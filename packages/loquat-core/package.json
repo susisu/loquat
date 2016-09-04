@@ -1,0 +1,30 @@
+{
+  "name": "loquat-core",
+  "version": "2.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/susisu/loquat-core.git"
+  },
+  "author": "Susisu <susisu2413@yahoo.co.jp> (https://github.com/susisu)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/susisu/loquat-core/issues"
+  },
+  "homepage": "https://github.com/susisu/loquat-core#readme",
+  "keywords": [
+    "parsing"
+  ],
+  "description": "",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "jsdoc": "^3.4.0",
+    "mocha": "^3.0.2"
+  }
+}
