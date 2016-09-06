@@ -1,3 +1,8 @@
+/*
+ * loquat-core / pos.js
+ * copyright (c) 2016 Susisu
+ */
+
 "use strict";
 
 function end() {
