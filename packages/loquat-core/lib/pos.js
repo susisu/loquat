@@ -81,25 +81,41 @@ class SourcePos {
         return copy;
     }
 
-    addString(str, tabWidth) {
+    addString(str, tabWidth, useCodePoint) {
         tabWidth = tabWidth | 0;
         if (tabWidth <= 0) {
             tabWidth = DEFAULT_TAB_WIDTH;
         }
         let copy = this.clone();
-        // TODO: consider surrogate pairs?
-        let len = str.length;
-        for (let i = 0; i < len; i++) {
-            switch (str[i]) {
-            case "\n":
-                copy.line  += 1;
-                copy.column = 1;
-                break;
-            case "\t":
-                copy.column += tabWidth - (copy.column - 1) % tabWidth;
-                break;
-            default:
-                copy.column += 1;
+        if (useCodePoint) {
+            for (let char of str) {
+                switch (char) {
+                case "\n":
+                    copy.line  += 1;
+                    copy.column = 1;
+                    break;
+                case "\t":
+                    copy.column += tabWidth - (copy.column - 1) % tabWidth;
+                    break;
+                default:
+                    copy.column += 1;
+                }
+            }
+        }
+        else {
+            let len = str.length;
+            for (let i = 0; i < len; i++) {
+                switch (str[i]) {
+                case "\n":
+                    copy.line  += 1;
+                    copy.column = 1;
+                    break;
+                case "\t":
+                    copy.column += tabWidth - (copy.column - 1) % tabWidth;
+                    break;
+                default:
+                    copy.column += 1;
+                }
             }
         }
         return copy;
