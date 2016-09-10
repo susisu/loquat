@@ -7,4 +7,8 @@
 
 describe(".SourcePos", () => {
     require("./SourcePos/constructor.js");
+
+    require("./SourcePos/init.js");
+    require("./SourcePos/equal.js");
+    require("./SourcePos/compare.js");
 });
