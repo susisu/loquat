@@ -18,10 +18,10 @@ let escapeMap = new Map();
 escapeMap.set("\\", "\\\\");
 escapeMap.set("\"", "\\\"");
 escapeMap.set("\b", "\\b");
-escapeMap.set("\t", "\\t");
+escapeMap.set("\f", "\\f");
 escapeMap.set("\n", "\\n");
 escapeMap.set("\r", "\\r");
-escapeMap.set("\f", "\\f");
+escapeMap.set("\t", "\\t");
 escapeMap.set("\v", "\\v");
 
 function escapeChar (char) {
@@ -34,7 +34,7 @@ function show(value) {
             return `"${escapeChar(value)}"`;
         }
         else {
-            return `"${value.split("").map(escapeChar).join("")}"`;
+            return `"${value.replace(/[\u0000-\u001F\\\"]/g, escapeChar)}"`;
         }
     }
     else if (Array.isArray(value)) {
