@@ -29,6 +29,24 @@ describe(".compare(posA, posB)", () => {
             let posB = new SourcePos("foobar", 496, 28);
             expect(SourcePos.compare(posA, posB)).to.be.lessThan(0);
         }
+        // priority: name > line > column
+        {
+            {
+                let posA = new SourcePos("foobar", 496, 28);
+                let posB = new SourcePos("nyancat", 6, 28);
+                expect(SourcePos.compare(posA, posB)).to.be.lessThan(0);
+            }
+            {
+                let posA = new SourcePos("foobar", 496, 28);
+                let posB = new SourcePos("nyancat", 496, 6);
+                expect(SourcePos.compare(posA, posB)).to.be.lessThan(0);
+            }
+            {
+                let posA = new SourcePos("foobar", 6, 28);
+                let posB = new SourcePos("foobar", 496, 6);
+                expect(SourcePos.compare(posA, posB)).to.be.lessThan(0);
+            }
+        }
     });
 
     it("should return positive number if `posA' describes a position behind `posB'", () => {
@@ -49,6 +67,24 @@ describe(".compare(posA, posB)", () => {
             let posA = new SourcePos("foobar", 496, 28);
             let posB = new SourcePos("foobar", 496, 6);
             expect(SourcePos.compare(posA, posB)).to.be.greaterThan(0);
+        }
+        // priority: name > line > column
+        {
+            {
+                let posA = new SourcePos("nyancat", 6, 28);
+                let posB = new SourcePos("foobar", 496, 28);
+                expect(SourcePos.compare(posA, posB)).to.be.greaterThan(0);
+            }
+            {
+                let posA = new SourcePos("nyancat", 496, 6);
+                let posB = new SourcePos("foobar", 496, 28);
+                expect(SourcePos.compare(posA, posB)).to.be.greaterThan(0);
+            }
+            {
+                let posA = new SourcePos("foobar", 496, 6);
+                let posB = new SourcePos("foobar", 6, 28);
+                expect(SourcePos.compare(posA, posB)).to.be.greaterThan(0);
+            }
         }
     });
 
