@@ -6,7 +6,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha test"
+    "test": "mocha test",
+    "docs": "jsdoc lib -c jsdoc.conf.json"
   },
   "repository": {
     "type": "git",
