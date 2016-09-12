@@ -1,5 +1,5 @@
 /*
- * loquat-core test / util._internal.escapeChar()
+ * loquat-core test / utils._internal.escapeChar()
  * copyright (c) 2016 Susisu
  */
 
@@ -7,7 +7,7 @@
 
 const { expect } = require("chai");
 
-const { _internal: { escapeChar } } = require("../../../lib/util.js");
+const { _internal: { escapeChar } } = require("../../../lib/utils.js");
 
 describe(".escapeChar(char)", () => {
     it("should escape the character `char' if it is a special character", () => {

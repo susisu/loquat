@@ -1,5 +1,5 @@
 /*
- * loquat-core / util.js
+ * loquat-core / utils.js
  * copyright (c) 2016 Susisu
  */
 
@@ -24,10 +24,26 @@ escapeMap.set("\r", "\\r");
 escapeMap.set("\t", "\\t");
 escapeMap.set("\v", "\\v");
 
+/**
+ * Escapes the given character `char`.
+ * @private
+ * @param {string} char A character.
+ * @returns {string} The escaped character.
+ */
 function escapeChar (char) {
     return escapeMap.has(char) ? escapeMap.get(char) : char;
 }
 
+/**
+ * Pretty-printer for error messages.
+ * Printing strategy is determined by the type of `value`.
+ * - If `value` is a string,.
+ * - If `value` is an string,.
+ * - If `value` is an object but `value.toString` is not a function, call `Object.prototype.toString.call(value)`.
+ * - Otherwise, call `String(value)`;
+ * @param value Any value.
+ * @returns {string} The printed string.
+ */
 function show(value) {
     if (typeof value === "string") {
         if (value.length === 1) {

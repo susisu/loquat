@@ -1,5 +1,5 @@
 /*
- * loquat-core test / util.show()
+ * loquat-core test / utils.show()
  * copyright (c) 2016 Susisu
  */
 
@@ -7,7 +7,7 @@
 
 const { expect } = require("chai");
 
-const { show } = require("../../lib/util.js");
+const { show } = require("../../lib/utils.js");
 
 describe(".show(value)", () => {
     it("should return escaped and double-quoted (\"...\") string if `value' is a string", () => {
