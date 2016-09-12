@@ -68,6 +68,8 @@ class SourcePos {
         }
         let copy = this.clone();
         switch (char) {
+        case "":
+            break;
         case "\n":
             copy.line  += 1;
             copy.column = 1;
