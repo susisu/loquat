@@ -34,6 +34,10 @@ class SourcePos {
         this.column = column;
     }
 
+    /** @member {string} module:pos.SourcePos#name */
+    /** @member {number} module:pos.SourcePos#line */
+    /** @member {number} module:pos.SourcePos#column */
+
     /**
      * Creates a new `SourcePos` instance initialized with `line = 1` and `column = 1`.
      * @param {string} name Name of the source.
