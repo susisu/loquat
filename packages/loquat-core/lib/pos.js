@@ -127,21 +127,22 @@ class SourcePos {
         if (tabWidth <= 0) {
             tabWidth = DEFAULT_TAB_WIDTH;
         }
-        let copy = this.clone();
+        let line   = this.line;
+        let column = this.column;
         switch (char) {
         case "":
             break;
         case "\n":
-            copy.line  += 1;
-            copy.column = 1;
+            line  += 1;
+            column = 1;
             break;
         case "\t":
-            copy.column += tabWidth - (copy.column - 1) % tabWidth;
+            column += tabWidth - (column - 1) % tabWidth;
             break;
         default:
-            copy.column += 1;
+            column += 1;
         }
-        return copy;
+        return new SourcePos(this.name, line, column);
     }
 
     /**
@@ -156,19 +157,20 @@ class SourcePos {
         if (tabWidth <= 0) {
             tabWidth = DEFAULT_TAB_WIDTH;
         }
-        let copy = this.clone();
+        let line   = this.line;
+        let column = this.column;
         if (useCodePoint) {
             for (let char of str) {
                 switch (char) {
                 case "\n":
-                    copy.line  += 1;
-                    copy.column = 1;
+                    line  += 1;
+                    column = 1;
                     break;
                 case "\t":
-                    copy.column += tabWidth - (copy.column - 1) % tabWidth;
+                    column += tabWidth - (column - 1) % tabWidth;
                     break;
                 default:
-                    copy.column += 1;
+                    column += 1;
                 }
             }
         }
@@ -177,18 +179,18 @@ class SourcePos {
             for (let i = 0; i < len; i++) {
                 switch (str[i]) {
                 case "\n":
-                    copy.line  += 1;
-                    copy.column = 1;
+                    line  += 1;
+                    column = 1;
                     break;
                 case "\t":
-                    copy.column += tabWidth - (copy.column - 1) % tabWidth;
+                    column += tabWidth - (column - 1) % tabWidth;
                     break;
                 default:
-                    copy.column += 1;
+                    column += 1;
                 }
             }
         }
-        return copy;
+        return new SourcePos(this.name, line, column);
     }
 }
 
