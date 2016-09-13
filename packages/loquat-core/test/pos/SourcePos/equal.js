@@ -1,5 +1,5 @@
 /*
- * loquat-core test / pos.SourcePos.equal
+ * loquat-core test / pos.SourcePos.equal()
  * copyright (c) 2016 Susisu
  */
 
