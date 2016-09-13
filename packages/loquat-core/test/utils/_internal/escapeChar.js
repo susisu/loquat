@@ -7,7 +7,7 @@
 
 const { expect } = require("chai");
 
-const { _internal: { escapeChar } } = require("../../../lib/utils.js");
+const { _internal: { escapeChar } } = require("utils.js");
 
 describe(".escapeChar(char)", () => {
     it("should escape the character `char' if it is a special character", () => {

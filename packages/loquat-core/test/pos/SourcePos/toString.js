@@ -7,7 +7,7 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = require("../../../lib/pos.js");
+const { SourcePos } = require("pos.js");
 
 describe("#toString()", () => {
     it("should return the string representation of the position", () => {

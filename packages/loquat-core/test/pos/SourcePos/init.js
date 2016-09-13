@@ -7,7 +7,7 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = require("../../../lib/pos.js");
+const { SourcePos } = require("pos.js");
 
 describe(".init(name)", () => {
     it("should create a new `SourcePos' instance with `line = 1' and `column = 1'", () => {

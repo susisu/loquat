@@ -7,7 +7,7 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = require("../../../lib/pos.js");
+const { SourcePos } = require("pos.js");
 
 describe("#addString(str, tabWidth, useCodePoint)", () => {
     it("should create a copy with lines and columns are incremented by `str'", () => {

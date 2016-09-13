@@ -7,7 +7,7 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = require("../../../lib/pos.js");
+const { SourcePos } = require("pos.js");
 
 describe("#clone()", () => {
     it("should create a copy of the `SourcePos' object", () => {

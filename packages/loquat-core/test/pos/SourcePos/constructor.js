@@ -7,7 +7,7 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = require("../../../lib/pos.js");
+const { SourcePos } = require("pos.js");
 
 describe("constructor(name, line, column)", () => {
     it("should create a new `SourcePos' instance", () => {

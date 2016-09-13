@@ -7,7 +7,7 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = require("../../../lib/pos.js");
+const { SourcePos } = require("pos.js");
 
 describe("#addChar(char, tabWidth)", () => {
     it("should create a copy but not change the position if `char' is empty", () => {

@@ -7,7 +7,7 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = require("../../../lib/pos.js");
+const { SourcePos } = require("pos.js");
 
 describe(".compare(posA, posB)", () => {
     it("should return negative number if `posA' describes a position ahead of `posB'", () => {

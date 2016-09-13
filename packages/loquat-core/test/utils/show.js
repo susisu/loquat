@@ -7,7 +7,7 @@
 
 const { expect } = require("chai");
 
-const { show } = require("../../lib/utils.js");
+const { show } = require("utils.js");
 
 describe(".show(value)", () => {
     it("should return escaped and double-quoted (\"...\") string if `value' is a string", () => {
