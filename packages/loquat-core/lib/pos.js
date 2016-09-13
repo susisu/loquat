@@ -37,7 +37,7 @@ class SourcePos {
     /**
      * Creates a new `SourcePos` instance initialized with `line = 1` and `column = 1`.
      * @param {string} name Name of the source.
-     * @returns {SourcePos} New `SourcePos` instance.
+     * @returns {module:pos.SourcePos} New `SourcePos` instance.
      */
     static init(name) {
         return new SourcePos(name, 1, 1);
@@ -45,8 +45,8 @@ class SourcePos {
 
     /**
      * Checks if two `SourcePos` instances describe the same position.
-     * @param {SourcePos} posA
-     * @param {SourcePos} posB
+     * @param {module:pos.SourcePos} posA
+     * @param {module:pos.SourcePos} posB
      * @returns {boolean} `true` if two `SoucePos` instances describe the same position.
      */
     static equal(posA, posB) {
@@ -57,9 +57,9 @@ class SourcePos {
 
     /**
      * Compares two `SourcePos` instances.
-     * @param {SourcePos} posA
-     * @parma {SourcePos} posB
      * @returns {number} Negative if `posA` describes a position ahead of `posB.
+     * @param {module:pos.SourcePos} posA
+     * @parma {module:pos.SourcePos} posB
      * Positive if `posA` describes a position behind `posB`.
      * Zero if `posA` and `posB` describe the same.
      */
@@ -84,7 +84,7 @@ class SourcePos {
 
     /**
      * Creates a new copy of the instance.
-     * @returns {SourcePos} Copy of the instnace.
+     * @returns {module:pos.SourcePos} Copy of the instnace.
      */
     clone() {
         return new SourcePos(this.name, this.line, this.column);
@@ -93,7 +93,7 @@ class SourcePos {
     /**
      * Creates a new copy of the instance with `name` set to the specified value.
      * @param {string} name
-     * @returns {SourcePos} Copy of the instance.
+     * @returns {module:pos.SourcePos} Copy of the instance.
      */
     setName(name) {
         return new SourcePos(name, this.line, this.column);
@@ -102,7 +102,7 @@ class SourcePos {
     /**
      * Creates a new copy of the instance with `line` set to the specified value.
      * @param {number} line
-     * @returns {SourcePos} Copy of the instance.
+     * @returns {module:pos.SourcePos} Copy of the instance.
      */
     setLine(line) {
         return new SourcePos(this.name, line, this.column);
@@ -111,7 +111,7 @@ class SourcePos {
     /**
      * Creates a new copy of the instance with `column` set to the specified value.
      * @param {number} column
-     * @returns {SourcePos} Copy of the instance.
+     * @returns {module:pos.SourcePos} Copy of the instance.
      */
     setColumn(column) {
         return new SourcePos(this.name, this.line, column);
@@ -120,7 +120,7 @@ class SourcePos {
     /**
      * @param {string} char
      * @param {number} tabWidth
-     * @returns {SourcePos}
+     * @returns {module:pos.SourcePos}
      */
     addChar(char, tabWidth) {
         tabWidth = tabWidth | 0;
@@ -150,7 +150,7 @@ class SourcePos {
      * @param {number} tabWidth
      * @param {boolean} useCodePoint If `true` specified, the characters in the `str` are counted
      * based on the UTF-16 code point.
-     * @returns {SourcePos}
+     * @returns {module:pos.SourcePos}
      */
     addString(str, tabWidth, useCodePoint) {
         tabWidth = tabWidth | 0;
