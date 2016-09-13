@@ -79,7 +79,7 @@ class SourcePos {
      */
     toString() {
         return (this.name === "" ? "" : `"${this.name}"`)
-            + `(line ${this.line.toString()}, column ${this.column.toString()})`;
+            + `(line ${this.line}, column ${this.column})`;
     }
 
     /**
