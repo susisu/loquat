@@ -293,7 +293,7 @@ class LazyParseError {
     /**
      * @returns {module:error.ParseError}
      * @throws {TypeError} Invalid thunk (not a function) found while evaluation.
-     * @throws {TypeError} The evaluation result is not a {@link module:error.ParseError} object.
+     * @throws {TypeError} The final evaluation result is not a {@link module:error.ParseError} object.
      */
     eval() {
         if (this._cache) {
