@@ -9,4 +9,5 @@ describe(".ParseError", () => {
     require("./ParseError/constructor.js");
     require("./ParseError/unknown.js");
     require("./ParseError/equal.js");
+    require("./ParseError/merge.js");
 });
