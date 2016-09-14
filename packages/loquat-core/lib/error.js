@@ -55,6 +55,9 @@ class ErrorMessage {
         this.msgStr = msgStr;
     }
 
+    /** @member {string} module:error.ErrorMessage#type */
+    /** @member {string} module:error.ErrorMessage#msgStr */
+
     /**
      * Checks if two messages are the same.
      * @param {module:error.ErrorMessage} msgA
@@ -69,6 +72,7 @@ class ErrorMessage {
     /**
      * @param {Array.<ErrorMessage>} msgs
      * @returns {string}
+     * @throws {Error} A message has unknown type.
      */
     static messagesToString(msgs) {
         if (msgs.length === 0) {
@@ -288,6 +292,8 @@ class LazyParseError {
 
     /**
      * @returns {module:error.ParseError}
+     * @throws {TypeError} Invalid thunk (not a function) found while evaluation.
+     * @throws {TypeError} The evaluation result is not a {@link module:error.ParseError} object.
      */
     eval() {
         if (this._cache) {
