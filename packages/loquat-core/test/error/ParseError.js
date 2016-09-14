@@ -14,4 +14,5 @@ describe(".ParseError", () => {
     require("./ParseError/isUnknown.js");
     require("./ParseError/setPosition.js");
     require("./ParseError/addMessages.js");
+    require("./ParseError/setSpecificTypeMessages.js");
 });
