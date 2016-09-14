@@ -14,4 +14,5 @@ describe(".LazyParseError", () => {
     require("./LazyParseError/isUnknown.js");
     require("./LazyParseError/setPosition.js");
     require("./LazyParseError/addMessages.js");
+    require("./LazyParseError/setSpecificTypeMessages.js");
 });
