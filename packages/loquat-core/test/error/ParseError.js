@@ -7,4 +7,5 @@
 
 describe(".ParseError", () => {
     require("./ParseError/constructor.js");
+    require("./ParseError/unknown.js");
 });
