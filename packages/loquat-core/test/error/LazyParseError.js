@@ -7,4 +7,5 @@
 
 describe(".LazyParseError", () => {
     require("./LazyParseError/constructor.js");
+    require("./LazyParseError/eval.js");
 });
