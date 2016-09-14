@@ -92,5 +92,5 @@ describe(".compare(posA, posB)", () => {
         let posA = new SourcePos("foobar", 496, 28);
         let posB = new SourcePos("foobar", 496, 28);
         expect(SourcePos.compare(posA, posB)).to.equal(0);
-    })
+    });
 });

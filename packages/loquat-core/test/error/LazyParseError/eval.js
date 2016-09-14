@@ -53,7 +53,7 @@ describe("#eval()", () => {
             let evalCount = 0;
             let err = new LazyParseError(() => {
                 evalCount += 1;
-                return new ParseError(pos, msgs)
+                return new ParseError(pos, msgs);
             });
             let resA = err.eval();
             let resB = err.eval();
@@ -69,7 +69,7 @@ describe("#eval()", () => {
                 evalCount += 1;
                 return new LazyParseError(() => {
                     intermediateEvalCount += 1;
-                    return new ParseError(pos, msgs)
+                    return new ParseError(pos, msgs);
                 });
             });
             let resA = err.eval();
