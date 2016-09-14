@@ -64,14 +64,13 @@ describe("#eval()", () => {
         // all LazyParseError objects are evaluated only once
         {
             let intermediateEvalCount = 0;
-            let intermediate = new LazyParseError(() => {
-                intermediateEvalCount += 1;
-                return new ParseError(pos, msgs)
-            });
             let evalCount = 0;
             let err = new LazyParseError(() => {
                 evalCount += 1;
-                return intermediate
+                return new LazyParseError(() => {
+                    intermediateEvalCount += 1;
+                    return new ParseError(pos, msgs)
+                });
             });
             let resA = err.eval();
             let resB = err.eval();
