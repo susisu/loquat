@@ -22,7 +22,7 @@ describe("#msgs", () => {
         let evaluated = false;
         let err = new LazyParseError(() => {
             evaluated = true;
-            return new ParseError(pos, msgs)
+            return new ParseError(pos, msgs);
         });
         expect(ErrorMessage.messagesEqual(err.msgs, msgs)).to.be.true;
         expect(evaluated).to.be.true;
