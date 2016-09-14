@@ -12,4 +12,5 @@ describe(".ParseError", () => {
     require("./ParseError/merge.js");
     require("./ParseError/toString.js");
     require("./ParseError/isUnknown.js");
+    require("./ParseError/setPosition.js");
 });
