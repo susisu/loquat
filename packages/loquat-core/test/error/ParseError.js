@@ -10,4 +10,5 @@ describe(".ParseError", () => {
     require("./ParseError/unknown.js");
     require("./ParseError/equal.js");
     require("./ParseError/merge.js");
+    require("./ParseError/toString.js");
 });
