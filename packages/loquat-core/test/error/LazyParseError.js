@@ -11,4 +11,5 @@ describe(".LazyParseError", () => {
     require("./LazyParseError/pos.js");
     require("./LazyParseError/msgs.js");
     require("./LazyParseError/toString.js");
+    require("./LazyParseError/isUnknown.js");
 });
