@@ -12,3 +12,4 @@ require("app-module-path").addPath(path.join(__dirname, "lib"));
 require("./test/utils.js");
 require("./test/pos.js");
 require("./test/error.js");
+require("./test/stream.js");
