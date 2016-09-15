@@ -35,7 +35,7 @@ escapeMap.set("\v", "\\v");
  * @param {string} char A character.
  * @returns {string} The escaped character.
  */
-function escapeChar (char) {
+function escapeChar(char) {
     return escapeMap.has(char) ? escapeMap.get(char) : char;
 }
 

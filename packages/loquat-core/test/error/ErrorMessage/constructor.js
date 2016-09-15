@@ -15,7 +15,7 @@ describe("constructor(type, msgStr)", () => {
             ErrorMessageType.SYSTEM_UNEXPECT,
             ErrorMessageType.UNEXPECT,
             ErrorMessageType.EXPECT,
-            ErrorMessageType.MESSAGE,
+            ErrorMessageType.MESSAGE
         ];
         for (let type of types) {
             // assert type exists
