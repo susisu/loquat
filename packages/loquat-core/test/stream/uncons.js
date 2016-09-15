@@ -9,20 +9,20 @@ const { expect } = require("chai");
 
 const { uncons } = require("stream.js");
 
-describe(".uncons(stream)", () => {
-    it("should return an object describing empty stream if `stream' is an empty string", () => {
+describe(".uncons(input)", () => {
+    it("should return an object describing empty input if `input' is an empty string", () => {
         expect(uncons("")).to.deep.equal({ empty: true });
     });
 
-    it("should return an object containing head and tail if `stream' is an non-empty string", () => {
+    it("should return an object containing head and tail if `input' is an non-empty string", () => {
         expect(uncons("foobar")).to.deep.equal({ empty: false, head: "f", tail: "oobar" });
     });
 
-    it("should return an object describing empty stream if `stream' is an empty array", () => {
+    it("should return an object describing empty input if `input' is an empty array", () => {
         expect(uncons([])).to.deep.equal({ empty: true });
     });
 
-    it("should return an object containing head and tail if `stream' is an non-empty array", () => {
+    it("should return an object containing head and tail if `input' is an non-empty array", () => {
         expect(uncons(["foo", "bar", "baz"])).to.deep.equal({
             empty: false,
             head : "foo",
@@ -30,14 +30,14 @@ describe(".uncons(stream)", () => {
         });
     });
 
-    it("should return an object describing empty stream if `stream' is an empty stream object", () => {
+    it("should return an object describing empty input if `input' is an empty stream object", () => {
         let stream = {
             uncons: () => ({ empty: true })
         };
         expect(uncons(stream)).to.deep.equal({ empty: true });
     });
 
-    it("should return an object containing head and tail if `stream' is an non-empty stream object", () => {
+    it("should return an object containing head and tail if `input' is an non-empty stream object", () => {
         let tail = {
             uncons: () => ({ empty: true })
         };
@@ -51,11 +51,11 @@ describe(".uncons(stream)", () => {
         expect(uncons(stream)).to.deep.equal({ empty: false, head: "nyancat", tail: tail });
     });
 
-    it("should throw a `TypeError' if `stream' does not implement `IStream' interface", () => {
+    it("should throw a `TypeError' if `input' does not implement `IStream' interface", () => {
         expect(() => { uncons({}); }).to.throw(TypeError);
     });
 
-    it("should throw a `TypeError' if `stream' is not a string, an array, nor an object", () => {
+    it("should throw a `TypeError' if `input' is not a string, an array, nor an object", () => {
         let values = [
             null,
             undefined,
