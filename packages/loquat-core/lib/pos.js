@@ -26,7 +26,7 @@ class SourcePos {
      * Creates a new `SourcePos` instance.
      * @param {string} name Name of the source.
      * @param {number} line Line in the source.
-     * @param {number} coulmn Column in the source.
+     * @param {number} column Column in the source.
      */
     constructor(name, line, column) {
         this.name   = name;
