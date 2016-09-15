@@ -7,7 +7,9 @@
   },
   "scripts": {
     "test": "mocha test.js",
-    "docs": "jsdoc lib -c jsdoc.conf.json"
+    "docs": "jsdoc lib -c jsdoc.conf.json",
+    "lint": "eslint lib --fix",
+    "lint-test": "eslint test --env mocha --fix"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,7 @@
   "devDependencies": {
     "app-module-path": "^1.1.0",
     "chai": "^3.5.0",
+    "eslint": "^3.5.0",
     "jsdoc": "^3.4.0",
     "mocha": "^3.0.2"
   }
