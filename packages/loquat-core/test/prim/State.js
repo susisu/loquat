@@ -8,4 +8,5 @@
 describe(".State", () => {
     require("./State/constructor.js");
     require("./State/equal.js");
+    require("./State/setInput.js");
 });
