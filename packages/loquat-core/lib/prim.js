@@ -16,6 +16,7 @@ function end() {
     });
 }
 
+const { SourcePos } = require("./pos.js");
 /**
  * The `Config` class represents parser configuration.
  * @static
@@ -80,6 +81,25 @@ class State {
     /** @member {(string|Array|module:stream.IStream)} module:prim.State#input */
     /** @member {module:pos.SourcePos} module:prim.State#pos */
     /** @member {*} module:prim.State#userState */
+
+    /**
+     * Checks if two states are equal.
+     * @param {module:prim.State} stateA
+     * @param {module:prim.State} stateB
+     * @param {(function|undefined)} [inputEqual = undefined]
+     * @param {(function|undefined)} [userStateEqual = undefined]
+     * @returns {boolean}
+     */
+    static equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefined) {
+        return Config.equal(stateA.config, stateB.config)
+            && (inputEqual === undefined
+                ? stateA.input === stateB.input
+                : inputEqual(stateA.input, stateB.input))
+            && SourcePos.equal(stateA.pos, stateB.pos)
+            && (userStateEqual === undefined
+                ? stateA.userState === stateB.userState
+                : userStateEqual(stateA.userState, stateB.userState));
+    }
 
     /**
      * @param {(string|Array|module:stream.IStream)} input
