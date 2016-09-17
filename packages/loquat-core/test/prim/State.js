@@ -1,0 +1,10 @@
+/*
+ * loquat-core test / prim.State
+ * copyright (c) 2016 Susisu
+ */
+
+"use strict";
+
+describe(".State", () => {
+    require("./State/constructor.js");
+});

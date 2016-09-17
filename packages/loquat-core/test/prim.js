@@ -7,4 +7,5 @@
 
 describe("prim", () => {
     require("./prim/Config.js");
+    require("./prim/State.js");
 });
