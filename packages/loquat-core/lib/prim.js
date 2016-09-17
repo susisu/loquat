@@ -12,11 +12,14 @@
 function end() {
     module.exports = Object.freeze({
         Config,
-        State
+        State,
+        Result
     });
 }
 
 const { SourcePos } = require("./pos.js");
+const { ParseError } = require("./error.js");
+
 /**
  * The `Config` class represents parser configuration.
  * @static
@@ -123,6 +126,94 @@ class State {
      */
     setUserState(userState) {
         return new State(this.config, this.input, this.pos, userState);
+    }
+}
+
+/**
+ * The `Result` class represents a result of parsing.
+ * @static
+ */
+class Result {
+    /**
+     * Creates a new `Result` instance.
+     * @param {boolean} consumed Indicates the parser consumed input or not.
+     * @param {boolean} succeeded Indicates the parser was succeeded or not.
+     * If `true`, `val` and `state` must be specified.
+     * @param {module:error.IParseError} err Parse error object.
+     * @param {*} [val = undefined] Obtained value.
+     * @param {(module:prim.State|undefined)} [state = undefined] Next state.
+     */
+    constructor(consumed, succeeded, err, val = undefined, state = undefined) {
+        this.consumed  = consumed;
+        this.succeeded = succeeded;
+        this.err       = err;
+        this.val       = val;
+        this.state     = state;
+    }
+
+    /**
+     * Checks if two results are equal.
+     * The properties `val` and `state` are compared only when both results are succeeded.
+     * @param {module:prim.Result} resA
+     * @param {module:prim.Result} resB
+     * @param {(function|undefined)} valEqual
+     * @param {(function|undefined)} inputEqual
+     * @param {(function|undefined)} userStateEqual
+     */
+    static equal(resA, resB, valEqual = undefined, inputEqual = undefined, userStateEqual = undefined) {
+        if (resA.succeeded && resB.succeeded) {
+            return resA.consumed === resB.consumed
+                && (valEqual === undefined
+                    ? resA.val === resB.val
+                    : valEqual(resA.val, resB.val))
+                && State.equal(resA.state, resB.state, inputEqual, userStateEqual)
+                && ParseError.equal(resA.err, resB.err);
+        }
+        else {
+            return resA.succeeded === resB.succeeded
+                && resA.consumed === resB.consumed
+                && ParseError.equal(resA.err, resB.err);
+        }
+    }
+
+    /**
+     * Returns consumed and succeeded result object.
+     * @param {module:error.IParseError} err
+     * @param {*} val
+     * @param {module:prim.State} state
+     * @returns {module:prim.Result}
+     */
+    static csuc(err, val, state) {
+        return new Result(true, true, err, val, state);
+    }
+
+    /**
+     * Returns consumed but error result object.
+     * @param {module:error.IParseError} err
+     * @returns {module:prim.Result}
+     */
+    static cerr(err) {
+        return new Result(true, false, err);
+    }
+
+    /**
+     * Returns not consumed and succeeded result object.
+     * @param {module:error.IParseError} err
+     * @param {*} val
+     * @param {module:prim.State} state
+     * @returns {module:prim.Result}
+     */
+    static esuc(err, val, state) {
+        return new Result(false, true, err, val, state);
+    }
+
+    /**
+     * Returns not consumed but error result object.
+     * @param {module:error.IParseError} err
+     * @returns {module:prim.Result}
+     */
+    static eerr(err) {
+        return new Result(false, false, err);
     }
 }
 
