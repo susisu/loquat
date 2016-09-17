@@ -44,6 +44,17 @@ class Config {
 
     /** @member {number} module:prim.Config#tabWidth */
     /** @member {boolean} module:prim.Config#useCodePoint */
+
+    /**
+     * Checks if two configs are equal.
+     * @param {module:prim.Config} configA
+     * @param {module:prim.Config} configB
+     * @returns {boolean}
+     */
+    static equal(configA, configB) {
+        return configA.tabWidth === configB.tabWidth
+            && configA.useCodePoint === configB.useCodePoint;
+    }
 }
 
 /**
