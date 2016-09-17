@@ -10,4 +10,5 @@ describe(".State", () => {
     require("./State/equal.js");
     require("./State/setInput.js");
     require("./State/setPosition.js");
+    require("./State/setUserState.js");
 });
