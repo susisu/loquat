@@ -8,4 +8,5 @@
 describe("prim", () => {
     require("./prim/Config.js");
     require("./prim/State.js");
+    require("./prim/Result.js");
 });
