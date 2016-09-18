@@ -14,7 +14,7 @@
         "no-sparse-arrays": ["warn"],
         "no-unsafe-finally": ["warn"],
         "no-unsafe-negation": ["warn"],
-        "valid-jsdoc": ["warn"],
+        "valid-jsdoc": ["warn", { "requireParamDescription": false, "requireReturn": false, "requireReturnDescription": false }],
 
         "array-callback-return": ["warn"],
         "consistent-return": ["error"],
