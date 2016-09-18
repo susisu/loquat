@@ -10,4 +10,5 @@ describe(".Result", () => {
     require("./Result/equal.js");
     require("./Result/csuc.js");
     require("./Result/cerr.js");
+    require("./Result/esuc.js");
 });
