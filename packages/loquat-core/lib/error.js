@@ -200,7 +200,7 @@ function joinMessageStrings(msgStrs, desc = "") {
 
 /**
  * @static
- * @implements module:error.IParseError
+ * @implements {module:error.IParseError}
  */
 class ParseError {
     /**
@@ -277,7 +277,7 @@ class ParseError {
 
 /**
  * @static
- * @implements module:error.IParseError
+ * @implements {module:error.IParseError}
  */
 class LazyParseError {
     /**
