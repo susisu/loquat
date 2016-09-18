@@ -11,4 +11,5 @@ describe(".Result", () => {
     require("./Result/csuc.js");
     require("./Result/cerr.js");
     require("./Result/esuc.js");
+    require("./Result/eerr.js");
 });
