@@ -7,4 +7,5 @@
 
 describe(".Result", () => {
     require("./Result/constructor.js");
+    require("./Result/equal.js");
 });
