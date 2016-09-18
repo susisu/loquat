@@ -62,7 +62,7 @@ class SourcePos {
     /**
      * Compares two `SourcePos` instances.
      * @param {module:pos.SourcePos} posA
-     * @parma {module:pos.SourcePos} posB
+     * @param {module:pos.SourcePos} posB
      * @returns {number} Negative if `posA` describes a position ahead of `posB`.
      * Positive if `posA` describes a position behind `posB`.
      * Zero if `posA` and `posB` describe the same.
