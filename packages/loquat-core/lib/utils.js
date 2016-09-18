@@ -48,7 +48,7 @@ function escapeChar(char) {
  * - If `value` is an object but `value.toString` is not a function, it calls `Object.prototype.toString.call(value)`.
  * - Otherwise, it calls `String(value)`
  * @static
- * @param value Any value.
+ * @param {*} value Any value.
  * @returns {string} The printed string.
  */
 function show(value) {
