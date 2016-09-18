@@ -9,7 +9,7 @@ const { expect } = require("chai");
 
 const { SourcePos } = require("pos.js");
 const { ErrorMessageType, ErrorMessage, ParseError } = require("error.js");
-const { Config, State, Result } = require("prim.js");
+const { Result } = require("prim.js");
 
 describe(".cerr(err, val, state)", () => {
     it("should create a consumed but failed result object", () => {
