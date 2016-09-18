@@ -169,32 +169,44 @@ function joinMessageStrings(msgStrs, desc = "") {
 
 /**
  * @interface IParseError
+ * @description The `IParseError` interface abstract parse error objects.
+ * There are two parse error classes which implements this interface:
+ * {@link module:error.ParseError} and {@link module:error.LazyParseError}.
  * @static
  */
 /**
  * @member {module:pos.SourcePos} module:error.IParseError#pos
+ * @description The position where the error occurred.
  */
 /**
  * @member {Array.<module:error.ErrorMessage>} module:error.IParseError#msgs
+ * @description Messages of the error.
  */
 /**
  * @method module:error.IParseError#toString
+ * @description Returns string representation of the error.
  * @returns {string}
  */
 /**
  * @method module:error.IParseError#isUnknown
+ * @description Checks wheter the error has no messages (unknown) or not.
  * @returns {boolean}
  */
 /**
  * @method module:error.IParseError#setPosition
+ * @description Creates a copy of the error with specified position
+ * @param {module:pos.SourcePos} pos
  * @returns {module:error.IParseError}
  */
 /**
  * @method module:error.IParseError#addMessages
+ * @param {Array.<module:error.ErrorMessage>} msgs
  * @returns {module:error.IParseError}
  */
 /**
  * @method module:error.IParseError#setSpecificTypeMessages
+ * @param {string} type
+ * @param {Array.<string>} msgStrs
  * @returns {module:error.IParseError}
  */
 
