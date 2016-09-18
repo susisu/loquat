@@ -159,6 +159,7 @@ class Result {
      * @param {(function|undefined)} valEqual
      * @param {(function|undefined)} inputEqual
      * @param {(function|undefined)} userStateEqual
+     * @returns {boolean}
      */
     static equal(resA, resB, valEqual = undefined, inputEqual = undefined, userStateEqual = undefined) {
         if (resA.succeeded && resB.succeeded) {
