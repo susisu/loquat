@@ -13,7 +13,10 @@ function end() {
     module.exports = Object.freeze({
         Config,
         State,
-        Result
+        Result,
+        AbstractParser,
+        Parser,
+        LazyParser
     });
 }
 
@@ -215,6 +218,128 @@ class Result {
      */
     static eerr(err) {
         return new Result(false, false, err);
+    }
+}
+
+/**
+ * @interface IParser
+ * @description The `IParser` imterface is an interface for parser objects.
+ * @static
+ */
+/**
+ * @method module:prim.IParser#run
+ * @description Runs the parser.
+ * @param {module:prim.State} state
+ * @returns {module:prim.Result} Result object.
+ */
+
+/**
+ * The `AbstractParser` class is inherited by the concrete parser classes,
+ * and is used for extending all the parser classes.
+ * This class is abstract and you cannot create `AbstractParser` instance directly.
+ * @static
+ * @implements {module:prim.IParser}
+ */
+class AbstractParser {
+    /**
+     * You cannot create `AbstractParser` instance directly.
+     * @throws {Error}
+     */
+    constructor() {
+        if (new.target === AbstractParser) {
+            throw new Error("cannot create AbstractParser object");
+        }
+    }
+
+    /**
+     * Not implemented.
+     * @throws {Error}
+     */
+    run() {
+        throw new Error("not implemented");
+    }
+}
+
+/**
+ * The `Parser` class is just a wrapper of parser function.
+ * @static
+ * @implements {module:prim.IParser}
+ */
+class Parser extends AbstractParser {
+    /**
+     * Creates a new `Parser` object.
+     * @param {function} func Parser function, which must take a {@link module:prim.State} object as its argument
+     * and return a {@link module:prim.Result} object.
+     */
+    constructor(func) {
+        super();
+        this.func = func;
+    }
+
+    /**
+     * @param {module:prim.State} state
+     * @returns {module:prim.Result}
+     */
+    run(state) {
+        return this.func.call(state);
+    }
+}
+
+/**
+ * The `LazyParser` class is a lazy version of the {@link:module.Parser} class.
+ * @static
+ * @implements {module:prim.IParser}
+ */
+class LazyParser extends AbstractParser {
+    /**
+     * Creates a new `LazyParser` object.
+     * @param {function} thunk A function, which must return an {@link module:prim.IParser} object.
+     */
+    constructor(thunk) {
+        super();
+        this._thunk = thunk;
+        this._cache = undefined;
+    }
+
+    /**
+     * Evaluates the thunk.
+     * @returns {module:prim.Parser}
+     * @throws {TypeError} Invalid thunk (not a function) found while evaluation.
+     * @throws {TypeError} The final evaluation result is not a {@link module:error.ParseError} object.
+     */
+    eval() {
+        if (this._cache) {
+            return this._cache;
+        }
+        let lazyParsers = [];
+        let parser = this;
+        while (parser instanceof LazyParser) {
+            if (parser._cache) {
+                parser = parser._cache;
+            }
+            else {
+                lazyParsers.push(parser);
+                if (typeof parser._thunk !== "function") {
+                    throw new TypeError("thunk is not a function");
+                }
+                parser = parser._thunk.call(undefined);
+            }
+        }
+        if (!(parser instanceof Parser)) {
+            throw new TypeError("evaluation result is not a Parser object");
+        }
+        for (let lazyParser of lazyParsers) {
+            lazyParser._cache = parser;
+        }
+        return parser;
+    }
+
+    /**
+     * @param {module:prim.State} state
+     * @returns {module:prim.Result}
+     */
+    run(state) {
+        return this.eval().run(state);
     }
 }
 
