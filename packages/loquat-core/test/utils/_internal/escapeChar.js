@@ -1,5 +1,5 @@
 /*
- * loquat-core test / utils._internal.escapeChar()
+ * loquat test / utils._internal.escapeChar()
  * copyright (c) 2016 Susisu
  */
 

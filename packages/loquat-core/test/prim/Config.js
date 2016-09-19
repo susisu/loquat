@@ -1,5 +1,5 @@
 /*
- * loquat-core test / prim.Config
+ * loquat test / prim.Config
  * copyright (c) 2016 Susisu
  */
 

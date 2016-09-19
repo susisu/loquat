@@ -1,5 +1,5 @@
 /*
- * loquat-core test / prim.State#setPosition()
+ * loquat test / prim.State#setPosition()
  * copyright (c) 2016 Susisu
  */
 

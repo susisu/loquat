@@ -1,5 +1,5 @@
 /*
- * loquat-core test / pos.SourcePos#clone()
+ * loquat test / pos.SourcePos#clone()
  * copyright (c) 2016 Susisu
  */
 

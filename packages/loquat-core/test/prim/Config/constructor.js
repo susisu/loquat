@@ -1,5 +1,5 @@
 /*
- * loquat-core test / prim.Config constructor()
+ * loquat test / prim.Config constructor()
  * copyright (c) 2016 Susisu
  */
 

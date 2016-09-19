@@ -1,5 +1,5 @@
 {
-  "name": "loquat-core",
+  "name": "loquat",
   "version": "2.0.0",
   "main": "index.js",
   "directories": {
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/susisu/loquat-core.git"
+    "url": "git+https://github.com/susisu/loquat2.git"
   },
   "author": "Susisu <susisu2413@yahoo.co.jp> (https://github.com/susisu)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/susisu/loquat-core/issues"
+    "url": "https://github.com/susisu/loquat2/issues"
   },
-  "homepage": "https://github.com/susisu/loquat-core#readme",
+  "homepage": "https://github.com/susisu/loquat2#readme",
   "keywords": [
     "parsing"
   ],

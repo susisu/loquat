@@ -1,5 +1,5 @@
 /*
- * loquat-core / pos.js
+ * loquat / pos.js
  * copyright (c) 2016 Susisu
  */
 

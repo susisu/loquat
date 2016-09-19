@@ -1,5 +1,5 @@
 /*
- * loquat-core test / error.LazyParseError#pos
+ * loquat test / error.LazyParseError#pos
  * copyright (c) 2016 Susisu
  */
 

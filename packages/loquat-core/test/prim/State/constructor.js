@@ -1,5 +1,5 @@
 /*
- * loquat-core test / prim.State constructor()
+ * loquat test / prim.State constructor()
  * copyright (c) 2016 Susisu
  */
 

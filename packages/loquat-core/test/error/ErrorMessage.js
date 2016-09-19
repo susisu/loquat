@@ -1,5 +1,5 @@
 /*
- * loquat-core test / error.ErrorMessage
+ * loquat test / error.ErrorMessage
  * copyright (c) 2016 Susisu
  */
 

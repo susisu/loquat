@@ -1,5 +1,5 @@
 /*
- * loquat-core test / pos.SourcePos#setLine()
+ * loquat test / pos.SourcePos#setLine()
  * copyright (c) 2016 Susisu
  */
 

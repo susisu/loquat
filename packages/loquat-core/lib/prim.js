@@ -1,5 +1,5 @@
 /*
- * loquat-core / prim.js
+ * loquat / prim.js
  * copyright (c) 2016 Susisu
  */
 

@@ -1,5 +1,5 @@
 /*
- * loquat-core test / prim.Result.equal()
+ * loquat test / prim.Result.equal()
  * copyright (c) 2016 Susisu
  */
 

@@ -1,5 +1,5 @@
 /*
- * loquat-core test / error
+ * loquat test / error
  * copyright (c) 2016 Susisu
  */
 

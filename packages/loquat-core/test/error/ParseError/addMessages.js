@@ -1,5 +1,5 @@
 /*
- * loquat-core test / error.ParseError#addMessages()
+ * loquat test / error.ParseError#addMessages()
  * copyright (c) 2016 Susisu
  */
 

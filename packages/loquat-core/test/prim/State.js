@@ -1,5 +1,5 @@
 /*
- * loquat-core test / prim.State
+ * loquat test / prim.State
  * copyright (c) 2016 Susisu
  */
 

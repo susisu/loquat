@@ -1,5 +1,5 @@
 /*
- * loquat-core test / prim.Result.eerr()
+ * loquat test / prim.Result.eerr()
  * copyright (c) 2016 Susisu
  */
 
