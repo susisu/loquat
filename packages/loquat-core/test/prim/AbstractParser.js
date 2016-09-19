@@ -7,4 +7,5 @@
 
 describe(".AbstractParser", () => {
     require("./AbstractParser/constructor.js");
+    require("./AbstractParser/run.js");
 });
