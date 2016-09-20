@@ -281,7 +281,7 @@ class Parser extends AbstractParser {
      * @returns {module:prim.Result}
      */
     run(state) {
-        return this.func.call(state);
+        return this.func.call(undefined, state);
     }
 }
 
