@@ -273,7 +273,7 @@ class Parser extends AbstractParser {
      */
     constructor(func) {
         super();
-        this.func = func;
+        this._func = func;
     }
 
     /**
@@ -281,7 +281,7 @@ class Parser extends AbstractParser {
      * @returns {module:prim.Result}
      */
     run(state) {
-        return this.func.call(undefined, state);
+        return this._func.call(undefined, state);
     }
 }
 
