@@ -10,4 +10,5 @@ describe("prim", () => {
     require("./prim/State.js");
     require("./prim/Result.js");
     require("./prim/AbstractParser.js");
+    require("./prim/Parser.js");
 });
