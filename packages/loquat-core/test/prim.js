@@ -11,4 +11,5 @@ describe("prim", () => {
     require("./prim/Result.js");
     require("./prim/AbstractParser.js");
     require("./prim/Parser.js");
+    require("./prim/LazyParser.js");
 });
