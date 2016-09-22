@@ -13,4 +13,4 @@ require("./test/utils.js");
 require("./test/pos.js");
 require("./test/error.js");
 require("./test/stream.js");
-require("./test/prim.js");
+require("./test/parser.js");
