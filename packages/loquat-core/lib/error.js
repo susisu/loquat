@@ -48,7 +48,7 @@ class ErrorMessage {
     /**
      * Creates a new `ErrorMessage` instance.
      * @param {string} type One of the constant of `ErrorMessageType`.
-     * @param {string} msgStr
+     * @param {string} msgStr Message string.
      */
     constructor(type, msgStr) {
         this.type   = type;
@@ -60,8 +60,8 @@ class ErrorMessage {
 
     /**
      * Checks if two messages are the same.
-     * @param {module:error.ErrorMessage} msgA
-     * @param {module:error.ErrorMessage} msgB
+     * @param {module:error.ErrorMessage} msgA An {@link module:error.ErrorMessage} object.
+     * @param {module:error.ErrorMessage} msgB An {@link module:error.ErrorMessage} object.
      * @returns {boolean} `true` if two messages are the same.
      */
     static equal(msgA, msgB) {
@@ -70,8 +70,9 @@ class ErrorMessage {
     }
 
     /**
-     * @param {Array.<ErrorMessage>} msgs
-     * @returns {string}
+     * Returns pretty-printed string of the error messages.
+     * @param {Array.<ErrorMessage>} msgs An array of {@link module:error.ErrorMessage} objects.
+     * @returns {string} Printed string.
      * @throws {Error} A message has unknown type.
      */
     static messagesToString(msgs) {
@@ -114,9 +115,10 @@ class ErrorMessage {
     }
 
     /**
-     * @param {Array.<module:error.ErrorMessage>} msgsA
-     * @param {Array.<module:error.ErrorMessage>} msgsB
-     * @returns {boolean}
+     * Checks if two arrays describe the same error messages.
+     * @param {Array.<module:error.ErrorMessage>} msgsA An array of {@link module:error.ErrorMessage} objects.
+     * @param {Array.<module:error.ErrorMessage>} msgsB An array of {@link module:error.ErrorMessage} objects.
+     * @returns {boolean} `true` if two arrays describe the same error messages with the same order.
      */
     static messagesEqual(msgsA, msgsB) {
         if (msgsA.length !== msgsB.length) {
@@ -133,20 +135,22 @@ class ErrorMessage {
 }
 
 /**
+ * Cleans array of message strings by removing empty and duplicate elements.
  * @private
  * @static
- * @param {Array.<string>} msgStrs
- * @returns {Array.<strings>}
+ * @param {Array.<string>} msgStrs An array of message strings.
+ * @returns {Array.<strings>} Cleaned array.
  */
 function cleanMessageStrings(msgStrs) {
     return msgStrs.filter((msgStr, i) => msgStr !== "" && msgStrs.indexOf(msgStr) === i);
 }
 
 /**
+ * Joins strings with commas (,) and "or".
  * @private
  * @static
- * @param {Array.<string>} msgStrs
- * @returns {string}
+ * @param {Array.<string>} msgStrs An array of message strings.
+ * @returns {string} Joined string.
  */
 function joinWithCommasOr(msgStrs) {
     return msgStrs.length <= 2
@@ -155,11 +159,12 @@ function joinWithCommasOr(msgStrs) {
 }
 
 /**
+ * Joins message strings with the specified description.
  * @private
  * @static
- * @param {Array.<string>} msgStrs
- * @param {string} [desc = ""]
- * @returns {string}
+ * @param {Array.<string>} msgStrs An array of message strings.
+ * @param {string} [desc = ""] Short description of the messages.
+ * @returns {string} Joined messages.
  */
 function joinMessageStrings(msgStrs, desc = "") {
     return msgStrs.length === 0
