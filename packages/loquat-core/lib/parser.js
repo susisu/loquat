@@ -17,7 +17,8 @@ function end() {
         AbstractParser,
         Parser,
         LazyParser,
-        lazy
+        lazy,
+        parse
     });
 }
 
@@ -351,6 +352,23 @@ class LazyParser extends AbstractParser {
  */
 function lazy(thunk) {
     return new LazyParser(thunk);
+}
+
+/**
+ * @param {module:parser.IParser} parser
+ * @param {string} name
+ * @param {(string | Array | module:stream.IStream)} input
+ * @param {Object} [opts = {}]
+ * @param {*} [userState = undefined]
+ * @returns {Object}
+ */
+function parse(parser, name, input, opts = {}, userState = undefined) {
+    let config = new Config(opts);
+    let state  = new State(config, input, SourcePos.init(name), userState);
+    let res    = parser.run(state);
+    return res.succeeded
+        ? { succeeded: true, value: res.val }
+        : { succeeded: false, error: res.err };
 }
 
 end();
