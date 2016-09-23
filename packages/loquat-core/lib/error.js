@@ -13,6 +13,7 @@ function end() {
     module.exports = Object.freeze({
         ErrorMessageType,
         ErrorMessage,
+        AbstractParseError,
         ParseError,
         LazyParseError,
         _internal: {
@@ -214,6 +215,90 @@ function joinMessageStrings(msgStrs, desc = "") {
  * @param {Array.<string>} msgStrs
  * @returns {module:error.IParseError}
  */
+
+/**
+ * The `AbstractParseError` class is inherited by the concrete parse error classes.
+ * This class is abstract and you cannot create `AbstractParseError` instance directly.
+ * @static
+ */
+class AbstractParseError {
+    /**
+     * You cannot create `AbstractParseError` instance directly.
+     * @throws {Error}
+     */
+    constructor() {
+        if (new.target === AbstractParseError) {
+            throw new Error("cannot create AbstractParseError object");
+        }
+    }
+
+    /**
+     * Not implemented.
+     * @type {module:pos.SourcePos}
+     * @throws {Error}
+     */
+    get pos() {
+        throw new Error("not implemented");
+    }
+
+    /**
+     * Not implemented.
+     * @type {Array.<module:error.ErrorMessage>}
+     * @throws {Error}
+     */
+    get msgs() {
+        throw new Error("not implemented");
+    }
+
+    /**
+     * Not implemented.
+     * @returns {string}
+     * @throws {Error}
+     */
+    toString() {
+        throw new Error("not implemented");
+    }
+
+    /**
+     * Not implemented.
+     * @returns {boolean}
+     * @throws {Error}
+     */
+    isUnknown() {
+        throw new Error("not implemented");
+    }
+
+    /**
+     * Not implemented.
+     * @param {module:pos.SourcePos} pos
+     * @returns {module:error.AbstractParseError}
+     * @throws {Error}
+     */
+    setPosition() {
+        throw new Error("not implemented");
+    }
+
+    /**
+     * Not implemented.
+     * @param {Array.<module:error.ErrorMessage>} msgs
+     * @returns {module:error.AbstractParseError}
+     * @throws {Error}
+     */
+    addMessages() {
+        throw new Error("not implemented");
+    }
+
+    /**
+     * Not implemented.
+     * @param {string} type
+     * @param {Array.<string>} msgStrs
+     * @returns {module:error.AbstractParseError}
+     * @throws {Error}
+     */
+    setSpecificTypeMessages() {
+        throw new Error("not implemented");
+    }
+}
 
 /**
  * @static
