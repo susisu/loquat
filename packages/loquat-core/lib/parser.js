@@ -242,6 +242,7 @@ class AbstractParser {
 
     /**
      * Not implemented.
+     * @returns {module:parser.Result}
      * @throws {Error}
      */
     run() {
