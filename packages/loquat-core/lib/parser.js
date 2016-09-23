@@ -224,23 +224,10 @@ class Result {
 }
 
 /**
- * @interface IParser
- * @description The `IParser` imterface is an interface for parser objects.
- * @static
- */
-/**
- * @method module:parser.IParser#run
- * @description Runs the parser.
- * @param {module:parser.State} state
- * @returns {module:parser.Result} Result object.
- */
-
-/**
  * The `AbstractParser` class is inherited by the concrete parser classes,
  * and is used for extending all the parser classes.
  * This class is abstract and you cannot create `AbstractParser` instance directly.
  * @static
- * @implements {module:parser.IParser}
  */
 class AbstractParser {
     /**
@@ -265,7 +252,7 @@ class AbstractParser {
 /**
  * The `Parser` class is just a wrapper of parser function.
  * @static
- * @implements {module:parser.IParser}
+ * @extends {module:parser.AbstractParser}
  */
 class Parser extends AbstractParser {
     /**
@@ -290,12 +277,12 @@ class Parser extends AbstractParser {
 /**
  * The `LazyParser` class is a lazy version of the {@link:module.Parser} class.
  * @static
- * @implements {module:parser.IParser}
+ * @extends {module:parser.AbstractParser}
  */
 class LazyParser extends AbstractParser {
     /**
      * Creates a new `LazyParser` object.
-     * @param {function} thunk A function, which must return an {@link module:parser.IParser} object.
+     * @param {function} thunk A function, which must return an {@link module:parser.AbstractParser} object.
      */
     constructor(thunk) {
         super();
@@ -355,7 +342,7 @@ function lazy(thunk) {
 }
 
 /**
- * @param {module:parser.IParser} parser
+ * @param {module:parser.AbstractParser} parser
  * @param {string} name
  * @param {(string | Array | module:stream.IStream)} input
  * @param {*} [userState = undefined]
