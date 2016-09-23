@@ -144,7 +144,7 @@ class Result {
      * @param {boolean} consumed Indicates the parser consumed input or not.
      * @param {boolean} succeeded Indicates the parser was succeeded or not.
      * If `true`, `val` and `state` must be specified.
-     * @param {module:error.IParseError} err Parse error object.
+     * @param {module:error.AbstractParseError} err Parse error object.
      * @param {*} [val = undefined] Obtained value.
      * @param {(module:parser.State|undefined)} [state = undefined] Next state.
      */
@@ -184,7 +184,7 @@ class Result {
 
     /**
      * Returns consumed and succeeded result object.
-     * @param {module:error.IParseError} err
+     * @param {module:error.AbstractParseError} err
      * @param {*} val
      * @param {module:parser.State} state
      * @returns {module:parser.Result}
@@ -195,7 +195,7 @@ class Result {
 
     /**
      * Returns consumed but error result object.
-     * @param {module:error.IParseError} err
+     * @param {module:error.AbstractParseError} err
      * @returns {module:parser.Result}
      */
     static cerr(err) {
@@ -204,7 +204,7 @@ class Result {
 
     /**
      * Returns not consumed and succeeded result object.
-     * @param {module:error.IParseError} err
+     * @param {module:error.AbstractParseError} err
      * @param {*} val
      * @param {module:parser.State} state
      * @returns {module:parser.Result}
@@ -215,7 +215,7 @@ class Result {
 
     /**
      * Returns not consumed but error result object.
-     * @param {module:error.IParseError} err
+     * @param {module:error.AbstractParseError} err
      * @returns {module:parser.Result}
      */
     static eerr(err) {

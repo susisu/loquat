@@ -174,49 +174,6 @@ function joinMessageStrings(msgStrs, desc = "") {
 }
 
 /**
- * @interface IParseError
- * @description The `IParseError` interface abstract parse error objects.
- * There are two parse error classes which implements this interface:
- * {@link module:error.ParseError} and {@link module:error.LazyParseError}.
- * @static
- */
-/**
- * @member {module:pos.SourcePos} module:error.IParseError#pos
- * @description The position where the error occurred.
- */
-/**
- * @member {Array.<module:error.ErrorMessage>} module:error.IParseError#msgs
- * @description Messages of the error.
- */
-/**
- * @method module:error.IParseError#toString
- * @description Returns string representation of the error.
- * @returns {string}
- */
-/**
- * @method module:error.IParseError#isUnknown
- * @description Checks wheter the error has no messages (unknown) or not.
- * @returns {boolean}
- */
-/**
- * @method module:error.IParseError#setPosition
- * @description Creates a copy of the error with specified position
- * @param {module:pos.SourcePos} pos
- * @returns {module:error.IParseError}
- */
-/**
- * @method module:error.IParseError#addMessages
- * @param {Array.<module:error.ErrorMessage>} msgs
- * @returns {module:error.IParseError}
- */
-/**
- * @method module:error.IParseError#setSpecificTypeMessages
- * @param {string} type
- * @param {Array.<string>} msgStrs
- * @returns {module:error.IParseError}
- */
-
-/**
  * The `AbstractParseError` class is inherited by the concrete parse error classes.
  * This class is abstract and you cannot create `AbstractParseError` instance directly.
  * @static
@@ -302,21 +259,19 @@ class AbstractParseError {
 
 /**
  * @static
- * @implements {module:error.IParseError}
+ * @extends {module:error.AbstractParseError}
  */
-class ParseError {
+class ParseError extends AbstractParseError {
     /**
      * Creates a new `ParseError` instance.
      * @param {module:pos.SourcePos} pos
      * @param {Array.<module:error.ErrorMessage>} msgs
      */
     constructor(pos, msgs) {
-        this.pos  = pos;
-        this.msgs = msgs;
+        super();
+        this._pos  = pos;
+        this._msgs = msgs;
     }
-
-    /** @member {module:pos.SourcePos} module:error.ParseError#pos */
-    /** @member {Array.<module:error.ErrorMessage>} module:error.ParseError#msgs */
 
     /**
      * @param {module:pos.SourcePos} pos
@@ -327,8 +282,8 @@ class ParseError {
     }
 
     /**
-     * @param {module:error.IParseError} errA
-     * @param {module:error.IParseError} errB
+     * @param {module:error.AbstractParseError} errA
+     * @param {module:error.AbstractParseError} errB
      * @returns {boolean}
      */
     static equal(errA, errB) {
@@ -337,9 +292,9 @@ class ParseError {
     }
 
     /**
-     * @param {module:error.IParseError} errA
-     * @param {module:error.IParseError} errB
-     * @returns {module:error.IParseError}
+     * @param {module:error.AbstractParseError} errA
+     * @param {module:error.AbstractParseError} errB
+     * @returns {module:error.AbstractParseError}
      */
     static merge(errA, errB) {
         return new LazyParseError(() => {
@@ -352,22 +307,55 @@ class ParseError {
         });
     }
 
+    /**
+     * @type {module:pos.SourcePos}
+     */
+    get pos() {
+        return this._pos;
+    }
+
+    /**
+     * @type {Array.<module:error.ErrorMessage>}
+     */
+    get msgs() {
+        return this._msgs;
+    }
+
+    /**
+     * @returns {string}
+     */
     toString() {
         return `${this.pos}:\n${ErrorMessage.messagesToString(this.msgs)}`;
     }
 
+    /**
+     * @returns {boolean}
+     */
     isUnknown() {
         return this.msgs.length === 0;
     }
 
+    /**
+     * @param {module:pos.SourcePos} pos
+     * @returns {module:error.AbstractParseError}
+     */
     setPosition(pos) {
         return new ParseError(pos, this.msgs);
     }
 
+    /**
+     * @param {Array.<module:error.ErrorMessage>} msgs
+     * @returns {module:error.AbstractParseError}
+     */
     addMessages(msgs) {
         return new LazyParseError(() => new ParseError(this.pos, this.msgs.concat(msgs)));
     }
 
+    /**
+     * @param {string} type
+     * @param {Array.<string>} msgStrs
+     * @returns {module:error.AbstractParseError}
+     */
     setSpecificTypeMessages(type, msgStrs) {
         return new LazyParseError(() => new ParseError(
             this.pos,
@@ -379,15 +367,15 @@ class ParseError {
 
 /**
  * @static
- * @implements {module:error.IParseError}
+ * @extends {module:error.AbstractParseError}
  */
-class LazyParseError {
+class LazyParseError extends AbstractParseError {
     /**
      * Creates a new `LazyParseError` instance.
-     * @param {function} thunk A function that returns a {@link module:error.ParseError}
-     * or {@link module:error.LazyParseError} object.
+     * @param {function} thunk A function that returns an {@link module:error.AbstractParseError} object.
      */
     constructor(thunk) {
+        super();
         this._thunk = thunk;
         this._cache = undefined;
     }
@@ -424,30 +412,55 @@ class LazyParseError {
         return err;
     }
 
+    /**
+     * @type {module:pos.SourcePos}
+     */
     get pos() {
         return this.eval().pos;
     }
 
+    /**
+     * @type {Array.<module:error.ErrorMessage>}
+     */
     get msgs() {
         return this.eval().msgs;
     }
 
+    /**
+     * @returns {string}
+     */
     toString() {
         return this.eval().toString();
     }
 
+    /**
+     * @returns {boolean}
+     */
     isUnknown() {
         return this.eval().isUnknown();
     }
 
+    /**
+     * @param {module:pos.SourcePos} pos
+     * @returns {module:error.AbstractParseError}
+     */
     setPosition(pos) {
         return new LazyParseError(() => this.eval().setPosition(pos));
     }
 
+    /**
+     * @param {Array.<module:error.ErrorMessage>} msgs
+     * @returns {module:error.AbstractParseError}
+     */
     addMessages(msgs) {
         return new LazyParseError(() => this.eval().addMessages(msgs));
     }
 
+    /**
+     * @param {string} type
+     * @param {Array.<string>} msgStrs
+     * @returns {module:error.AbstractParseError}
+     */
     setSpecificTypeMessages(type, msgStrs) {
         return new LazyParseError(() => this.eval().setSpecificTypeMessages(type, msgStrs));
     }
