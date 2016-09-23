@@ -358,14 +358,13 @@ function lazy(thunk) {
  * @param {module:parser.IParser} parser
  * @param {string} name
  * @param {(string | Array | module:stream.IStream)} input
- * @param {Object} [opts = {}]
  * @param {*} [userState = undefined]
+ * @param {Object} [opts = {}]
  * @returns {Object}
  */
-function parse(parser, name, input, opts = {}, userState = undefined) {
-    let config = new Config(opts);
-    let state  = new State(config, input, SourcePos.init(name), userState);
-    let res    = parser.run(state);
+function parse(parser, name, input, userState = undefined, opts = {}) {
+    let state = new State(new Config(opts), input, SourcePos.init(name), userState);
+    let res   = parser.run(state);
     return res.succeeded
         ? { succeeded: true, value: res.val }
         : { succeeded: false, error: res.err };
