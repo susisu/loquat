@@ -16,7 +16,8 @@ function end() {
         Result,
         AbstractParser,
         Parser,
-        LazyParser
+        LazyParser,
+        lazy
     });
 }
 
@@ -341,6 +342,15 @@ class LazyParser extends AbstractParser {
     run(state) {
         return this.eval().run(state);
     }
+}
+
+/**
+ * Shorthand for `new LazyParser()`.
+ * @param {function} thunk
+ * @returns {module:parser.LazyParser}
+ */
+function lazy(thunk) {
+    return new LazyParser(thunk);
 }
 
 end();
