@@ -235,7 +235,7 @@ class AbstractParser {
      * @throws {Error}
      */
     constructor() {
-        if (new.target === AbstractParser) {
+        if (this.constructor === AbstractParser) {
             throw new Error("cannot create AbstractParser object");
         }
     }
