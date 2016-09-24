@@ -10,6 +10,8 @@ describe(".ParseError", () => {
     require("./ParseError/unknown.js");
     require("./ParseError/equal.js");
     require("./ParseError/merge.js");
+    require("./ParseError/pos.js");
+    require("./ParseError/msgs.js");
     require("./ParseError/toString.js");
     require("./ParseError/isUnknown.js");
     require("./ParseError/setPosition.js");

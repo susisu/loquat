@@ -1,5 +1,5 @@
 /*
- * loquat test / error.ParseError constructor()
+ * loquat test / error.ParseError#msgs
  * copyright (c) 2016 Susisu
  */
 
@@ -10,8 +10,8 @@ const { expect } = require("chai");
 const { SourcePos } = require("pos.js");
 const { ErrorMessageType, ErrorMessage, ParseError } = require("error.js");
 
-describe("constructor(pos, msgs)", () => {
-    it("should create a new `ParseError' instance", () => {
+describe("#msgs", () => {
+    it("should get messages of the error", () => {
         let pos = new SourcePos("foobar", 496, 28);
         let msgs = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -20,6 +20,6 @@ describe("constructor(pos, msgs)", () => {
             new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat")
         ];
         let err = new ParseError(pos, msgs);
-        expect(err).to.be.an.instanceOf(ParseError);
+        expect(ErrorMessage.messagesEqual(err.msgs, msgs)).to.be.true;
     });
 });
