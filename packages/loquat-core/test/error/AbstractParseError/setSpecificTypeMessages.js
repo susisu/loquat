@@ -9,7 +9,7 @@ const { expect } = require("chai");
 
 const { ErrorMessageType, AbstractParseError } = require("error.js");
 
-describe("#setSpecificTypeMessages()", () => {
+describe("#setSpecificTypeMessages(type, msgStrs)", () => {
     it("should throw an `Error'", () => {
         let TestParseError = class extends AbstractParseError {
             constructor() {

@@ -10,7 +10,7 @@ const { expect } = require("chai");
 const { SourcePos } = require("pos.js");
 const { AbstractParseError } = require("error.js");
 
-describe("#setPosition()", () => {
+describe("#setPosition(pos)", () => {
     it("should throw an `Error'", () => {
         let TestParseError = class extends AbstractParseError {
             constructor() {

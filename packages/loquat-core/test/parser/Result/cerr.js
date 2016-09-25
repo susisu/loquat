@@ -11,7 +11,7 @@ const { SourcePos } = require("pos.js");
 const { ErrorMessageType, ErrorMessage, ParseError } = require("error.js");
 const { Result } = require("parser.js");
 
-describe(".cerr(err, val, state)", () => {
+describe(".cerr(err)", () => {
     it("should create a consumed but failed result object", () => {
         let res = Result.cerr(
             new ParseError(

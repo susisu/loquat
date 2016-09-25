@@ -9,7 +9,7 @@ const { expect } = require("chai");
 
 const { Parser, LazyParser, lazy } = require("parser.js");
 
-describe(".lazy()", () => {
+describe(".lazy(thunk)", () => {
     it("should create a new `LazyParser' instance", () => {
         let p = new Parser(() => {});
         let parser = lazy(() => p);
