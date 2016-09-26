@@ -164,6 +164,12 @@ class Result {
         this.state     = state;
     }
 
+    /** @member {boolean} module:parser.Result#consumed */
+    /** @member {boolean} module:parser.Result#succeeded */
+    /** @member {module:error.AbstractParseError} module:parser.Result#err */
+    /** @member {*} module:parser.Result#val */
+    /** @member {module:parser.State} module:parser.Result#state */
+
     /**
      * Checks if two results are equal.
      * The properties `val` and `state` are compared only when both results are succeeded.
