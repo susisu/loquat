@@ -1,0 +1,208 @@
+/*
+ * loquat test / parser.parse()
+ * copyright (c) 2016 Susisu
+ */
+
+"use strict";
+
+const { expect } = require("chai");
+
+const { SourcePos } = require("pos.js");
+const { ErrorMessageType, ErrorMessage, ParseError } = require("error.js");
+const { Config, State, Result, Parser, parse } = require("parser.js");
+
+describe(".parse(parser, name, input, userState = undefined, opts = {})", () => {
+    it("should run `parser' and return result as a simple object", () => {
+        // csuc
+        {
+            let parser = new Parser(state => {
+                expect(State.equal(
+                    state,
+                    new State(
+                        new Config({ tabWidth: 4, useCodePoint: true }),
+                        "test",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    )
+                )).to.be.true;
+                return Result.csuc(
+                    new ParseError(
+                        new SourcePos("foobar", 496, 28),
+                        [
+                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
+                            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
+                            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
+                            new ErrorMessage(ErrorMessageType.MESSAGE, "w")
+                        ]
+                    ),
+                    "nyancat",
+                    new State(
+                        new Config({ tabWidth: 4, useCodePoint: true }),
+                        "rest",
+                        new SourcePos("foobar", 496, 28),
+                        "some"
+                    )
+                );
+            });
+            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, useCodePoint: true });
+            expect(res).to.deep.equal({
+                succeeded: true,
+                value    : "nyancat"
+            });
+        }
+        // cerr
+        {
+            let parser = new Parser(state => {
+                expect(State.equal(
+                    state,
+                    new State(
+                        new Config({ tabWidth: 4, useCodePoint: true }),
+                        "test",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    )
+                )).to.be.true;
+                return Result.cerr(
+                    new ParseError(
+                        new SourcePos("foobar", 496, 28),
+                        [
+                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
+                            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
+                            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
+                            new ErrorMessage(ErrorMessageType.MESSAGE, "w")
+                        ]
+                    )
+                );
+            });
+            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, useCodePoint: true });
+            expect(res).to.be.an("object");
+            expect(res.succeeded).to.be.false;
+            expect(ParseError.equal(
+                res.error,
+                new ParseError(
+                    new SourcePos("foobar", 496, 28),
+                    [
+                        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
+                        new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
+                        new ErrorMessage(ErrorMessageType.EXPECT, "z"),
+                        new ErrorMessage(ErrorMessageType.MESSAGE, "w")
+                    ]
+                )
+            )).to.be.true;
+        }
+        // esuc
+        {
+            let parser = new Parser(state => {
+                expect(State.equal(
+                    state,
+                    new State(
+                        new Config({ tabWidth: 4, useCodePoint: true }),
+                        "test",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    )
+                )).to.be.true;
+                return Result.esuc(
+                    new ParseError(
+                        new SourcePos("foobar", 496, 28),
+                        [
+                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
+                            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
+                            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
+                            new ErrorMessage(ErrorMessageType.MESSAGE, "w")
+                        ]
+                    ),
+                    "nyancat",
+                    new State(
+                        new Config({ tabWidth: 4, useCodePoint: true }),
+                        "rest",
+                        new SourcePos("foobar", 496, 28),
+                        "some"
+                    )
+                );
+            });
+            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, useCodePoint: true });
+            expect(res).to.deep.equal({
+                succeeded: true,
+                value    : "nyancat"
+            });
+        }
+        // eerr
+        {
+            let parser = new Parser(state => {
+                expect(State.equal(
+                    state,
+                    new State(
+                        new Config({ tabWidth: 4, useCodePoint: true }),
+                        "test",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    )
+                )).to.be.true;
+                return Result.eerr(
+                    new ParseError(
+                        new SourcePos("foobar", 496, 28),
+                        [
+                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
+                            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
+                            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
+                            new ErrorMessage(ErrorMessageType.MESSAGE, "w")
+                        ]
+                    )
+                );
+            });
+            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, useCodePoint: true });
+            expect(res).to.be.an("object");
+            expect(res.succeeded).to.be.false;
+            expect(ParseError.equal(
+                res.error,
+                new ParseError(
+                    new SourcePos("foobar", 496, 28),
+                    [
+                        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
+                        new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
+                        new ErrorMessage(ErrorMessageType.EXPECT, "z"),
+                        new ErrorMessage(ErrorMessageType.MESSAGE, "w")
+                    ]
+                )
+            )).to.be.true;
+        }
+        // use default parameters
+        {
+            let parser = new Parser(state => {
+                expect(State.equal(
+                    state,
+                    new State(
+                        new Config(),
+                        "test",
+                        new SourcePos("foobar", 1, 1),
+                        undefined
+                    )
+                )).to.be.true;
+                return Result.csuc(
+                    new ParseError(
+                        new SourcePos("foobar", 496, 28),
+                        [
+                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
+                            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
+                            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
+                            new ErrorMessage(ErrorMessageType.MESSAGE, "w")
+                        ]
+                    ),
+                    "nyancat",
+                    new State(
+                        new Config({ tabWidth: 4, useCodePoint: true }),
+                        "rest",
+                        new SourcePos("foobar", 496, 28),
+                        "some"
+                    )
+                );
+            });
+            let res = parse(parser, "foobar", "test");
+            expect(res).to.deep.equal({
+                succeeded: true,
+                value    : "nyancat"
+            });
+        }
+    });
+});

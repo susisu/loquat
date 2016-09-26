@@ -13,4 +13,5 @@ describe("parser", () => {
     require("./parser/Parser.js");
     require("./parser/LazyParser.js");
     require("./parser/lazy.js");
+    require("./parser/parse.js");
 });
