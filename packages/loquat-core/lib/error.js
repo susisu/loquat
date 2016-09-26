@@ -191,6 +191,7 @@ class AbstractParseError {
 
     /**
      * Not implemented.
+     * @readonly
      * @type {module:pos.SourcePos}
      * @throws {Error}
      */
@@ -200,6 +201,7 @@ class AbstractParseError {
 
     /**
      * Not implemented.
+     * @readonly
      * @type {Array.<module:error.ErrorMessage>}
      * @throws {Error}
      */
@@ -318,6 +320,7 @@ class ParseError extends AbstractParseError {
     }
 
     /**
+     * @readonly
      * @type {module:pos.SourcePos}
      */
     get pos() {
@@ -325,6 +328,7 @@ class ParseError extends AbstractParseError {
     }
 
     /**
+     * @readonly
      * @type {Array.<module:error.ErrorMessage>}
      */
     get msgs() {
@@ -431,6 +435,7 @@ class LazyParseError extends AbstractParseError {
     }
 
     /**
+     * @readonly
      * @type {module:pos.SourcePos}
      */
     get pos() {
@@ -438,6 +443,7 @@ class LazyParseError extends AbstractParseError {
     }
 
     /**
+     * @readonly
      * @type {Array.<module:error.ErrorMessage>}
      */
     get msgs() {
