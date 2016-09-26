@@ -241,6 +241,16 @@ class AbstractParseError {
      * @returns {module:error.AbstractParseError}
      * @throws {Error}
      */
+    setMessages() {
+        throw new Error("not implemented");
+    }
+
+    /**
+     * Not implemented.
+     * @param {Array.<module:error.ErrorMessage>} msgs
+     * @returns {module:error.AbstractParseError}
+     * @throws {Error}
+     */
     addMessages() {
         throw new Error("not implemented");
     }
@@ -347,6 +357,14 @@ class ParseError extends AbstractParseError {
      * @param {Array.<module:error.ErrorMessage>} msgs
      * @returns {module:error.AbstractParseError}
      */
+    setMessages(msgs) {
+        return new ParseError(this.pos, msgs);
+    }
+
+    /**
+     * @param {Array.<module:error.ErrorMessage>} msgs
+     * @returns {module:error.AbstractParseError}
+     */
     addMessages(msgs) {
         return new LazyParseError(() => new ParseError(this.pos, this.msgs.concat(msgs)));
     }
@@ -446,6 +464,14 @@ class LazyParseError extends AbstractParseError {
      */
     setPosition(pos) {
         return new LazyParseError(() => this.eval().setPosition(pos));
+    }
+
+    /**
+     * @param {Array.<module:error.ErrorMessage>} msgs
+     * @returns {module:error.AbstractParseError}
+     */
+    setMessages(msgs) {
+        return new LazyParseError(() => this.eval().setMessages(msgs));
     }
 
     /**
