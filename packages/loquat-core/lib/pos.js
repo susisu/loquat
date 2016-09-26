@@ -87,14 +87,6 @@ class SourcePos {
     }
 
     /**
-     * Creates a new copy of the instance.
-     * @returns {module:pos.SourcePos} Copy of the instnace.
-     */
-    clone() {
-        return new SourcePos(this.name, this.line, this.column);
-    }
-
-    /**
      * Creates a new copy of the instance with `name` set to the specified value.
      * @param {string} name
      * @returns {module:pos.SourcePos} Copy of the instance.
