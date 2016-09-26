@@ -110,6 +110,14 @@ class State {
     }
 
     /**
+     * @param {module:parser.Config} config
+     * @returns {module:parser.State}
+     */
+    setConfig(config) {
+        return new State(config, this.input, this.pos, this.userState);
+    }
+
+    /**
      * @param {(string|Array|module:stream.IStream)} input
      * @returns {module:parser.State}
      */
