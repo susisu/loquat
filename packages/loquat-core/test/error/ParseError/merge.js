@@ -11,7 +11,7 @@ const { SourcePos } = require("pos.js");
 const { ErrorMessageType, ErrorMessage, ParseError, LazyParseError } = require("error.js");
 
 describe(".merge(errA, errB)", () => {
-    it("should return an `IParseError' object that is equal to `errA' if `errB' is unknown but `errA' is not", () => {
+    it("should return an `AbstractParseError' object that is equal to `errA' if `errB' is unknown but `errA' is not", () => {
         let posA = new SourcePos("foobar", 496, 28);
         let msgsA = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -54,7 +54,7 @@ describe(".merge(errA, errB)", () => {
         }
     });
 
-    it("should return an `IParseError' object that is equal to `errB' if `errA' is unknown but `errB' is not", () => {
+    it("should return an `AbstractParseError' object that is equal to `errB' if `errA' is unknown but `errB' is not", () => {
         let posA = new SourcePos("foobar", 496, 28);
         let msgsA = [];
         let posB = new SourcePos("foobar", 6, 28);
@@ -97,7 +97,7 @@ describe(".merge(errA, errB)", () => {
         }
     });
 
-    it("should return an `IParseError' object that is equal to `errA' if `errA.pos' is behind `errB.pos'", () => {
+    it("should return an `AbstractParseError' object that is equal to `errA' if `errA.pos' is behind `errB.pos'", () => {
         let posA = new SourcePos("foobar", 496, 28);
         let msgsA = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -144,7 +144,7 @@ describe(".merge(errA, errB)", () => {
             expect(ErrorMessage.messagesEqual(err.msgs, msgsA)).to.be.true;
         }
     });
-    it("should return an `IParseError' object that is equal to `errB' if `errB.pos' is behind `errA.pos'", () => {
+    it("should return an `AbstractParseError' object that is equal to `errB' if `errB.pos' is behind `errA.pos'", () => {
         let posA = new SourcePos("foobar", 6, 28);
         let msgsA = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -192,7 +192,7 @@ describe(".merge(errA, errB)", () => {
         }
     });
 
-    it("should return an `IParseError' object with error messages of `errA' and `errB' concatenated"
+    it("should return an `AbstractParseError' object with error messages of `errA' and `errB' concatenated"
         + " if `errA.pos' is equal to `errB.pos'", () => {
         let pos = new SourcePos("foobar", 496, 28);
         let msgsA = [

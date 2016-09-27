@@ -11,7 +11,7 @@ const { SourcePos } = require("pos.js");
 const { ErrorMessageType, ErrorMessage, ParseError, LazyParseError } = require("error.js");
 
 describe("#setPosition(pos)", () => {
-    it("should return an `IParseError' object with the specified position `pos'", () => {
+    it("should return an `AbstractParseError' object with the specified position `pos'", () => {
         let pos = new SourcePos("foobar", 496, 28);
         let msgs = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
