@@ -12,6 +12,7 @@ describe(".AbstractParseError", () => {
     require("./AbstractParseError/toString.js");
     require("./AbstractParseError/isUnknown.js");
     require("./AbstractParseError/setPosition.js");
+    require("./AbstractParseError/setMessages.js");
     require("./AbstractParseError/addMessages.js");
     require("./AbstractParseError/setSpecificTypeMessages.js");
 });
