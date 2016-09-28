@@ -24,7 +24,8 @@ function end() {
     });
 }
 
-const { SourcePos } = require("./pos.js");
+const _pos = require("./pos.js");
+const SourcePos = _pos.SourcePos;
 
 /**
  * The `ErrorMessageType` object has string constants, each describes a type of error message:
@@ -167,7 +168,10 @@ function joinWithCommasOr(msgStrs) {
  * @param {string} [desc = ""] Short description of the messages.
  * @returns {string} Joined messages.
  */
-function joinMessageStrings(msgStrs, desc = "") {
+function joinMessageStrings(msgStrs, desc) {
+    if (typeof desc === "undefined") {
+        desc = "";
+    }
     return msgStrs.length === 0
         ? ""
         : (desc === "" ? "" : desc + " ") + joinWithCommasOr(msgStrs);

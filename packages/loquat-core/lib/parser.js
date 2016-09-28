@@ -25,8 +25,11 @@ function end() {
     });
 }
 
-const { SourcePos } = require("./pos.js");
-const { ParseError } = require("./error.js");
+const _pos = require("./pos.js");
+const SourcePos = _pos.SourcePos;
+
+const _error = require("./error.js");
+const ParseError = _error.ParseError;
 
 /**
  * The `Config` class represents parser configuration.
@@ -49,7 +52,10 @@ class Config {
      * to appear in input.</td></tr>
      * </table>
      */
-    constructor(opts = {}) {
+    constructor(opts) {
+        if (opts === undefined) {
+            opts = {};
+        }
         this.tabWidth     = opts.tabWidth === undefined ? 8 : opts.tabWidth;
         this.useCodePoint = opts.useCodePoint === undefined ? false : opts.useCodePoint;
     }
@@ -81,7 +87,7 @@ class State {
      * @param {module:pos.SourcePos} pos Current position.
      * @param {*} [userState = undefined] Additional user-defined state for advanced use.
      */
-    constructor(config, input, pos, userState = undefined) {
+    constructor(config, input, pos, userState) {
         this.config    = config;
         this.input     = input;
         this.pos       = pos;
@@ -101,7 +107,7 @@ class State {
      * @param {(function|undefined)} [userStateEqual = undefined]
      * @returns {boolean}
      */
-    static equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefined) {
+    static equal(stateA, stateB, inputEqual, userStateEqual) {
         return Config.equal(stateA.config, stateB.config)
             && (inputEqual === undefined
                 ? stateA.input === stateB.input
@@ -159,7 +165,7 @@ class Result {
      * @param {*} [val = undefined] Obtained value.
      * @param {(module:parser.State|undefined)} [state = undefined] Next state.
      */
-    constructor(consumed, succeeded, err, val = undefined, state = undefined) {
+    constructor(consumed, succeeded, err, val, state) {
         this.consumed  = consumed;
         this.succeeded = succeeded;
         this.err       = err;
@@ -183,7 +189,7 @@ class Result {
      * @param {(function|undefined)} userStateEqual
      * @returns {boolean}
      */
-    static equal(resA, resB, valEqual = undefined, inputEqual = undefined, userStateEqual = undefined) {
+    static equal(resA, resB, valEqual, inputEqual, userStateEqual) {
         if (resA.succeeded && resB.succeeded) {
             return resA.consumed === resB.consumed
                 && (valEqual === undefined
@@ -369,7 +375,10 @@ function lazy(thunk) {
  * @param {Object} [opts = {}]
  * @returns {Object}
  */
-function parse(parser, name, input, userState = undefined, opts = {}) {
+function parse(parser, name, input, userState, opts) {
+    if (opts === undefined) {
+        opts = {};
+    }
     let state = new State(new Config(opts), input, SourcePos.init(name), userState);
     let res   = parser.run(state);
     return res.succeeded
