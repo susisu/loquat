@@ -19,6 +19,8 @@ function end() {
         LazyParser,
         lazy,
         parse,
+        isParser,
+        assertParser,
         extendParser
     });
 }
@@ -371,6 +373,25 @@ function parse(parser, name, input, userState = undefined, opts = {}) {
     return res.succeeded
         ? { succeeded: true, value: res.val }
         : { succeeded: false, error: res.err };
+}
+
+/**
+ * @param {*} val
+ * @return {boolean}
+ */
+function isParser(val) {
+    return val instanceof AbstractParser;
+}
+
+/**
+ * @param {*} val
+ * @return {undefined}
+ * @throws {Error} Not a parser.
+ */
+function assertParser(val) {
+    if (!isParser(val)) {
+        throw new Error("not a parser");
+    }
 }
 
 /**
