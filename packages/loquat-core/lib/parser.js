@@ -18,7 +18,8 @@ function end() {
         Parser,
         LazyParser,
         lazy,
-        parse
+        parse,
+        extendParser
     });
 }
 
@@ -370,6 +371,23 @@ function parse(parser, name, input, userState = undefined, opts = {}) {
     return res.succeeded
         ? { succeeded: true, value: res.val }
         : { succeeded: false, error: res.err };
+}
+
+/**
+ * @param {Object} extensions
+ * @returns {undefined}
+ */
+function extendParser(extensions) {
+    let descs = {};
+    for (let key of Object.keys(extensions)) {
+        descs[key] = {
+            value       : extensions[key],
+            writable    : true,
+            configurable: true,
+            enumerable  : false
+        };
+    }
+    Object.defineProperties(AbstractParser.prototype, descs);
 }
 
 end();
