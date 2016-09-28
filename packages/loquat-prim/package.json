@@ -1,0 +1,35 @@
+{
+  "name": "loquat-prim",
+  "version": "2.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test.js",
+    "docs": "jsdoc lib -c jsdoc.conf.json",
+    "lint": "eslint lib --fix",
+    "lint-test": "eslint test --env mocha --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/susisu/loquat-prim.git"
+  },
+  "author": "Susisu <susisu2413@yahoo.co.jp> (https://github.com/susisu)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/susisu/loquat-prim/issues"
+  },
+  "homepage": "https://github.com/susisu/loquat-prim#readme",
+  "keywords": [
+    "parsing"
+  ],
+  "description": "",
+  "devDependencies": {
+    "app-module-path": "^2.0.0",
+    "chai": "^3.5.0",
+    "eslint": "^3.6.1",
+    "jsdoc": "^3.4.1",
+    "mocha": "^3.1.0"
+  }
+}
