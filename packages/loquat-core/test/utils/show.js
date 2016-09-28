@@ -11,8 +11,8 @@ const { show } = require("utils.js");
 
 describe(".show(value)", () => {
     it("should return escaped and double-quoted (\"...\") string if `value' is a string", () => {
-        let str = "0\\9\"A\bZ\ta\nz\r'\f`\vあ安🍣";
-        expect(show(str)).to.equal("\"0\\\\9\\\"A\\bZ\\ta\\nz\\r'\\f`\\vあ安🍣\"");
+        let str = "0\\9\"A\bZ\ta\nz\r'\f`\v\u3042\u5b89\uD83C\uDF63";
+        expect(show(str)).to.equal("\"0\\\\9\\\"A\\bZ\\ta\\nz\\r'\\f`\\v\u3042\u5b89\uD83C\uDF63\"");
     });
 
     it("should stringify each element by `show()' and return joined string separated by commas (,)"
@@ -20,7 +20,7 @@ describe(".show(value)", () => {
         let arr = [
             null,
             undefined,
-            "0\\9\"A\bZ\ta\nz\r'\f`\vあ安🍣",
+            "0\\9\"A\bZ\ta\nz\r'\f`\v\u3042\u5b89\uD83C\uDF63",
             3.14,
             true,
             { toString: () => "foobar" },
@@ -29,7 +29,7 @@ describe(".show(value)", () => {
         ];
         expect(show(arr)).to.equal(
             "["
-            + "null, undefined, \"0\\\\9\\\"A\\bZ\\ta\\nz\\r'\\f`\\vあ安🍣\", "
+            + "null, undefined, \"0\\\\9\\\"A\\bZ\\ta\\nz\\r'\\f`\\v\u3042\u5b89\uD83C\uDF63\", "
             + "3.14, true, foobar, "
             + Object.prototype.toString.call(Object.create(null)) + ", "
             + "[1, \"nyancat\", false]"

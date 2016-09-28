@@ -22,7 +22,7 @@ describe(".escapeChar(char)", () => {
     });
 
     it("should return `char' itself if it is not a special character", () => {
-        let chars = "09AZaz'`あ安🍣";
+        let chars = "09AZaz'`\u3042\u5b89\uD83C\uDF63";
         for (let char of chars) {
             expect(escapeChar(char)).to.equal(char);
         }
