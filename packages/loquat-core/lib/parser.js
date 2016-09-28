@@ -352,6 +352,7 @@ class LazyParser extends AbstractParser {
 
 /**
  * Shorthand for `new LazyParser()`.
+ * @static
  * @param {function} thunk
  * @returns {module:parser.LazyParser}
  */
@@ -360,6 +361,7 @@ function lazy(thunk) {
 }
 
 /**
+ * @static
  * @param {module:parser.AbstractParser} parser
  * @param {string} name
  * @param {(string | Array | module:stream.IStream)} input
@@ -376,6 +378,7 @@ function parse(parser, name, input, userState = undefined, opts = {}) {
 }
 
 /**
+ * @static
  * @param {*} val
  * @return {boolean}
  */
@@ -384,6 +387,7 @@ function isParser(val) {
 }
 
 /**
+ * @static
  * @param {*} val
  * @return {undefined}
  * @throws {Error} Not a parser.
@@ -395,6 +399,7 @@ function assertParser(val) {
 }
 
 /**
+ * @static
  * @param {Object} extensions
  * @returns {undefined}
  */
