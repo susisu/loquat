@@ -1,5 +1,5 @@
 /*
- * loquat test / error._internal.joinWithCommasOr()
+ * loquat-core test / error._internal.joinWithCommasOr()
  * copyright (c) 2016 Susisu
  */
 

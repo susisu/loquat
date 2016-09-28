@@ -1,5 +1,5 @@
 /*
- * loquat test / parser.Parser constructor()
+ * loquat-core test / parser.Parser constructor()
  * copyright (c) 2016 Susisu
  */
 

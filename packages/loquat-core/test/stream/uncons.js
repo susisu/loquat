@@ -1,5 +1,5 @@
 /*
- * loquat test / stream.uncons()
+ * loquat-core test / stream.uncons()
  * copyright (c) 2016 Susisu
  */
 

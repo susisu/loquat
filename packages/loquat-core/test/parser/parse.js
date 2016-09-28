@@ -1,5 +1,5 @@
 /*
- * loquat test / parser.parse()
+ * loquat-core test / parser.parse()
  * copyright (c) 2016 Susisu
  */
 

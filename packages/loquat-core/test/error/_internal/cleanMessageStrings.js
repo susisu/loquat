@@ -1,5 +1,5 @@
 /*
- * loquat test / error._internal.cleanMessageStrings()
+ * loquat-core test / error._internal.cleanMessageStrings()
  * copyright (c) 2016 Susisu
  */
 

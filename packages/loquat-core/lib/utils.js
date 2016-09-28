@@ -1,5 +1,5 @@
 /*
- * loquat / utils.js
+ * loquat-core / utils.js
  * copyright (c) 2016 Susisu
  */
 

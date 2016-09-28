@@ -1,5 +1,5 @@
 /*
- * loquat test / error.ParseError.unknown()
+ * loquat-core test / error.ParseError.unknown()
  * copyright (c) 2016 Susisu
  */
 

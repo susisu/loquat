@@ -1,5 +1,5 @@
 /*
- * loquat / stream.js
+ * loquat-core / stream.js
  * copyright (c) 2016 Susisu
  */
 

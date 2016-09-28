@@ -1,5 +1,5 @@
 /*
- * loquat test / parser.State
+ * loquat-core test / parser.State
  * copyright (c) 2016 Susisu
  */
 

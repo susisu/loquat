@@ -1,5 +1,5 @@
 /*
- * loquat test / utils
+ * loquat-core test / utils
  * copyright (c) 2016 Susisu
  */
 

@@ -1,5 +1,5 @@
 /*
- * loquat test / stream
+ * loquat-core test / stream
  * copyright (c) 2016 Susisu
  */
 

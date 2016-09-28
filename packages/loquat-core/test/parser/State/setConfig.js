@@ -1,5 +1,5 @@
 /*
- * loquat test / parser.State#setConfig()
+ * loquat-core test / parser.State#setConfig()
  * copyright (c) 2016 Susisu
  */
 

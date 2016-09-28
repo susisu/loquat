@@ -1,1 +1,1 @@
-# loquat2
+# loquat-core

@@ -1,5 +1,5 @@
 /*
- * loquat test / error.AbstractParseError#setPosition()
+ * loquat-core test / error.AbstractParseError#setPosition()
  * copyright (c) 2016 Susisu
  */
 

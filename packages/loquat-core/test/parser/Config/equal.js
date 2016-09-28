@@ -1,5 +1,5 @@
 /*
- * loquat test / parser.Config.equal()
+ * loquat-core test / parser.Config.equal()
  * copyright (c) 2016 Susisu
  */
 

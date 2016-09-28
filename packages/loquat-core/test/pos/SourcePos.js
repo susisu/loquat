@@ -1,5 +1,5 @@
 /*
- * loquat test / pos.SourcePos
+ * loquat-core test / pos.SourcePos
  * copyright (c) 2016 Susisu
  */
 

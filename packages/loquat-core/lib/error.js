@@ -1,5 +1,5 @@
 /*
- * loquat / error.js
+ * loquat-core / error.js
  * copyright (c) 2016 Susisu
  */
 
