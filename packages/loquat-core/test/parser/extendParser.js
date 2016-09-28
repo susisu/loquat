@@ -11,6 +11,7 @@ const expect = chai.expect;
 const _parser = require("parser.js");
 const AbstractParser = _parser.AbstractParser;
 const Parser         = _parser.Parser;
+const LazyParser     = _parser.LazyParser;
 const extendParser   = _parser.extendParser;
 
 describe(".extendParser(extensions)", () => {
@@ -44,10 +45,18 @@ describe(".extendParser(extensions)", () => {
             configurable: true,
             enumerable  : false
         });
-        // can be accessed from parser object
-        let parser = new Parser(() => {});
-        expect(parser.exFoo).to.equal("x");
-        expect(parser.exBar).to.equal("y");
-        expect(parser.exBaz).to.equal("z");
+        // can be accessed from parser objects
+        {
+            let parser = new Parser(() => {});
+            expect(parser.exFoo).to.equal("x");
+            expect(parser.exBar).to.equal("y");
+            expect(parser.exBaz).to.equal("z");
+        }
+        {
+            let parser = new LazyParser(() => new Parser(() => {}));
+            expect(parser.exFoo).to.equal("x");
+            expect(parser.exBar).to.equal("y");
+            expect(parser.exBaz).to.equal("z");
+        }
     });
 });
