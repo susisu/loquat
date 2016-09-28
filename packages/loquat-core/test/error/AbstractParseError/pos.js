@@ -5,9 +5,11 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { AbstractParseError } = require("error.js");
+const _error = require("error.js");
+const AbstractParseError = _error.AbstractParseError;
 
 describe("#pos", () => {
     it("should throw an `Error'", () => {

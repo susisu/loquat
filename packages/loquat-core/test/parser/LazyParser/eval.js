@@ -5,9 +5,12 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { Parser, LazyParser } = require("parser.js");
+const _parser = require("parser.js");
+const Parser     = _parser.Parser;
+const LazyParser = _parser.LazyParser;
 
 describe("#eval()", () => {
     it("should evaluate the thunk then return a `Parser' object obtained as a result and cahce it"

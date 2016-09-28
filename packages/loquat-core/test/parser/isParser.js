@@ -5,9 +5,14 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { AbstractParser, Parser, LazyParser, isParser } = require("parser.js");
+const _parser = require("parser.js");
+const AbstractParser = _parser.AbstractParser;
+const Parser         = _parser.Parser;
+const LazyParser     = _parser.LazyParser;
+const isParser       = _parser.isParser;
 
 describe(".isParser(val)", () => {
     it("should return true if `val' is an instance of `AbstractParser'", () => {

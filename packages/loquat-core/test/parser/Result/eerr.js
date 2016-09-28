@@ -5,11 +5,19 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { SourcePos } = require("pos.js");
-const { ErrorMessageType, ErrorMessage, ParseError } = require("error.js");
-const { Result } = require("parser.js");
+const _pos = require("pos.js");
+const SourcePos = _pos.SourcePos;
+
+const _error = require("error.js");
+const ErrorMessageType = _error.ErrorMessageType;
+const ErrorMessage     = _error.ErrorMessage;
+const ParseError       = _error.ParseError;
+
+const _parser = require("parser.js");
+const Result = _parser.Result;
 
 describe(".eerr(err)", () => {
     it("should create a not consumed but failed result object", () => {

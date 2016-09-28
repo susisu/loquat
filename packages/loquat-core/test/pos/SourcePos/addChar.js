@@ -5,9 +5,11 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { SourcePos } = require("pos.js");
+const _pos = require("pos.js");
+const SourcePos = _pos.SourcePos;
 
 describe("#addChar(char, tabWidth)", () => {
     it("should create a copy but not change the position if `char' is empty", () => {

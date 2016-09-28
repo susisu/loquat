@@ -5,9 +5,13 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { AbstractParser, Parser, extendParser } = require("parser.js");
+const _parser = require("parser.js");
+const AbstractParser = _parser.AbstractParser;
+const Parser         = _parser.Parser;
+const extendParser   = _parser.extendParser;
 
 describe(".extendParser(extensions)", () => {
     it("should extend `AbstractParser.prototype'", () => {

@@ -5,9 +5,11 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { Parser } = require("parser.js");
+const _parser = require("parser.js");
+const Parser = _parser.Parser;
 
 describe("constructor(func)", () => {
     it("should create a new `Parser' instance", () => {

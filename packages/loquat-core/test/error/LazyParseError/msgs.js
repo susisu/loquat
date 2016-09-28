@@ -5,10 +5,17 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { SourcePos } = require("pos.js");
-const { ErrorMessageType, ErrorMessage, ParseError, LazyParseError } = require("error.js");
+const _pos = require("pos.js");
+const SourcePos = _pos.SourcePos;
+
+const _error = require("error.js");
+const ErrorMessageType   = _error.ErrorMessageType;
+const ErrorMessage       = _error.ErrorMessage;
+const ParseError         = _error.ParseError;
+const LazyParseError     = _error.LazyParseError;
 
 describe("#msgs", () => {
     it("should first evaluate the thunk and return `msgs' of the result", () => {

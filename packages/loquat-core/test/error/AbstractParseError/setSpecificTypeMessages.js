@@ -5,9 +5,12 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { ErrorMessageType, AbstractParseError } = require("error.js");
+const _error = require("error.js");
+const ErrorMessageType   = _error.ErrorMessageType;
+const AbstractParseError = _error.AbstractParseError;
 
 describe("#setSpecificTypeMessages(type, msgStrs)", () => {
     it("should throw an `Error'", () => {

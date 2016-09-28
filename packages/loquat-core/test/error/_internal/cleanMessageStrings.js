@@ -5,9 +5,11 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { _internal: { cleanMessageStrings } } = require("error.js");
+const _error = require("error.js");
+const cleanMessageStrings = _error._internal.cleanMessageStrings;
 
 describe(".cleanMessageStrings(msgStrs)", () => {
     it("should remove both duplicate messages and empty messages", () => {

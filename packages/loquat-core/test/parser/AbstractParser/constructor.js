@@ -5,9 +5,11 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { AbstractParser } = require("parser.js");
+const _parser = require("parser.js");
+const AbstractParser = _parser.AbstractParser;
 
 describe("constructor()", () => {
     it("should throw an `Error' if it is called as `new AbstractParser'", () => {

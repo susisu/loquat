@@ -5,9 +5,11 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { _internal: { joinWithCommasOr } } = require("error.js");
+const _error = require("error.js");
+const joinWithCommasOr = _error._internal.joinWithCommasOr;
 
 describe(".joinWithCommasOr(msgStrs)", () => {
     it("should return empty string if `msgStrs' is empty", () => {

@@ -5,10 +5,15 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { SourcePos } = require("pos.js");
-const { ErrorMessage, ParseError } = require("error.js");
+const _pos = require("pos.js");
+const SourcePos = _pos.SourcePos;
+
+const _error = require("error.js");
+const ErrorMessage = _error.ErrorMessage;
+const ParseError   = _error.ParseError;
 
 describe(".unknown(pos)", () => {
     it("should create a new `ParseError' object describing unknown error (with empty error messages)", () => {

@@ -5,9 +5,11 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { show } = require("utils.js");
+const _utils = require("utils.js");
+const show = _utils.show;
 
 describe(".show(value)", () => {
     it("should return escaped and double-quoted (\"...\") string if `value' is a string", () => {

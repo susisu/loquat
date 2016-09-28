@@ -5,9 +5,11 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { _internal: { joinMessageStrings } } = require("error.js");
+const _error = require("error.js");
+const joinMessageStrings = _error._internal.joinMessageStrings;
 
 describe(".joinMessageStrings(msgStrs, desc = \"\")", () => {
     it("should return joined string of `msgStrs' with commas and \"or\" if `desc' is empty string", () => {

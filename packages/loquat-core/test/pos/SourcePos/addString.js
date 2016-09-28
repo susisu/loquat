@@ -5,9 +5,11 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { SourcePos } = require("pos.js");
+const _pos = require("pos.js");
+const SourcePos = _pos.SourcePos;
 
 describe("#addString(str, tabWidth, useCodePoint)", () => {
     it("should create a copy with lines and columns are incremented by `str'", () => {

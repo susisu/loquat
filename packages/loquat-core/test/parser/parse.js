@@ -5,11 +5,23 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { SourcePos } = require("pos.js");
-const { ErrorMessageType, ErrorMessage, ParseError } = require("error.js");
-const { Config, State, Result, Parser, parse } = require("parser.js");
+const _pos = require("pos.js");
+const SourcePos = _pos.SourcePos;
+
+const _error = require("error.js");
+const ErrorMessageType = _error.ErrorMessageType;
+const ErrorMessage     = _error.ErrorMessage;
+const ParseError       = _error.ParseError;
+
+const _parser = require("parser.js");
+const Config = _parser.Config;
+const State  = _parser.State;
+const Result = _parser.Result;
+const Parser = _parser.Parser;
+const parse  = _parser.parse;
 
 describe(".parse(parser, name, input, userState = undefined, opts = {})", () => {
     it("should run `parser' and return result as a simple object", () => {

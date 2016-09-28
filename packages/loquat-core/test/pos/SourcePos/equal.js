@@ -5,9 +5,11 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { SourcePos } = require("../../../lib/pos.js");
+const _pos = require("pos.js");
+const SourcePos = _pos.SourcePos;
 
 describe(".equal(posA, posB)", () => {
     it("should return true if `posA' and `posB' describe the same position", () => {

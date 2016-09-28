@@ -5,9 +5,12 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { ErrorMessageType, ErrorMessage } = require("error.js");
+const _error = require("error.js");
+const ErrorMessageType = _error.ErrorMessageType;
+const ErrorMessage     = _error.ErrorMessage;
 
 describe(".messagesEqual(msgsA, msgsB)", () => {
     it("should return `true' if two messages have the same error messages with the same order", () => {

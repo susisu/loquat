@@ -5,10 +5,15 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { SourcePos } = require("pos.js");
-const { Config, State } = require("parser.js");
+const _pos = require("pos.js");
+const SourcePos = _pos.SourcePos;
+
+const _parser = require("parser.js");
+const Config = _parser.Config;
+const State  = _parser.State;
 
 describe("constructor(config, input, pos, userState)", () => {
     it("should create a new `State' instance", () => {

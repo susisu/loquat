@@ -5,10 +5,14 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { SourcePos } = require("pos.js");
-const { AbstractParseError } = require("error.js");
+const _pos = require("pos.js");
+const SourcePos = _pos.SourcePos;
+
+const _error = require("error.js");
+const AbstractParseError = _error.AbstractParseError;
 
 describe("#setPosition(pos)", () => {
     it("should throw an `Error'", () => {

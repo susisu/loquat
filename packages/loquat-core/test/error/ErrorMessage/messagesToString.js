@@ -5,9 +5,12 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { ErrorMessageType, ErrorMessage } = require("error.js");
+const _error = require("error.js");
+const ErrorMessageType = _error.ErrorMessageType;
+const ErrorMessage     = _error.ErrorMessage;
 
 describe(".messagesToString(msgs)", () => {
     it("should return \"unknown parse error\" if `msgs' is empty", () => {

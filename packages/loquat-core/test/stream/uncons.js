@@ -5,9 +5,11 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { uncons } = require("stream.js");
+const _stream = require("stream.js");
+const uncons = _stream.uncons;
 
 describe(".uncons(input)", () => {
     it("should return an object describing empty input if `input' is an empty string", () => {

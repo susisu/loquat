@@ -5,9 +5,11 @@
 
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const expect = chai.expect;
 
-const { _internal: { escapeChar } } = require("utils.js");
+const _utils = require("utils.js");
+const escapeChar = _utils._internal.escapeChar;
 
 describe(".escapeChar(char)", () => {
     it("should escape the character `char' if it is a special character", () => {
