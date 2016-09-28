@@ -26,7 +26,7 @@
   ],
   "description": "",
   "devDependencies": {
-    "app-module-path": "^1.1.0",
+    "app-module-path": "^2.0.0",
     "chai": "^3.5.0",
     "eslint": "^3.5.0",
     "jsdoc": "^3.4.0",
