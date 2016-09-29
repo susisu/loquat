@@ -9,15 +9,15 @@
 
 "use strict";
 
-module.exports = core => {
+module.exports = _core => {
     function end() {
         return Object.freeze({
             map
         });
     }
 
-    const Result = core.Result;
-    const Parser = core.Parser;
+    const Result = _core.Result;
+    const Parser = _core.Parser;
 
     /**
      * @function module:prim.map
