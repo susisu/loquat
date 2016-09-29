@@ -30,6 +30,7 @@
     "chai": "^3.5.0",
     "eslint": "^3.6.1",
     "jsdoc": "^3.4.1",
+    "loquat-core": "git+https://github.com/susisu/loquat-core.git",
     "mocha": "^3.1.0"
   }
 }
