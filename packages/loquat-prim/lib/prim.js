@@ -12,12 +12,14 @@
 module.exports = _core => {
     function end() {
         return Object.freeze({
-            map
+            map,
+            return: __return__
         });
     }
 
-    const Result = _core.Result;
-    const Parser = _core.Parser;
+    const ParseError = _core.ParseError;
+    const Result     = _core.Result;
+    const Parser     = _core.Parser;
 
     /**
      * @function module:prim.map
@@ -33,6 +35,16 @@ module.exports = _core => {
                 ? new Result(res.consumed, true, res.err, func(res.val), res.state)
                 : res;
         });
+    }
+
+    /**
+     * @function module:prim.return
+     * @static
+     * @param {*} val
+     * @returns {AbstractParser}
+     */
+    function __return__(val) {
+        return new Parser(state => Result.esuc(ParseError.unknown(state.pos), val, state));
     }
 
     return end();
