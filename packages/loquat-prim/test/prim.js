@@ -7,4 +7,5 @@
 
 describe("prim", () => {
     require("./prim/map.js");
+    require("./prim/return.js");
 });
