@@ -17,12 +17,13 @@ const Config           = _core.Config;
 const State            = _core.State;
 const Result           = _core.Result;
 const Parser           = _core.Parser;
+const assertParser     = _core.assertParser;
 
 const _prim = require("prim.js")(_core);
 const map = _prim.map;
 
 describe(".map(parser, func)", () => {
-    it("should run `parser' and map `func' to the result value", () => {
+    it("should return a parser that runs `parser' and maps `func' to the result value", () => {
         let func = x => x.toUpperCase();
 
         let initState = new State(
@@ -44,22 +45,30 @@ describe(".map(parser, func)", () => {
 
         {
             let parser = new Parser(() => Result.csuc(err, "nyancat", finalState));
-            let res = map(parser, func).run(initState);
+            let mapped = map(parser, func);
+            assertParser(mapped);
+            let res = mapped.run(initState);
             expect(Result.equal(res, Result.csuc(err, "NYANCAT", finalState))).to.be.true;
         }
         {
             let parser = new Parser(() => Result.cerr(err));
-            let res = map(parser, func).run(initState);
+            let mapped = map(parser, func);
+            assertParser(mapped);
+            let res = mapped.run(initState);
             expect(Result.equal(res, Result.cerr(err))).to.be.true;
         }
         {
             let parser = new Parser(() => Result.esuc(err, "nyancat", finalState));
-            let res = map(parser, func).run(initState);
+            let mapped = map(parser, func);
+            assertParser(mapped);
+            let res = mapped.run(initState);
             expect(Result.equal(res, Result.esuc(err, "NYANCAT", finalState))).to.be.true;
         }
         {
             let parser = new Parser(() => Result.eerr(err));
-            let res = map(parser, func).run(initState);
+            let mapped = map(parser, func);
+            assertParser(mapped);
+            let res = mapped.run(initState);
             expect(Result.equal(res, Result.eerr(err))).to.be.true;
         }
     });
