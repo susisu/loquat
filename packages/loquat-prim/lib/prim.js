@@ -13,7 +13,7 @@ module.exports = _core => {
     function end() {
         return Object.freeze({
             map,
-            return: __return__,
+            unit,
             flatMap
         });
     }
@@ -39,12 +39,12 @@ module.exports = _core => {
     }
 
     /**
-     * @function module:prim.return
+     * @function module:prim.unit
      * @static
      * @param {*} val
      * @returns {AbstractParser}
      */
-    function __return__(val) {
+    function unit(val) {
         return new Parser(state => Result.esuc(ParseError.unknown(state.pos), val, state));
     }
 

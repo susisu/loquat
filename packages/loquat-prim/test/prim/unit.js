@@ -1,5 +1,5 @@
 /*
- * loquat-prim test / prim.return()
+ * loquat-prim test / prim.unit()
  * copyright (c) 2016 Susisu
  */
 
@@ -17,9 +17,9 @@ const Result       = _core.Result;
 const assertParser = _core.assertParser;
 
 const _prim = require("prim.js")(_core);
-const __return__ = _prim.return;
+const unit = _prim.unit;
 
-describe(".return(val)", () => {
+describe(".unit(val)", () => {
     it("should return a parser that always empty succeeds with `val'", () => {
         let initState = new State(
             new Config({ tabWidth: 8 }),
@@ -27,7 +27,7 @@ describe(".return(val)", () => {
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let parser = __return__("nyancat");
+        let parser = unit("nyancat");
         assertParser(parser);
         let res = parser.run(initState);
         expect(Result.equal(

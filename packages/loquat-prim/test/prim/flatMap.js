@@ -20,8 +20,8 @@ const Parser           = _core.Parser;
 const assertParser     = _core.assertParser;
 
 const _prim = require("prim.js")(_core);
-const __return__ = _prim.return;
-const flatMap    = _prim.flatMap;
+const unit    = _prim.unit;
+const flatMap = _prim.flatMap;
 
 describe(".flatMap(parser, func)", () => {
     it("should return a parser that runs `parser', maps `func' to the result, and flattens its return value", () => {
@@ -227,7 +227,7 @@ describe(".flatMap(parser, func)", () => {
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        // return x >>= func = func x
+        // unit x >>= func = func x
         {
             let finalState = new State(
                 new Config({ tabWidth: 4 }),
@@ -247,12 +247,12 @@ describe(".flatMap(parser, func)", () => {
             ];
             for (let func of funcs) {
                 expect(Result.equal(
-                    flatMap(__return__("nyan"), func).run(initState),
+                    flatMap(unit("nyan"), func).run(initState),
                     func("nyan").run(initState)
                 )).to.be.true;
             }
         }
-        // parser >>= return = parser
+        // parser >>= unit = parser
         {
             let finalState = new State(
                 new Config({ tabWidth: 4 }),
@@ -272,7 +272,7 @@ describe(".flatMap(parser, func)", () => {
             ];
             for (let parser of parsers) {
                 expect(Result.equal(
-                    flatMap(parser, __return__).run(initState),
+                    flatMap(parser, unit).run(initState),
                     parser.run(initState)
                 )).to.be.true;
             }
