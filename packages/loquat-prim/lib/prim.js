@@ -13,7 +13,8 @@ module.exports = _core => {
     function end() {
         return Object.freeze({
             map,
-            return: __return__
+            return: __return__,
+            flatMap
         });
     }
 
@@ -45,6 +46,33 @@ module.exports = _core => {
      */
     function __return__(val) {
         return new Parser(state => Result.esuc(ParseError.unknown(state.pos), val, state));
+    }
+
+    /**
+     * @function module:prim.flatMap
+     * @static
+     * @param {AbstractParser} parser
+     * @param {function} func
+     * @returns {AbstractParser}
+     */
+    function flatMap(parser, func) {
+        return new Parser(state => {
+            let resA = parser.run(state);
+            if (resA.succeeded) {
+                let parserB = func(resA.val);
+                let resB = parserB.run(resA.state);
+                return new Result(
+                    resA.consumed || resB.consumed,
+                    resB.succeeded,
+                    resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err),
+                    resB.val,
+                    resB.state
+                );
+            }
+            else {
+                return resA;
+            }
+        });
     }
 
     return end();
