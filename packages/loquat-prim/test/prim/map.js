@@ -44,28 +44,40 @@ describe(".map(parser, func)", () => {
         );
 
         {
-            let parser = new Parser(() => Result.csuc(err, "nyancat", finalState));
+            let parser = new Parser(state => {
+                expect(State.equal(state, initState)).to.be.true;
+                return Result.csuc(err, "nyancat", finalState);
+            });
             let mapped = map(parser, func);
             assertParser(mapped);
             let res = mapped.run(initState);
             expect(Result.equal(res, Result.csuc(err, "NYANCAT", finalState))).to.be.true;
         }
         {
-            let parser = new Parser(() => Result.cerr(err));
+            let parser = new Parser(state => {
+                expect(State.equal(state, initState)).to.be.true;
+                return Result.cerr(err);
+            });
             let mapped = map(parser, func);
             assertParser(mapped);
             let res = mapped.run(initState);
             expect(Result.equal(res, Result.cerr(err))).to.be.true;
         }
         {
-            let parser = new Parser(() => Result.esuc(err, "nyancat", finalState));
+            let parser = new Parser(state => {
+                expect(State.equal(state, initState)).to.be.true;
+                return Result.esuc(err, "nyancat", finalState);
+            });
             let mapped = map(parser, func);
             assertParser(mapped);
             let res = mapped.run(initState);
             expect(Result.equal(res, Result.esuc(err, "NYANCAT", finalState))).to.be.true;
         }
         {
-            let parser = new Parser(() => Result.eerr(err));
+            let parser = new Parser(state => {
+                expect(State.equal(state, initState)).to.be.true;
+                return Result.eerr(err);
+            });
             let mapped = map(parser, func);
             assertParser(mapped);
             let res = mapped.run(initState);
