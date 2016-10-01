@@ -1,5 +1,5 @@
 /*
- * loquat-prim test / prim.flatMap()
+ * loquat-prim test / prim.bind()
  * copyright (c) 2016 Susisu
  */
 
@@ -20,10 +20,10 @@ const Parser           = _core.Parser;
 const assertParser     = _core.assertParser;
 
 const _prim = require("prim.js")(_core);
-const unit    = _prim.unit;
-const flatMap = _prim.flatMap;
+const pure = _prim.pure;
+const bind = _prim.bind;
 
-describe(".flatMap(parser, func)", () => {
+describe(".bind(parser, func)", () => {
     it("should return a parser that runs `parser', maps `func' to the result, and flattens its return value", () => {
         let initState = new State(
             new Config({ tabWidth: 8 }),
@@ -64,7 +64,7 @@ describe(".flatMap(parser, func)", () => {
                     return Result.csuc(errB, "cat", stateB);
                 });
             };
-            let mapped = flatMap(parser, func);
+            let mapped = bind(parser, func);
             assertParser(mapped);
             let res = mapped.run(initState);
             expect(Result.equal(res, Result.csuc(errB, "cat", stateB))).to.be.true;
@@ -82,7 +82,7 @@ describe(".flatMap(parser, func)", () => {
                     return Result.cerr(errB);
                 });
             };
-            let mapped = flatMap(parser, func);
+            let mapped = bind(parser, func);
             assertParser(mapped);
             let res = mapped.run(initState);
             expect(Result.equal(res, Result.cerr(errB))).to.be.true;
@@ -100,7 +100,7 @@ describe(".flatMap(parser, func)", () => {
                     return Result.esuc(errB, "cat", stateB);
                 });
             };
-            let mapped = flatMap(parser, func);
+            let mapped = bind(parser, func);
             assertParser(mapped);
             let res = mapped.run(initState);
             expect(Result.equal(res, Result.csuc(ParseError.merge(errA, errB), "cat", stateB))).to.be.true;
@@ -118,7 +118,7 @@ describe(".flatMap(parser, func)", () => {
                     return Result.eerr(errB);
                 });
             };
-            let mapped = flatMap(parser, func);
+            let mapped = bind(parser, func);
             let res = mapped.run(initState);
             expect(Result.equal(res, Result.cerr(ParseError.merge(errA, errB)))).to.be.true;
         }
@@ -129,7 +129,7 @@ describe(".flatMap(parser, func)", () => {
                 return Result.cerr(errA);
             });
             let func = () => { throw new Error("unexpected call"); };
-            let mapped = flatMap(parser, func);
+            let mapped = bind(parser, func);
             assertParser(mapped);
             let res = mapped.run(initState);
             expect(Result.equal(res, Result.cerr(errA))).to.be.true;
@@ -147,7 +147,7 @@ describe(".flatMap(parser, func)", () => {
                     return Result.csuc(errB, "cat", stateB);
                 });
             };
-            let mapped = flatMap(parser, func);
+            let mapped = bind(parser, func);
             assertParser(mapped);
             let res = mapped.run(initState);
             expect(Result.equal(res, Result.csuc(errB, "cat", stateB))).to.be.true;
@@ -165,7 +165,7 @@ describe(".flatMap(parser, func)", () => {
                     return Result.cerr(errB);
                 });
             };
-            let mapped = flatMap(parser, func);
+            let mapped = bind(parser, func);
             assertParser(mapped);
             let res = mapped.run(initState);
             expect(Result.equal(res, Result.cerr(errB))).to.be.true;
@@ -183,7 +183,7 @@ describe(".flatMap(parser, func)", () => {
                     return Result.esuc(errB, "cat", stateB);
                 });
             };
-            let mapped = flatMap(parser, func);
+            let mapped = bind(parser, func);
             assertParser(mapped);
             let res = mapped.run(initState);
             expect(Result.equal(res, Result.esuc(ParseError.merge(errA, errB), "cat", stateB))).to.be.true;
@@ -201,7 +201,7 @@ describe(".flatMap(parser, func)", () => {
                     return Result.eerr(errB);
                 });
             };
-            let mapped = flatMap(parser, func);
+            let mapped = bind(parser, func);
             assertParser(mapped);
             let res = mapped.run(initState);
             expect(Result.equal(res, Result.eerr(ParseError.merge(errA, errB)))).to.be.true;
@@ -213,7 +213,7 @@ describe(".flatMap(parser, func)", () => {
                 return Result.eerr(errA);
             });
             let func = () => { throw new Error("unexpected call"); };
-            let mapped = flatMap(parser, func);
+            let mapped = bind(parser, func);
             assertParser(mapped);
             let res = mapped.run(initState);
             expect(Result.equal(res, Result.eerr(errA))).to.be.true;
@@ -227,7 +227,7 @@ describe(".flatMap(parser, func)", () => {
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        // unit x >>= func = func x
+        // pure x >>= func = func x
         {
             let finalState = new State(
                 new Config({ tabWidth: 4 }),
@@ -247,12 +247,12 @@ describe(".flatMap(parser, func)", () => {
             ];
             for (let func of funcs) {
                 expect(Result.equal(
-                    flatMap(unit("nyan"), func).run(initState),
+                    bind(pure("nyan"), func).run(initState),
                     func("nyan").run(initState)
                 )).to.be.true;
             }
         }
-        // parser >>= unit = parser
+        // parser >>= pure = parser
         {
             let finalState = new State(
                 new Config({ tabWidth: 4 }),
@@ -272,7 +272,7 @@ describe(".flatMap(parser, func)", () => {
             ];
             for (let parser of parsers) {
                 expect(Result.equal(
-                    flatMap(parser, unit).run(initState),
+                    bind(parser, pure).run(initState),
                     parser.run(initState)
                 )).to.be.true;
             }
@@ -334,8 +334,8 @@ describe(".flatMap(parser, func)", () => {
                 for (let f of fs) {
                     for (let g of gs) {
                         expect(Result.equal(
-                            flatMap(flatMap(parser, f), g).run(initState),
-                            flatMap(parser, x => flatMap(f(x), g)).run(initState)
+                            bind(bind(parser, f), g).run(initState),
+                            bind(parser, x => bind(f(x), g)).run(initState)
                         )).to.be.true;
                     }
                 }

@@ -7,6 +7,6 @@
 
 describe("prim", () => {
     require("./prim/map.js");
-    require("./prim/unit.js");
-    require("./prim/flatMap.js");
+    require("./prim/pure.js");
+    require("./prim/bind.js");
 });

@@ -13,8 +13,8 @@ module.exports = _core => {
     function end() {
         return Object.freeze({
             map,
-            unit,
-            flatMap
+            pure,
+            bind
         });
     }
 
@@ -39,23 +39,23 @@ module.exports = _core => {
     }
 
     /**
-     * @function module:prim.unit
+     * @function module:prim.pure
      * @static
      * @param {*} val
      * @returns {AbstractParser}
      */
-    function unit(val) {
+    function pure(val) {
         return new Parser(state => Result.esuc(ParseError.unknown(state.pos), val, state));
     }
 
     /**
-     * @function module:prim.flatMap
+     * @function module:prim.bind
      * @static
      * @param {AbstractParser} parser
      * @param {function} func
      * @returns {AbstractParser}
      */
-    function flatMap(parser, func) {
+    function bind(parser, func) {
         return new Parser(state => {
             let resA = parser.run(state);
             if (resA.succeeded) {
