@@ -9,4 +9,5 @@ describe("prim", () => {
     require("./prim/map.js");
     require("./prim/pure.js");
     require("./prim/bind.js");
+    require("./prim/then.js");
 });
