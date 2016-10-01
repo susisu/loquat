@@ -14,7 +14,8 @@ module.exports = _core => {
         return Object.freeze({
             map,
             pure,
-            bind
+            bind,
+            then
         });
     }
 
@@ -73,6 +74,17 @@ module.exports = _core => {
                 return resA;
             }
         });
+    }
+
+    /**
+     * @function module:prim.then
+     * @static
+     * @param {AbstractParser} parserA
+     * @param {AbstractParser} parserB
+     * @returns {AbstracParser}
+     */
+    function then(parserA, parserB) {
+        return bind(parserA, () => parserB);
     }
 
     return end();
