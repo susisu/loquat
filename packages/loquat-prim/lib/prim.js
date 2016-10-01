@@ -15,6 +15,8 @@ module.exports = _core => {
             map,
             pure,
             ap,
+            left,
+            right,
             bind,
             then,
             fail
@@ -66,6 +68,31 @@ module.exports = _core => {
                 pure(valA(valB))
             )
         );
+    }
+
+    const former = x => () => x;
+    const latter = () => y => y;
+
+    /**
+     * @function module:prim.left
+     * @static
+     * @param {AbstractParser} parserA
+     * @param {AbstractParser} parserB
+     * @returns {AbstractParser}
+     */
+    function left(parserA, parserB) {
+        return ap(map(parserA, former), parserB);
+    }
+
+    /**
+     * @function module:prim.right
+     * @static
+     * @param {AbstractParser} parserA
+     * @param {AbstractParser} parserB
+     * @returns {AbstractParser}
+     */
+    function right(parserA, parserB) {
+        return ap(map(parserA, latter), parserB);
     }
 
     /**
