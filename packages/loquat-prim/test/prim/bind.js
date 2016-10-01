@@ -119,6 +119,7 @@ describe(".bind(parser, func)", () => {
                 });
             };
             let mapped = bind(parser, func);
+            assertParser(mapped);
             let res = mapped.run(initState);
             expect(Result.equal(res, Result.cerr(ParseError.merge(errA, errB)))).to.be.true;
         }
