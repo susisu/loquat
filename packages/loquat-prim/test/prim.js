@@ -10,4 +10,5 @@ describe("prim", () => {
     require("./prim/pure.js");
     require("./prim/bind.js");
     require("./prim/then.js");
+    require("./prim/fail.js");
 });
