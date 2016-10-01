@@ -15,13 +15,16 @@ module.exports = _core => {
             map,
             pure,
             bind,
-            then
+            then,
+            fail
         });
     }
 
-    const ParseError = _core.ParseError;
-    const Result     = _core.Result;
-    const Parser     = _core.Parser;
+    const ErrorMessageType = _core.ErrorMessageType;
+    const ErrorMessage     = _core.ErrorMessage;
+    const ParseError       = _core.ParseError;
+    const Result           = _core.Result;
+    const Parser           = _core.Parser;
 
     /**
      * @function module:prim.map
@@ -85,6 +88,18 @@ module.exports = _core => {
      */
     function then(parserA, parserB) {
         return bind(parserA, () => parserB);
+    }
+
+    /**
+     * @function module:prim.fail
+     * @static
+     * @param {string} msgStr
+     * @returns {AbstractParser}
+     */
+    function fail(msgStr) {
+        return new Parser(state => Result.eerr(
+            new ParseError(state.pos, [new ErrorMessage(ErrorMessageType.MESSAGE, msgStr)])
+        ));
     }
 
     return end();
