@@ -14,6 +14,7 @@ module.exports = _core => {
         return Object.freeze({
             map,
             pure,
+            ap,
             bind,
             then,
             fail
@@ -50,6 +51,21 @@ module.exports = _core => {
      */
     function pure(val) {
         return new Parser(state => Result.esuc(ParseError.unknown(state.pos), val, state));
+    }
+
+    /**
+     * @function module:prim.ap
+     * @static
+     * @param {AbstractParser} parserA
+     * @param {AbstractParser} parserB
+     * @returns {AbstractParser}
+     */
+    function ap(parserA, parserB) {
+        return bind(parserA, valA =>
+            bind(parserB, valB =>
+                pure(valA(valB))
+            )
+        );
     }
 
     /**
