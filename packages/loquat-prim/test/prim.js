@@ -14,4 +14,5 @@ describe("prim", () => {
     require("./prim/bind.js");
     require("./prim/then.js");
     require("./prim/fail.js");
+    require("./prim/mzero.js");
 });
