@@ -27,7 +27,8 @@ module.exports = _core => {
             unexpected,
             tryParse,
             lookAhead,
-            reduceMany
+            reduceMany,
+            many
         });
     }
 
@@ -311,6 +312,16 @@ module.exports = _core => {
                 }
             }
         });
+    }
+
+    /**
+     * @function module:prim.many
+     * @static
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function many(parser) {
+        return reduceMany(parser, (accum, val) => { accum.push(val); return accum; }, []);
     }
 
     return end();
