@@ -23,7 +23,8 @@ module.exports = _core => {
             mzero,
             mplus,
             label,
-            labels
+            labels,
+            unexpected
         });
     }
 
@@ -223,6 +224,21 @@ module.exports = _core => {
                 );
             }
         });
+    }
+
+    /**
+     * @function module:prim.unexpected
+     * @static
+     * @param {string} msgStr
+     * @returns {AbstractParser}
+     */
+    function unexpected(msgStr) {
+        return new Parser(state => Result.eerr(
+            new ParseError(
+                state.pos,
+                [new ErrorMessage(ErrorMessageType.UNEXPECT, msgStr)]
+            )
+        ));
     }
 
     return end();
