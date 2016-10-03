@@ -28,7 +28,8 @@ module.exports = _core => {
             tryParse,
             lookAhead,
             reduceMany,
-            many
+            many,
+            skipMany
         });
     }
 
@@ -322,6 +323,16 @@ module.exports = _core => {
      */
     function many(parser) {
         return reduceMany(parser, (accum, val) => { accum.push(val); return accum; }, []);
+    }
+
+    /**
+     * @function module:prim.skipMany
+     * @static
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function skipMany(parser) {
+        return reduceMany(parser, accum => accum, undefined);
     }
 
     return end();
