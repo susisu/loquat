@@ -25,7 +25,8 @@ module.exports = _core => {
             label,
             labels,
             unexpected,
-            tryParse
+            tryParse,
+            lookAhead
         });
     }
 
@@ -253,6 +254,21 @@ module.exports = _core => {
             let res = parser.run(state);
             return res.consumed && !res.succeeded
                 ? Result.eerr(res.err)
+                : res;
+        });
+    }
+
+    /**
+     * @function module:prim.lookAhead
+     * @static
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function lookAhead(parser) {
+        return new Parser(state => {
+            let res = parser.run(state);
+            return res.succeeded
+                ? Result.esuc(ParseError.unknown(state.pos), res.val, state)
                 : res;
         });
     }
