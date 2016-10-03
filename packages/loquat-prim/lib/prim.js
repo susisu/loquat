@@ -19,7 +19,9 @@ module.exports = _core => {
             right,
             bind,
             then,
-            fail
+            fail,
+            mzero,
+            mplus
         });
     }
 
@@ -143,6 +145,39 @@ module.exports = _core => {
         return new Parser(state => Result.eerr(
             new ParseError(state.pos, [new ErrorMessage(ErrorMessageType.MESSAGE, msgStr)])
         ));
+    }
+
+    /**
+     * @constant module:prim.mzero
+     * @static
+     * @type {AbstractParser}
+     */
+    const mzero = new Parser(state => Result.eerr(ParseError.unknown(state.pos)));
+
+    /**
+     * @function module:prim.mplus
+     * @static
+     * @param {AbstractParser} parserA
+     * @param {AbstractParser} parserB
+     * @returns {AbstractParser}
+     */
+    function mplus(parserA, parserB) {
+        return new Parser(state => {
+            let resA = parserA.run(state);
+            if (!resA.consumed && !resA.succeeded) {
+                let resB = parserB.run(state);
+                return new Result(
+                    resB.consumed,
+                    resB.succeeded,
+                    resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err),
+                    resB.val,
+                    resB.state
+                );
+            }
+            else {
+                return resA;
+            }
+        });
     }
 
     return end();
