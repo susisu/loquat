@@ -24,7 +24,8 @@ module.exports = _core => {
             mplus,
             label,
             labels,
-            unexpected
+            unexpected,
+            tryParse
         });
     }
 
@@ -239,6 +240,21 @@ module.exports = _core => {
                 [new ErrorMessage(ErrorMessageType.UNEXPECT, msgStr)]
             )
         ));
+    }
+
+    /**
+     * @function module:prim.tryParse
+     * @static
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function tryParse(parser) {
+        return new Parser(state => {
+            let res = parser.run(state);
+            return res.consumed && !res.succeeded
+                ? Result.eerr(res.err)
+                : res;
+        });
     }
 
     return end();
