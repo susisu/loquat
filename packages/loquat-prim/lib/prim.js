@@ -21,13 +21,16 @@ module.exports = _core => {
             then,
             fail,
             mzero,
-            mplus
+            mplus,
+            label,
+            labels
         });
     }
 
     const ErrorMessageType = _core.ErrorMessageType;
     const ErrorMessage     = _core.ErrorMessage;
     const ParseError       = _core.ParseError;
+    const LazyParseError   = _core.LazyParseError;
     const Result           = _core.Result;
     const Parser           = _core.Parser;
 
@@ -176,6 +179,48 @@ module.exports = _core => {
             }
             else {
                 return resA;
+            }
+        });
+    }
+
+    /**
+     * @function module:prim.label
+     * @static
+     * @param {AbstractParser} parser
+     * @param {string} labelStr
+     * @returns {AbstractParser}
+     */
+    function label(parser, labelStr) {
+        return labels(parser, [labelStr]);
+    }
+
+    /**
+     * @function module:prim.labels
+     * @static
+     * @param {AbstractParser} parser
+     * @param {Array.<string>} labelStrs
+     * @returns {AbstractParser}
+     */
+    function labels(parser, labelStrs) {
+        function setExpects(err) {
+            return err.setSpecificTypeMessages(ErrorMessageType.EXPECT, labelStrs.length === 0 ? [""] : labelStrs);
+        }
+        return new Parser(state => {
+            let res = parser.run(state);
+            if (res.consumed) {
+                return res;
+            }
+            else {
+                let err = res.err;
+                return new Result(
+                    false,
+                    res.succeeded,
+                    res.succeeded
+                        ? new LazyParseError(() => err.isUnknown() ? err : setExpects(err))
+                        : setExpects(err),
+                    res.val,
+                    res.state
+                );
             }
         });
     }
