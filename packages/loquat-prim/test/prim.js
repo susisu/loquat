@@ -15,4 +15,5 @@ describe("prim", () => {
     require("./prim/then.js");
     require("./prim/fail.js");
     require("./prim/mzero.js");
+    require("./prim/mplus.js");
 });
