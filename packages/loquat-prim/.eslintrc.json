@@ -6,7 +6,7 @@
     "extends": "eslint:recommended",
     "rules": {
         "no-cond-assign": ["warn", "always"],
-        "no-constant-condition": ["warn"],
+        "no-constant-condition": ["warn", { "checkLoops": false }],
         "no-control-regex": ["off"],
         "no-dupe-args": ["warn"],
         "no-empty": ["warn"],
