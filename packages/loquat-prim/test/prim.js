@@ -17,4 +17,5 @@ describe("prim", () => {
     require("./prim/mzero.js");
     require("./prim/mplus.js");
     require("./prim/label.js");
+    require("./prim/labels.js");
 });
