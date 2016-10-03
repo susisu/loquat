@@ -26,7 +26,8 @@ module.exports = _core => {
             labels,
             unexpected,
             tryParse,
-            lookAhead
+            lookAhead,
+            reduceMany
         });
     }
 
@@ -270,6 +271,45 @@ module.exports = _core => {
             return res.succeeded
                 ? Result.esuc(ParseError.unknown(state.pos), res.val, state)
                 : res;
+        });
+    }
+
+    /**
+     * @function module:prim.reduceMany
+     * @static
+     * @param {AbstractParser} parser
+     * @param {function} callback
+     * @param {*} initVal
+     * @returns {AbstractParser}
+     */
+    function reduceMany(parser, callback, initVal) {
+        return new Parser(state => {
+            let accum = initVal;
+            let consumed = false;
+            let currentState = state;
+            while (true) {
+                let res = parser.run(currentState);
+                if (res.succeeded) {
+                    if (res.consumed) {
+                        consumed = true;
+                        accum = callback(accum, res.val);
+                        currentState = res.state;
+                    }
+                    else {
+                        throw new Error("'many' is applied to a parser that accepts an empty string");
+                    }
+                }
+                else {
+                    if (res.consumed) {
+                        return res;
+                    }
+                    else {
+                        return consumed
+                            ? Result.csuc(res.err, accum, currentState)
+                            : Result.esuc(res.err, accum, currentState);
+                    }
+                }
+            }
         });
     }
 
