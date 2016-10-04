@@ -374,7 +374,7 @@ module.exports = _core => {
         return new Parser(state => {
             let len = expectTokens.length;
             if (len === 0) {
-                return Result.esuc(ParseError.unknown(state.position), [], state);
+                return Result.esuc(ParseError.unknown(state.pos), [], state);
             }
             let rest = state.input;
             for (let i = 0; i < len; i++) {
