@@ -32,7 +32,8 @@ module.exports = _core => {
             skipMany,
             tokens,
             token,
-            tokenPrim
+            tokenPrim,
+            getState
         });
     }
 
@@ -462,6 +463,13 @@ module.exports = _core => {
             }
         });
     }
+
+    /**
+     * @constant module:prim.getState
+     * @static
+     * @type {AbstractParser}
+     */
+    const getState = new Parser(state => Result.esuc(ParseError.unknown(state.pos), state, state));
 
     return end();
 };
