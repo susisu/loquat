@@ -26,4 +26,5 @@ describe("prim", () => {
     require("./prim/skipMany.js");
     require("./prim/tokens.js");
     require("./prim/token.js");
+    require("./prim/tokenPrim.js");
 });
