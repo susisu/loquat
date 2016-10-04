@@ -23,4 +23,5 @@ describe("prim", () => {
     require("./prim/lookAhead.js");
     require("./prim/reduceMany.js");
     require("./prim/many.js");
+    require("./prim/skipMany.js");
 });
