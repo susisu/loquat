@@ -346,19 +346,19 @@ module.exports = _core => {
     /**
      * @function module:prim.tokens
      * @static
-     * @param {Array.<*>} expectedTokens
+     * @param {Array.<*>} expectTokens
      * @param {function} tokenEqual
      * @param {function} tokensToString
      * @param {function} calcNextPos
      * @returns {AbstractParser}
      */
-    function tokens(expectedTokens, tokenEqual, tokensToString, calcNextPos) {
+    function tokens(expectTokens, tokenEqual, tokensToString, calcNextPos) {
         function eofError(pos) {
             return new ParseError(
                 pos,
                 [
                     new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                    new ErrorMessage(ErrorMessageType.EXPECT, tokensToString(expectedTokens))
+                    new ErrorMessage(ErrorMessageType.EXPECT, tokensToString(expectTokens))
                 ]
             );
         }
@@ -367,12 +367,12 @@ module.exports = _core => {
                 pos,
                 [
                     new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, tokensToString([token])),
-                    new ErrorMessage(ErrorMessageType.EXPECT, tokensToString(expectedTokens))
+                    new ErrorMessage(ErrorMessageType.EXPECT, tokensToString(expectTokens))
                 ]
             );
         }
         return new Parser(state => {
-            let len = expectedTokens.length;
+            let len = expectTokens.length;
             if (len === 0) {
                 return Result.esuc(ParseError.unknown(state.position), [], state);
             }
@@ -385,7 +385,7 @@ module.exports = _core => {
                         : Result.cerr(eofError(state.pos));
                 }
                 else {
-                    if (tokenEqual(expectedTokens[i], unconsed.head)) {
+                    if (tokenEqual(expectTokens[i], unconsed.head)) {
                         rest = unconsed.tail;
                     }
                     else {
@@ -395,10 +395,10 @@ module.exports = _core => {
                     }
                 }
             }
-            let newPos = calcNextPos(state.pos, expectedTokens);
+            let newPos = calcNextPos(state.pos, expectTokens);
             return Result.csuc(
                 ParseError.unknown(newPos),
-                expectedTokens,
+                expectTokens,
                 new State(state.config, rest, newPos, state.userState)
             );
         });
