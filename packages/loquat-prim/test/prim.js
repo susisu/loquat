@@ -21,4 +21,5 @@ describe("prim", () => {
     require("./prim/unexpected.js");
     require("./prim/tryParse.js");
     require("./prim/lookAhead.js");
+    require("./prim/reduceMany.js");
 });
