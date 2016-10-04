@@ -70,16 +70,7 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
                 "none"
             );
             let expectTokens = ["A", "B"];
-            let parser = tokens(
-                expectTokens,
-                (x, y) => x === y,
-                tokens => tokens.join(""),
-                (pos, tokens) => {
-                    expect(SourcePos.equal(pos, initPos)).to.be.true;
-                    expect(tokens).to.deep.equal(expectTokens);
-                    return new SourcePos("foobar", 1, 3);
-                }
-            );
+            let parser = generateParser(expectTokens);
             assertParser(parser);
             let res = parser.run(initState);
             expect(Result.equal(
@@ -106,16 +97,7 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
                 "none"
             );
             let expectTokens = ["A", "B"];
-            let parser = tokens(
-                expectTokens,
-                (x, y) => x === y,
-                tokens => tokens.join(""),
-                (pos, tokens) => {
-                    expect(SourcePos.equal(pos, initPos)).to.be.true;
-                    expect(tokens).to.deep.equal(expectTokens);
-                    return new SourcePos("foobar", 1, 3);
-                }
-            );
+            let parser = generateParser(expectTokens);
             assertParser(parser);
             let res = parser.run(initState);
             expect(Result.equal(
@@ -141,16 +123,7 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
                 "none"
             );
             let expectTokens = ["A", "B"];
-            let parser = tokens(
-                expectTokens,
-                (x, y) => x === y,
-                tokens => tokens.join(""),
-                (pos, tokens) => {
-                    expect(SourcePos.equal(pos, initPos)).to.be.true;
-                    expect(tokens).to.deep.equal(expectTokens);
-                    return new SourcePos("foobar", 1, 3);
-                }
-            );
+            let parser = generateParser(expectTokens);
             assertParser(parser);
             let res = parser.run(initState);
             expect(Result.equal(
@@ -176,16 +149,7 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
                 "none"
             );
             let expectTokens = ["A", "B"];
-            let parser = tokens(
-                expectTokens,
-                (x, y) => x === y,
-                tokens => tokens.join(""),
-                (pos, tokens) => {
-                    expect(SourcePos.equal(pos, initPos)).to.be.true;
-                    expect(tokens).to.deep.equal(expectTokens);
-                    return new SourcePos("foobar", 1, 3);
-                }
-            );
+            let parser = generateParser(expectTokens);
             assertParser(parser);
             let res = parser.run(initState);
             expect(Result.equal(
@@ -211,16 +175,7 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
                 "none"
             );
             let expectTokens = ["A", "B"];
-            let parser = tokens(
-                expectTokens,
-                (x, y) => x === y,
-                tokens => tokens.join(""),
-                (pos, tokens) => {
-                    expect(SourcePos.equal(pos, initPos)).to.be.true;
-                    expect(tokens).to.deep.equal(expectTokens);
-                    return new SourcePos("foobar", 1, 3);
-                }
-            );
+            let parser = generateParser(expectTokens);
             assertParser(parser);
             let res = parser.run(initState);
             expect(Result.equal(
