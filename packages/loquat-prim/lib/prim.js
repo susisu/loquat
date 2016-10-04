@@ -283,6 +283,7 @@ module.exports = _core => {
      * @param {function} callback
      * @param {*} initVal
      * @returns {AbstractParser}
+     * @throws {Error} `parser` accepts an empty string.
      */
     function reduceMany(parser, callback, initVal) {
         return new Parser(state => {
@@ -320,6 +321,7 @@ module.exports = _core => {
      * @static
      * @param {AbstractParser} parser
      * @returns {AbstractParser}
+     * @throws {Error} `parser` accepts an empty string.
      */
     function many(parser) {
         return reduceMany(parser, (accum, val) => { accum.push(val); return accum; }, []);
@@ -330,6 +332,7 @@ module.exports = _core => {
      * @static
      * @param {AbstractParser} parser
      * @returns {AbstractParser}
+     * @throws {Error} `parser` accepts an empty string.
      */
     function skipMany(parser) {
         return reduceMany(parser, accum => accum, undefined);
