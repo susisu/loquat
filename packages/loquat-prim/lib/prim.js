@@ -33,7 +33,9 @@ module.exports = _core => {
             tokens,
             token,
             tokenPrim,
-            getState
+            getState,
+            setState,
+            updateState
         });
     }
 
@@ -470,6 +472,29 @@ module.exports = _core => {
      * @type {AbstractParser}
      */
     const getState = new Parser(state => Result.esuc(ParseError.unknown(state.pos), state, state));
+
+    /**
+     * @function module:prim.setState
+     * @static
+     * @param {State} state
+     * @returns {AbstractParser}
+     */
+    function setState(state) {
+        return updateState(() => state);
+    }
+
+    /**
+     * @function module:prim.updateState
+     * @static
+     * @param {function} func
+     * @returns {AbstractParser}
+     */
+    function updateState(func) {
+        return new Parser(state => {
+            let newState = func(state);
+            return Result.esuc(ParseError.unknown(newState.pos), newState, newState);
+        });
+    }
 
     return end();
 };
