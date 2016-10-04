@@ -19,4 +19,5 @@ describe("prim", () => {
     require("./prim/label.js");
     require("./prim/labels.js");
     require("./prim/unexpected.js");
+    require("./prim/tryParse.js");
 });
