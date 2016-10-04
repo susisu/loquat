@@ -30,7 +30,9 @@ module.exports = _core => {
             reduceMany,
             many,
             skipMany,
-            tokens
+            tokens,
+            token,
+            tokenPrim
         });
     }
 
@@ -399,6 +401,65 @@ module.exports = _core => {
                 expectedTokens,
                 new State(state.config, rest, newPos, state.userState)
             );
+        });
+    }
+
+    /**
+     * @function module:prim.token
+     * @static
+     * @param {function} calcValue
+     * @param {function} tokenToString
+     * @param {function} calcPos
+     * @returns {AbstractParser}
+     */
+    function token(calcValue, tokenToString, calcPos) {
+        function calcNextPos(pos, token, rest) {
+            let unconsed = uncons(rest);
+            return unconsed.empty
+                ? calcPos(token)
+                : calcPos(unconsed.head);
+        }
+        return tokenPrim(calcValue, tokenToString, calcNextPos);
+    }
+
+    /**
+     * @function module:prim.tokenPrim
+     * @static
+     * @param {function} calcValue
+     * @param {function} tokenToString
+     * @param {function} calcNextPos
+     * @param {function} [calcNextUserState = x => x]
+     * @returns {AbstractParser}
+     */
+    function tokenPrim(calcValue, tokenToString, calcNextPos, calcNextUserState) {
+        function systemUnexpectError(pos, str) {
+            return new ParseError(
+                pos,
+                [new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, str)]
+            );
+        }
+        return new Parser(state => {
+            let unconsed = uncons(state.input);
+            if (unconsed.empty) {
+                return Result.eerr(systemUnexpectError(state.pos, ""));
+            }
+            else {
+                let maybeVal = calcValue(unconsed.head);
+                if (maybeVal.empty) {
+                    return Result.eerr(systemUnexpectError(state.pos, tokenToString(unconsed.head)));
+                }
+                else {
+                    let newPos = calcNextPos(state.pos, unconsed.head, unconsed.tail);
+                    let newUserState = calcNextUserState === undefined
+                        ? state.userState
+                        : calcNextUserState(state.userState, state.pos, unconsed.head, unconsed.tail);
+                    return Result.csuc(
+                        ParseError.unknown(newPos),
+                        maybeVal.value,
+                        new State(state.config, unconsed.tail, newPos, newUserState)
+                    );
+                }
+            }
         });
     }
 
