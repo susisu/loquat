@@ -29,7 +29,8 @@ module.exports = _core => {
             lookAhead,
             reduceMany,
             many,
-            skipMany
+            skipMany,
+            tokens
         });
     }
 
@@ -37,6 +38,8 @@ module.exports = _core => {
     const ErrorMessage     = _core.ErrorMessage;
     const ParseError       = _core.ParseError;
     const LazyParseError   = _core.LazyParseError;
+    const uncons           = _core.uncons;
+    const State            = _core.State;
     const Result           = _core.Result;
     const Parser           = _core.Parser;
 
@@ -336,6 +339,67 @@ module.exports = _core => {
      */
     function skipMany(parser) {
         return reduceMany(parser, accum => accum, undefined);
+    }
+
+    /**
+     * @function module:prim.tokens
+     * @static
+     * @param {Array.<*>} expectedTokens
+     * @param {function} tokenEqual
+     * @param {function} tokensToString
+     * @param {function} calcNextPos
+     * @returns {AbstractParser}
+     */
+    function tokens(expectedTokens, tokenEqual, tokensToString, calcNextPos) {
+        function eofError(pos) {
+            return new ParseError(
+                pos,
+                [
+                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                    new ErrorMessage(ErrorMessageType.EXPECT, tokensToString(expectedTokens))
+                ]
+            );
+        }
+        function expectError(pos, token) {
+            return new ParseError(
+                pos,
+                [
+                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, tokensToString([token])),
+                    new ErrorMessage(ErrorMessageType.EXPECT, tokensToString(expectedTokens))
+                ]
+            );
+        }
+        return new Parser(state => {
+            let len = expectedTokens.length;
+            if (len === 0) {
+                return Result.esuc(ParseError.unknown(state.position), [], state);
+            }
+            let rest = state.input;
+            for (let i = 0; i < len; i++) {
+                let unconsed = uncons(rest);
+                if (unconsed.empty) {
+                    return i === 0
+                        ? Result.eerr(eofError(state.pos))
+                        : Result.cerr(eofError(state.pos));
+                }
+                else {
+                    if (tokenEqual(expectedTokens[i], unconsed.head)) {
+                        rest = unconsed.tail;
+                    }
+                    else {
+                        return i === 0
+                            ? Result.eerr(expectError(state.pos, unconsed.head))
+                            : Result.cerr(expectError(state.pos, unconsed.head));
+                    }
+                }
+            }
+            let newPos = calcNextPos(state.pos, expectedTokens);
+            return Result.csuc(
+                ParseError.unknown(newPos),
+                expectedTokens,
+                new State(state.config, rest, newPos, state.userState)
+            );
+        });
     }
 
     return end();
