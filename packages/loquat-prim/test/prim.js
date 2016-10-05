@@ -37,4 +37,5 @@ describe("prim", () => {
     require("./prim/getPosition.js");
     require("./prim/setPosition.js");
     require("./prim/getUserState.js");
+    require("./prim/setUserState.js");
 });
