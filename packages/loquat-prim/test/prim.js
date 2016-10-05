@@ -34,4 +34,5 @@ describe("prim", () => {
     require("./prim/setConfig.js");
     require("./prim/getInput.js");
     require("./prim/setInput.js");
+    require("./prim/getPosition.js");
 });
