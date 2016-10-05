@@ -1,5 +1,5 @@
 /*
- * loquat-prim test / prim.setState
+ * loquat-prim test / prim.setState()
  * copyright (c) 2016 Susisu
  */
 
