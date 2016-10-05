@@ -30,4 +30,5 @@ describe("prim", () => {
     require("./prim/getState.js");
     require("./prim/setState.js");
     require("./prim/updateState.js");
+    require("./prim/getConfig.js");
 });
