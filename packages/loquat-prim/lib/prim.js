@@ -35,7 +35,15 @@ module.exports = _core => {
             tokenPrim,
             getState,
             setState,
-            updateState
+            updateState,
+            getConfig,
+            setConfig,
+            getInput,
+            setInput,
+            getPosition,
+            setPosition,
+            getUserState,
+            setUserState
         });
     }
 
@@ -494,6 +502,86 @@ module.exports = _core => {
             let newState = func(state);
             return Result.esuc(ParseError.unknown(newState.pos), newState, newState);
         });
+    }
+
+    /**
+     * @constant module:prim.getConfig
+     * @static
+     * @type {AbstractParser}
+     */
+    const getConfig = bind(getState, state => pure(state.config));
+
+    /**
+     * @function module:prim.setConfig
+     * @static
+     * @param {Config} config
+     * @returns {AbstractParser}
+     */
+    function setConfig(config) {
+        return then(
+            updateState(state => state.setConfig(config)),
+            pure(undefined)
+        );
+    }
+
+    /**
+     * @constant module:prim.getInput
+     * @static
+     * @type {AbstractParser}
+     */
+    const getInput = bind(getState, state => pure(state.input));
+
+    /**
+     * @function module:prim.setInput
+     * @static
+     * @param {(string|Array|IStream)} input
+     * @returns {AbstractParser}
+     */
+    function setInput(input) {
+        return then(
+            updateState(state => state.setInput(input)),
+            pure(undefined)
+        );
+    }
+
+    /**
+     * @constant module:prim.getPosition
+     * @static
+     * @type {AbstractParser}
+     */
+    const getPosition = bind(getState, state => pure(state.pos));
+
+    /**
+     * @function module:prim.setPosition
+     * @static
+     * @param {SourcePos} pos
+     * @returns {AbstractParser}
+     */
+    function setPosition(pos) {
+        return then(
+            updateState(state => state.setPosition(pos)),
+            pure(undefined)
+        );
+    }
+
+    /**
+     * @constant module:prim.getUserState
+     * @static
+     * @type {AbstractParser}
+     */
+    const getUserState = bind(getState, state => pure(state.userState));
+
+    /**
+     * @function module:prim.setUserState
+     * @static
+     * @param {*} userState
+     * @returns {AbstractParser}
+     */
+    function setUserState(userState) {
+        return then(
+            updateState(state => state.setUserState(userState)),
+            pure(undefined)
+        );
     }
 
     return end();
