@@ -15,7 +15,8 @@ module.exports = _core => {
             string,
             satisfy,
             oneOf,
-            noneOf
+            noneOf,
+            char
         });
     }
 
@@ -29,6 +30,7 @@ module.exports = _core => {
     const Parser           = _core.Parser;
 
     const _prim = require("loquat-prim")(_core);
+    const label     = _prim.label;
     const tokenPrim = _prim.tokenPrim;
 
     /**
@@ -157,6 +159,16 @@ module.exports = _core => {
             chars.add(str[i]);
         }
         return satisfy((char, config) => config.useCodePoint ? !cpChars.has(char) : !chars.has(char));
+    }
+
+    /**
+     * @function module:char.char
+     * @static
+     * @param {string} expectChar
+     * @returns {AbstractParser}
+     */
+    function char(expectChar) {
+        return label(satisfy(char => char === expectChar), show(expectChar));
     }
 
     return end();
