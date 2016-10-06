@@ -12,7 +12,8 @@
 module.exports = _core => {
     function end() {
         return Object.freeze({
-            string
+            string,
+            satisfy
         });
     }
 
@@ -24,6 +25,9 @@ module.exports = _core => {
     const State            = _core.State;
     const Result           = _core.Result;
     const Parser           = _core.Parser;
+
+    const _prim = require("loquat-prim")(_core);
+    const tokenPrim = _prim.tokenPrim;
 
     /**
      * @function module:char.string
@@ -107,6 +111,20 @@ module.exports = _core => {
                 new State(state.config, rest, newPos, state.userState)
             );
         });
+    }
+
+    /**
+     * @function module:char.satisfy
+     * @static
+     * @param {function} test
+     * @returns {AbstractParser}
+     */
+    function satisfy(test) {
+        return tokenPrim(
+            (char, config) => test(char, config) ? { empty: false, value: char } : { empty: true },
+            show,
+            (pos, char, rest, config) => pos.addChar(char, config.tabWidth)
+        );
     }
 
     return end();
