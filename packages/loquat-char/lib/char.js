@@ -28,7 +28,8 @@ module.exports = _core => {
             digit,
             alphaNum,
             octDigit,
-            hexDigit
+            hexDigit,
+            manyChars
         });
     }
 
@@ -42,9 +43,10 @@ module.exports = _core => {
     const Parser           = _core.Parser;
 
     const _prim = require("loquat-prim")(_core);
-    const label     = _prim.label;
-    const skipMany  = _prim.skipMany;
-    const tokenPrim = _prim.tokenPrim;
+    const label      = _prim.label;
+    const reduceMany = _prim.reduceMany;
+    const skipMany   = _prim.skipMany;
+    const tokenPrim  = _prim.tokenPrim;
 
     /**
      * @function module:char.string
@@ -276,6 +278,16 @@ module.exports = _core => {
      * @type {AbstractParser}
      */
     const hexDigit = label(satisfy(char => hexDigitChars.has(char)), "hexadecimal digit");
+
+    /**
+     * @function module:char.manyChars
+     * @static
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function manyChars(parser) {
+        return reduceMany(parser, (accum, char) => accum + char, "");
+    }
 
     return end();
 };
