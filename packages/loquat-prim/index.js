@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = (core, sugar) => {
-    let _prim = require("./lib/prim")(core);
+    let _prim = require("./lib/prim.js")(core);
     const map          = _prim.map;
     const pure         = _prim.pure;
     const ap           = _prim.ap;
