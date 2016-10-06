@@ -37,8 +37,9 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
                     return { empty: false, value: "nyancat" };
                 },
                 () => { throw new Error("unexpected call"); },
-                x => {
+                (x, config) => {
                     expect(x).to.equal("B");
+                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
                     return new SourcePos("foobar", 1, 2);
                 }
             );
@@ -72,8 +73,9 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
                     return { empty: false, value: "nyancat" };
                 },
                 () => { throw new Error("unexpected call"); },
-                x => {
+                (x, config) => {
                     expect(x).to.equal("A");
+                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
                     return new SourcePos("foobar", 1, 2);
                 }
             );
