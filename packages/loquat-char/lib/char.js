@@ -210,56 +210,56 @@ module.exports = _core => {
      * @static
      * @type {AbstractParser}
      */
-    const space    = label(satisfy(char => spaceChars.has(char)), "space");
+    const space = label(satisfy(char => spaceChars.has(char)), "space");
 
     /**
      * @constant module:char.spaces
      * @static
      * @type {AbstractParser}
      */
-    const spaces   = label(skipMany(space), "white space");
+    const spaces = label(skipMany(space), "white space");
 
     /**
      * @constant module:char.newline
      * @static
      * @type {AbstractParser}
      */
-    const newline  = label(char("\n"), "new-line");
+    const newline = label(char("\n"), "new-line");
 
     /**
      * @constant module:char.tab
      * @static
      * @type {AbstractParser}
      */
-    const tab      = label(char("\t"), "tab");
+    const tab = label(char("\t"), "tab");
 
     /**
      * @constant module:char.upper
      * @static
      * @type {AbstractParser}
      */
-    const upper    = label(satisfy(char => upperChars.has(char)), "uppercase letter");
+    const upper = label(satisfy(char => upperChars.has(char)), "uppercase letter");
 
     /**
      * @constant module:char.lower
      * @static
      * @type {AbstractParser}
      */
-    const lower    = label(satisfy(char => lowerChars.has(char)), "lowercase letter");
+    const lower = label(satisfy(char => lowerChars.has(char)), "lowercase letter");
 
     /**
      * @constant module:char.letter
      * @static
      * @type {AbstractParser}
      */
-    const letter   = label(satisfy(char => letterChars.has(char)), "letter");
+    const letter = label(satisfy(char => letterChars.has(char)), "letter");
 
     /**
      * @constant module:char.digit
      * @static
      * @type {AbstractParser}
      */
-    const digit    = label(satisfy(char => digitChars.has(char)), "digit");
+    const digit = label(satisfy(char => digitChars.has(char)), "digit");
 
     /**
      * @constant module:char.alphaNum
