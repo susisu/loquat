@@ -17,7 +17,18 @@ module.exports = _core => {
             oneOf,
             noneOf,
             char,
-            anyChar
+            anyChar,
+            space,
+            spaces,
+            newline,
+            tab,
+            upper,
+            lower,
+            letter,
+            digit,
+            alphaNum,
+            octDigit,
+            hexDigit
         });
     }
 
@@ -32,6 +43,7 @@ module.exports = _core => {
 
     const _prim = require("loquat-prim")(_core);
     const label     = _prim.label;
+    const skipMany  = _prim.skipMany;
     const tokenPrim = _prim.tokenPrim;
 
     /**
@@ -178,6 +190,92 @@ module.exports = _core => {
      * @type {AbstractParser}
      */
     const anyChar = satisfy(() => true);
+
+    const spaceChars    = new Set(" \f\n\r\t\v");
+    const upperChars    = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    const lowerChars    = new Set("abcdefghijklmnopqrstuvwxyz");
+    const letterChars   = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+    const digitChars    = new Set("0123456789");
+    const alphaNumChars = new Set("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+    const octDigitChars = new Set("01234567");
+    const hexDigitChars = new Set("0123456789ABCDEFabcdef");
+
+    /**
+     * @constant module:char.space
+     * @static
+     * @type {AbstractParser}
+     */
+    const space    = label(satisfy(char => spaceChars.has(char)), "space");
+
+    /**
+     * @constant module:char.spaces
+     * @static
+     * @type {AbstractParser}
+     */
+    const spaces   = label(skipMany(space), "white space");
+
+    /**
+     * @constant module:char.newline
+     * @static
+     * @type {AbstractParser}
+     */
+    const newline  = label(char("\n"), "new-line");
+
+    /**
+     * @constant module:char.tab
+     * @static
+     * @type {AbstractParser}
+     */
+    const tab      = label(char("\t"), "tab");
+
+    /**
+     * @constant module:char.upper
+     * @static
+     * @type {AbstractParser}
+     */
+    const upper    = label(satisfy(char => upperChars.has(char)), "uppercase letter");
+
+    /**
+     * @constant module:char.lower
+     * @static
+     * @type {AbstractParser}
+     */
+    const lower    = label(satisfy(char => lowerChars.has(char)), "lowercase letter");
+
+    /**
+     * @constant module:char.letter
+     * @static
+     * @type {AbstractParser}
+     */
+    const letter   = label(satisfy(char => letterChars.has(char)), "letter");
+
+    /**
+     * @constant module:char.digit
+     * @static
+     * @type {AbstractParser}
+     */
+    const digit    = label(satisfy(char => digitChars.has(char)), "digit");
+
+    /**
+     * @constant module:char.alphaNum
+     * @static
+     * @type {AbstractParser}
+     */
+    const alphaNum = label(satisfy(char => alphaNumChars.has(char)), "letter or digit");
+
+    /**
+     * @constant module:char.octDigit
+     * @static
+     * @type {AbstractParser}
+     */
+    const octDigit = label(satisfy(char => octDigitChars.has(char)), "octal digit");
+
+    /**
+     * @constant module:char.hexDigit
+     * @static
+     * @type {AbstractParser}
+     */
+    const hexDigit = label(satisfy(char => hexDigitChars.has(char)), "hexadecimal digit");
 
     return end();
 };
