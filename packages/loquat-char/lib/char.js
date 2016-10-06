@@ -136,12 +136,12 @@ module.exports = _core => {
      * @returns {AbstractParser}
      */
     function oneOf(str) {
-        let cpCharSet = new Set(str);
-        let charSet = new Set();
+        let cpChars = new Set(str);
+        let chars   = new Set();
         for (let i = 0; i < str.length; i++) {
-            charSet.add(str[i]);
+            chars.add(str[i]);
         }
-        return satisfy((char, config) => config.useCodePoint ? cpCharSet.has(char) : charSet.has(char));
+        return satisfy((char, config) => config.useCodePoint ? cpChars.has(char) : chars.has(char));
     }
 
     /**
@@ -151,12 +151,12 @@ module.exports = _core => {
      * @returns {AbstractParser}
      */
     function noneOf(str) {
-        let cpCharSet = new Set(str);
-        let charSet = new Set();
+        let cpChars = new Set(str);
+        let chars   = new Set();
         for (let i = 0; i < str.length; i++) {
-            charSet.add(str[i]);
+            chars.add(str[i]);
         }
-        return satisfy((char, config) => config.useCodePoint ? !cpCharSet.has(char) : !charSet.has(char));
+        return satisfy((char, config) => config.useCodePoint ? !cpChars.has(char) : !chars.has(char));
     }
 
     return end();
