@@ -455,7 +455,7 @@ module.exports = _core => {
                 return Result.eerr(systemUnexpectError(state.pos, ""));
             }
             else {
-                let maybeVal = calcValue(unconsed.head);
+                let maybeVal = calcValue(unconsed.head, state.config);
                 if (maybeVal.empty) {
                     return Result.eerr(systemUnexpectError(state.pos, tokenToString(unconsed.head)));
                 }
