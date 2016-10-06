@@ -13,7 +13,8 @@ module.exports = _core => {
     function end() {
         return Object.freeze({
             string,
-            satisfy
+            satisfy,
+            oneOf
         });
     }
 
@@ -125,6 +126,21 @@ module.exports = _core => {
             show,
             (pos, char, rest, config) => pos.addChar(char, config.tabWidth)
         );
+    }
+
+    /**
+     * @function module:char.oneOf
+     * @static
+     * @param {string} str
+     * @returns {AbstractParser}
+     */
+    function oneOf(str) {
+        let cpCharSet = new Set(str);
+        let charSet = new Set();
+        for (let i = 0; i < str.length; i++) {
+            charSet.add(str[i]);
+        }
+        return satisfy((char, config) => config.useCodePoint ? cpCharSet.has(char) : charSet.has(char));
     }
 
     return end();
