@@ -406,7 +406,7 @@ module.exports = _core => {
                     }
                 }
             }
-            let newPos = calcNextPos(state.pos, expectTokens);
+            let newPos = calcNextPos(state.pos, expectTokens, state.config);
             return Result.csuc(
                 ParseError.unknown(newPos),
                 expectTokens,
@@ -424,11 +424,11 @@ module.exports = _core => {
      * @returns {AbstractParser}
      */
     function token(calcValue, tokenToString, calcPos) {
-        function calcNextPos(pos, token, rest) {
+        function calcNextPos(pos, token, rest, config) {
             let unconsed = uncons(rest);
             return unconsed.empty
-                ? calcPos(token)
-                : calcPos(unconsed.head);
+                ? calcPos(token, config)
+                : calcPos(unconsed.head, config);
         }
         return tokenPrim(calcValue, tokenToString, calcNextPos);
     }
@@ -460,10 +460,10 @@ module.exports = _core => {
                     return Result.eerr(systemUnexpectError(state.pos, tokenToString(unconsed.head)));
                 }
                 else {
-                    let newPos = calcNextPos(state.pos, unconsed.head, unconsed.tail);
+                    let newPos = calcNextPos(state.pos, unconsed.head, unconsed.tail, state.config);
                     let newUserState = calcNextUserState === undefined
                         ? state.userState
-                        : calcNextUserState(state.userState, state.pos, unconsed.head, unconsed.tail);
+                        : calcNextUserState(state.userState, state.pos, unconsed.head, unconsed.tail, state.config);
                     return Result.csuc(
                         ParseError.unknown(newPos),
                         maybeVal.value,
