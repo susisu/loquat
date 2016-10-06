@@ -25,15 +25,17 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
     it("should return a parser that parses tokens given by `expectTokens'", () => {
         let arrayEqual = (xs, ys) => xs.length === ys.length && xs.every((x, i) => x === ys[i]);
 
-        let initPos = new SourcePos("foobar", 1, 1);
+        let initConfig = new Config({ tabWidth: 8 });
+        let initPos    = new SourcePos("foobar", 1, 1);
         function generateParser(expectTokens) {
             return tokens(
                 expectTokens,
                 (x, y) => x === y,
                 tokens => tokens.join(""),
-                (pos, tokens) => {
+                (pos, tokens, config) => {
                     expect(SourcePos.equal(pos, initPos)).to.be.true;
                     expect(tokens).to.deep.equal(expectTokens);
+                    expect(Config.equal(config, initConfig)).to.be.true;
                     return new SourcePos("foobar", 1, 3);
                 }
             );
@@ -42,7 +44,7 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
         // expect empty
         {
             let initState = new State(
-                new Config({ tabWidth: 8 }),
+                initConfig,
                 "ABC",
                 initPos,
                 "none"
@@ -64,7 +66,7 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
         // expect many, correct input
         {
             let initState = new State(
-                new Config({ tabWidth: 8 }),
+                initConfig,
                 "ABC",
                 initPos,
                 "none"
@@ -91,7 +93,7 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
         // expect many, totally wrong input
         {
             let initState = new State(
-                new Config({ tabWidth: 8 }),
+                initConfig,
                 "CDE",
                 initPos,
                 "none"
@@ -117,7 +119,7 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
         // expect many, partially wrong input
         {
             let initState = new State(
-                new Config({ tabWidth: 8 }),
+                initConfig,
                 "ACD",
                 initPos,
                 "none"
@@ -143,7 +145,7 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
         // expect many, no input
         {
             let initState = new State(
-                new Config({ tabWidth: 8 }),
+                initConfig,
                 "",
                 initPos,
                 "none"
@@ -169,7 +171,7 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
         // expect many, less input
         {
             let initState = new State(
-                new Config({ tabWidth: 8 }),
+                initConfig,
                 "A",
                 initPos,
                 "none"
