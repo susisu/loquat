@@ -16,7 +16,8 @@ module.exports = _core => {
             satisfy,
             oneOf,
             noneOf,
-            char
+            char,
+            anyChar
         });
     }
 
@@ -170,6 +171,13 @@ module.exports = _core => {
     function char(expectChar) {
         return label(satisfy(char => char === expectChar), show(expectChar));
     }
+
+    /**
+     * @constant module:char.anyChar
+     * @static
+     * @type {AbstractParser}
+     */
+    const anyChar = satisfy(() => true);
 
     return end();
 };
