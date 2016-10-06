@@ -14,7 +14,8 @@ module.exports = _core => {
         return Object.freeze({
             string,
             satisfy,
-            oneOf
+            oneOf,
+            noneOf
         });
     }
 
@@ -141,6 +142,21 @@ module.exports = _core => {
             charSet.add(str[i]);
         }
         return satisfy((char, config) => config.useCodePoint ? cpCharSet.has(char) : charSet.has(char));
+    }
+
+    /**
+     * @function module:char.noneOf
+     * @static
+     * @param {string} str
+     * @returns {AbstractParser}
+     */
+    function noneOf(str) {
+        let cpCharSet = new Set(str);
+        let charSet = new Set();
+        for (let i = 0; i < str.length; i++) {
+            charSet.add(str[i]);
+        }
+        return satisfy((char, config) => config.useCodePoint ? !cpCharSet.has(char) : !charSet.has(char));
     }
 
     return end();
