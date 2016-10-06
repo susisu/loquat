@@ -29,7 +29,8 @@ module.exports = _core => {
             alphaNum,
             octDigit,
             hexDigit,
-            manyChars
+            manyChars,
+            manyChars1
         });
     }
 
@@ -43,6 +44,8 @@ module.exports = _core => {
     const Parser           = _core.Parser;
 
     const _prim = require("loquat-prim")(_core);
+    const pure       = _prim.pure;
+    const bind       = _prim.bind;
     const label      = _prim.label;
     const reduceMany = _prim.reduceMany;
     const skipMany   = _prim.skipMany;
@@ -287,6 +290,16 @@ module.exports = _core => {
      */
     function manyChars(parser) {
         return reduceMany(parser, (accum, char) => accum + char, "");
+    }
+
+    /**
+     * @function module:char.manyChars1
+     * @static
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function manyChars1(parser) {
+        return bind(parser, head => bind(manyChars(parser), tail => pure(head + tail)));
     }
 
     return end();
