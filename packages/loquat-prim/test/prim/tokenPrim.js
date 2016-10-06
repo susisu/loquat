@@ -37,14 +37,19 @@ describe(".tokenPrim(calcValue, tokenToString, calcNextPos, calcNextUserState = 
                     return { empty: false, value: "nyancat" };
                 },
                 () => { throw new Error("unexpected call"); },
-                (pos, x, xs) => {
+                (pos, x, xs, config) => {
                     expect(SourcePos.equal(pos, new SourcePos("foobar", 1, 1))).to.be.true;
                     expect(x).to.equal("A");
                     expect(xs).to.equal("BC");
+                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
                     return new SourcePos("foobar", 1, 2);
                 },
-                userState => {
+                (userState, pos, x, xs, config) => {
                     expect(userState).to.equal("none");
+                    expect(SourcePos.equal(pos, new SourcePos("foobar", 1, 1))).to.be.true;
+                    expect(x).to.equal("A");
+                    expect(xs).to.equal("BC");
+                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
                     return "some";
                 }
             );
@@ -78,10 +83,11 @@ describe(".tokenPrim(calcValue, tokenToString, calcNextPos, calcNextUserState = 
                     return { empty: false, value: "nyancat" };
                 },
                 () => { throw new Error("unexpected call"); },
-                (pos, x, xs) => {
+                (pos, x, xs, config) => {
                     expect(SourcePos.equal(pos, new SourcePos("foobar", 1, 1))).to.be.true;
                     expect(x).to.equal("A");
                     expect(xs).to.equal("BC");
+                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
                     return new SourcePos("foobar", 1, 2);
                 }
             );
