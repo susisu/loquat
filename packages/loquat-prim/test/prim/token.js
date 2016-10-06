@@ -32,8 +32,9 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
                 "none"
             );
             let parser = token(
-                x => {
+                (x, config) => {
                     expect(x).to.equal("A");
+                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
                     return { empty: false, value: "nyancat" };
                 },
                 () => { throw new Error("unexpected call"); },
@@ -68,8 +69,9 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
                 "none"
             );
             let parser = token(
-                x => {
+                (x, config) => {
                     expect(x).to.equal("A");
+                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
                     return { empty: false, value: "nyancat" };
                 },
                 () => { throw new Error("unexpected call"); },
@@ -104,8 +106,9 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
                 "none"
             );
             let parser = token(
-                x => {
+                (x, config) => {
                     expect(x).to.equal("A");
+                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
                     return { empty: true };
                 },
                 x => {

@@ -32,8 +32,9 @@ describe(".tokenPrim(calcValue, tokenToString, calcNextPos, calcNextUserState = 
                 "none"
             );
             let parser = tokenPrim(
-                x => {
+                (x, config) => {
                     expect(x).to.equal("A");
+                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
                     return { empty: false, value: "nyancat" };
                 },
                 () => { throw new Error("unexpected call"); },
@@ -78,8 +79,9 @@ describe(".tokenPrim(calcValue, tokenToString, calcNextPos, calcNextUserState = 
                 "none"
             );
             let parser = tokenPrim(
-                x => {
+                (x, config) => {
                     expect(x).to.equal("A");
+                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
                     return { empty: false, value: "nyancat" };
                 },
                 () => { throw new Error("unexpected call"); },
@@ -116,8 +118,9 @@ describe(".tokenPrim(calcValue, tokenToString, calcNextPos, calcNextUserState = 
                 "none"
             );
             let parser = tokenPrim(
-                x => {
+                (x, config) => {
                     expect(x).to.equal("A");
+                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
                     return { empty: true };
                 },
                 x => {
