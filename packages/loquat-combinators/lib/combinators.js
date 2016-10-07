@@ -13,12 +13,15 @@ module.exports = _core => {
     function end() {
         return Object.freeze({
             choice,
-            option
+            option,
+            optionMaybe
         });
     }
 
     const _prim = require("loquat-prim")(_core);
+    const map   = _prim.map;
     const pure  = _prim.pure;
+    const bind  = _prim.bind;
     const mzero = _prim.mzero;
     const mplus = _prim.mplus;
 
@@ -41,6 +44,19 @@ module.exports = _core => {
      */
     function option(val, parser) {
         return mplus(parser, pure(val));
+    }
+
+    /**
+     * @function module:combinators.optionmaybe
+     * @static
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function optionMaybe(parser) {
+        return mplus(
+            map(parser, val => ({ empty: false, value: val })),
+            bind(pure(undefined), () => ({ empty: true }))
+        );
     }
 
     return end();
