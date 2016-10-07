@@ -85,7 +85,13 @@ module.exports = _core => {
      * @returns {AbstractParser}
      */
     function between(open, close, parser) {
-        return then(open, bind(parser, val => then(close, pure(val))));
+        return then(open,
+            bind(parser, val =>
+                then(close,
+                    pure(val)
+                )
+            )
+        );
     }
 
     /**
@@ -95,7 +101,11 @@ module.exports = _core => {
      * @returns {AbstractParser}
      */
     function many1(parser) {
-        return bind(parser, head => bind(many(parser), tail => pure([head].concat(tail))));
+        return bind(parser, head =>
+            bind(many(parser), tail =>
+                pure([head].concat(tail))
+            )
+        );
     }
 
     /**
