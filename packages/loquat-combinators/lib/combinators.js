@@ -14,7 +14,8 @@ module.exports = _core => {
         return Object.freeze({
             choice,
             option,
-            optionMaybe
+            optionMaybe,
+            optional
         });
     }
 
@@ -22,6 +23,7 @@ module.exports = _core => {
     const map   = _prim.map;
     const pure  = _prim.pure;
     const bind  = _prim.bind;
+    const then  = _prim.then;
     const mzero = _prim.mzero;
     const mplus = _prim.mplus;
 
@@ -57,6 +59,10 @@ module.exports = _core => {
             map(parser, val => ({ empty: false, value: val })),
             bind(pure(undefined), () => ({ empty: true }))
         );
+    }
+
+    function optional(parser) {
+        return mplus(then(parser, pure(undefined)), pure(undefined));
     }
 
     return end();
