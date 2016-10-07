@@ -17,18 +17,20 @@ module.exports = _core => {
             optionMaybe,
             optional,
             between,
-            many1
+            many1,
+            skipMany1
         });
     }
 
     const _prim = require("loquat-prim")(_core);
-    const map   = _prim.map;
-    const pure  = _prim.pure;
-    const bind  = _prim.bind;
-    const then  = _prim.then;
-    const mzero = _prim.mzero;
-    const mplus = _prim.mplus;
-    const many  = _prim.many;
+    const map      = _prim.map;
+    const pure     = _prim.pure;
+    const bind     = _prim.bind;
+    const then     = _prim.then;
+    const mzero    = _prim.mzero;
+    const mplus    = _prim.mplus;
+    const many     = _prim.many;
+    const skipMany = _prim.skipMany;
 
     /**
      * @function module:combinators.choice
@@ -94,6 +96,16 @@ module.exports = _core => {
      */
     function many1(parser) {
         return bind(parser, head => bind(many(parser), tail => pure([head].concat(tail))));
+    }
+
+    /**
+     * @function module:combinators.skipMany1
+     * @static
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function skipMany1(parser) {
+        return then(parser, skipMany(parser));
     }
 
     return end();
