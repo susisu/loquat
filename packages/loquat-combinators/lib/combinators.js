@@ -22,7 +22,8 @@ module.exports = _core => {
             sepBy,
             sepBy1,
             sepEndBy,
-            sepEndBy1
+            sepEndBy1,
+            endBy
         });
     }
 
@@ -235,6 +236,21 @@ module.exports = _core => {
                     )
                 ),
                 pure([head])
+            )
+        );
+    }
+
+    /**
+     * @function module:combinators.endBy
+     * @static
+     * @param {AbstractParser} parser
+     * @param {AbstractParser} sep
+     * @returns {AbstractParser}
+     */
+    function endBy(parser, sep) {
+        return many(
+            bind(parser, val =>
+                then(sep, pure(val))
             )
         );
     }
