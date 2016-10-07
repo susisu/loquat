@@ -18,7 +18,9 @@ module.exports = _core => {
             optional,
             between,
             many1,
-            skipMany1
+            skipMany1,
+            sepBy,
+            sepBy1
         });
     }
 
@@ -116,6 +118,35 @@ module.exports = _core => {
      */
     function skipMany1(parser) {
         return then(parser, skipMany(parser));
+    }
+
+    /**
+     * @function module:combinators.sepBy
+     * @static
+     * @param {AbstractParser} parser
+     * @param {AbstractParser} sep
+     * @returns {AbstractParser}
+     */
+    function sepBy(parser, sep) {
+        return mplus(
+            sepBy1(parser, sep),
+            map(pure(undefined), () => [])
+        );
+    }
+
+    /**
+     * @function module:combinators.sepBy1
+     * @static
+     * @param {AbstractParser} parser
+     * @param {AbstractParser} sep
+     * @returns {AbstractParser}
+     */
+    function sepBy1(parser, sep) {
+        return bind(parser, head =>
+            bind(many(then(sep, parser)), tail =>
+                pure([head].concat(tail))
+            )
+        );
     }
 
     return end();
