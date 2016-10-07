@@ -16,7 +16,8 @@ module.exports = _core => {
             option,
             optionMaybe,
             optional,
-            between
+            between,
+            many1
         });
     }
 
@@ -27,6 +28,7 @@ module.exports = _core => {
     const then  = _prim.then;
     const mzero = _prim.mzero;
     const mplus = _prim.mplus;
+    const many  = _prim.many;
 
     /**
      * @function module:combinators.choice
@@ -82,6 +84,16 @@ module.exports = _core => {
      */
     function between(open, close, parser) {
         return then(open, bind(parser, val => then(close, pure(val))));
+    }
+
+    /**
+     * @function module:combinators.many1
+     * @static
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function many1(parser) {
+        return bind(parser, head => bind(many(parser), tail => pure([head].concat(tail))));
     }
 
     return end();
