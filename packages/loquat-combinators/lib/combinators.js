@@ -197,7 +197,7 @@ module.exports = _core => {
                 }
                 let sepRes = sep.run(currentState);
                 if (sepRes.succeeded) {
-                    if (sepRes.consuemd) {
+                    if (sepRes.consumed) {
                         consumed = true;
                         currentState = sepRes.state;
                         currentErr = sepRes.err;
