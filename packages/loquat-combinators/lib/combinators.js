@@ -20,9 +20,14 @@ module.exports = _core => {
             many1,
             skipMany1,
             sepBy,
-            sepBy1
+            sepBy1,
+            sepEndBy
         });
     }
+
+    const ParseError = _core.ParseError;
+    const Result     = _core.Result;
+    const Parser     = _core.Parser;
 
     const _prim = require("loquat-prim")(_core);
     const map      = _prim.map;
@@ -147,6 +152,70 @@ module.exports = _core => {
                 pure([head].concat(tail))
             )
         );
+    }
+
+    /**
+     * @function module:combinators.sepEndBy
+     * @static
+     * @param {AbstractParser} parser
+     * @param {AbstractParser} sep
+     * @returns {AbstractParser}
+     */
+    function sepEndBy(parser, sep) {
+        return new Parser(state => {
+            let accum = [];
+            let currentState = state;
+            let currentErr = ParseError.unknown(state.pos);
+            let consumed = false;
+            while (true) {
+                let res = parser.run(currentState);
+                if (res.succeeded) {
+                    if (res.consumed) {
+                        consumed = true;
+                        accum.push(res.val);
+                        currentState = res.state;
+                        currentErr = res.err;
+                    }
+                    else {
+                        accum.push(res.val);
+                        currentState = res.state;
+                        currentErr = ParseError.merge(currentErr, res.err);
+                    }
+                }
+                else {
+                    if (res.consumed) {
+                        return Result.cerr(res.err);
+                    }
+                    else {
+                        return consumed
+                            ? Result.csuc(ParseError.merge(currentErr, res.err), accum, currentState)
+                            : Result.esuc(ParseError.merge(currentErr, res.err), accum, currentState);
+                    }
+                }
+                let sepRes = sep.run(currentState);
+                if (sepRes.succeeded) {
+                    if (sepRes.consuemd) {
+                        consumed = true;
+                        currentState = sepRes.state;
+                        currentErr = sepRes.err;
+                    }
+                    else {
+                        currentState = sepRes.state;
+                        currentErr = ParseError.merge(currentErr, sepRes.err);
+                    }
+                }
+                else {
+                    if (sepRes.consumed) {
+                        return Result.cerr(sepRes.err);
+                    }
+                    else {
+                        return consumed
+                            ? Result.csuc(ParseError.merge(currentErr, sepRes.err), accum, currentState)
+                            : Result.esuc(ParseError.merge(currentErr, sepRes.err), accum, currentState);
+                    }
+                }
+            }
+        });
     }
 
     return end();
