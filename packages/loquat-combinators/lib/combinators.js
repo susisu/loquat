@@ -12,11 +12,13 @@
 module.exports = _core => {
     function end() {
         return Object.freeze({
-            choice
+            choice,
+            option
         });
     }
 
     const _prim = require("loquat-prim")(_core);
+    const pure  = _prim.pure;
     const mzero = _prim.mzero;
     const mplus = _prim.mplus;
 
@@ -28,6 +30,17 @@ module.exports = _core => {
      */
     function choice(parsers) {
         return parsers.reduceRight((accum, parser) => mplus(parser, accum), mzero);
+    }
+
+    /**
+     * @function module:combinators.option
+     * @static
+     * @param {*} val
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function option(val, parser) {
+        return mplus(parser, pure(val));
     }
 
     return end();
