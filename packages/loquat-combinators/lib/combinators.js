@@ -62,7 +62,7 @@ module.exports = _core => {
     function optionMaybe(parser) {
         return mplus(
             map(parser, val => ({ empty: false, value: val })),
-            bind(pure(undefined), () => ({ empty: true }))
+            map(pure(undefined), () => ({ empty: true }))
         );
     }
 
