@@ -24,7 +24,9 @@ module.exports = _core => {
             sepEndBy,
             sepEndBy1,
             endBy,
-            endBy1
+            endBy1,
+            chainl,
+            chainl1
         });
     }
 
@@ -269,6 +271,94 @@ module.exports = _core => {
                 then(sep, pure(val))
             )
         );
+    }
+
+    function chainl(parser, op, defaultVal) {
+        return mplus(
+            chainl1(parser, op),
+            pure(defaultVal)
+        );
+    }
+
+    function chainl1(parser, op) {
+        return new Parser(state => {
+            let currentVal;
+            let currentState = state;
+            let currentErr = ParseError.unknown(state.pos);
+            let consumed = false;
+
+            let headRes = parser.run(currentState);
+            if (headRes.succeeded) {
+                if (consumed) {
+                    consumed = true;
+                    currentVal = headRes.val;
+                    currentState = headRes.state;
+                    currentErr = ParseError.merge(currentErr, headRes.err);
+                }
+                else {
+                    currentVal = headRes.val;
+                    currentState = headRes.state;
+                    currentErr = ParseError.merge(currentErr, headRes.err);
+                }
+            }
+            else {
+                return headRes.consumed
+                    ? Result.cerr(headRes.err)
+                    : Result.eerr(ParseError.merge(currentErr, headRes.err));
+            }
+
+            while (true) {
+                let opRes = op.run(currentState);
+                let operation;
+                if (opRes.succeeded) {
+                    if (opRes.consumed) {
+                        consumed = true;
+                        operation = opRes.val;
+                        currentState = opRes.state;
+                        currentErr = opRes.err;
+                    }
+                    else {
+                        operation = opRes.val;
+                        currentState = opRes.state;
+                        currentErr = ParseError.merge(currentErr, opRes.err);
+                    }
+                }
+                else {
+                    if (consumed) {
+                        return Result.cerr(opRes.err);
+                    }
+                    else {
+                        return consumed
+                            ? Result.csuc(ParseError.merge(currentErr, opRes.err), currentVal, currentState)
+                            : Result.esuc(ParseError.merge(currentErr, opRes.err), currentVal, currentState);
+                    }
+                }
+                let res = parser.run(currentState);
+                if (res.succeeded) {
+                    if (res.consumed) {
+                        consumed = true;
+                        currentVal = operation(currentVal, res.val);
+                        currentState = res.state;
+                        currentErr = res.err;
+                    }
+                    else {
+                        currentVal = operation(currentVal, res.val);
+                        currentState = res.state;
+                        currentErr = ParseError.merge(currentErr, res.err);
+                    }
+                }
+                else {
+                    if (res.consumed) {
+                        return Result.cerr(res.err);
+                    }
+                    else {
+                        return consumed
+                            ? Result.csuc(ParseError.merge(currentErr, res.err), currentVal, currentState)
+                            : Result.esuc(ParseError.merge(currentErr, res.err), currentVal, currentState);
+                    }
+                }
+            }
+        });
     }
 
     return end();
