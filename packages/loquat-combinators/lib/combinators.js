@@ -61,6 +61,12 @@ module.exports = _core => {
         );
     }
 
+    /**
+     * @function module:combinators.optional
+     * @static
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
     function optional(parser) {
         return mplus(then(parser, pure(undefined)), pure(undefined));
     }
