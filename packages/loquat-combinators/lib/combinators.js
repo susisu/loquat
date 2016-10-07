@@ -15,7 +15,8 @@ module.exports = _core => {
             choice,
             option,
             optionMaybe,
-            optional
+            optional,
+            between
         });
     }
 
@@ -69,6 +70,18 @@ module.exports = _core => {
      */
     function optional(parser) {
         return mplus(then(parser, pure(undefined)), pure(undefined));
+    }
+
+    /**
+     * @function module:combinators.between
+     * @static
+     * @param {AbstractParser} open
+     * @param {AbstractParser} close
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function between(open, close, parser) {
+        return then(open, bind(parser, val => then(close, pure(val))));
     }
 
     return end();
