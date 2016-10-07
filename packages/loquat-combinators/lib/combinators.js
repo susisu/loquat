@@ -21,7 +21,8 @@ module.exports = _core => {
             skipMany1,
             sepBy,
             sepBy1,
-            sepEndBy
+            sepEndBy,
+            sepEndBy1
         });
     }
 
@@ -216,6 +217,26 @@ module.exports = _core => {
                 }
             }
         });
+    }
+
+    /**
+     * @function module:combinators.sepEndBy1
+     * @static
+     * @param {AbstractParser} parser
+     * @param {AbstractParser} sep
+     * @returns {AbstractParser}
+     */
+    function sepEndBy1(parser, sep) {
+        return bind(parser, head =>
+            mplus(
+                then(sep,
+                    bind(sepEndBy(parser, sep), tail =>
+                        pure([head].concat(tail))
+                    )
+                ),
+                pure([head])
+            )
+        );
     }
 
     return end();
