@@ -322,14 +322,14 @@ module.exports = _core => {
     /**
      * @function module:combinators.chainl
      * @static
-     * @param {AbstractParser} parser
+     * @param {AbstractParser} term
      * @param {AbstractParser} op
      * @param {*} defaultVal
      * @returns {AbstractParser}
      */
-    function chainl(parser, op, defaultVal) {
+    function chainl(term, op, defaultVal) {
         return mplus(
-            chainl1(parser, op),
+            chainl1(term, op),
             pure(defaultVal)
         );
     }
@@ -337,18 +337,18 @@ module.exports = _core => {
     /**
      * @function module:combinators.chainl1
      * @static
-     * @param {AbstractParser} parser
+     * @param {AbstractParser} term
      * @param {AbstractParser} op
      * @returns {AbstractParser}
      */
-    function chainl1(parser, op) {
+    function chainl1(term, op) {
         return new Parser(state => {
             let currentVal;
             let currentState = state;
             let currentErr = ParseError.unknown(state.pos);
             let consumed = false;
 
-            let headRes = parser.run(currentState);
+            let headRes = term.run(currentState);
             if (headRes.succeeded) {
                 if (consumed) {
                     consumed = true;
@@ -394,28 +394,28 @@ module.exports = _core => {
                             : Result.esuc(ParseError.merge(currentErr, opRes.err), currentVal, currentState);
                     }
                 }
-                let res = parser.run(currentState);
-                if (res.succeeded) {
-                    if (res.consumed) {
+                let termRes = term.run(currentState);
+                if (termRes.succeeded) {
+                    if (termRes.consumed) {
                         consumed = true;
-                        currentVal = operation(currentVal, res.val);
-                        currentState = res.state;
-                        currentErr = res.err;
+                        currentVal = operation(currentVal, termRes.val);
+                        currentState = termRes.state;
+                        currentErr = termRes.err;
                     }
                     else {
-                        currentVal = operation(currentVal, res.val);
-                        currentState = res.state;
-                        currentErr = ParseError.merge(currentErr, res.err);
+                        currentVal = operation(currentVal, termRes.val);
+                        currentState = termRes.state;
+                        currentErr = ParseError.merge(currentErr, termRes.err);
                     }
                 }
                 else {
-                    if (res.consumed) {
-                        return Result.cerr(res.err);
+                    if (termRes.consumed) {
+                        return Result.cerr(termRes.err);
                     }
                     else {
                         return consumed
-                            ? Result.csuc(ParseError.merge(currentErr, res.err), currentVal, currentState)
-                            : Result.esuc(ParseError.merge(currentErr, res.err), currentVal, currentState);
+                            ? Result.csuc(ParseError.merge(currentErr, termRes.err), currentVal, currentState)
+                            : Result.esuc(ParseError.merge(currentErr, termRes.err), currentVal, currentState);
                     }
                 }
             }
