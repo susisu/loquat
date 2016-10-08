@@ -319,6 +319,14 @@ module.exports = _core => {
         }
     }
 
+    /**
+     * @function module:combinators.chainl
+     * @static
+     * @param {AbstractParser} parser
+     * @param {AbstractParser} op
+     * @param {*} defaultVal
+     * @returns {AbstractParser}
+     */
     function chainl(parser, op, defaultVal) {
         return mplus(
             chainl1(parser, op),
@@ -326,6 +334,13 @@ module.exports = _core => {
         );
     }
 
+    /**
+     * @function module:combinators.chainl1
+     * @static
+     * @param {AbstractParser} parser
+     * @param {AbstractParser} op
+     * @returns {AbstractParser}
+     */
     function chainl1(parser, op) {
         return new Parser(state => {
             let currentVal;
