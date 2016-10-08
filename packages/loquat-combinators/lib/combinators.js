@@ -32,7 +32,8 @@ module.exports = _core => {
             chainr1,
             anyToken,
             notFollowedBy,
-            eof
+            eof,
+            manyTill
         });
     }
 
@@ -604,6 +605,68 @@ module.exports = _core => {
      * @type {AbstractParser}
      */
     const eof = label(notFollowedBy(anyToken), "end of input");
+
+    /**
+     * @function module:combinators.manyTill
+     * @static
+     * @param {AbstractParser} parser
+     * @param {AbstractParser} end
+     * @returns {AbstractParser}
+     */
+    function manyTill(parser, end) {
+        return new Parser(state => {
+            let accum = [];
+            let currentState = state;
+            let currentErr = ParseError.unknown(state.pos);
+            let consumed = false;
+            while (true) {
+                let endRes = end.run(currentState);
+                if (endRes.succeeded) {
+                    if (endRes.consumed) {
+                        return Result.csuc(endRes.err, accum, endRes.state);
+                    }
+                    else {
+                        return consumed
+                            ? Result.csuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state)
+                            : Result.esuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state);
+                    }
+                }
+                else {
+                    if (endRes.consumed) {
+                        return Result.cerr(endRes.err);
+                    }
+                    else {
+                        currentErr = ParseError.merge(currentErr, endRes.err);
+                    }
+                }
+
+                let res = parser.run(currentState);
+                if (res.succeeded) {
+                    if (res.consumed) {
+                        consumed = true;
+                        accum.push(res.val);
+                        currentState = res.state;
+                        currentErr = res.err;
+                    }
+                    else {
+                        accum.push(res.val);
+                        currentState = res.state;
+                        currentErr = ParseError.merge(currentErr, res.err);
+                    }
+                }
+                else {
+                    if (res.consumed) {
+                        return Result.cerr(res.err);
+                    }
+                    else {
+                        return consumed
+                            ? Result.cerr(ParseError.merge(currentErr, res.err))
+                            : Result.eerr(ParseError.merge(currentErr, res.err));
+                    }
+                }
+            }
+        });
+    }
 
     return end();
 };
