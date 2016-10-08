@@ -29,23 +29,26 @@ module.exports = _core => {
             chainl,
             chainl1,
             chainr,
-            chainr1
+            chainr1,
+            anyToken
         });
     }
 
+    const show       = _core.show;
     const ParseError = _core.ParseError;
     const Result     = _core.Result;
     const Parser     = _core.Parser;
 
     const _prim = require("loquat-prim")(_core);
-    const map      = _prim.map;
-    const pure     = _prim.pure;
-    const bind     = _prim.bind;
-    const then     = _prim.then;
-    const mzero    = _prim.mzero;
-    const mplus    = _prim.mplus;
-    const many     = _prim.many;
-    const skipMany = _prim.skipMany;
+    const map       = _prim.map;
+    const pure      = _prim.pure;
+    const bind      = _prim.bind;
+    const then      = _prim.then;
+    const mzero     = _prim.mzero;
+    const mplus     = _prim.mplus;
+    const many      = _prim.many;
+    const skipMany  = _prim.skipMany;
+    const tokenPrim = _prim.tokenPrim;
 
     /**
      * @function module:combinators.choice
@@ -557,6 +560,17 @@ module.exports = _core => {
             }
         });
     }
+
+    /**
+     * @constant module:combinators.anyToken
+     * @static
+     * @type {AbstractParser}
+     */
+    const anyToken = tokenPrim(
+        token => ({ empty: false, value: token }),
+        show,
+        pos => pos
+    );
 
     return end();
 };
