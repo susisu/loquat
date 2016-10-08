@@ -30,7 +30,8 @@ module.exports = _core => {
             chainl1,
             chainr,
             chainr1,
-            anyToken
+            anyToken,
+            notFollowedBy
         });
     }
 
@@ -40,15 +41,17 @@ module.exports = _core => {
     const Parser     = _core.Parser;
 
     const _prim = require("loquat-prim")(_core);
-    const map       = _prim.map;
-    const pure      = _prim.pure;
-    const bind      = _prim.bind;
-    const then      = _prim.then;
-    const mzero     = _prim.mzero;
-    const mplus     = _prim.mplus;
-    const many      = _prim.many;
-    const skipMany  = _prim.skipMany;
-    const tokenPrim = _prim.tokenPrim;
+    const map        = _prim.map;
+    const pure       = _prim.pure;
+    const bind       = _prim.bind;
+    const then       = _prim.then;
+    const mzero      = _prim.mzero;
+    const mplus      = _prim.mplus;
+    const unexpected = _prim.unexpected;
+    const tryParse   = _prim.tryParse;
+    const many       = _prim.many;
+    const skipMany   = _prim.skipMany;
+    const tokenPrim  = _prim.tokenPrim;
 
     /**
      * @function module:combinators.choice
@@ -571,6 +574,27 @@ module.exports = _core => {
         show,
         pos => pos
     );
+
+    /**
+     * @function module:combinators.notFollowedBy
+     * @static
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function notFollowedBy(parser) {
+        let modParser = new Parser(state => {
+            let res = parser.run(state);
+            return !res.consumed && res.succeeded
+                ? Result.csuc(res.err, res.val, res.state)
+                : res;
+        });
+        return tryParse(
+            mplus(
+                bind(modParser, val => unexpected(show(val))),
+                pure(undefined)
+            )
+        );
+    }
 
     return end();
 };
