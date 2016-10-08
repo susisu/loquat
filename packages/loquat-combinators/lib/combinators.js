@@ -385,7 +385,7 @@ module.exports = _core => {
                     }
                 }
                 else {
-                    if (consumed) {
+                    if (opRes.consumed) {
                         return Result.cerr(opRes.err);
                     }
                     else {
