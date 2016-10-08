@@ -25,6 +25,7 @@ module.exports = _core => {
             sepEndBy1,
             endBy,
             endBy1,
+            count,
             chainl,
             chainl1
         });
@@ -271,6 +272,51 @@ module.exports = _core => {
                 then(sep, pure(val))
             )
         );
+    }
+
+    /**
+     * @function module:combinators.count
+     * @static
+     * @param {number} num
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function count(num, parser) {
+        if (num <= 0) {
+            return map(pure(undefined), () => []);
+        }
+        else {
+            return new Parser(state => {
+                let accum = [];
+                let currentState = state;
+                let currentErr = ParseError.unknown(state.pos);
+                let consumed = false;
+                for (let i = 0; i < num; i++) {
+                    let res = parser.run(currentState);
+                    if (res.succeeded) {
+                        if (res.consumed) {
+                            consumed = true;
+                            accum.push(res.val);
+                            currentState = res.state;
+                            currentErr = res.err;
+                        }
+                        else {
+                            accum.push(res.val);
+                            currentState = res.state;
+                            currentErr = ParseError.merge(currentErr, res.err);
+                        }
+                    }
+                    else {
+                        return res.consumed
+                            ? Result.cerr(res.err)
+                            : Result.eerr(ParseError.merge(currentErr, res.err));
+                    }
+                }
+                return consumed
+                    ? Result.csuc(currentErr, accum, currentState)
+                    : Result.esuc(currentErr, accum, currentState);
+            });
+        }
     }
 
     function chainl(parser, op, defaultVal) {
