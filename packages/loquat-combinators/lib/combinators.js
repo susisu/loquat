@@ -27,7 +27,9 @@ module.exports = _core => {
             endBy1,
             count,
             chainl,
-            chainl1
+            chainl1,
+            chainr,
+            chainr1
         });
     }
 
@@ -423,6 +425,132 @@ module.exports = _core => {
                             return consumed
                                 ? Result.csuc(ParseError.merge(currentErr, termRes.err), currentVal, initState)
                                 : Result.esuc(ParseError.merge(currentErr, termRes.err), currentVal, initState);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * @function module:combinators.chainr
+     * @static
+     * @param {AbstractParser} term
+     * @param {AbstractParser} op
+     * @param {*} defaultVal
+     * @returns {AbstractParser}
+     */
+    function chainr(term, op, defaultVal) {
+        return mplus(
+            chainr1(term, op),
+            pure(defaultVal)
+        );
+    }
+
+    /**
+     * @function module:combinators.chainr1
+     * @static
+     * @param {AbstractParser} term
+     * @param {AbstractParser} op
+     * @returns {AbstractParser}
+     */
+    function chainr1(term, op) {
+        return new Parser(state => {
+            let resultVal;
+            let currentState = state;
+            let currentErr = ParseError.unknown(state.pos);
+            let consumed = false;
+
+            let headRes = term.run(currentState);
+            if (headRes.succeeded) {
+                if (headRes.consumed) {
+                    consumed = true;
+                    resultVal = headRes.val;
+                    currentState = headRes.state;
+                    currentErr = headRes.err;
+                }
+                else {
+                    resultVal = headRes.val;
+                    currentState = headRes.state;
+                    currentErr = ParseError.merge(currentErr, headRes.err);
+                }
+            }
+            else {
+                return headRes.consumed
+                    ? Result.cerr(headRes.err)
+                    : Result.eerr(ParseError.merge(currentErr, headRes.err));
+            }
+
+            let accum = [];
+            let operations = [];
+            while (true) {
+                let initState = currentState;
+
+                let opRes = op.run(currentState);
+                if (opRes.succeeded) {
+                    if (opRes.consumed) {
+                        consumed = true;
+                        operations.push(opRes.val);
+                        currentState = opRes.state;
+                        currentErr = opRes.err;
+                    }
+                    else {
+                        operations.push(opRes.val);
+                        currentState = opRes.state;
+                        currentErr = ParseError.merge(currentErr, opRes.err);
+                    }
+                }
+                else {
+                    if (opRes.consumed) {
+                        return Result.cerr(opRes.err);
+                    }
+                    else {
+                        if (accum.length > 0) {
+                            let currentVal = accum[accum.length - 1];
+                            for (let i = accum.length - 2; i >= 0; i--) {
+                                currentVal = operations[i + 1](accum[i], currentVal);
+                            }
+                            resultVal = operations[0](resultVal, currentVal);
+                        }
+                        return consumed
+                            ? Result.csuc(ParseError.merge(currentErr, opRes.err), resultVal, initState)
+                            : Result.esuc(ParseError.merge(currentErr, opRes.err), resultVal, initState);
+                    }
+                }
+
+                let termRes = term.run(currentState);
+                if (termRes.succeeded) {
+                    if (termRes.consumed) {
+                        consumed = true;
+                        accum.push(termRes.val);
+                        currentState = termRes.state;
+                        currentErr = termRes.err;
+                    }
+                    else {
+                        accum.push(termRes.val);
+                        currentState = termRes.state;
+                        currentErr = ParseError.merge(currentErr, termRes.err);
+                    }
+                }
+                else {
+                    if (termRes.consumed) {
+                        return Result.cerr(termRes.err);
+                    }
+                    else {
+                        if (opRes.consumed) {
+                            return Result.cerr(ParseError.merge(currentErr, termRes.err));
+                        }
+                        else {
+                            if (accum.length > 0) {
+                                let currentVal = accum[accum.length - 1];
+                                for (let i = accum.length - 2; i >= 0; i--) {
+                                    currentVal = operations[i + 1](accum[i], currentVal);
+                                }
+                                resultVal = operations[0](resultVal, currentVal);
+                            }
+                            return consumed
+                                ? Result.csuc(ParseError.merge(currentErr, termRes.err), resultVal, initState)
+                                : Result.esuc(ParseError.merge(currentErr, termRes.err), resultVal, initState);
                         }
                     }
                 }
