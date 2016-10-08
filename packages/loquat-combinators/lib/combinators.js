@@ -31,7 +31,8 @@ module.exports = _core => {
             chainr,
             chainr1,
             anyToken,
-            notFollowedBy
+            notFollowedBy,
+            eof
         });
     }
 
@@ -47,6 +48,7 @@ module.exports = _core => {
     const then       = _prim.then;
     const mzero      = _prim.mzero;
     const mplus      = _prim.mplus;
+    const label      = _prim.label;
     const unexpected = _prim.unexpected;
     const tryParse   = _prim.tryParse;
     const many       = _prim.many;
@@ -595,6 +597,13 @@ module.exports = _core => {
             )
         );
     }
+
+    /**
+     * @constant module:combinators.eof
+     * @static
+     * @type {AbstractParser}
+     */
+    const eof = label(notFollowedBy(anyToken), "end of input");
 
     return end();
 };
