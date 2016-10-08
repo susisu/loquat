@@ -369,6 +369,8 @@ module.exports = _core => {
             }
 
             while (true) {
+                let initState = currentState;
+
                 let opRes = op.run(currentState);
                 let operation;
                 if (opRes.succeeded) {
@@ -390,10 +392,11 @@ module.exports = _core => {
                     }
                     else {
                         return consumed
-                            ? Result.csuc(ParseError.merge(currentErr, opRes.err), currentVal, currentState)
-                            : Result.esuc(ParseError.merge(currentErr, opRes.err), currentVal, currentState);
+                            ? Result.csuc(ParseError.merge(currentErr, opRes.err), currentVal, initState)
+                            : Result.esuc(ParseError.merge(currentErr, opRes.err), currentVal, initState);
                     }
                 }
+
                 let termRes = term.run(currentState);
                 if (termRes.succeeded) {
                     if (termRes.consumed) {
@@ -413,9 +416,14 @@ module.exports = _core => {
                         return Result.cerr(termRes.err);
                     }
                     else {
-                        return consumed
-                            ? Result.csuc(ParseError.merge(currentErr, termRes.err), currentVal, currentState)
-                            : Result.esuc(ParseError.merge(currentErr, termRes.err), currentVal, currentState);
+                        if (opRes.consumed) {
+                            return Result.cerr(ParseError.merge(currentErr, termRes.err));
+                        }
+                        else {
+                            return consumed
+                                ? Result.csuc(ParseError.merge(currentErr, termRes.err), currentVal, initState)
+                                : Result.esuc(ParseError.merge(currentErr, termRes.err), currentVal, initState);
+                        }
                     }
                 }
             }
