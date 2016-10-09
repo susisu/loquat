@@ -340,7 +340,34 @@ module.exports = _core => {
      * @throws {Error} `parser` accepts an empty string.
      */
     function many(parser) {
-        return reduceMany(parser, (accum, val) => { accum.push(val); return accum; }, []);
+        return new Parser(state => {
+            let accum = [];
+            let consumed = false;
+            let currentState = state;
+            while (true) {
+                const res = parser.run(currentState);
+                if (res.succeeded) {
+                    if (res.consumed) {
+                        consumed = true;
+                        accum.push(res.val);
+                        currentState = res.state;
+                    }
+                    else {
+                        throw new Error("'many' is applied to a parser that accepts an empty string");
+                    }
+                }
+                else {
+                    if (res.consumed) {
+                        return res;
+                    }
+                    else {
+                        return consumed
+                            ? Result.csuc(res.err, accum, currentState)
+                            : Result.esuc(res.err, accum, currentState);
+                    }
+                }
+            }
+        });
     }
 
     /**
