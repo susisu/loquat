@@ -156,7 +156,7 @@ class SourcePos {
         let line   = this.line;
         let column = this.column;
         if (useCodePoint) {
-            for (let char of str) {
+            for (const char of str) {
                 switch (char) {
                 case "\n":
                     line  += 1;
@@ -171,7 +171,7 @@ class SourcePos {
             }
         }
         else {
-            let len = str.length;
+            const len = str.length;
             for (let i = 0; i < len; i++) {
                 switch (str[i]) {
                 case "\n":

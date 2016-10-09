@@ -81,11 +81,11 @@ class ErrorMessage {
         if (msgs.length === 0) {
             return "unknown parse error";
         }
-        let systemUnexpects = [];
-        let unexpects       = [];
-        let expects         = [];
-        let defaultMessages = [];
-        for (let msg of msgs) {
+        const systemUnexpects = [];
+        const unexpects       = [];
+        const expects         = [];
+        const defaultMessages = [];
+        for (const msg of msgs) {
             switch (msg.type) {
             case ErrorMessageType.SYSTEM_UNEXPECT:
                 systemUnexpects.push(msg.msgStr);
@@ -103,7 +103,7 @@ class ErrorMessage {
                 throw new Error("unknown message type: " + msg.type);
             }
         }
-        let msgStrs = [
+        const msgStrs = [
             unexpects.length === 0 && systemUnexpects.length !== 0
                 ? systemUnexpects[0] === ""
                     ? "unexpected end of input"
@@ -126,7 +126,7 @@ class ErrorMessage {
         if (msgsA.length !== msgsB.length) {
             return false;
         }
-        let len = msgsA.length;
+        const len = msgsA.length;
         for (let i = 0; i < len; i++) {
             if (!ErrorMessage.equal(msgsA[i], msgsB[i])) {
                 return false;
@@ -314,7 +314,7 @@ class ParseError extends AbstractParseError {
      */
     static merge(errA, errB) {
         return new LazyParseError(() => {
-            let cmp = SourcePos.compare(errA.pos, errB.pos);
+            const cmp = SourcePos.compare(errA.pos, errB.pos);
             return errB.isUnknown() && !errA.isUnknown() ? errA
                  : errA.isUnknown() && !errB.isUnknown() ? errB
                  : cmp > 0                               ? errA
@@ -415,7 +415,7 @@ class LazyParseError extends AbstractParseError {
         if (this._cache) {
             return this._cache;
         }
-        let lazyErrs = [];
+        const lazyErrs = [];
         let err = this;
         while (err instanceof LazyParseError) {
             if (err._cache) {
@@ -432,7 +432,7 @@ class LazyParseError extends AbstractParseError {
         if (!(err instanceof ParseError)) {
             throw new TypeError("evaluation result is not a ParseError obejct");
         }
-        for (let lazyErr of lazyErrs) {
+        for (const lazyErr of lazyErrs) {
             lazyErr._cache = err;
         }
         return err;

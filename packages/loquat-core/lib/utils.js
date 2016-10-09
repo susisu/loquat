@@ -18,7 +18,7 @@ function end() {
     });
 }
 
-let escapeMap = new Map();
+const escapeMap = new Map();
 escapeMap.set("\\", "\\\\");
 escapeMap.set("\"", "\\\"");
 escapeMap.set("\b", "\\b");

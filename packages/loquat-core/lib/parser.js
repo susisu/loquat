@@ -324,7 +324,7 @@ class LazyParser extends AbstractParser {
         if (this._cache) {
             return this._cache;
         }
-        let lazyParsers = [];
+        const lazyParsers = [];
         let parser = this;
         while (parser instanceof LazyParser) {
             if (parser._cache) {
@@ -341,7 +341,7 @@ class LazyParser extends AbstractParser {
         if (!(parser instanceof Parser)) {
             throw new TypeError("evaluation result is not a Parser object");
         }
-        for (let lazyParser of lazyParsers) {
+        for (const lazyParser of lazyParsers) {
             lazyParser._cache = parser;
         }
         return parser;
@@ -379,8 +379,8 @@ function parse(parser, name, input, userState, opts) {
     if (opts === undefined) {
         opts = {};
     }
-    let state = new State(new Config(opts), input, SourcePos.init(name), userState);
-    let res   = parser.run(state);
+    const state = new State(new Config(opts), input, SourcePos.init(name), userState);
+    const res   = parser.run(state);
     return res.succeeded
         ? { succeeded: true, value: res.val }
         : { succeeded: false, error: res.err };
@@ -413,8 +413,8 @@ function assertParser(val) {
  * @returns {undefined}
  */
 function extendParser(extensions) {
-    let descs = {};
-    for (let key of Object.keys(extensions)) {
+    const descs = {};
+    for (const key of Object.keys(extensions)) {
         descs[key] = {
             value       : extensions[key],
             writable    : true,
