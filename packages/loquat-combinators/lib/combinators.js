@@ -180,12 +180,12 @@ module.exports = _core => {
      */
     function sepEndBy(parser, sep) {
         return new Parser(state => {
-            let accum = [];
+            const accum = [];
             let currentState = state;
             let currentErr = ParseError.unknown(state.pos);
             let consumed = false;
             while (true) {
-                let res = parser.run(currentState);
+                const res = parser.run(currentState);
                 if (res.succeeded) {
                     if (res.consumed) {
                         consumed = true;
@@ -209,7 +209,7 @@ module.exports = _core => {
                             : Result.esuc(ParseError.merge(currentErr, res.err), accum, currentState);
                     }
                 }
-                let sepRes = sep.run(currentState);
+                const sepRes = sep.run(currentState);
                 if (sepRes.succeeded) {
                     if (sepRes.consumed) {
                         consumed = true;
@@ -298,12 +298,12 @@ module.exports = _core => {
         }
         else {
             return new Parser(state => {
-                let accum = [];
+                const accum = [];
                 let currentState = state;
                 let currentErr = ParseError.unknown(state.pos);
                 let consumed = false;
                 for (let i = 0; i < num; i++) {
-                    let res = parser.run(currentState);
+                    const res = parser.run(currentState);
                     if (res.succeeded) {
                         if (res.consumed) {
                             consumed = true;
@@ -359,7 +359,7 @@ module.exports = _core => {
             let currentErr = ParseError.unknown(state.pos);
             let consumed = false;
 
-            let headRes = term.run(currentState);
+            const headRes = term.run(currentState);
             if (headRes.succeeded) {
                 if (consumed) {
                     consumed = true;
@@ -380,9 +380,9 @@ module.exports = _core => {
             }
 
             while (true) {
-                let initState = currentState;
+                const initState = currentState;
 
-                let opRes = op.run(currentState);
+                const opRes = op.run(currentState);
                 let operation;
                 if (opRes.succeeded) {
                     if (opRes.consumed) {
@@ -408,7 +408,7 @@ module.exports = _core => {
                     }
                 }
 
-                let termRes = term.run(currentState);
+                const termRes = term.run(currentState);
                 if (termRes.succeeded) {
                     if (termRes.consumed) {
                         consumed = true;
@@ -470,7 +470,7 @@ module.exports = _core => {
             let currentErr = ParseError.unknown(state.pos);
             let consumed = false;
 
-            let headRes = term.run(currentState);
+            const headRes = term.run(currentState);
             if (headRes.succeeded) {
                 if (headRes.consumed) {
                     consumed = true;
@@ -490,12 +490,12 @@ module.exports = _core => {
                     : Result.eerr(ParseError.merge(currentErr, headRes.err));
             }
 
-            let accum = [];
-            let operations = [];
+            const accum = [];
+            const operations = [];
             while (true) {
-                let initState = currentState;
+                const initState = currentState;
 
-                let opRes = op.run(currentState);
+                const opRes = op.run(currentState);
                 if (opRes.succeeded) {
                     if (opRes.consumed) {
                         consumed = true;
@@ -527,7 +527,7 @@ module.exports = _core => {
                     }
                 }
 
-                let termRes = term.run(currentState);
+                const termRes = term.run(currentState);
                 if (termRes.succeeded) {
                     if (termRes.consumed) {
                         consumed = true;
@@ -585,8 +585,8 @@ module.exports = _core => {
      * @returns {AbstractParser}
      */
     function notFollowedBy(parser) {
-        let modParser = new Parser(state => {
-            let res = parser.run(state);
+        const modParser = new Parser(state => {
+            const res = parser.run(state);
             return !res.consumed && res.succeeded
                 ? Result.csuc(res.err, res.val, res.state)
                 : res;
@@ -615,12 +615,12 @@ module.exports = _core => {
      */
     function manyTill(parser, end) {
         return new Parser(state => {
-            let accum = [];
+            const accum = [];
             let currentState = state;
             let currentErr = ParseError.unknown(state.pos);
             let consumed = false;
             while (true) {
-                let endRes = end.run(currentState);
+                const endRes = end.run(currentState);
                 if (endRes.succeeded) {
                     if (endRes.consumed) {
                         return Result.csuc(endRes.err, accum, endRes.state);
@@ -640,7 +640,7 @@ module.exports = _core => {
                     }
                 }
 
-                let res = parser.run(currentState);
+                const res = parser.run(currentState);
                 if (res.succeeded) {
                     if (res.consumed) {
                         consumed = true;
