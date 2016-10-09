@@ -303,8 +303,6 @@ module.exports = _core => {
         return bind(parser, head => bind(manyChars(parser), tail => pure(head + tail)));
     }
 
-    const availableFlags = new Set("imu");
-
     /**
      * @function module:char.regexp
      * @static
@@ -316,7 +314,7 @@ module.exports = _core => {
         if (groupId === undefined) {
             groupId = 0;
         }
-        const flags = re.flags.replace(/./g, f => availableFlags.has(f) ? f : "");
+        const flags = re.flags.replace(/[^imu]/g, "");
         const anchored = new RegExp(`^(?:${re.source})`, flags);
         return new Parser(state => {
             if (typeof state.input !== "string") {
