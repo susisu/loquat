@@ -30,7 +30,8 @@ module.exports = _core => {
             octDigit,
             hexDigit,
             manyChars,
-            manyChars1
+            manyChars1,
+            regexp
         });
     }
 
@@ -300,6 +301,60 @@ module.exports = _core => {
      */
     function manyChars1(parser) {
         return bind(parser, head => bind(manyChars(parser), tail => pure(head + tail)));
+    }
+
+    const availableFlags = new Set("imu");
+
+    /**
+     * @function module:char.regexp
+     * @static
+     * @param {RegExp} re
+     * @param {number} [groupId = 0]
+     * @returns {AbstractParser}
+     */
+    function regexp(re, groupId) {
+        if (groupId === undefined) {
+            groupId = 0;
+        }
+        const flags = re.flags.replace(/./g, f => availableFlags.has(f) ? f : "");
+        const anchored = new RegExp(`^(?:${re.source})`, flags);
+        return new Parser(state => {
+            if (typeof state.input !== "string") {
+                throw new Error("'regexp' is only applicable to string input");
+            }
+            const match = anchored.exec(state.input);
+            if (match) {
+                const str = match[0];
+                const val = match[groupId];
+                if (str.length === 0) {
+                    return Result.esuc(
+                        ParseError.unknown(state.pos),
+                        val,
+                        state
+                    );
+                }
+                else {
+                    return Result.csuc(
+                        ParseError.unknown(state.pos),
+                        val,
+                        new State(
+                            state.config,
+                            state.input.substr(str.length),
+                            state.pos.addString(str),
+                            state.userState
+                        )
+                    );
+                }
+            }
+            else {
+                return Result.eerr(
+                    new ParseError(
+                        state.pos,
+                        [new ErrorMessage(ErrorMessageType.EXPECT, show(re))]
+                    )
+                );
+            }
+        });
     }
 
     return end();
