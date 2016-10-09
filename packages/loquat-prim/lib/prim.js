@@ -65,7 +65,7 @@ module.exports = _core => {
      */
     function map(parser, func) {
         return new Parser(state => {
-            let res = parser.run(state);
+            const res = parser.run(state);
             return res.succeeded
                 ? new Result(res.consumed, true, res.err, func(res.val), res.state)
                 : res;
@@ -131,10 +131,10 @@ module.exports = _core => {
      */
     function bind(parser, func) {
         return new Parser(state => {
-            let resA = parser.run(state);
+            const resA = parser.run(state);
             if (resA.succeeded) {
-                let parserB = func(resA.val);
-                let resB = parserB.run(resA.state);
+                const parserB = func(resA.val);
+                const resB = parserB.run(resA.state);
                 return new Result(
                     resA.consumed || resB.consumed,
                     resB.succeeded,
@@ -188,9 +188,9 @@ module.exports = _core => {
      */
     function mplus(parserA, parserB) {
         return new Parser(state => {
-            let resA = parserA.run(state);
+            const resA = parserA.run(state);
             if (!resA.consumed && !resA.succeeded) {
-                let resB = parserB.run(state);
+                const resB = parserB.run(state);
                 return new Result(
                     resB.consumed,
                     resB.succeeded,
@@ -228,12 +228,12 @@ module.exports = _core => {
             return err.setSpecificTypeMessages(ErrorMessageType.EXPECT, labelStrs.length === 0 ? [""] : labelStrs);
         }
         return new Parser(state => {
-            let res = parser.run(state);
+            const res = parser.run(state);
             if (res.consumed) {
                 return res;
             }
             else {
-                let err = res.err;
+                const err = res.err;
                 return new Result(
                     false,
                     res.succeeded,
@@ -270,7 +270,7 @@ module.exports = _core => {
      */
     function tryParse(parser) {
         return new Parser(state => {
-            let res = parser.run(state);
+            const res = parser.run(state);
             return res.consumed && !res.succeeded
                 ? Result.eerr(res.err)
                 : res;
@@ -285,7 +285,7 @@ module.exports = _core => {
      */
     function lookAhead(parser) {
         return new Parser(state => {
-            let res = parser.run(state);
+            const res = parser.run(state);
             return res.succeeded
                 ? Result.esuc(ParseError.unknown(state.pos), res.val, state)
                 : res;
@@ -307,7 +307,7 @@ module.exports = _core => {
             let consumed = false;
             let currentState = state;
             while (true) {
-                let res = parser.run(currentState);
+                const res = parser.run(currentState);
                 if (res.succeeded) {
                     if (res.consumed) {
                         consumed = true;
@@ -383,13 +383,13 @@ module.exports = _core => {
             );
         }
         return new Parser(state => {
-            let len = expectTokens.length;
+            const len = expectTokens.length;
             if (len === 0) {
                 return Result.esuc(ParseError.unknown(state.pos), [], state);
             }
             let rest = state.input;
             for (let i = 0; i < len; i++) {
-                let unconsed = uncons(rest);
+                const unconsed = uncons(rest);
                 if (unconsed.empty) {
                     return i === 0
                         ? Result.eerr(eofError(state.pos))
@@ -406,7 +406,7 @@ module.exports = _core => {
                     }
                 }
             }
-            let newPos = calcNextPos(state.pos, expectTokens, state.config);
+            const newPos = calcNextPos(state.pos, expectTokens, state.config);
             return Result.csuc(
                 ParseError.unknown(newPos),
                 expectTokens,
@@ -425,7 +425,7 @@ module.exports = _core => {
      */
     function token(calcValue, tokenToString, calcPos) {
         function calcNextPos(pos, token, rest, config) {
-            let unconsed = uncons(rest);
+            const unconsed = uncons(rest);
             return unconsed.empty
                 ? calcPos(token, config)
                 : calcPos(unconsed.head, config);
@@ -450,18 +450,18 @@ module.exports = _core => {
             );
         }
         return new Parser(state => {
-            let unconsed = uncons(state.input);
+            const unconsed = uncons(state.input);
             if (unconsed.empty) {
                 return Result.eerr(systemUnexpectError(state.pos, ""));
             }
             else {
-                let maybeVal = calcValue(unconsed.head, state.config);
+                const maybeVal = calcValue(unconsed.head, state.config);
                 if (maybeVal.empty) {
                     return Result.eerr(systemUnexpectError(state.pos, tokenToString(unconsed.head)));
                 }
                 else {
-                    let newPos = calcNextPos(state.pos, unconsed.head, unconsed.tail, state.config);
-                    let newUserState = calcNextUserState === undefined
+                    const newPos = calcNextPos(state.pos, unconsed.head, unconsed.tail, state.config);
+                    const newUserState = calcNextUserState === undefined
                         ? state.userState
                         : calcNextUserState(state.userState, state.pos, unconsed.head, unconsed.tail, state.config);
                     return Result.csuc(
@@ -499,7 +499,7 @@ module.exports = _core => {
      */
     function updateState(func) {
         return new Parser(state => {
-            let newState = func(state);
+            const newState = func(state);
             return Result.esuc(ParseError.unknown(newState.pos), newState, newState);
         });
     }
