@@ -15,8 +15,6 @@ function end() {
     });
 }
 
-const DEFAULT_TAB_WIDTH = 8;
-
 /**
  * An instance of the `SourcePos` class represents a specific position in the source.
  * @static
@@ -139,10 +137,6 @@ class SourcePos {
      * @returns {module:pos.SourcePos}
      */
     addChar(char, tabWidth) {
-        tabWidth = tabWidth | 0;
-        if (tabWidth <= 0) {
-            tabWidth = DEFAULT_TAB_WIDTH;
-        }
         let line   = this.line;
         let column = this.column;
         switch (char) {
@@ -169,10 +163,6 @@ class SourcePos {
      * @returns {module:pos.SourcePos}
      */
     addString(str, tabWidth, useCodePoint) {
-        tabWidth = tabWidth | 0;
-        if (tabWidth <= 0) {
-            tabWidth = DEFAULT_TAB_WIDTH;
-        }
         let line   = this.line;
         let column = this.column;
         if (useCodePoint) {
