@@ -332,13 +332,14 @@ module.exports = _core => {
                     );
                 }
                 else {
+                    const newPos = state.pos.addString(str, state.config.tabWidth, state.config.useCodePoint);
                     return Result.csuc(
-                        ParseError.unknown(state.pos),
+                        ParseError.unknown(newPos),
                         val,
                         new State(
                             state.config,
                             state.input.substr(str.length),
-                            state.pos.addString(str),
+                            newPos,
                             state.userState
                         )
                     );
