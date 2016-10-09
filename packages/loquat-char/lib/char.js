@@ -77,17 +77,17 @@ module.exports = _core => {
             );
         }
         return new Parser(state => {
-            let len = str.length;
+            const len = str.length;
             if (len === 0) {
                 return Result.esuc(ParseError.unknown(state.pos), "", state);
             }
-            let tabWidth     = state.config.tabWidth;
-            let useCodePoint = state.config.useCodePoint;
+            const tabWidth     = state.config.tabWidth;
+            const useCodePoint = state.config.useCodePoint;
             let rest = state.input;
             if (useCodePoint) {
                 let consumed = false;
-                for (let char of str) {
-                    let unconsed = uncons(rest);
+                for (const char of str) {
+                    const unconsed = uncons(rest);
                     if (unconsed.empty) {
                         return !consumed
                             ? Result.eerr(eofError(state.pos))
@@ -108,7 +108,7 @@ module.exports = _core => {
             }
             else {
                 for (let i = 0; i < len; i++) {
-                    let unconsed = uncons(rest);
+                    const unconsed = uncons(rest);
                     if (unconsed.empty) {
                         return i === 0
                             ? Result.eerr(eofError(state.pos))
@@ -126,7 +126,7 @@ module.exports = _core => {
                     }
                 }
             }
-            let newPos = state.pos.addString(str, tabWidth, useCodePoint);
+            const newPos = state.pos.addString(str, tabWidth, useCodePoint);
             return Result.csuc(
                 ParseError.unknown(newPos),
                 str,
@@ -156,8 +156,8 @@ module.exports = _core => {
      * @returns {AbstractParser}
      */
     function oneOf(str) {
-        let cpChars = new Set(str);
-        let chars   = new Set();
+        const cpChars = new Set(str);
+        const chars   = new Set();
         for (let i = 0; i < str.length; i++) {
             chars.add(str[i]);
         }
@@ -171,8 +171,8 @@ module.exports = _core => {
      * @returns {AbstractParser}
      */
     function noneOf(str) {
-        let cpChars = new Set(str);
-        let chars   = new Set();
+        const cpChars = new Set(str);
+        const chars   = new Set();
         for (let i = 0; i < str.length; i++) {
             chars.add(str[i]);
         }
