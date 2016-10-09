@@ -29,14 +29,10 @@ class SourcePos {
      * @param {number} column Column in the source.
      */
     constructor(name, line, column) {
-        this.name   = name;
-        this.line   = line;
-        this.column = column;
+        this._name   = name;
+        this._line   = line;
+        this._column = column;
     }
-
-    /** @member {string} module:pos.SourcePos#name */
-    /** @member {number} module:pos.SourcePos#line */
-    /** @member {number} module:pos.SourcePos#column */
 
     /**
      * Creates a new `SourcePos` instance initialized with `line = 1` and `column = 1`.
@@ -75,6 +71,30 @@ class SourcePos {
              : posA.column < posB.column ? -1
              : posA.column > posB.column ? 1
                                          : 0;
+    }
+
+    /**
+     * @readonly
+     * @type {string}
+     */
+    get name() {
+        return this._name;
+    }
+
+    /**
+     * @readonly
+     * @type {number}
+     */
+    get line() {
+        return this._line;
+    }
+
+    /**
+     * @readonly
+     * @type {number}
+     */
+    get column() {
+        return this._column;
     }
 
     /**

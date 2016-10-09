@@ -56,12 +56,9 @@ class Config {
         if (opts === undefined) {
             opts = {};
         }
-        this.tabWidth     = opts.tabWidth === undefined ? 8 : opts.tabWidth;
-        this.useCodePoint = opts.useCodePoint === undefined ? false : opts.useCodePoint;
+        this._tabWidth     = opts.tabWidth === undefined ? 8 : opts.tabWidth;
+        this._useCodePoint = opts.useCodePoint === undefined ? false : opts.useCodePoint;
     }
-
-    /** @member {number} module:parser.Config#tabWidth */
-    /** @member {boolean} module:parser.Config#useCodePoint */
 
     /**
      * Checks if two configs are equal.
@@ -72,6 +69,22 @@ class Config {
     static equal(configA, configB) {
         return configA.tabWidth === configB.tabWidth
             && configA.useCodePoint === configB.useCodePoint;
+    }
+
+    /**
+     * @readonly
+     * @type {number}
+     */
+    get tabWidth() {
+        return this._tabWidth;
+    }
+
+    /**
+     * @readonly
+     * @type {boolean}
+     */
+    get useCodePoint() {
+        return this._useCodePoint;
     }
 }
 
@@ -88,16 +101,11 @@ class State {
      * @param {*} [userState = undefined] Additional user-defined state for advanced use.
      */
     constructor(config, input, pos, userState) {
-        this.config    = config;
-        this.input     = input;
-        this.pos       = pos;
-        this.userState = userState;
+        this._config    = config;
+        this._input     = input;
+        this._pos       = pos;
+        this._userState = userState;
     }
-
-    /** @member {module:parser.Config} module:parser.State#config */
-    /** @member {(string|Array|module:stream.IStream)} module:parser.State#input */
-    /** @member {module:pos.SourcePos} module:parser.State#pos */
-    /** @member {*} module:parser.State#userState */
 
     /**
      * Checks if two states are equal.
@@ -116,6 +124,38 @@ class State {
             && (userStateEqual === undefined
                 ? stateA.userState === stateB.userState
                 : userStateEqual(stateA.userState, stateB.userState));
+    }
+
+    /**
+     * @readonly
+     * @type {module:parser.Config}
+     */
+    get config() {
+        return this._config;
+    }
+
+    /**
+     * @readonly
+     * @type {(string|Array|module:stream.IStream)}
+     */
+    get input() {
+        return this._input;
+    }
+
+    /**
+     * @readonly
+     * @type {module:pos.SourcePos}
+     */
+    get pos() {
+        return this._pos;
+    }
+
+    /**
+     * @readonly
+     * @type {*}
+     */
+    get userState() {
+        return this._userState;
     }
 
     /**
@@ -166,18 +206,12 @@ class Result {
      * @param {(module:parser.State|undefined)} [state = undefined] Next state.
      */
     constructor(consumed, succeeded, err, val, state) {
-        this.consumed  = consumed;
-        this.succeeded = succeeded;
-        this.err       = err;
-        this.val       = val;
-        this.state     = state;
+        this._consumed  = consumed;
+        this._succeeded = succeeded;
+        this._err       = err;
+        this._val       = val;
+        this._state     = state;
     }
-
-    /** @member {boolean} module:parser.Result#consumed */
-    /** @member {boolean} module:parser.Result#succeeded */
-    /** @member {module:error.AbstractParseError} module:parser.Result#err */
-    /** @member {*} module:parser.Result#val */
-    /** @member {module:parser.State} module:parser.Result#state */
 
     /**
      * Checks if two results are equal.
@@ -243,6 +277,46 @@ class Result {
      */
     static eerr(err) {
         return new Result(false, false, err);
+    }
+
+    /**
+     * @readonly
+     * @type {boolean}
+     */
+    get consumed() {
+        return this._consumed;
+    }
+
+    /**
+     * @readonly
+     * @type {boolean}
+     */
+    get succeeded() {
+        return this._succeeded;
+    }
+
+    /**
+     * @readonly
+     * @type {module:error.AbstractParseError}
+     */
+    get err() {
+        return this._err;
+    }
+
+    /**
+     * @readonly
+     * @type {*}
+     */
+    get val() {
+        return this._val;
+    }
+
+    /**
+     * @readonly
+     * @type {module:parser.State}
+     */
+    get state() {
+        return this._state;
     }
 }
 
