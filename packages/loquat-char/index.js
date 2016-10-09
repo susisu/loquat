@@ -26,6 +26,7 @@ module.exports = (core, sugar) => {
     const hexDigit   = _char.hexDigit;
     const manyChars  = _char.manyChars;
     const manyChars1 = _char.manyChars1;
+    const regexp     = _char.regexp;
 
     return Object.freeze({
         string,
@@ -46,6 +47,7 @@ module.exports = (core, sugar) => {
         octDigit,
         hexDigit,
         manyChars,
-        manyChars1
+        manyChars1,
+        regexp
     });
 };
