@@ -416,7 +416,7 @@ module.exports = _core => {
             }
             let rest = state.input;
             for (let i = 0; i < len; i++) {
-                const unconsed = uncons(rest);
+                const unconsed = uncons(rest, state.config.unicode);
                 if (unconsed.empty) {
                     return i === 0
                         ? Result.eerr(eofError(state.pos))
@@ -452,7 +452,7 @@ module.exports = _core => {
      */
     function token(calcValue, tokenToString, calcPos) {
         function calcNextPos(pos, token, rest, config) {
-            const unconsed = uncons(rest);
+            const unconsed = uncons(rest, config.unicode);
             return unconsed.empty
                 ? calcPos(token, config)
                 : calcPos(unconsed.head, config);
@@ -477,7 +477,7 @@ module.exports = _core => {
             );
         }
         return new Parser(state => {
-            const unconsed = uncons(state.input);
+            const unconsed = uncons(state.input, state.config.unicode);
             if (unconsed.empty) {
                 return Result.eerr(systemUnexpectError(state.pos, ""));
             }

@@ -26,7 +26,7 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
         // calcValue succeeds, abundant input
         {
             let initState = new State(
-                new Config({ tabWidth: 8 }),
+                new Config({ tabWidth: 8, unicode: false }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -34,13 +34,13 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
             let parser = token(
                 (x, config) => {
                     expect(x).to.equal("A");
-                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
+                    expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
                     return { empty: false, value: "nyancat" };
                 },
                 () => { throw new Error("unexpected call"); },
                 (x, config) => {
                     expect(x).to.equal("B");
-                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
+                    expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
                     return new SourcePos("foobar", 1, 2);
                 }
             );
@@ -63,7 +63,7 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
         // calcValue succeeds, minimal input
         {
             let initState = new State(
-                new Config({ tabWidth: 8 }),
+                new Config({ tabWidth: 8, unicode: false }),
                 "A",
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -71,13 +71,13 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
             let parser = token(
                 (x, config) => {
                     expect(x).to.equal("A");
-                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
+                    expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
                     return { empty: false, value: "nyancat" };
                 },
                 () => { throw new Error("unexpected call"); },
                 (x, config) => {
                     expect(x).to.equal("A");
-                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
+                    expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
                     return new SourcePos("foobar", 1, 2);
                 }
             );
@@ -100,7 +100,7 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
         // calcValue fails
         {
             let initState = new State(
-                new Config({ tabWidth: 8 }),
+                new Config({ tabWidth: 8, unicode: false }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -108,7 +108,7 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
             let parser = token(
                 (x, config) => {
                     expect(x).to.equal("A");
-                    expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
+                    expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
                     return { empty: true };
                 },
                 x => {
@@ -132,7 +132,7 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
         // empty input
         {
             let initState = new State(
-                new Config({ tabWidth: 8 }),
+                new Config({ tabWidth: 8, unicode: false }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -150,6 +150,83 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
                     new ParseError(
                         new SourcePos("foobar", 1, 1),
                         [new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "")]
+                    )
+                )
+            )).to.be.true;
+        }
+    });
+
+    it("should treat input in unicode mode if `unicode' flag of the config is `true'", () => {
+        // non-unicode mode
+        {
+            let initState = new State(
+                new Config({ tabWidth: 8, unicode: false }),
+                "\uD83C\uDF63\uD83C\uDF64ABC",
+                new SourcePos("foobar", 1, 1),
+                "none"
+            );
+            let parser = token(
+                (x, config) => {
+                    expect(x).to.equal("\uD83C");
+                    expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
+                    return { empty: false, value: "nyancat" };
+                },
+                () => { throw new Error("unexpected call"); },
+                (x, config) => {
+                    expect(x).to.equal("\uDF63");
+                    expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
+                    return new SourcePos("foobar", 1, 2);
+                }
+            );
+            assertParser(parser);
+            let res = parser.run(initState);
+            expect(Result.equal(
+                res,
+                Result.csuc(
+                    ParseError.unknown(new SourcePos("foobar", 1, 2)),
+                    "nyancat",
+                    new State(
+                        initState.config,
+                        "\uDF63\uD83C\uDF64ABC",
+                        new SourcePos("foobar", 1, 2),
+                        "none"
+                    )
+                )
+            )).to.be.true;
+        }
+        // unicode mode
+        {
+            let initState = new State(
+                new Config({ tabWidth: 8, unicode: true }),
+                "\uD83C\uDF63\uD83C\uDF64ABC",
+                new SourcePos("foobar", 1, 1),
+                "none"
+            );
+            let parser = token(
+                (x, config) => {
+                    expect(x).to.equal("\uD83C\uDF63");
+                    expect(Config.equal(config, new Config({ tabWidth: 8, unicode: true }))).to.be.true;
+                    return { empty: false, value: "nyancat" };
+                },
+                () => { throw new Error("unexpected call"); },
+                (x, config) => {
+                    expect(x).to.equal("\uD83C\uDF64");
+                    expect(Config.equal(config, new Config({ tabWidth: 8, unicode: true }))).to.be.true;
+                    return new SourcePos("foobar", 1, 2);
+                }
+            );
+            assertParser(parser);
+            let res = parser.run(initState);
+            expect(Result.equal(
+                res,
+                Result.csuc(
+                    ParseError.unknown(new SourcePos("foobar", 1, 2)),
+                    "nyancat",
+                    new State(
+                        initState.config,
+                        "\uD83C\uDF64ABC",
+                        new SourcePos("foobar", 1, 2),
+                        "none"
                     )
                 )
             )).to.be.true;
