@@ -26,7 +26,7 @@ describe(".string(str)", () => {
         // expect empty
         {
             let initState = new State(
-                new Config({ useCodePoint: false }),
+                new Config({ unicode: false }),
                 "\uD83C\uDF63X",
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -40,7 +40,7 @@ describe(".string(str)", () => {
                     ParseError.unknown(new SourcePos("foobar", 1, 1)),
                     "",
                     new State(
-                        new Config({ useCodePoint: false }),
+                        new Config({ unicode: false }),
                         "\uD83C\uDF63X",
                         new SourcePos("foobar", 1, 1),
                         "none"
@@ -51,7 +51,7 @@ describe(".string(str)", () => {
         // expect many, correct input
         {
             let initState = new State(
-                new Config({ useCodePoint: false }),
+                new Config({ unicode: false }),
                 "\uD83C\uDF63X",
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -65,7 +65,7 @@ describe(".string(str)", () => {
                     ParseError.unknown(new SourcePos("foobar", 1, 3)),
                     "\uD83C\uDF63",
                     new State(
-                        new Config({ useCodePoint: false }),
+                        new Config({ unicode: false }),
                         "X",
                         new SourcePos("foobar", 1, 3),
                         "none"
@@ -76,7 +76,7 @@ describe(".string(str)", () => {
         // expect many, totally wrong input
         {
             let initState = new State(
-                new Config({ useCodePoint: false }),
+                new Config({ unicode: false }),
                 "XYZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -100,7 +100,7 @@ describe(".string(str)", () => {
         // expect many, partially wrong input
         {
             let initState = new State(
-                new Config({ useCodePoint: false }),
+                new Config({ unicode: false }),
                 "\uD83CXY",
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -124,7 +124,7 @@ describe(".string(str)", () => {
         // expect many, no input
         {
             let initState = new State(
-                new Config({ useCodePoint: false }),
+                new Config({ unicode: false }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -148,7 +148,7 @@ describe(".string(str)", () => {
         // expect many, less input
         {
             let initState = new State(
-                new Config({ useCodePoint: false }),
+                new Config({ unicode: false }),
                 "\uD83C",
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -171,7 +171,7 @@ describe(".string(str)", () => {
         }
     });
 
-    it("should treat characters in code point units if useCodePoint flag of the config is `true'", () => {
+    it("should treat characters in code point units if unicode flag of the config is `true'", () => {
         function cpArray(str) {
             let arr = [];
             for (let char of str) {
@@ -184,7 +184,7 @@ describe(".string(str)", () => {
         // expect empty
         {
             let initState = new State(
-                new Config({ useCodePoint: true }),
+                new Config({ unicode: true }),
                 cpArray("\uD83C\uDF63XY"),
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -198,7 +198,7 @@ describe(".string(str)", () => {
                     ParseError.unknown(new SourcePos("foobar", 1, 1)),
                     "",
                     new State(
-                        new Config({ useCodePoint: true }),
+                        new Config({ unicode: true }),
                         cpArray("\uD83C\uDF63XY"),
                         new SourcePos("foobar", 1, 1),
                         "none"
@@ -211,7 +211,7 @@ describe(".string(str)", () => {
         // expect many, correct input
         {
             let initState = new State(
-                new Config({ useCodePoint: true }),
+                new Config({ unicode: true }),
                 cpArray("\uD83C\uDF63XY"),
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -225,7 +225,7 @@ describe(".string(str)", () => {
                     ParseError.unknown(new SourcePos("foobar", 1, 3)),
                     "\uD83C\uDF63X",
                     new State(
-                        new Config({ useCodePoint: true }),
+                        new Config({ unicode: true }),
                         cpArray("Y"),
                         new SourcePos("foobar", 1, 3),
                         "none"
@@ -238,7 +238,7 @@ describe(".string(str)", () => {
         // expect many, totally wrong input
         {
             let initState = new State(
-                new Config({ useCodePoint: true }),
+                new Config({ unicode: true }),
                 cpArray("XYZ"),
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -264,7 +264,7 @@ describe(".string(str)", () => {
         // expect many, partially wrong input
         {
             let initState = new State(
-                new Config({ useCodePoint: true }),
+                new Config({ unicode: true }),
                 cpArray("\uD83C\uDF63YX"),
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -290,7 +290,7 @@ describe(".string(str)", () => {
         // expect many, no input
         {
             let initState = new State(
-                new Config({ useCodePoint: true }),
+                new Config({ unicode: true }),
                 cpArray(""),
                 new SourcePos("foobar", 1, 1),
                 "none"
@@ -316,7 +316,7 @@ describe(".string(str)", () => {
         // expect many, less input
         {
             let initState = new State(
-                new Config({ useCodePoint: true }),
+                new Config({ unicode: true }),
                 cpArray("\uD83C\uDF63"),
                 new SourcePos("foobar", 1, 1),
                 "none"

@@ -82,10 +82,10 @@ module.exports = _core => {
             if (len === 0) {
                 return Result.esuc(ParseError.unknown(state.pos), "", state);
             }
-            const tabWidth     = state.config.tabWidth;
-            const useCodePoint = state.config.useCodePoint;
+            const tabWidth = state.config.tabWidth;
+            const unicode  = state.config.unicode;
             let rest = state.input;
-            if (useCodePoint) {
+            if (unicode) {
                 let consumed = false;
                 for (const char of str) {
                     const unconsed = uncons(rest);
@@ -127,7 +127,7 @@ module.exports = _core => {
                     }
                 }
             }
-            const newPos = state.pos.addString(str, tabWidth, useCodePoint);
+            const newPos = state.pos.addString(str, tabWidth, unicode);
             return Result.csuc(
                 ParseError.unknown(newPos),
                 str,
@@ -162,7 +162,7 @@ module.exports = _core => {
         for (let i = 0; i < str.length; i++) {
             chars.add(str[i]);
         }
-        return satisfy((char, config) => config.useCodePoint ? cpChars.has(char) : chars.has(char));
+        return satisfy((char, config) => config.unicode ? cpChars.has(char) : chars.has(char));
     }
 
     /**
@@ -177,7 +177,7 @@ module.exports = _core => {
         for (let i = 0; i < str.length; i++) {
             chars.add(str[i]);
         }
-        return satisfy((char, config) => config.useCodePoint ? !cpChars.has(char) : !chars.has(char));
+        return satisfy((char, config) => config.unicode ? !cpChars.has(char) : !chars.has(char));
     }
 
     /**
@@ -332,7 +332,7 @@ module.exports = _core => {
                     );
                 }
                 else {
-                    const newPos = state.pos.addString(str, state.config.tabWidth, state.config.useCodePoint);
+                    const newPos = state.pos.addString(str, state.config.tabWidth, state.config.unicode);
                     return Result.csuc(
                         ParseError.unknown(newPos),
                         val,
