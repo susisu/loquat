@@ -27,7 +27,7 @@ describe(".setConfig(config)", () => {
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let parser = setConfig(new Config({ tabWidth: 4, useCodePoint: true }));
+        let parser = setConfig(new Config({ tabWidth: 4, unicode: true }));
         assertParser(parser);
         let res = parser.run(initState);
         expect(Result.equal(
@@ -36,7 +36,7 @@ describe(".setConfig(config)", () => {
                 ParseError.unknown(new SourcePos("foobar", 1, 1)),
                 undefined,
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "input",
                     new SourcePos("foobar", 1, 1),
                     "none"
