@@ -49,15 +49,28 @@ function end() {
  * @static
  * @param {(string|Array|module:stream.IStream)} input A string, an array,
  * or an {@link module:stream.IStream} object.
+ * @param {boolean} unicode For string input, if `true` specified, the input is unconsed in units of code points.
  * @returns {Object} An object that have properties describes above.
  * @throws {TypeError} `input` is not a string nor an array,
  * or object does not implement the {@link module:stream.IStream} interface.
  */
-function uncons(input) {
+function uncons(input, unicode) {
     if (typeof input === "string") {
-        return input === ""
-            ? { empty: true }
-            : { empty: false, head: input[0], tail: input.substr(1) };
+        if (unicode) {
+            const cp = input.codePointAt(0);
+            if (cp === undefined) {
+                return { empty: true };
+            }
+            else {
+                const char = String.fromCodePoint(cp);
+                return { empty: false, head: char, tail: input.substr(char.length) };
+            }
+        }
+        else {
+            return input === ""
+                ? { empty: true }
+                : { empty: false, head: input[0], tail: input.substr(1) };
+        }
     }
     else if (Array.isArray(input)) {
         return input.length === 0
