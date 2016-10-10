@@ -7,4 +7,5 @@
 
 describe("char", () => {
     require("./char/string.js");
+    require("./char/satisfy.js");
 });
