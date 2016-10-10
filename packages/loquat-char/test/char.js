@@ -8,4 +8,5 @@
 describe("char", () => {
     require("./char/string.js");
     require("./char/satisfy.js");
+    require("./char/oneOf.js");
 });
