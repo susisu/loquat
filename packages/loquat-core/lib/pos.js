@@ -158,14 +158,13 @@ class SourcePos {
     /**
      * @param {string} str
      * @param {number} tabWidth
-     * @param {boolean} useCodePoint If `true` specified, the characters in the `str` are counted
-     * based on the UTF-16 code point.
+     * @param {boolean} unicode If `true` specified, the characters are counted in units of code points.
      * @returns {module:pos.SourcePos}
      */
-    addString(str, tabWidth, useCodePoint) {
+    addString(str, tabWidth, unicode) {
         let line   = this.line;
         let column = this.column;
-        if (useCodePoint) {
+        if (unicode) {
             for (const char of str) {
                 switch (char) {
                 case "\n":

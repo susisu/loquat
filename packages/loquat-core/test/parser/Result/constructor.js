@@ -38,7 +38,7 @@ describe("constructor(consumed, succeeded, err, val, state)", () => {
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -63,7 +63,7 @@ describe("constructor(consumed, succeeded, err, val, state)", () => {
             expect(State.equal(
                 res.state,
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"

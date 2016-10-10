@@ -31,7 +31,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
                 expect(State.equal(
                     state,
                     new State(
-                        new Config({ tabWidth: 4, useCodePoint: true }),
+                        new Config({ tabWidth: 4, unicode: true }),
                         "test",
                         new SourcePos("foobar", 1, 1),
                         "none"
@@ -49,14 +49,14 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
                     ),
                     "nyancat",
                     new State(
-                        new Config({ tabWidth: 4, useCodePoint: true }),
+                        new Config({ tabWidth: 4, unicode: true }),
                         "rest",
                         new SourcePos("foobar", 496, 28),
                         "some"
                     )
                 );
             });
-            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, useCodePoint: true });
+            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(res).to.deep.equal({
                 succeeded: true,
                 value    : "nyancat"
@@ -68,7 +68,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
                 expect(State.equal(
                     state,
                     new State(
-                        new Config({ tabWidth: 4, useCodePoint: true }),
+                        new Config({ tabWidth: 4, unicode: true }),
                         "test",
                         new SourcePos("foobar", 1, 1),
                         "none"
@@ -86,7 +86,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
                     )
                 );
             });
-            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, useCodePoint: true });
+            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(res).to.be.an("object");
             expect(res.succeeded).to.be.false;
             expect(ParseError.equal(
@@ -108,7 +108,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
                 expect(State.equal(
                     state,
                     new State(
-                        new Config({ tabWidth: 4, useCodePoint: true }),
+                        new Config({ tabWidth: 4, unicode: true }),
                         "test",
                         new SourcePos("foobar", 1, 1),
                         "none"
@@ -126,14 +126,14 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
                     ),
                     "nyancat",
                     new State(
-                        new Config({ tabWidth: 4, useCodePoint: true }),
+                        new Config({ tabWidth: 4, unicode: true }),
                         "rest",
                         new SourcePos("foobar", 496, 28),
                         "some"
                     )
                 );
             });
-            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, useCodePoint: true });
+            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(res).to.deep.equal({
                 succeeded: true,
                 value    : "nyancat"
@@ -145,7 +145,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
                 expect(State.equal(
                     state,
                     new State(
-                        new Config({ tabWidth: 4, useCodePoint: true }),
+                        new Config({ tabWidth: 4, unicode: true }),
                         "test",
                         new SourcePos("foobar", 1, 1),
                         "none"
@@ -163,7 +163,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
                     )
                 );
             });
-            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, useCodePoint: true });
+            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(res).to.be.an("object");
             expect(res.succeeded).to.be.false;
             expect(ParseError.equal(
@@ -203,7 +203,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
                     ),
                     "nyancat",
                     new State(
-                        new Config({ tabWidth: 4, useCodePoint: true }),
+                        new Config({ tabWidth: 4, unicode: true }),
                         "rest",
                         new SourcePos("foobar", 496, 28),
                         "some"

@@ -18,24 +18,24 @@ describe("constructor(opts = {})", () => {
             let config = new Config();
             expect(config).to.be.an.instanceOf(Config);
             expect(config.tabWidth).to.equal(8);
-            expect(config.useCodePoint).to.equal(false);
+            expect(config.unicode).to.equal(false);
         }
         // use default config
         {
             let config = new Config({});
             expect(config).to.be.an.instanceOf(Config);
             expect(config.tabWidth).to.equal(8);
-            expect(config.useCodePoint).to.equal(false);
+            expect(config.unicode).to.equal(false);
         }
         // specify config
         {
             let config = new Config({
-                tabWidth    : 4,
-                useCodePoint: true
+                tabWidth: 4,
+                unicode : true
             });
             expect(config).to.be.an.instanceOf(Config);
             expect(config.tabWidth).to.equal(4);
-            expect(config.useCodePoint).to.equal(true);
+            expect(config.unicode).to.equal(true);
         }
     });
 });

@@ -43,13 +43,11 @@ class Config {
      * <table>
      * <tr><th>Name</th><th>Type</th><th>Default</th><th>Description</th></tr>
      * <tr><td>tabWidth</td><td>number</td><td>8</td><td>Positive integer specifying tab width.</td></tr>
-     * <tr><td>useCodePoint</td><td>boolean</td><td>false</td><td>Specifies character counting strategy.
-     * If `false` (default), characters in input are counted by the traditional method.
-     * If `true`, characters are counted based on the UTF-16 code point.
-     * (For instance, `"\uD83C\uDF63"` is counted 2 characters by the traditional method,
-     * while it is counted 1 character based on the code point.)
-     * You should set this flag to `true` when the language you want to parse allows surrogate pairs (like emojis)
-     * to appear in input.</td></tr>
+     * <tr><td>unicode</td><td>boolean</td><td>false</td><td>Enables unicode features.
+     * If `true`, characters are treated as code points.
+     * (For instance, `"\uD83C\uDF63"` is 2 characters (code units) in non-unicode mode,
+     * while it is 1 character (code point) in unicode mode.)
+     * </td></tr>
      * </table>
      */
     constructor(opts) {
@@ -57,7 +55,7 @@ class Config {
             opts = {};
         }
         this._tabWidth     = opts.tabWidth === undefined ? 8 : opts.tabWidth;
-        this._useCodePoint = opts.useCodePoint === undefined ? false : opts.useCodePoint;
+        this._unicode = opts.unicode === undefined ? false : opts.unicode;
     }
 
     /**
@@ -68,7 +66,7 @@ class Config {
      */
     static equal(configA, configB) {
         return configA.tabWidth === configB.tabWidth
-            && configA.useCodePoint === configB.useCodePoint;
+            && configA.unicode === configB.unicode;
     }
 
     /**
@@ -83,8 +81,8 @@ class Config {
      * @readonly
      * @type {boolean}
      */
-    get useCodePoint() {
-        return this._useCodePoint;
+    get unicode() {
+        return this._unicode;
     }
 }
 

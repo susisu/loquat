@@ -20,14 +20,14 @@ describe("constructor(config, input, pos, userState)", () => {
         // use default argument
         {
             let state = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28)
             );
             expect(state).to.be.an.instanceOf(State);
             expect(Config.equal(
                 state.config,
-                new Config({ tabWidth: 4, useCodePoint: true })
+                new Config({ tabWidth: 4, unicode: true })
             )).to.be.true;
             expect(state.input).to.equal("foobar");
             expect(SourcePos.equal(
@@ -39,7 +39,7 @@ describe("constructor(config, input, pos, userState)", () => {
         // specify userState
         {
             let state = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "user-defined state"
@@ -47,7 +47,7 @@ describe("constructor(config, input, pos, userState)", () => {
             expect(state).to.be.an.instanceOf(State);
             expect(Config.equal(
                 state.config,
-                new Config({ tabWidth: 4, useCodePoint: true })
+                new Config({ tabWidth: 4, unicode: true })
             )).to.be.true;
             expect(state.input).to.equal("foobar");
             expect(SourcePos.equal(

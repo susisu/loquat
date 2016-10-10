@@ -30,7 +30,7 @@ describe("#run(state)", () => {
             expect(State.equal(
                 state,
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "init",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -50,7 +50,7 @@ describe("#run(state)", () => {
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "some"
@@ -58,7 +58,7 @@ describe("#run(state)", () => {
             );
         });
         let res = parser.run(new State(
-            new Config({ tabWidth: 4, useCodePoint: true }),
+            new Config({ tabWidth: 4, unicode: true }),
             "init",
             new SourcePos("foobar", 496, 28),
             "none"
@@ -80,7 +80,7 @@ describe("#run(state)", () => {
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "some"

@@ -18,7 +18,7 @@ const State  = _parser.State;
 describe("#setUserState(pos)", () => {
     it("should a copy of the state, with specified `pos'", () => {
         let state = new State(
-            new Config({ tabWidth: 4, useCodePoint: true }),
+            new Config({ tabWidth: 4, unicode: true }),
             "foobar",
             new SourcePos("nyancat", 496, 28),
             "none"
@@ -28,7 +28,7 @@ describe("#setUserState(pos)", () => {
         expect(State.equal(
             copy,
             new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "some"

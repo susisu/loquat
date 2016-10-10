@@ -20,13 +20,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         // use default arguments
         {
             let stateA = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
             let stateB = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
@@ -36,13 +36,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         // specify undefined
         {
             let stateA = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
             let stateB = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
@@ -52,13 +52,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         // specify functions
         {
             let stateA = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 ["foo", "bar", "baz"],
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
             let stateB = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 ["foo", "bar", "baz"],
                 new SourcePos("nyancat", 496, 28),
                 "NONE"
@@ -74,13 +74,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         // different config
         {
             let stateA = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
             let stateB = new State(
-                new Config({ tabWidth: 8, useCodePoint: false }),
+                new Config({ tabWidth: 8, unicode: false }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
@@ -90,13 +90,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         // different input
         {
             let stateA = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
             let stateB = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "FOOBAR",
                 new SourcePos("nyancat", 496, 28),
                 "none"
@@ -106,13 +106,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         // different pos
         {
             let stateA = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
             let stateB = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 6, 28),
                 "none"
@@ -122,13 +122,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         // different userState
         {
             let stateA = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
             let stateB = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "NONE"
@@ -138,13 +138,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         // all
         {
             let stateA = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
             let stateB = new State(
-                new Config({ tabWidth: 8, useCodePoint: false }),
+                new Config({ tabWidth: 8, unicode: false }),
                 "FOOBAR",
                 new SourcePos("nyancat", 6, 28),
                 "NONE"
@@ -154,13 +154,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         // specify equal functions
         {
             let stateA = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
             let stateB = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
@@ -170,13 +170,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         }
         {
             let stateA = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
             let stateB = new State(
-                new Config({ tabWidth: 4, useCodePoint: true }),
+                new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"

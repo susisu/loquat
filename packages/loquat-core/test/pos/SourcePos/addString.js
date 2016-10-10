@@ -11,7 +11,7 @@ const expect = chai.expect;
 const _pos = require("pos.js");
 const SourcePos = _pos.SourcePos;
 
-describe("#addString(str, tabWidth, useCodePoint)", () => {
+describe("#addString(str, tabWidth, unicode)", () => {
     it("should create a copy with lines and columns are incremented by `str'", () => {
         {
             let pos  = new SourcePos("foobar", 496, 1);
@@ -31,7 +31,7 @@ describe("#addString(str, tabWidth, useCodePoint)", () => {
         }
     });
 
-    it("should count characters based on the UTF-16 code point if `useCodePoint' is true", () => {
+    it("should count characters in units of code points if `unicode' is true", () => {
         let pos  = new SourcePos("foobar", 496, 1);
         let copy = pos.addString("nyan\n\tcat\n\u3042\t\uD83C\uDF63", 8, true);
         expect(copy).not.to.equal(pos);

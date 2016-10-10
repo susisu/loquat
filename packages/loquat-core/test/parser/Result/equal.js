@@ -39,7 +39,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -59,7 +59,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -83,7 +83,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -103,7 +103,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "RESULT",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "REST",
                     new SourcePos("foobar", 496, 28),
                     "NONE"
@@ -131,7 +131,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -151,7 +151,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -175,7 +175,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -195,7 +195,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -219,7 +219,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -239,7 +239,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -263,7 +263,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -283,7 +283,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "ok",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -307,7 +307,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -327,7 +327,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 6, 28),
                     "none"
@@ -351,7 +351,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
@@ -424,7 +424,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                 ),
                 "result",
                 new State(
-                    new Config({ tabWidth: 4, useCodePoint: true }),
+                    new Config({ tabWidth: 4, unicode: true }),
                     "rest",
                     new SourcePos("foobar", 496, 28),
                     "none"
