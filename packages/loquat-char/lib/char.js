@@ -88,7 +88,7 @@ module.exports = _core => {
             if (unicode) {
                 let consumed = false;
                 for (const char of str) {
-                    const unconsed = uncons(rest);
+                    const unconsed = uncons(rest, unicode);
                     if (unconsed.empty) {
                         return !consumed
                             ? Result.eerr(eofError(state.pos))
@@ -109,7 +109,7 @@ module.exports = _core => {
             }
             else {
                 for (let i = 0; i < len; i++) {
-                    const unconsed = uncons(rest);
+                    const unconsed = uncons(rest, unicode);
                     if (unconsed.empty) {
                         return i === 0
                             ? Result.eerr(eofError(state.pos))

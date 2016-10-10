@@ -171,21 +171,12 @@ describe(".string(str)", () => {
         }
     });
 
-    it("should treat characters in code point units if unicode flag of the config is `true'", () => {
-        function cpArray(str) {
-            let arr = [];
-            for (let char of str) {
-                arr.push(char);
-            }
-            return arr;
-        }
-        let arrayEqual = (xs, ys) => xs.length === ys.length && xs.every((x, i) => x === ys[i]);
-
+    it("should treat characters as code points if unicode flag of the config is `true'", () => {
         // expect empty
         {
             let initState = new State(
                 new Config({ unicode: true }),
-                cpArray("\uD83C\uDF63XY"),
+                "\uD83C\uDF63XY",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
@@ -199,20 +190,19 @@ describe(".string(str)", () => {
                     "",
                     new State(
                         new Config({ unicode: true }),
-                        cpArray("\uD83C\uDF63XY"),
+                        "\uD83C\uDF63XY",
                         new SourcePos("foobar", 1, 1),
                         "none"
                     )
                 ),
-                undefined,
-                arrayEqual
+                undefined
             )).to.be.true;
         }
         // expect many, correct input
         {
             let initState = new State(
                 new Config({ unicode: true }),
-                cpArray("\uD83C\uDF63XY"),
+                "\uD83C\uDF63XY",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
@@ -226,20 +216,19 @@ describe(".string(str)", () => {
                     "\uD83C\uDF63X",
                     new State(
                         new Config({ unicode: true }),
-                        cpArray("Y"),
+                        "Y",
                         new SourcePos("foobar", 1, 3),
                         "none"
                     )
                 ),
-                undefined,
-                arrayEqual
+                undefined
             )).to.be.true;
         }
         // expect many, totally wrong input
         {
             let initState = new State(
                 new Config({ unicode: true }),
-                cpArray("XYZ"),
+                "XYZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
@@ -257,15 +246,14 @@ describe(".string(str)", () => {
                         ]
                     )
                 ),
-                undefined,
-                arrayEqual
+                undefined
             )).to.be.true;
         }
         // expect many, partially wrong input
         {
             let initState = new State(
                 new Config({ unicode: true }),
-                cpArray("\uD83C\uDF63YX"),
+                "\uD83C\uDF63YX",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
@@ -283,15 +271,14 @@ describe(".string(str)", () => {
                         ]
                     )
                 ),
-                undefined,
-                arrayEqual
+                undefined
             )).to.be.true;
         }
         // expect many, no input
         {
             let initState = new State(
                 new Config({ unicode: true }),
-                cpArray(""),
+                "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
@@ -309,15 +296,14 @@ describe(".string(str)", () => {
                         ]
                     )
                 ),
-                undefined,
-                arrayEqual
+                undefined
             )).to.be.true;
         }
         // expect many, less input
         {
             let initState = new State(
                 new Config({ unicode: true }),
-                cpArray("\uD83C\uDF63"),
+                "\uD83C\uDF63",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
@@ -335,8 +321,7 @@ describe(".string(str)", () => {
                         ]
                     )
                 ),
-                undefined,
-                arrayEqual
+                undefined
             )).to.be.true;
         }
     });
