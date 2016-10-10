@@ -8,6 +8,11 @@
 module.exports = (_core, sugar) => {
     const _prim = require("./lib/prim.js")(_core);
 
+    if (sugar) {
+        const _sugar = require("./lib/sugar.js")(_core, _prim);
+        _core.extendParser(_sugar);
+    }
+
     return Object.freeze({
         map         : _prim.map,
         pure        : _prim.pure,
