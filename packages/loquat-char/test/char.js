@@ -18,4 +18,5 @@ describe("char", () => {
     require("./char/tab.js");
     require("./char/upper.js");
     require("./char/lower.js");
+    require("./char/letter.js");
 });
