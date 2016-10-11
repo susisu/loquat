@@ -13,4 +13,5 @@ describe("char", () => {
     require("./char/char.js");
     require("./char/anyChar.js");
     require("./char/space.js");
+    require("./char/spaces.js");
 });
