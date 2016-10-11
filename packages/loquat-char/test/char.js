@@ -15,4 +15,5 @@ describe("char", () => {
     require("./char/space.js");
     require("./char/spaces.js");
     require("./char/newline.js");
+    require("./char/tab.js");
 });
