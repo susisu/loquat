@@ -19,4 +19,5 @@ describe("char", () => {
     require("./char/upper.js");
     require("./char/lower.js");
     require("./char/letter.js");
+    require("./char/digit.js");
 });
