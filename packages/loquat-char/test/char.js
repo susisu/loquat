@@ -21,4 +21,5 @@ describe("char", () => {
     require("./char/letter.js");
     require("./char/digit.js");
     require("./char/alphaNum.js");
+    require("./char/octDigit.js");
 });
