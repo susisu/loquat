@@ -20,4 +20,5 @@ describe("char", () => {
     require("./char/lower.js");
     require("./char/letter.js");
     require("./char/digit.js");
+    require("./char/alphaNum.js");
 });
