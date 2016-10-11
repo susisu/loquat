@@ -10,4 +10,5 @@ describe("char", () => {
     require("./char/satisfy.js");
     require("./char/oneOf.js");
     require("./char/noneOf.js");
+    require("./char/char.js");
 });
