@@ -11,4 +11,5 @@ describe("char", () => {
     require("./char/oneOf.js");
     require("./char/noneOf.js");
     require("./char/char.js");
+    require("./char/anyChar.js");
 });
