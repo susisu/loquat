@@ -12,4 +12,5 @@ describe("char", () => {
     require("./char/noneOf.js");
     require("./char/char.js");
     require("./char/anyChar.js");
+    require("./char/space.js");
 });
