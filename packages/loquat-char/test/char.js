@@ -22,4 +22,5 @@ describe("char", () => {
     require("./char/digit.js");
     require("./char/alphaNum.js");
     require("./char/octDigit.js");
+    require("./char/hexDigit.js");
 });
