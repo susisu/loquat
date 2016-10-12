@@ -314,7 +314,9 @@ module.exports = _core => {
         if (groupId === undefined) {
             groupId = 0;
         }
-        const flags = re.flags.replace(/[^imu]/g, "");
+        const flags = (re.ignoreCase ? "i" : "")
+            + (re.multiline ? "m" : "")
+            + (re.unicode ? "u" : "");
         const anchored = new RegExp(`^(?:${re.source})`, flags);
         return new Parser(state => {
             if (typeof state.input !== "string") {
