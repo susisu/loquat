@@ -340,4 +340,31 @@ describe(".regexp(re, groupId = 0)", () => {
             )).to.be.true;
         }
     });
+
+    it("should throw an `Error' if input is not a string", () => {
+        // Array
+        {
+            let initState = new State(
+                new Config({ unicode: true }),
+                ["X", "Y", "Z"],
+                new SourcePos("foobar", 1, 1),
+                "none"
+            );
+            let parser = regexp(/./, 0);
+            assertParser(parser);
+            expect(() => { parser.run(initState); }).to.throw(Error, /regexp/);
+        }
+        // IStream
+        {
+            let initState = new State(
+                new Config({ unicode: true }),
+                { uncons: () => ({ empty: true }) },
+                new SourcePos("foobar", 1, 1),
+                "none"
+            );
+            let parser = regexp(/./, 0);
+            assertParser(parser);
+            expect(() => { parser.run(initState); }).to.throw(Error, /regexp/);
+        }
+    });
 });
