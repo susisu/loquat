@@ -8,7 +8,6 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-const _core = require("loquat-core");
 const show             = _core.show;
 const SourcePos        = _core.SourcePos;
 const ErrorMessageType = _core.ErrorMessageType;
@@ -19,7 +18,6 @@ const State            = _core.State;
 const Result           = _core.Result;
 const assertParser     = _core.assertParser;
 
-const _char = require("char.js")(_core);
 const satisfy = _char.satisfy;
 
 describe(".satisfy(test)", () => {

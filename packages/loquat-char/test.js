@@ -5,8 +5,7 @@
 
 "use strict";
 
-const path = require("path");
-
-require("app-module-path").addPath(path.join(__dirname, "lib"));
+global._core = require("loquat-core")();
+global._char = require("./lib/char.js")(_core);
 
 require("./test/char.js");
