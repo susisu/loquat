@@ -25,4 +25,5 @@ describe("char", () => {
     require("./char/hexDigit.js");
     require("./char/manyChars.js");
     require("./char/manyChars1.js");
+    require("./char/regexp.js");
 });
