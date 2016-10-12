@@ -5,9 +5,11 @@
 
 "use strict";
 
-const path = require("path");
-
-require("app-module-path").addPath(path.join(__dirname, "lib"));
+global._utils  = require("./lib/utils.js")();
+global._pos    = require("./lib/pos.js")();
+global._error  = require("./lib/error.js")(_pos);
+global._stream = require("./lib/stream.js")();
+global._parser = require("./lib/parser.js")(_pos, _error);
 
 require("./test/utils.js");
 require("./test/pos.js");

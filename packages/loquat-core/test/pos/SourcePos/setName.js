@@ -8,7 +8,6 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-const _pos = require("pos.js");
 const SourcePos = _pos.SourcePos;
 
 describe("#setName(name)", () => {

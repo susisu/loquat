@@ -8,7 +8,6 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-const _error = require("error.js");
 const joinWithCommasOr = _error._internal.joinWithCommasOr;
 
 describe(".joinWithCommasOr(msgStrs)", () => {

@@ -8,7 +8,6 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-const _parser = require("parser.js");
 const AbstractParser = _parser.AbstractParser;
 const Parser         = _parser.Parser;
 const LazyParser     = _parser.LazyParser;

@@ -8,7 +8,6 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-const _error = require("error.js");
 const ErrorMessageType   = _error.ErrorMessageType;
 const ErrorMessage       = _error.ErrorMessage;
 const AbstractParseError = _error.AbstractParseError;

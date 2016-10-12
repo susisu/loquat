@@ -8,15 +8,12 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-const _pos = require("pos.js");
 const SourcePos = _pos.SourcePos;
 
-const _error = require("error.js");
 const ErrorMessageType = _error.ErrorMessageType;
 const ErrorMessage     = _error.ErrorMessage;
 const ParseError       = _error.ParseError;
 
-const _parser = require("parser.js");
 const Config = _parser.Config;
 const State  = _parser.State;
 const Result = _parser.Result;

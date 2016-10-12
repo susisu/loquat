@@ -8,7 +8,6 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-const _stream = require("stream.js");
 const uncons = _stream.uncons;
 
 describe(".uncons(input, unicode)", () => {

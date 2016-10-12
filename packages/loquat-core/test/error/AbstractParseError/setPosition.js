@@ -8,10 +8,8 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-const _pos = require("pos.js");
 const SourcePos = _pos.SourcePos;
 
-const _error = require("error.js");
 const AbstractParseError = _error.AbstractParseError;
 
 describe("#setPosition(pos)", () => {

@@ -8,7 +8,6 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-const _error = require("error.js");
 const joinMessageStrings = _error._internal.joinMessageStrings;
 
 describe(".joinMessageStrings(msgStrs, desc = \"\")", () => {

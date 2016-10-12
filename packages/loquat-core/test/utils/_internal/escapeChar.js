@@ -8,7 +8,6 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-const _utils = require("utils.js");
 const escapeChar = _utils._internal.escapeChar;
 
 describe(".escapeChar(char)", () => {

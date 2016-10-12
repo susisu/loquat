@@ -8,10 +8,8 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-const _pos = require("pos.js");
 const SourcePos = _pos.SourcePos;
 
-const _parser = require("parser.js");
 const Config = _parser.Config;
 const State  = _parser.State;
 
