@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/susisu/loquat-combinators#readme",
   "devDependencies": {
-    "app-module-path": "^2.0.0",
     "chai": "^3.5.0",
     "eslint": "^3.7.1",
     "jsdoc": "^3.4.2",
