@@ -8,7 +8,6 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-const _core = require("loquat-core");
 const SourcePos        = _core.SourcePos;
 const ErrorMessageType = _core.ErrorMessageType;
 const ErrorMessage     = _core.ErrorMessage;
@@ -19,7 +18,6 @@ const Result           = _core.Result;
 const Parser           = _core.Parser;
 const assertParser     = _core.assertParser;
 
-const _prim = require("prim.js")(_core);
 const pure = _prim.pure;
 const bind = _prim.bind;
 

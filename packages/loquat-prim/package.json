@@ -10,7 +10,7 @@
     "test": "mocha test.js",
     "docs": "jsdoc lib -c jsdoc.conf.json",
     "lint": "eslint lib --fix",
-    "lint-test": "eslint test --env mocha --fix"
+    "lint-test": "eslint test --env mocha --global _core,_prim --fix"
   },
   "repository": {
     "type": "git",
