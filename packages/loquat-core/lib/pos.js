@@ -9,194 +9,196 @@
 
 "use strict";
 
-function end() {
-    module.exports = Object.freeze({
-        SourcePos
-    });
-}
-
-/**
- * An instance of the `SourcePos` class represents a specific position in the source.
- * @static
- */
-class SourcePos {
-    /**
-     * Creates a new `SourcePos` instance.
-     * @param {string} name Name of the source.
-     * @param {number} line Line in the source.
-     * @param {number} column Column in the source.
-     */
-    constructor(name, line, column) {
-        this._name   = name;
-        this._line   = line;
-        this._column = column;
+module.exports = () => {
+    function end() {
+        return Object.freeze({
+            SourcePos
+        });
     }
 
     /**
-     * Creates a new `SourcePos` instance initialized with `line = 1` and `column = 1`.
-     * @param {string} name Name of the source.
-     * @returns {module:pos.SourcePos} New `SourcePos` instance.
+     * An instance of the `SourcePos` class represents a specific position in the source.
+     * @static
      */
-    static init(name) {
-        return new SourcePos(name, 1, 1);
-    }
-
-    /**
-     * Checks if two `SourcePos` instances describe the same position.
-     * @param {module:pos.SourcePos} posA
-     * @param {module:pos.SourcePos} posB
-     * @returns {boolean} `true` if two `SoucePos` instances describe the same position.
-     */
-    static equal(posA, posB) {
-        return posA.name   === posB.name
-            && posA.line   === posB.line
-            && posA.column === posB.column;
-    }
-
-    /**
-     * Compares two `SourcePos` instances.
-     * @param {module:pos.SourcePos} posA
-     * @param {module:pos.SourcePos} posB
-     * @returns {number} Negative if `posA` describes a position ahead of `posB`.
-     * Positive if `posA` describes a position behind `posB`.
-     * Zero if `posA` and `posB` describe the same.
-     */
-    static compare(posA, posB) {
-        return posA.name   < posB.name   ? -1
-             : posA.name   > posB.name   ? 1
-             : posA.line   < posB.line   ? -1
-             : posA.line   > posB.line   ? 1
-             : posA.column < posB.column ? -1
-             : posA.column > posB.column ? 1
-                                         : 0;
-    }
-
-    /**
-     * @readonly
-     * @type {string}
-     */
-    get name() {
-        return this._name;
-    }
-
-    /**
-     * @readonly
-     * @type {number}
-     */
-    get line() {
-        return this._line;
-    }
-
-    /**
-     * @readonly
-     * @type {number}
-     */
-    get column() {
-        return this._column;
-    }
-
-    /**
-     * Returns the string representation of the position.
-     * @returns {string} The string representation of the position.
-     */
-    toString() {
-        return (this.name === "" ? "" : `"${this.name}"`)
-            + `(line ${this.line}, column ${this.column})`;
-    }
-
-    /**
-     * Creates a new copy of the instance with `name` set to the specified value.
-     * @param {string} name
-     * @returns {module:pos.SourcePos} Copy of the instance.
-     */
-    setName(name) {
-        return new SourcePos(name, this.line, this.column);
-    }
-
-    /**
-     * Creates a new copy of the instance with `line` set to the specified value.
-     * @param {number} line
-     * @returns {module:pos.SourcePos} Copy of the instance.
-     */
-    setLine(line) {
-        return new SourcePos(this.name, line, this.column);
-    }
-
-    /**
-     * Creates a new copy of the instance with `column` set to the specified value.
-     * @param {number} column
-     * @returns {module:pos.SourcePos} Copy of the instance.
-     */
-    setColumn(column) {
-        return new SourcePos(this.name, this.line, column);
-    }
-
-    /**
-     * @param {string} char
-     * @param {number} tabWidth
-     * @returns {module:pos.SourcePos}
-     */
-    addChar(char, tabWidth) {
-        let line   = this.line;
-        let column = this.column;
-        switch (char) {
-        case "":
-            break;
-        case "\n":
-            line  += 1;
-            column = 1;
-            break;
-        case "\t":
-            column += tabWidth - (column - 1) % tabWidth;
-            break;
-        default:
-            column += 1;
+    class SourcePos {
+        /**
+         * Creates a new `SourcePos` instance.
+         * @param {string} name Name of the source.
+         * @param {number} line Line in the source.
+         * @param {number} column Column in the source.
+         */
+        constructor(name, line, column) {
+            this._name   = name;
+            this._line   = line;
+            this._column = column;
         }
-        return new SourcePos(this.name, line, column);
-    }
 
-    /**
-     * @param {string} str
-     * @param {number} tabWidth
-     * @param {boolean} unicode If `true` specified, the characters are counted in units of code points.
-     * @returns {module:pos.SourcePos}
-     */
-    addString(str, tabWidth, unicode) {
-        let line   = this.line;
-        let column = this.column;
-        if (unicode) {
-            for (const char of str) {
-                switch (char) {
-                case "\n":
-                    line  += 1;
-                    column = 1;
-                    break;
-                case "\t":
-                    column += tabWidth - (column - 1) % tabWidth;
-                    break;
-                default:
-                    column += 1;
+        /**
+         * Creates a new `SourcePos` instance initialized with `line = 1` and `column = 1`.
+         * @param {string} name Name of the source.
+         * @returns {module:pos.SourcePos} New `SourcePos` instance.
+         */
+        static init(name) {
+            return new SourcePos(name, 1, 1);
+        }
+
+        /**
+         * Checks if two `SourcePos` instances describe the same position.
+         * @param {module:pos.SourcePos} posA
+         * @param {module:pos.SourcePos} posB
+         * @returns {boolean} `true` if two `SoucePos` instances describe the same position.
+         */
+        static equal(posA, posB) {
+            return posA.name   === posB.name
+                && posA.line   === posB.line
+                && posA.column === posB.column;
+        }
+
+        /**
+         * Compares two `SourcePos` instances.
+         * @param {module:pos.SourcePos} posA
+         * @param {module:pos.SourcePos} posB
+         * @returns {number} Negative if `posA` describes a position ahead of `posB`.
+         * Positive if `posA` describes a position behind `posB`.
+         * Zero if `posA` and `posB` describe the same.
+         */
+        static compare(posA, posB) {
+            return posA.name   < posB.name   ? -1
+                 : posA.name   > posB.name   ? 1
+                 : posA.line   < posB.line   ? -1
+                 : posA.line   > posB.line   ? 1
+                 : posA.column < posB.column ? -1
+                 : posA.column > posB.column ? 1
+                                             : 0;
+        }
+
+        /**
+         * @readonly
+         * @type {string}
+         */
+        get name() {
+            return this._name;
+        }
+
+        /**
+         * @readonly
+         * @type {number}
+         */
+        get line() {
+            return this._line;
+        }
+
+        /**
+         * @readonly
+         * @type {number}
+         */
+        get column() {
+            return this._column;
+        }
+
+        /**
+         * Returns the string representation of the position.
+         * @returns {string} The string representation of the position.
+         */
+        toString() {
+            return (this.name === "" ? "" : `"${this.name}"`)
+                + `(line ${this.line}, column ${this.column})`;
+        }
+
+        /**
+         * Creates a new copy of the instance with `name` set to the specified value.
+         * @param {string} name
+         * @returns {module:pos.SourcePos} Copy of the instance.
+         */
+        setName(name) {
+            return new SourcePos(name, this.line, this.column);
+        }
+
+        /**
+         * Creates a new copy of the instance with `line` set to the specified value.
+         * @param {number} line
+         * @returns {module:pos.SourcePos} Copy of the instance.
+         */
+        setLine(line) {
+            return new SourcePos(this.name, line, this.column);
+        }
+
+        /**
+         * Creates a new copy of the instance with `column` set to the specified value.
+         * @param {number} column
+         * @returns {module:pos.SourcePos} Copy of the instance.
+         */
+        setColumn(column) {
+            return new SourcePos(this.name, this.line, column);
+        }
+
+        /**
+         * @param {string} char
+         * @param {number} tabWidth
+         * @returns {module:pos.SourcePos}
+         */
+        addChar(char, tabWidth) {
+            let line   = this.line;
+            let column = this.column;
+            switch (char) {
+            case "":
+                break;
+            case "\n":
+                line  += 1;
+                column = 1;
+                break;
+            case "\t":
+                column += tabWidth - (column - 1) % tabWidth;
+                break;
+            default:
+                column += 1;
+            }
+            return new SourcePos(this.name, line, column);
+        }
+
+        /**
+         * @param {string} str
+         * @param {number} tabWidth
+         * @param {boolean} unicode If `true` specified, the characters are counted in units of code points.
+         * @returns {module:pos.SourcePos}
+         */
+        addString(str, tabWidth, unicode) {
+            let line   = this.line;
+            let column = this.column;
+            if (unicode) {
+                for (const char of str) {
+                    switch (char) {
+                    case "\n":
+                        line  += 1;
+                        column = 1;
+                        break;
+                    case "\t":
+                        column += tabWidth - (column - 1) % tabWidth;
+                        break;
+                    default:
+                        column += 1;
+                    }
                 }
             }
-        }
-        else {
-            const len = str.length;
-            for (let i = 0; i < len; i++) {
-                switch (str[i]) {
-                case "\n":
-                    line  += 1;
-                    column = 1;
-                    break;
-                case "\t":
-                    column += tabWidth - (column - 1) % tabWidth;
-                    break;
-                default:
-                    column += 1;
+            else {
+                const len = str.length;
+                for (let i = 0; i < len; i++) {
+                    switch (str[i]) {
+                    case "\n":
+                        line  += 1;
+                        column = 1;
+                        break;
+                    case "\t":
+                        column += tabWidth - (column - 1) % tabWidth;
+                        break;
+                    default:
+                        column += 1;
+                    }
                 }
             }
+            return new SourcePos(this.name, line, column);
         }
-        return new SourcePos(this.name, line, column);
     }
-}
 
-end();
+    return end();
+};
