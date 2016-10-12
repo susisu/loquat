@@ -30,7 +30,8 @@ module.exports = () => {
     escapeMap.set("\v", "\\v");
 
     /**
-     * Escapes the given character `char`.
+     * @function module:utils._internal.escapeChar
+     * @description Escapes the given character `char`.
      * @private
      * @static
      * @param {string} char A character.
@@ -41,12 +42,14 @@ module.exports = () => {
     }
 
     /**
-     * Pretty-printer for error messages.
+     * @function module:utils.show
+     * @description Pretty-printer for error messages.
      * Printing strategy is determined by the type of `value`.
      * - If `value` is a string, the string is escaped and double-quoted.
      * - If `value` is an string, each element is printed by `show()`
      * then joined with commas `,` and wrapped by braces `[ ... ]`.
-     * - If `value` is an object but `value.toString` is not a function, it calls `Object.prototype.toString.call(value)`.
+     * - If `value` is an object but `value.toString` is not a function,
+     * it calls `Object.prototype.toString.call(value)`.
      * - Otherwise, it calls `String(value)`
      * @static
      * @param {*} value Any value.

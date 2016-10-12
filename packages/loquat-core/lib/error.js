@@ -28,7 +28,8 @@ module.exports = _pos => {
     const SourcePos = _pos.SourcePos;
 
     /**
-     * The `ErrorMessageType` object has string constants, each describes a type of error message:
+     * @constant {Object} module:error.ErrorMessageType
+     * @description The `ErrorMessageType` object has string constants, each describes a type of error message:
      * - `ErrorMessageType.SYSTEM_UNEXPECT = "systemUnexpect"`
      * - `ErrorMessageType.UNEXPECT = "unexpect"`
      * - `ErrorMessageType.EXPECT = "expect"`

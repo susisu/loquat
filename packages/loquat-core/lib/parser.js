@@ -428,7 +428,8 @@ module.exports = (_pos, _error) => {
     }
 
     /**
-     * Shorthand for `new LazyParser()`.
+     * @function module:parser.lazy
+     * @description Shorthand for `new LazyParser()`.
      * @static
      * @param {function} thunk
      * @returns {module:parser.LazyParser}
@@ -438,6 +439,7 @@ module.exports = (_pos, _error) => {
     }
 
     /**
+     * @function module:parser.parse
      * @static
      * @param {module:parser.AbstractParser} parser
      * @param {string} name
@@ -458,6 +460,7 @@ module.exports = (_pos, _error) => {
     }
 
     /**
+     * @function module:parser.isParser
      * @static
      * @param {*} val
      * @return {boolean}
@@ -467,6 +470,7 @@ module.exports = (_pos, _error) => {
     }
 
     /**
+     * @function module:parser.assertParser
      * @static
      * @param {*} val
      * @return {undefined}
@@ -479,6 +483,7 @@ module.exports = (_pos, _error) => {
     }
 
     /**
+     * @function module:parser.extendParser
      * @static
      * @param {Object} extensions
      * @returns {undefined}

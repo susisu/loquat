@@ -37,7 +37,8 @@ module.exports = () => {
      */
 
     /**
-     * Reads the input.
+     * @function module:stream.uncons
+     * @description Reads the input.
      * A returned object has the following properties.
      * <table>
      * <tr><th>Property</th><th>Type</th><th>Description</th></tr>
