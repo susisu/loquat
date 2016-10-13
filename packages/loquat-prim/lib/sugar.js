@@ -10,7 +10,7 @@
 "use strict";
 
 module.exports = (_core, _prim) => {
-    const assertParser = _core.assertParser;
+    const isParser = _core.isParser;
 
     const map        = _prim.map;
     const pure       = _prim.pure;
@@ -72,7 +72,7 @@ module.exports = (_core, _prim) => {
             return many(this);
         },
         skipMany: function (parser) {
-            return assertParser(parser)
+            return isParser(parser)
                 ? left(this, skipMany(parser))
                 : skipMany(this);
         }
