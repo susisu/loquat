@@ -54,12 +54,9 @@ module.exports = _pos => {
          * @param {string} msgStr Message string.
          */
         constructor(type, msgStr) {
-            this.type   = type;
-            this.msgStr = msgStr;
+            this._type   = type;
+            this._msgStr = msgStr;
         }
-
-        /** @member {string} module:error.ErrorMessage#type */
-        /** @member {string} module:error.ErrorMessage#msgStr */
 
         /**
          * Checks if two messages are the same.
@@ -134,6 +131,22 @@ module.exports = _pos => {
                 }
             }
             return true;
+        }
+
+        /**
+         * @readonly
+         * @type {string}
+         */
+        get type() {
+            return this._type;
+        }
+
+        /**
+         * @readonly
+         * @type {string}
+         */
+        get msgStr() {
+            return this._msgStr;
         }
     }
 
