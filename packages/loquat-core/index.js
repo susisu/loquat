@@ -37,4 +37,4 @@ module.exports = () => {
         assertParser  : _parser.assertParser,
         extendParser  : _parser.extendParser
     });
-}
+};
