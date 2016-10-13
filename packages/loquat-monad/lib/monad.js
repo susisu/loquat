@@ -12,13 +12,15 @@
 module.exports = _core => {
     function end() {
         return Object.freeze({
-            forever
+            forever,
+            voidM
         });
     }
 
     const lazy = _core.lazy;
 
     const _prim = require("loquat-prim")(_core);
+    const map  = _prim.map;
     const then = _prim.then;
 
     /**
@@ -30,6 +32,16 @@ module.exports = _core => {
     function forever(parser) {
         const rec = lazy(() => then(parser, rec));
         return rec;
+    }
+
+    /**
+     * @function module:monad.voidM
+     * @static
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function voidM(parser) {
+        return map(parser, () => undefined);
     }
 
     return end();
