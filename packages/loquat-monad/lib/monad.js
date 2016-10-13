@@ -15,7 +15,8 @@ module.exports = _core => {
             forever,
             voidM,
             join,
-            when
+            when,
+            unless
         });
     }
 
@@ -67,6 +68,17 @@ module.exports = _core => {
      */
     function when(flag, parser) {
         return flag ? parser : pure(undefined);
+    }
+
+    /**
+     * @function module:monad.unless
+     * @static
+     * @param {boolean} flag
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function unless(flag, parser) {
+        return flag ? pure(undefined) : parser;
     }
 
     return end();
