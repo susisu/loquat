@@ -8,6 +8,11 @@
 module.exports = (_core, sugar) => {
     let _char = require("./lib/char.js")(_core);
 
+    if (sugar) {
+        const _sugar = require("./lib/sugar.js")(_core, _char);
+        _core.extendParser(_sugar);
+    }
+
     return Object.freeze({
         string    : _char.string,
         satisfy   : _char.satisfy,
