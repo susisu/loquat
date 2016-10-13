@@ -318,6 +318,7 @@ module.exports = _core => {
             + (re.multiline ? "m" : "")
             + (re.unicode ? "u" : "");
         const anchored = new RegExp(`^(?:${re.source})`, flags);
+        const expectStr = show(re);
         return new Parser(state => {
             if (typeof state.input !== "string") {
                 throw new Error("'regexp' is only applicable to string input");
@@ -351,7 +352,7 @@ module.exports = _core => {
                 return Result.eerr(
                     new ParseError(
                         state.pos,
-                        [new ErrorMessage(ErrorMessageType.EXPECT, show(re))]
+                        [new ErrorMessage(ErrorMessageType.EXPECT, expectStr)]
                     )
                 );
             }
