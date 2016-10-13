@@ -13,7 +13,8 @@ module.exports = _core => {
     function end() {
         return Object.freeze({
             forever,
-            voidM
+            voidM,
+            join
         });
     }
 
@@ -21,6 +22,7 @@ module.exports = _core => {
 
     const _prim = require("loquat-prim")(_core);
     const map  = _prim.map;
+    const bind = _prim.bind;
     const then = _prim.then;
 
     /**
@@ -42,6 +44,16 @@ module.exports = _core => {
      */
     function voidM(parser) {
         return map(parser, () => undefined);
+    }
+
+    /**
+     * @function module:monad.join
+     * @static
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function join(parser) {
+        return bind(parser, val => val);
     }
 
     return end();
