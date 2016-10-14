@@ -27,7 +27,8 @@ module.exports = _core => {
             sequence,
             sequence_,
             mapM,
-            mapM_
+            mapM_,
+            forM
         });
     }
 
@@ -268,6 +269,17 @@ module.exports = _core => {
      */
     function mapM_(func, parsers) {
         return sequence_(parsers.map(parser => func(parser)));
+    }
+
+    /**
+     * @function module:monad.forM
+     * @static
+     * @param {Array.<AbstractParser>} parsers
+     * @param {function} func
+     * @returns {AbstractParser}
+     */
+    function forM(parsers, func) {
+        return mapM(func, parsers);
     }
 
     return end();
