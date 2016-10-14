@@ -7,4 +7,5 @@
 
 describe("combinators", () => {
     require("./combinators/choice.js");
+    require("./combinators/option.js");
 });
