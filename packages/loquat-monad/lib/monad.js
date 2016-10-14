@@ -16,7 +16,8 @@ module.exports = _core => {
             voidM,
             join,
             when,
-            unless
+            unless,
+            liftM
         });
     }
 
@@ -79,6 +80,16 @@ module.exports = _core => {
      */
     function unless(flag, parser) {
         return flag ? pure(undefined) : parser;
+    }
+
+    /**
+     * @function module:monad.liftM
+     * @static
+     * @param {function} func
+     * @returns {function}
+     */
+    function liftM(func) {
+        return parser => bind(parser, val => pure(func(val)));
     }
 
     return end();
