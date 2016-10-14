@@ -20,7 +20,8 @@ module.exports = _core => {
             liftM,
             liftM2,
             liftM3,
-            liftM4
+            liftM4,
+            liftM5
         });
     }
 
@@ -140,6 +141,27 @@ module.exports = _core => {
                     bind(parserC, valC =>
                         bind(parserD, valD =>
                             pure(func(valA, valB, valC, valD))
+                        )
+                    )
+                )
+            );
+    }
+
+    /**
+     * @function module:monad.liftM5
+     * @static
+     * @param {function} func
+     * @returns {function}
+     */
+    function liftM5(func) {
+        return (parserA, parserB, parserC, parserD, parserE) =>
+            bind(parserA, valA =>
+                bind(parserB, valB =>
+                    bind(parserC, valC =>
+                        bind(parserD, valD =>
+                            bind(parserE, valE =>
+                                pure(func(valA, valB, valC, valD, valE))
+                            )
                         )
                     )
                 )
