@@ -24,7 +24,8 @@ module.exports = _core => {
             liftM5,
             ltor,
             rtol,
-            sequence
+            sequence,
+            sequence_
         });
     }
 
@@ -233,6 +234,16 @@ module.exports = _core => {
                 ? Result.csuc(currentErr, accum, currentState)
                 : Result.esuc(currentErr, accum, currentState);
         });
+    }
+
+    /**
+     * @function module:monad.sequence
+     * @static
+     * @param {Array.<AbstractParser>} parsers
+     * @returns {AbstractParser}
+     */
+    function sequence_(parsers) {
+        return parsers.reduceRight((accum, parser) => then(parser, accum), pure(undefined));
     }
 
     return end();
