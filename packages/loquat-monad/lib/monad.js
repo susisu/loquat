@@ -23,11 +23,15 @@ module.exports = _core => {
             liftM4,
             liftM5,
             ltor,
-            rtol
+            rtol,
+            sequence
         });
     }
 
-    const lazy = _core.lazy;
+    const ParseError = _core.ParseError;
+    const Result     = _core.Result;
+    const Parser     = _core.Parser;
+    const lazy       = _core.lazy;
 
     const _prim = require("loquat-prim")(_core);
     const map  = _prim.map;
@@ -190,6 +194,45 @@ module.exports = _core => {
      */
     function rtol(funcA, funcB) {
         return val => bind(funcB(val), funcA);
+    }
+
+    /**
+     * @function module:monad.sequence
+     * @static
+     * @param {Array.<AbstractParser>} parsers
+     * @returns {AbstractParser}
+     */
+    function sequence(parsers) {
+        return new Parser(state => {
+            const accum = [];
+            let currentState = state;
+            let currentErr = ParseError.unknown(state.pos);
+            let consumed = false;
+            for (const parser of parsers) {
+                const res = parser.run(currentState);
+                if (res.succeeded) {
+                    if (res.consumed) {
+                        consumed = true;
+                        accum.push(res.val);
+                        currentState = res.state;
+                        currentErr = res.err;
+                    }
+                    else {
+                        accum.push(res.val);
+                        currentState = res.state;
+                        currentErr = ParseError.merge(currentErr, res.err);
+                    }
+                }
+                else {
+                    return res.consumed
+                        ? res
+                        : Result.eerr(ParseError.merge(currentErr, res.err));
+                }
+            }
+            return consumed
+                ? Result.csuc(currentErr, accum, currentState)
+                : Result.esuc(currentErr, accum, currentState);
+        });
     }
 
     return end();
