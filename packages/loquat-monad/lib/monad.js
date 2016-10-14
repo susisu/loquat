@@ -25,7 +25,8 @@ module.exports = _core => {
             ltor,
             rtol,
             sequence,
-            sequence_
+            sequence_,
+            mapM
         });
     }
 
@@ -244,6 +245,17 @@ module.exports = _core => {
      */
     function sequence_(parsers) {
         return parsers.reduceRight((accum, parser) => then(parser, accum), pure(undefined));
+    }
+
+    /**
+     * @function module:monad.mapM
+     * @static
+     * @param {function} func
+     * @param {Array.<AbstractParser>} parsers
+     * @returns {AbstractParser}
+     */
+    function mapM(func, parsers) {
+        return sequence(parsers.map(parser => func(parser)));
     }
 
     return end();
