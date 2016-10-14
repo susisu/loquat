@@ -22,7 +22,8 @@ module.exports = _core => {
             liftM3,
             liftM4,
             liftM5,
-            ltor
+            ltor,
+            rtol
         });
     }
 
@@ -178,6 +179,17 @@ module.exports = _core => {
      */
     function ltor(funcA, funcB) {
         return val => bind(funcA(val), funcB);
+    }
+
+    /**
+     * @function module:monad.rtol
+     * @static
+     * @param {function} funcA
+     * @param {function} funcB
+     * @returns {function}
+     */
+    function rtol(funcA, funcB) {
+        return val => bind(funcB(val), funcA);
     }
 
     return end();
