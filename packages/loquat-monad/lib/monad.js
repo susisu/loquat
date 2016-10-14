@@ -18,7 +18,8 @@ module.exports = _core => {
             when,
             unless,
             liftM,
-            liftM2
+            liftM2,
+            liftM3
         });
     }
 
@@ -104,6 +105,23 @@ module.exports = _core => {
             bind(parserA, valA =>
                 bind(parserB, valB =>
                     pure(func(valA, valB))
+                )
+            );
+    }
+
+    /**
+     * @function module:monad.liftM3
+     * @static
+     * @param {function} func
+     * @returns {function}
+     */
+    function liftM3(func) {
+        return (parserA, parserB, parserC) =>
+            bind(parserA, valA =>
+                bind(parserB, valB =>
+                    bind(parserC, valC =>
+                        pure(func(valA, valB, valC))
+                    )
                 )
             );
     }
