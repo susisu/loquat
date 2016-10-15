@@ -29,7 +29,8 @@ module.exports = _core => {
             mapM,
             mapM_,
             forM,
-            forM_
+            forM_,
+            filterM
         });
     }
 
@@ -292,6 +293,56 @@ module.exports = _core => {
      */
     function forM_(arr, func) {
         return mapM_(func, arr);
+    }
+
+    /**
+     * @function module:monad.filterM
+     * @static
+     * @param {function} test
+     * @param {Array} arr
+     * @returns {AbstractParser}
+     */
+    function filterM(test, arr) {
+        return new Parser(state => {
+            const accum = [];
+            let currentState = state;
+            let currentErr = ParseError.unknown(state.pos);
+            let consumed = false;
+            for (const elem of arr) {
+                const parser = test(elem);
+                const res = parser.run(currentState);
+                if (res.succeeded) {
+                    if (res.consumed) {
+                        consumed = true;
+                        if (res.val) {
+                            accum.push(elem);
+                        }
+                        currentState = res.state;
+                        currentErr = res.err;
+                    }
+                    else {
+                        if (res.val) {
+                            accum.push(elem);
+                        }
+                        currentState = res.state;
+                        currentErr = ParseError.merge(currentErr, res.err);
+                    }
+                }
+                else {
+                    if (res.consumed) {
+                        return Result.cerr(res.err);
+                    }
+                    else {
+                        return consumed
+                            ? Result.cerr(ParseError.merge(currentErr, res.err))
+                            : Result.eerr(ParseError.merge(currentErr, res.err));
+                    }
+                }
+            }
+            return consumed
+                ? Result.csuc(currentErr, accum, currentState)
+                : Result.esuc(currentErr, accum, currentState);
+        });
     }
 
     return end();
