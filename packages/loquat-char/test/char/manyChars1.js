@@ -21,7 +21,7 @@ const assertParser     = _core.assertParser;
 const manyChars1 = _char.manyChars1;
 
 describe(".manyChars1(parser)", () => {
-    it("should return a parser that runs `parser' until it empty fails"
+    it("should return a parser that one or more characters accepted by `parser' until it empty fails"
         + " and concats the resultant values into a string", () => {
         let initState = new State(
             new Config({ tabWidth: 8 }),
