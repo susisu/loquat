@@ -254,44 +254,44 @@ module.exports = _core => {
      * @function module:monad.mapM
      * @static
      * @param {function} func
-     * @param {Array.<AbstractParser>} parsers
+     * @param {Array} arr
      * @returns {AbstractParser}
      */
-    function mapM(func, parsers) {
-        return sequence(parsers.map(parser => func(parser)));
+    function mapM(func, arr) {
+        return sequence(arr.map(elem => func(elem)));
     }
 
     /**
      * @function module:monad.mapM_
      * @static
      * @param {function} func
-     * @param {Array.<AbstractParser>} parsers
+     * @param {Array} arr
      * @returns {AbstractParser}
      */
-    function mapM_(func, parsers) {
-        return sequence_(parsers.map(parser => func(parser)));
+    function mapM_(func, arr) {
+        return sequence_(arr.map(elem => func(elem)));
     }
 
     /**
      * @function module:monad.forM
      * @static
-     * @param {Array.<AbstractParser>} parsers
+     * @param {Array} arr
      * @param {function} func
      * @returns {AbstractParser}
      */
-    function forM(parsers, func) {
-        return mapM(func, parsers);
+    function forM(arr, func) {
+        return mapM(func, arr);
     }
 
     /**
      * @function module:monad.forM_
      * @static
-     * @param {Array.<AbstractParser>} parsers
+     * @param {Array} arr
      * @param {function} func
      * @returns {AbstractParser}
      */
-    function forM_(parsers, func) {
-        return mapM_(func, parsers);
+    function forM_(arr, func) {
+        return mapM_(func, arr);
     }
 
     return end();
