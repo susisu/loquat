@@ -11,4 +11,5 @@ describe("combinators", () => {
     require("./combinators/optionMaybe.js");
     require("./combinators/optional.js");
     require("./combinators/between.js");
+    require("./combinators/many1.js");
 });
