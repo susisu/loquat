@@ -13,6 +13,7 @@ module.exports = _core => {
     function end() {
         return Object.freeze({
             map,
+            fmap,
             pure,
             ap,
             left,
@@ -70,6 +71,16 @@ module.exports = _core => {
                 ? new Result(res.consumed, true, res.err, func(res.val), res.state)
                 : res;
         });
+    }
+
+    /**
+     * @function module:prim.fmap
+     * @static
+     * @param {function} func
+     * @returns {function}
+     */
+    function fmap(func) {
+        return parser => map(parser, func);
     }
 
     /**
