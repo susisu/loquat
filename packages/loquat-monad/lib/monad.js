@@ -30,7 +30,11 @@ module.exports = _core => {
             mapM_,
             forM,
             forM_,
-            filterM
+            filterM,
+            zipWithM,
+            _internal: {
+                zipWith
+            }
         });
     }
 
@@ -343,6 +347,36 @@ module.exports = _core => {
                 ? Result.csuc(currentErr, accum, currentState)
                 : Result.esuc(currentErr, accum, currentState);
         });
+    }
+
+    /**
+     * @function module:monad.zipWith
+     * @private
+     * @static
+     * @param {function} func
+     * @param {Array} arrA
+     * @param {Array} arrB
+     * @returns {*}
+     */
+    function zipWith(func, arrA, arrB) {
+        const res = [];
+        const len = Math.min(arrA.length, arrB.length);
+        for (let i = 0; i < len; i++) {
+            res.push(func(arrA[i], arrB[i]));
+        }
+        return res;
+    }
+
+    /**
+     * @function module:monad.zipWithM
+     * @static
+     * @param {function} func
+     * @param {Array} arrA
+     * @param {Array} arrB
+     * @returns {AbstractParser}
+     */
+    function zipWithM(func, arrA, arrB) {
+        return sequence(zipWith(func, arrA, arrB));
     }
 
     return end();
