@@ -33,6 +33,7 @@ module.exports = _core => {
             filterM,
             zipWithM,
             zipWithM_,
+            foldM,
             _internal: {
                 zipWith
             }
@@ -390,6 +391,53 @@ module.exports = _core => {
      */
     function zipWithM_(func, arrA, arrB) {
         return sequence_(zipWith(func, arrA, arrB));
+    }
+
+    /**
+     * @function module:monad.foldM
+     * @static
+     * @param {function} func
+     * @param {*} initVal
+     * @param {Array} arr
+     * @returns {AbstractParser}
+     */
+    function foldM(func, initVal, arr) {
+        return new Parser(state => {
+            let accum = initVal;
+            let currentState = state;
+            let currentErr = ParseError.unknown(state.pos);
+            let consumed = false;
+            for (const elem of arr) {
+                const parser = func(accum, elem);
+                const res = parser.run(currentState);
+                if (res.succeeded) {
+                    if (res.consumed) {
+                        consumed = true;
+                        accum = res.val;
+                        currentState = res.state;
+                        currentErr = res.err;
+                    }
+                    else {
+                        accum = res.val;
+                        currentState = res.state;
+                        currentErr = ParseError.merge(currentErr, res.err);
+                    }
+                }
+                else {
+                    if (res.consumed) {
+                        return Result.cerr(res.err);
+                    }
+                    else {
+                        return consumed
+                            ? Result.cerr(ParseError.merge(currentErr, res.err))
+                            : Result.eerr(ParseError.merge(currentErr, res.err));
+                    }
+                }
+            }
+            return consumed
+                ? Result.csuc(currentErr, accum, currentState)
+                : Result.esuc(currentErr, accum, currentState);
+        });
     }
 
     return end();
