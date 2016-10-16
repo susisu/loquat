@@ -36,6 +36,7 @@ module.exports = _core => {
             foldM,
             foldM_,
             replicateM,
+            replicateM_,
             _internal: {
                 zipWith
             }
@@ -463,6 +464,17 @@ module.exports = _core => {
      */
     function replicateM(num, parser) {
         return sequence(new Array(num).fill(parser));
+    }
+
+    /**
+     * @function module:monad.replicateM_
+     * @static
+     * @param {number} num
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function replicateM_(num, parser) {
+        return sequence_(new Array(num).fill(parser));
     }
 
     return end();
