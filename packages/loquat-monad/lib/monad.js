@@ -32,6 +32,7 @@ module.exports = _core => {
             forM_,
             filterM,
             zipWithM,
+            zipWithM_,
             _internal: {
                 zipWith
             }
@@ -377,6 +378,18 @@ module.exports = _core => {
      */
     function zipWithM(func, arrA, arrB) {
         return sequence(zipWith(func, arrA, arrB));
+    }
+
+    /**
+     * @function module:monad.zipWithM_
+     * @static
+     * @param {function} func
+     * @param {Array} arrA
+     * @param {Array} arrB
+     * @returns {AbstractParser}
+     */
+    function zipWithM_(func, arrA, arrB) {
+        return sequence_(zipWith(func, arrA, arrB));
     }
 
     return end();
