@@ -7,6 +7,7 @@
 
 describe("prim", () => {
     require("./prim/map.js");
+    require("./prim/fmap.js");
     require("./prim/pure.js");
     require("./prim/ap.js");
     require("./prim/left.js");
