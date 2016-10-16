@@ -34,6 +34,7 @@ module.exports = _core => {
             zipWithM,
             zipWithM_,
             foldM,
+            foldM_,
             _internal: {
                 zipWith
             }
@@ -438,6 +439,18 @@ module.exports = _core => {
                 ? Result.csuc(currentErr, accum, currentState)
                 : Result.esuc(currentErr, accum, currentState);
         });
+    }
+
+    /**
+     * @function module:monad.foldM_
+     * @static
+     * @param {function} func
+     * @param {*} initVal
+     * @param {Array} arr
+     * @returns {AbstractParser}
+     */
+    function foldM_(func, initVal, arr) {
+        return then(foldM(func, initVal, arr), pure(undefined));
     }
 
     return end();
