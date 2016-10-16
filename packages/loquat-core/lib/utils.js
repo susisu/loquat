@@ -30,7 +30,7 @@ module.exports = () => {
     escapeMap.set("\v", "\\v");
 
     /**
-     * @function module:utils._internal.escapeChar
+     * @function module:utils.escapeChar
      * @description Escapes the given character `char`.
      * @private
      * @static

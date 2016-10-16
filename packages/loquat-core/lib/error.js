@@ -151,7 +151,8 @@ module.exports = _pos => {
     }
 
     /**
-     * Cleans array of message strings by removing empty and duplicate elements.
+     * @function module:error.cleanMessageStrings
+     * @description Cleans array of message strings by removing empty and duplicate elements.
      * @private
      * @static
      * @param {Array.<string>} msgStrs An array of message strings.
@@ -162,7 +163,8 @@ module.exports = _pos => {
     }
 
     /**
-     * Joins strings with commas (,) and "or".
+     * @function module:error.joinWithCommasOr
+     * @description Joins strings with commas (,) and "or".
      * @private
      * @static
      * @param {Array.<string>} msgStrs An array of message strings.
@@ -175,7 +177,8 @@ module.exports = _pos => {
     }
 
     /**
-     * Joins message strings with the specified description.
+     * @function module:error.joinMessageStrings
+     * @description Joins message strings with the specified description.
      * @private
      * @static
      * @param {Array.<string>} msgStrs An array of message strings.
