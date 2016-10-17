@@ -37,6 +37,7 @@ module.exports = _core => {
             foldM_,
             replicateM,
             replicateM_,
+            guard,
             _internal: {
                 zipWith
             }
@@ -49,10 +50,11 @@ module.exports = _core => {
     const lazy       = _core.lazy;
 
     const _prim = require("loquat-prim")(_core);
-    const map  = _prim.map;
-    const pure = _prim.pure;
-    const bind = _prim.bind;
-    const then = _prim.then;
+    const map   = _prim.map;
+    const pure  = _prim.pure;
+    const bind  = _prim.bind;
+    const then  = _prim.then;
+    const mzero = _prim.mzero;
 
     /**
      * @function module:monad.forever
@@ -475,6 +477,16 @@ module.exports = _core => {
      */
     function replicateM_(num, parser) {
         return sequence_(new Array(num).fill(parser));
+    }
+
+    /**
+     * @function module:monad.guard
+     * @static
+     * @param {boolean} cond
+     * @returns {AbstractParser}
+     */
+    function guard(cond) {
+        return cond ? pure(undefined) : mzero;
     }
 
     return end();
