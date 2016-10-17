@@ -39,6 +39,7 @@ module.exports = _core => {
             replicateM_,
             guard,
             msum,
+            mfilter,
             _internal: {
                 zipWith
             }
@@ -499,6 +500,17 @@ module.exports = _core => {
      */
     function msum(parsers) {
         return parsers.reduceRight((accum, parser) => mplus(parser, accum), mzero);
+    }
+
+    /**
+     * @function module:monad.mfilter
+     * @static
+     * @param {function} test
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function mfilter(test, parser) {
+        return bind(parser, val => test(val) ? pure(val) : mzero);
     }
 
     return end();
