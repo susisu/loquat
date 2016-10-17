@@ -13,7 +13,7 @@ module.exports = _core => {
     function end() {
         return Object.freeze({
             forever,
-            voidM,
+            discard,
             join,
             when,
             unless,
@@ -71,12 +71,12 @@ module.exports = _core => {
     }
 
     /**
-     * @function module:monad.voidM
+     * @function module:monad.discard
      * @static
      * @param {AbstractParser} parser
      * @returns {AbstractParser}
      */
-    function voidM(parser) {
+    function discard(parser) {
         return map(parser, () => undefined);
     }
 
