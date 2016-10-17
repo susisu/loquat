@@ -15,6 +15,7 @@ module.exports = (_core, sugar) => {
 
     return Object.freeze({
         map         : _prim.map,
+        fmap        : _prim.fmap,
         pure        : _prim.pure,
         return      : _prim.pure,
         ap          : _prim.ap,
