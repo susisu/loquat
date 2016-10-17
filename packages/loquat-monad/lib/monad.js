@@ -90,23 +90,23 @@ module.exports = _core => {
     /**
      * @function module:monad.when
      * @static
-     * @param {boolean} flag
+     * @param {boolean} cond
      * @param {AbstractParser} parser
      * @returns {AbstractParser}
      */
-    function when(flag, parser) {
-        return flag ? parser : pure(undefined);
+    function when(cond, parser) {
+        return cond ? parser : pure(undefined);
     }
 
     /**
      * @function module:monad.unless
      * @static
-     * @param {boolean} flag
+     * @param {boolean} cond
      * @param {AbstractParser} parser
      * @returns {AbstractParser}
      */
-    function unless(flag, parser) {
-        return flag ? pure(undefined) : parser;
+    function unless(cond, parser) {
+        return cond ? pure(undefined) : parser;
     }
 
     /**
