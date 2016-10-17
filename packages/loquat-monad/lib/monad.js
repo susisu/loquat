@@ -38,6 +38,7 @@ module.exports = _core => {
             replicateM,
             replicateM_,
             guard,
+            msum,
             _internal: {
                 zipWith
             }
@@ -55,6 +56,7 @@ module.exports = _core => {
     const bind  = _prim.bind;
     const then  = _prim.then;
     const mzero = _prim.mzero;
+    const mplus = _prim.mplus;
 
     /**
      * @function module:monad.forever
@@ -487,6 +489,16 @@ module.exports = _core => {
      */
     function guard(cond) {
         return cond ? pure(undefined) : mzero;
+    }
+
+    /**
+     * @function module:monad.msum
+     * @static
+     * @param {Array.<AbstractParser>} parsers
+     * @returns {AbstractParser}
+     */
+    function msum(parsers) {
+        return parsers.reduceRight((accum, parser) => mplus(parser, accum), mzero);
     }
 
     return end();
