@@ -11,6 +11,7 @@ module.exports = (_core, sugar) => {
     return Object.freeze({
         forever    : _monad.forever,
         discard    : _monad.discard,
+        void       : _monad.discard,
         join       : _monad.join,
         when       : _monad.when,
         unless     : _monad.unless,
