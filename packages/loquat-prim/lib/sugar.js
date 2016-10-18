@@ -41,6 +41,9 @@ module.exports = (_core, _prim) => {
         left: function (parser) {
             return left(this, parser);
         },
+        skip: function (parser) {
+            return left(this, parser);
+        },
         right: function (parser) {
             return right(this, parser);
         },
