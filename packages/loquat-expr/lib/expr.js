@@ -13,7 +13,8 @@ module.exports = _core => {
     function end() {
         return Object.freeze({
             OperatorType,
-            OperatorAssoc
+            OperatorAssoc,
+            Operator
         });
     }
 
@@ -44,6 +45,46 @@ module.exports = _core => {
         LEFT : "left",
         RIGHT: "right"
     });
+
+    /**
+     * @static
+     */
+    class Operator {
+        /**
+         * @param {string} type
+         * @param {AbstractParser} parser
+         * @param {(string|undefined)} [assoc=undefined]
+         */
+        constructor(type, parser, assoc) {
+            this._type   = type;
+            this._parser = parser;
+            this._assoc  = assoc;
+        }
+
+        /**
+         * @readonly
+         * @type {string}
+         */
+        get type() {
+            return this._type;
+        }
+
+        /**
+         * @readonly
+         * @type {AbstractParser}
+         */
+        get parser() {
+            return this._parser;
+        }
+
+        /**
+         * @readonly
+         * @type {(string|undefined)}
+         */
+        get assoc() {
+            return this._assoc;
+        }
+    }
 
     return end();
 };
