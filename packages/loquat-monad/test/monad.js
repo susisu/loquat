@@ -8,4 +8,5 @@
 describe("monad", () => {
     require("./monad/forever.js");
     require("./monad/discard.js");
+    require("./monad/join.js");
 });
