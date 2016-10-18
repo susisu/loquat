@@ -10,4 +10,5 @@ describe("monad", () => {
     require("./monad/discard.js");
     require("./monad/join.js");
     require("./monad/when.js");
+    require("./monad/unless.js");
 });
