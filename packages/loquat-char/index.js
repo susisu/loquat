@@ -6,7 +6,8 @@
 "use strict";
 
 module.exports = (_core, sugar) => {
-    let _char = require("./lib/char.js")(_core);
+    const _prim = require("loquat-prim")(_core);
+    const _char = require("./lib/char.js")(_core, _prim);
 
     if (sugar) {
         const _sugar = require("./lib/sugar.js")(_core, _char);
