@@ -32,5 +32,9 @@
     "jsdoc": "^3.4.2",
     "loquat-core": "git+https://github.com/susisu/loquat-core.git",
     "mocha": "^3.1.2"
+  },
+  "dependencies": {
+    "loquat-combinators": "git+https://github.com/susisu/loquat-combinators.git",
+    "loquat-prim": "git+https://github.com/susisu/loquat-prim.git"
   }
 }
