@@ -6,6 +6,7 @@
 "use strict";
 
 global._core        = require("loquat-core")();
-global._combinators = require("./lib/combinators.js")(_core);
+const _prim         = require("loquat-prim")(_core);
+global._combinators = require("./lib/combinators.js")(_core, _prim);
 
 require("./test/combinators.js");

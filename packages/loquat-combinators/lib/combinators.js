@@ -9,7 +9,7 @@
 
 "use strict";
 
-module.exports = _core => {
+module.exports = (_core, _prim) => {
     function end() {
         return Object.freeze({
             choice,
@@ -42,7 +42,6 @@ module.exports = _core => {
     const Result     = _core.Result;
     const Parser     = _core.Parser;
 
-    const _prim = require("loquat-prim")(_core);
     const map        = _prim.map;
     const pure       = _prim.pure;
     const bind       = _prim.bind;
