@@ -6,7 +6,8 @@
 "use strict";
 
 module.exports = (_core, sugar) => {
-    let _monad = require("./lib/monad.js")(_core);
+    const _prim  = require("loquat-prim")(_core);
+    const _monad = require("./lib/monad.js")(_core, _prim);
 
     return Object.freeze({
         forever    : _monad.forever,
