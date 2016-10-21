@@ -9,6 +9,11 @@ module.exports = (_core, sugar) => {
     const _prim        = require("loquat-prim")(_core);
     const _combinators = require("./lib/combinators.js")(_core, _prim);
 
+    if (sugar) {
+        const _sugar = require("./lib/sugar.js")(_core, _prim, _combinators);
+        _core.extendParser(_sugar);
+    }
+
     return Object.freeze({
         choice       : _combinators.choice,
         option       : _combinators.option,
