@@ -9,6 +9,11 @@ module.exports = (_core, sugar) => {
     const _prim  = require("loquat-prim")(_core);
     const _monad = require("./lib/monad.js")(_core, _prim);
 
+    if (sugar) {
+        const _sugar = require("./lib/sugar.js")(_core, _monad);
+        _core.extendParser(_sugar);
+    }
+
     return Object.freeze({
         forever    : _monad.forever,
         discard    : _monad.discard,
