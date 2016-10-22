@@ -586,9 +586,15 @@ module.exports = (_core, _prim) => {
     function notFollowedBy(parser) {
         const modParser = new Parser(state => {
             const res = parser.run(state);
-            return !res.consumed && res.succeeded
-                ? Result.csuc(res.err, res.val, res.state)
-                : res;
+            if (res.consumed && !res.succeeded) {
+                return Result.eerr(res.err);
+            }
+            else if (!res.consumed && res.succeeded) {
+                return Result.csuc(res.err, res.val, res.state);
+            }
+            else {
+                return res;
+            }
         });
         return tryParse(
             mplus(
