@@ -16,4 +16,5 @@ describe("monad", () => {
     require("./monad/liftM3.js");
     require("./monad/liftM4.js");
     require("./monad/liftM5.js");
+    require("./monad/ltor.js");
 });
