@@ -243,9 +243,14 @@ module.exports = (_core, _prim) => {
                     }
                 }
                 else {
-                    return res.consumed
-                        ? res
-                        : Result.eerr(ParseError.merge(currentErr, res.err));
+                    if (res.consumed) {
+                        return Result.cerr(res.err);
+                    }
+                    else {
+                        return consumed
+                            ? Result.cerr(ParseError.merge(currentErr, res.err))
+                            : Result.eerr(ParseError.merge(currentErr, res.err));
+                    }
                 }
             }
             return consumed
