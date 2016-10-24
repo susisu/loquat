@@ -20,4 +20,5 @@ describe("monad", () => {
     require("./monad/rtol.js");
     require("./monad/sequence.js");
     require("./monad/sequence_.js");
+    require("./monad/mapM.js");
 });
