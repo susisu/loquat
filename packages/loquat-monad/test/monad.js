@@ -19,4 +19,5 @@ describe("monad", () => {
     require("./monad/ltor.js");
     require("./monad/rtol.js");
     require("./monad/sequence.js");
+    require("./monad/sequence_.js");
 });
