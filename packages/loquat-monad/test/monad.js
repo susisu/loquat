@@ -24,4 +24,5 @@ describe("monad", () => {
     require("./monad/mapM_.js");
     require("./monad/forM.js");
     require("./monad/forM_.js");
+    require("./monad/filterM.js");
 });
