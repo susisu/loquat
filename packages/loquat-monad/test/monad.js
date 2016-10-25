@@ -21,4 +21,5 @@ describe("monad", () => {
     require("./monad/sequence.js");
     require("./monad/sequence_.js");
     require("./monad/mapM.js");
+    require("./monad/mapM_.js");
 });
