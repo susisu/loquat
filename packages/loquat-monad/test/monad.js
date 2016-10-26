@@ -26,5 +26,6 @@ describe("monad", () => {
     require("./monad/forM_.js");
     require("./monad/filterM.js");
     require("./monad/zipWithM.js");
+    require("./monad/zipWithM_.js");
     require("./monad/_internal.js");
 });
