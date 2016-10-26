@@ -28,5 +28,6 @@ describe("monad", () => {
     require("./monad/zipWithM.js");
     require("./monad/zipWithM_.js");
     require("./monad/foldM.js");
+    require("./monad/foldM_.js");
     require("./monad/_internal.js");
 });
