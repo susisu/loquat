@@ -31,5 +31,6 @@ describe("monad", () => {
     require("./monad/foldM_.js");
     require("./monad/replicateM.js");
     require("./monad/replicateM_.js");
+    require("./monad/guard.js");
     require("./monad/_internal.js");
 });
