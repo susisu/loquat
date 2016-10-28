@@ -1,0 +1,22 @@
+{
+  "name": "loquat",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/susisu/loquat2.git"
+  },
+  "keywords": [
+    "parsing"
+  ],
+  "author": "Susisu <susisu2413@yahoo.co.jp> (https://github.com/susisu)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/susisu/loquat2/issues"
+  },
+  "homepage": "https://github.com/susisu/loquat2#readme"
+}
