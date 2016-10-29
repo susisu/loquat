@@ -13,4 +13,5 @@ describe("combinators", () => {
     require("./combinators/between.js");
     require("./combinators/many1.js");
     require("./combinators/skipMany1.js");
+    require("./combinators/sepBy.js");
 });
