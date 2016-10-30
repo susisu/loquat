@@ -15,4 +15,5 @@ describe("combinators", () => {
     require("./combinators/skipMany1.js");
     require("./combinators/sepBy.js");
     require("./combinators/sepBy1.js");
+    require("./combinators/sepEndBy.js");
 });
