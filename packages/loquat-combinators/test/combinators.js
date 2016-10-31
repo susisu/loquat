@@ -18,4 +18,5 @@ describe("combinators", () => {
     require("./combinators/sepEndBy.js");
     require("./combinators/sepEndBy1.js");
     require("./combinators/endBy.js");
+    require("./combinators/endBy1.js");
 });
