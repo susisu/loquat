@@ -365,7 +365,7 @@ module.exports = (_core, _prim) => {
 
             const headRes = term.run(currentState);
             if (headRes.succeeded) {
-                if (consumed) {
+                if (headRes.consumed) {
                     consumed = true;
                     currentVal = headRes.val;
                     currentState = headRes.state;
