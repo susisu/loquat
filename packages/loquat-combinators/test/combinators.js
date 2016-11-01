@@ -21,4 +21,5 @@ describe("combinators", () => {
     require("./combinators/endBy1.js");
     require("./combinators/count.js");
     require("./combinators/chainl.js");
+    require("./combinators/chainl1.js");
 });
