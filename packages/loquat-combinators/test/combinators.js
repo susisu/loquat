@@ -24,4 +24,5 @@ describe("combinators", () => {
     require("./combinators/chainl1.js");
     require("./combinators/chainr.js");
     require("./combinators/chainr1.js");
+    require("./combinators/anyToken.js");
 });
