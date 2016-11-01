@@ -26,4 +26,5 @@ describe("combinators", () => {
     require("./combinators/chainr1.js");
     require("./combinators/anyToken.js");
     require("./combinators/notFollowedBy.js");
+    require("./combinators/eof.js");
 });
