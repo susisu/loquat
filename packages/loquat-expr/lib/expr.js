@@ -9,7 +9,7 @@
 
 "use strict";
 
-module.exports = _core => {
+module.exports = (_core, _prim, _combinators) => {
     function end() {
         return Object.freeze({
             OperatorType,
@@ -23,7 +23,6 @@ module.exports = _core => {
     const Result     = _core.Result;
     const Parser     = _core.Parser;
 
-    const _prim = require("loquat-prim")(_core);
     const pure     = _prim.pure;
     const bind     = _prim.bind;
     const then     = _prim.then;
@@ -32,7 +31,6 @@ module.exports = _core => {
     const label    = _prim.label;
     const tryParse = _prim.tryParse;
 
-    const _combinators = require("loquat-combinators")(_core);
     const choice = _combinators.choice;
 
     /**
