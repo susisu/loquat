@@ -18,5 +18,14 @@
   "bugs": {
     "url": "https://github.com/susisu/loquat2/issues"
   },
-  "homepage": "https://github.com/susisu/loquat2#readme"
+  "homepage": "https://github.com/susisu/loquat2#readme",
+  "dependencies": {
+    "loquat-char": "git+https://github.com/susisu/loquat-char.git",
+    "loquat-combinators": "git+https://github.com/susisu/loquat-combinators.git",
+    "loquat-core": "git+https://github.com/susisu/loquat-core.git",
+    "loquat-expr": "git+https://github.com/susisu/loquat-expr.git",
+    "loquat-monad": "git+https://github.com/susisu/loquat-monad.git",
+    "loquat-prim": "git+https://github.com/susisu/loquat-prim.git",
+    "loquat-qo": "git+https://github.com/susisu/loquat-qo.git"
+  }
 }
