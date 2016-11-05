@@ -5,11 +5,15 @@
 
 "use strict";
 
-module.exports = (_core, sugar) => {
+module.exports = (_core, opts) => {
+    if (opts === undefined) {
+        opts = {};
+    }
+
     const _prim = require("loquat-prim")(_core);
     const _char = require("./lib/char.js")(_core, _prim);
 
-    if (sugar) {
+    if (opts.sugar) {
         const _sugar = require("./lib/sugar.js")(_core, _char);
         _core.extendParser(_sugar);
     }
