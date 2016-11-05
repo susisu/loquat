@@ -5,10 +5,14 @@
 
 "use strict";
 
-module.exports = (_core, sugar) => {
+module.exports = (_core, opts) => {
+    if (opts === undefined) {
+        opts = {};
+    }
+
     const _prim = require("./lib/prim.js")(_core);
 
-    if (sugar) {
+    if (opts.sugar) {
         const _sugar = require("./lib/sugar.js")(_core, _prim);
         _core.extendParser(_sugar);
     }
