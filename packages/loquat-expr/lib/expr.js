@@ -331,7 +331,7 @@ module.exports = (_core, _prim, _combinators) => {
                                 const err = ParseError.merge(ParseError.merge(currentErr, opRes.err), ambRes.err);
                                 return consumed
                                     ? Result.csuc(err, currentVal, initState)
-                                    : Result.cerr(err, currentVal, initState);
+                                    : Result.esuc(err, currentVal, initState);
                             }
                         }
 
@@ -362,7 +362,7 @@ module.exports = (_core, _prim, _combinators) => {
                                     const err = ParseError.merge(ParseError.merge(currentErr, termRes.err), ambRes.err);
                                     return consumed
                                         ? Result.csuc(err, currentVal, initState)
-                                        : Result.cerr(err, currentVal, initState);
+                                        : Result.esuc(err, currentVal, initState);
                                 }
                             }
                         }
