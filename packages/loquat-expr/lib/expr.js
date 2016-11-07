@@ -385,7 +385,7 @@ module.exports = (_core, _prim, _combinators) => {
             return bind(termP, x =>
                 label(
                     mplus(
-                        mplus(mplus(rassocP, lassocP), nassocP),
+                        mplus(mplus(rassocP(x), lassocP(x)), nassocP(x)),
                         pure(x)
                     ),
                     "operator"
