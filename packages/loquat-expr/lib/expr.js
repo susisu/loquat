@@ -238,8 +238,8 @@ module.exports = (_core, _prim, _combinators) => {
                                     resVal = operations[0](resVal, currentVal);
                                 }
                                 return consumed
-                                    ? Result.csuc(resVal, initState, err)
-                                    : Result.esuc(resVal, initState, err);
+                                    ? Result.csuc(err, resVal, initState)
+                                    : Result.esuc(err, resVal, initState);
                             }
                         }
 
@@ -277,8 +277,8 @@ module.exports = (_core, _prim, _combinators) => {
                                         resVal = operations[0](resVal, currentVal);
                                     }
                                     return consumed
-                                        ? Result.csuc(resVal, initState, err)
-                                        : Result.esuc(resVal, initState, err);
+                                        ? Result.csuc(err, resVal, initState)
+                                        : Result.esuc(err, resVal, initState);
                                 }
                             }
                         }
