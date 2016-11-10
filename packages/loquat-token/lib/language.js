@@ -42,17 +42,17 @@ module.exports = () => {
          */
         clone() {
             return new LanguageDef({
-                commentStart   : this.commentStart,
-                commentEnd     : this.commentEnd,
-                commentLine    : this.commentLine,
-                nestedComments : this.nestedComments,
-                idStart        : this.idStart,
-                idLetter       : this.idLetter,
-                opStart        : this.opStart,
-                opLetter       : this.opLetter,
-                reservedIds    : this.reservedIds,
-                reservedOps    : this.reservedOps,
-                caseSensitive  : this.caseSensitive
+                commentStart  : this.commentStart,
+                commentEnd    : this.commentEnd,
+                commentLine   : this.commentLine,
+                nestedComments: this.nestedComments,
+                idStart       : this.idStart,
+                idLetter      : this.idLetter,
+                opStart       : this.opStart,
+                opLetter      : this.opLetter,
+                reservedIds   : this.reservedIds,
+                reservedOps   : this.reservedOps,
+                caseSensitive : this.caseSensitive
             });
         }
     }
