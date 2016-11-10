@@ -28,12 +28,12 @@ module.exports = () => {
             this.commentEnd      = obj.commentEnd;
             this.commentLine     = obj.commentLine;
             this.nestedComments  = obj.nestedComments === undefined ? false : obj.nestedComments;
-            this.identStart      = obj.identStart;
-            this.identLetter     = obj.identLetter;
+            this.idStart         = obj.idStart;
+            this.idLetter        = obj.idLetter;
             this.opStart         = obj.opStart;
             this.opLetter        = obj.opLetter;
-            this.reservedNames   = obj.reservedNames;
-            this.reservedOpNames = obj.reservedOpNames;
+            this.reservedIds     = obj.reservedIds;
+            this.reservedOps     = obj.reservedOps;
             this.caseSensitive   = obj.caseSensitive === undefined ? true : obj.caseSensitive;
         }
 
@@ -46,12 +46,12 @@ module.exports = () => {
                 commentEnd     : this.commentEnd,
                 commentLine    : this.commentLine,
                 nestedComments : this.nestedComments,
-                identStart     : this.identStart,
-                identLetter    : this.identLetter,
+                idStart        : this.idStart,
+                idLetter       : this.idLetter,
                 opStart        : this.opStart,
                 opLetter       : this.opLetter,
-                reservedNames  : this.reservedNames,
-                reservedOpNames: this.reservedOpNames,
+                reservedIds    : this.reservedIds,
+                reservedOps    : this.reservedOps,
                 caseSensitive  : this.caseSensitive
             });
         }
