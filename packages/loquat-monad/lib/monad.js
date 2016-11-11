@@ -229,7 +229,7 @@ module.exports = (_core, _prim) => {
             let consumed = false;
             for (const parser of parsers) {
                 const res = parser.run(currentState);
-                if (res.succeeded) {
+                if (res.success) {
                     if (res.consumed) {
                         consumed = true;
                         accum.push(res.val);
@@ -329,7 +329,7 @@ module.exports = (_core, _prim) => {
             for (const elem of arr) {
                 const parser = test(elem);
                 const res = parser.run(currentState);
-                if (res.succeeded) {
+                if (res.success) {
                     if (res.consumed) {
                         consumed = true;
                         if (res.val) {
@@ -422,7 +422,7 @@ module.exports = (_core, _prim) => {
             for (const elem of arr) {
                 const parser = func(accum, elem);
                 const res = parser.run(currentState);
-                if (res.succeeded) {
+                if (res.success) {
                     if (res.consumed) {
                         consumed = true;
                         accum = res.val;
