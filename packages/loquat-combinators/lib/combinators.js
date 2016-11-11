@@ -185,7 +185,7 @@ module.exports = (_core, _prim) => {
             let consumed = false;
             while (true) {
                 const res = parser.run(currentState);
-                if (res.succeeded) {
+                if (res.success) {
                     if (res.consumed) {
                         consumed = true;
                         accum.push(res.val);
@@ -209,7 +209,7 @@ module.exports = (_core, _prim) => {
                     }
                 }
                 const sepRes = sep.run(currentState);
-                if (sepRes.succeeded) {
+                if (sepRes.success) {
                     if (sepRes.consumed) {
                         consumed = true;
                         currentState = sepRes.state;
@@ -303,7 +303,7 @@ module.exports = (_core, _prim) => {
                 let consumed = false;
                 for (let i = 0; i < num; i++) {
                     const res = parser.run(currentState);
-                    if (res.succeeded) {
+                    if (res.success) {
                         if (res.consumed) {
                             consumed = true;
                             accum.push(res.val);
@@ -364,7 +364,7 @@ module.exports = (_core, _prim) => {
             let consumed = false;
 
             const headRes = term.run(currentState);
-            if (headRes.succeeded) {
+            if (headRes.success) {
                 if (headRes.consumed) {
                     consumed = true;
                     currentVal = headRes.val;
@@ -388,7 +388,7 @@ module.exports = (_core, _prim) => {
 
                 const opRes = op.run(currentState);
                 let operation;
-                if (opRes.succeeded) {
+                if (opRes.success) {
                     if (opRes.consumed) {
                         consumed = true;
                         operation = opRes.val;
@@ -413,7 +413,7 @@ module.exports = (_core, _prim) => {
                 }
 
                 const termRes = term.run(currentState);
-                if (termRes.succeeded) {
+                if (termRes.success) {
                     if (termRes.consumed) {
                         consumed = true;
                         currentVal = operation(currentVal, termRes.val);
@@ -475,7 +475,7 @@ module.exports = (_core, _prim) => {
             let consumed = false;
 
             const headRes = term.run(currentState);
-            if (headRes.succeeded) {
+            if (headRes.success) {
                 if (headRes.consumed) {
                     consumed = true;
                     resultVal = headRes.val;
@@ -500,7 +500,7 @@ module.exports = (_core, _prim) => {
                 const initState = currentState;
 
                 const opRes = op.run(currentState);
-                if (opRes.succeeded) {
+                if (opRes.success) {
                     if (opRes.consumed) {
                         consumed = true;
                         operations.push(opRes.val);
@@ -532,7 +532,7 @@ module.exports = (_core, _prim) => {
                 }
 
                 const termRes = term.run(currentState);
-                if (termRes.succeeded) {
+                if (termRes.success) {
                     if (termRes.consumed) {
                         consumed = true;
                         accum.push(termRes.val);
@@ -591,10 +591,10 @@ module.exports = (_core, _prim) => {
     function notFollowedBy(parser) {
         const modParser = new Parser(state => {
             const res = parser.run(state);
-            if (res.consumed && !res.succeeded) {
+            if (res.consumed && !res.success) {
                 return Result.eerr(res.err);
             }
-            else if (!res.consumed && res.succeeded) {
+            else if (!res.consumed && res.success) {
                 return Result.csuc(res.err, res.val, res.state);
             }
             else {
@@ -631,7 +631,7 @@ module.exports = (_core, _prim) => {
             let consumed = false;
             while (true) {
                 const endRes = end.run(currentState);
-                if (endRes.succeeded) {
+                if (endRes.success) {
                     if (endRes.consumed) {
                         return Result.csuc(endRes.err, accum, endRes.state);
                     }
@@ -651,7 +651,7 @@ module.exports = (_core, _prim) => {
                 }
 
                 const res = parser.run(currentState);
-                if (res.succeeded) {
+                if (res.success) {
                     if (res.consumed) {
                         consumed = true;
                         accum.push(res.val);
