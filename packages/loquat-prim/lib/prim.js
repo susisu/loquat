@@ -67,7 +67,7 @@ module.exports = _core => {
     function map(parser, func) {
         return new Parser(state => {
             const res = parser.run(state);
-            return res.succeeded
+            return res.success
                 ? new Result(res.consumed, true, res.err, func(res.val), res.state)
                 : res;
         });
@@ -143,12 +143,12 @@ module.exports = _core => {
     function bind(parser, func) {
         return new Parser(state => {
             const resA = parser.run(state);
-            if (resA.succeeded) {
+            if (resA.success) {
                 const parserB = func(resA.val);
                 const resB = parserB.run(resA.state);
                 return new Result(
                     resA.consumed || resB.consumed,
-                    resB.succeeded,
+                    resB.success,
                     resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err),
                     resB.val,
                     resB.state
@@ -200,11 +200,11 @@ module.exports = _core => {
     function mplus(parserA, parserB) {
         return new Parser(state => {
             const resA = parserA.run(state);
-            if (!resA.consumed && !resA.succeeded) {
+            if (!resA.consumed && !resA.success) {
                 const resB = parserB.run(state);
                 return new Result(
                     resB.consumed,
-                    resB.succeeded,
+                    resB.success,
                     resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err),
                     resB.val,
                     resB.state
@@ -247,8 +247,8 @@ module.exports = _core => {
                 const err = res.err;
                 return new Result(
                     false,
-                    res.succeeded,
-                    res.succeeded
+                    res.success,
+                    res.success
                         ? new LazyParseError(() => err.isUnknown() ? err : setExpects(err))
                         : setExpects(err),
                     res.val,
@@ -282,7 +282,7 @@ module.exports = _core => {
     function tryParse(parser) {
         return new Parser(state => {
             const res = parser.run(state);
-            return res.consumed && !res.succeeded
+            return res.consumed && !res.success
                 ? Result.eerr(res.err)
                 : res;
         });
@@ -297,7 +297,7 @@ module.exports = _core => {
     function lookAhead(parser) {
         return new Parser(state => {
             const res = parser.run(state);
-            return res.succeeded
+            return res.success
                 ? Result.esuc(ParseError.unknown(state.pos), res.val, state)
                 : res;
         });
@@ -319,7 +319,7 @@ module.exports = _core => {
             let currentState = state;
             while (true) {
                 const res = parser.run(currentState);
-                if (res.succeeded) {
+                if (res.success) {
                     if (res.consumed) {
                         consumed = true;
                         accum = callback(accum, res.val);
@@ -357,7 +357,7 @@ module.exports = _core => {
             let currentState = state;
             while (true) {
                 const res = parser.run(currentState);
-                if (res.succeeded) {
+                if (res.success) {
                     if (res.consumed) {
                         consumed = true;
                         accum.push(res.val);
