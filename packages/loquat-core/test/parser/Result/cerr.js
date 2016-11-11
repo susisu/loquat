@@ -17,7 +17,7 @@ const ParseError       = _error.ParseError;
 const Result = _parser.Result;
 
 describe(".cerr(err)", () => {
-    it("should create a consumed but failed result object", () => {
+    it("should create a consumed failure result object", () => {
         let res = Result.cerr(
             new ParseError(
                 new SourcePos("foobar", 6, 6),
