@@ -28,17 +28,17 @@ describe(".replicateM_(num, parsers)", () => {
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        function generateParser(consumed, succeeded, vals, states, errs) {
+        function generateParser(consumed, success, vals, states, errs) {
             let i = 0;
             return new Parser(state => {
                 expect(State.equal(state, i === 0 ? initState : states[i - 1])).to.be.true;
-                let _consumed  = consumed[i];
-                let _succeeded = succeeded[i];
-                let _val       = vals[i];
-                let _state     = states[i];
-                let _err       = errs[i];
+                let _consumed = consumed[i];
+                let _success  = success[i];
+                let _val      = vals[i];
+                let _state    = states[i];
+                let _err      = errs[i];
                 i += 1;
-                return new Result(_consumed, _succeeded, _err, _val, _state);
+                return new Result(_consumed, _success, _err, _val, _state);
             });
         }
 
@@ -56,7 +56,7 @@ describe(".replicateM_(num, parsers)", () => {
         // csuc, csuc
         {
             let consumed = [true, true];
-            let succeeded = [true, true];
+            let success = [true, true];
             let vals = ["nyan", "cat"];
             let states = [
                 new State(
@@ -82,7 +82,7 @@ describe(".replicateM_(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, succeeded, vals, states, errs);
+            let parser = generateParser(consumed, success, vals, states, errs);
             let repParser = replicateM_(2, parser);
             assertParser(repParser);
             let res = repParser.run(initState);
@@ -106,7 +106,7 @@ describe(".replicateM_(num, parsers)", () => {
         // csuc, cerr
         {
             let consumed = [true, true];
-            let succeeded = [true, false];
+            let success = [true, false];
             let vals = ["nyan"];
             let states = [
                 new State(
@@ -126,7 +126,7 @@ describe(".replicateM_(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, succeeded, vals, states, errs);
+            let parser = generateParser(consumed, success, vals, states, errs);
             let repParser = replicateM_(2, parser);
             assertParser(repParser);
             let res = repParser.run(initState);
@@ -143,7 +143,7 @@ describe(".replicateM_(num, parsers)", () => {
         // csuc, esuc
         {
             let consumed = [true, false];
-            let succeeded = [true, true];
+            let success = [true, true];
             let vals = ["nyan", "cat"];
             let states = [
                 new State(
@@ -169,7 +169,7 @@ describe(".replicateM_(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, succeeded, vals, states, errs);
+            let parser = generateParser(consumed, success, vals, states, errs);
             let repParser = replicateM_(2, parser);
             assertParser(repParser);
             let res = repParser.run(initState);
@@ -196,7 +196,7 @@ describe(".replicateM_(num, parsers)", () => {
         // csuc, eerr
         {
             let consumed = [true, false];
-            let succeeded = [true, false];
+            let success = [true, false];
             let vals = ["nyan"];
             let states = [
                 new State(
@@ -216,7 +216,7 @@ describe(".replicateM_(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, succeeded, vals, states, errs);
+            let parser = generateParser(consumed, success, vals, states, errs);
             let repParser = replicateM_(2, parser);
             assertParser(repParser);
             let res = repParser.run(initState);
@@ -236,7 +236,7 @@ describe(".replicateM_(num, parsers)", () => {
         // cerr
         {
             let consumed = [true];
-            let succeeded = [false];
+            let success = [false];
             let vals = [];
             let states = [];
             let errs = [
@@ -245,7 +245,7 @@ describe(".replicateM_(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let parser = generateParser(consumed, succeeded, vals, states, errs);
+            let parser = generateParser(consumed, success, vals, states, errs);
             let repParser = replicateM_(2, parser);
             assertParser(repParser);
             let res = repParser.run(initState);
@@ -262,7 +262,7 @@ describe(".replicateM_(num, parsers)", () => {
         // esuc, csuc
         {
             let consumed = [false, true];
-            let succeeded = [true, true];
+            let success = [true, true];
             let vals = ["nyan", "cat"];
             let states = [
                 new State(
@@ -288,7 +288,7 @@ describe(".replicateM_(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, succeeded, vals, states, errs);
+            let parser = generateParser(consumed, success, vals, states, errs);
             let repParser = replicateM_(2, parser);
             assertParser(repParser);
             let res = repParser.run(initState);
@@ -312,7 +312,7 @@ describe(".replicateM_(num, parsers)", () => {
         // esuc, cerr
         {
             let consumed = [false, true];
-            let succeeded = [true, false];
+            let success = [true, false];
             let vals = ["nyan"];
             let states = [
                 new State(
@@ -332,7 +332,7 @@ describe(".replicateM_(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, succeeded, vals, states, errs);
+            let parser = generateParser(consumed, success, vals, states, errs);
             let repParser = replicateM_(2, parser);
             assertParser(repParser);
             let res = repParser.run(initState);
@@ -349,7 +349,7 @@ describe(".replicateM_(num, parsers)", () => {
         // esuc, esuc
         {
             let consumed = [false, false];
-            let succeeded = [true, true];
+            let success = [true, true];
             let vals = ["nyan", "cat"];
             let states = [
                 new State(
@@ -375,7 +375,7 @@ describe(".replicateM_(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, succeeded, vals, states, errs);
+            let parser = generateParser(consumed, success, vals, states, errs);
             let repParser = replicateM_(2, parser);
             assertParser(repParser);
             let res = repParser.run(initState);
@@ -402,7 +402,7 @@ describe(".replicateM_(num, parsers)", () => {
         // esuc, eerr
         {
             let consumed = [false, false];
-            let succeeded = [true, false];
+            let success = [true, false];
             let vals = ["nyan"];
             let states = [
                 new State(
@@ -422,7 +422,7 @@ describe(".replicateM_(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, succeeded, vals, states, errs);
+            let parser = generateParser(consumed, success, vals, states, errs);
             let repParser = replicateM_(2, parser);
             assertParser(repParser);
             let res = repParser.run(initState);
@@ -442,7 +442,7 @@ describe(".replicateM_(num, parsers)", () => {
         // eerr
         {
             let consumed = [false];
-            let succeeded = [false];
+            let success = [false];
             let vals = [];
             let states = [];
             let errs = [
@@ -451,7 +451,7 @@ describe(".replicateM_(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let parser = generateParser(consumed, succeeded, vals, states, errs);
+            let parser = generateParser(consumed, success, vals, states, errs);
             let repParser = replicateM_(2, parser);
             assertParser(repParser);
             let res = repParser.run(initState);

@@ -31,16 +31,16 @@ describe(".zipWithM(func, arrA, arrB)", () => {
             "none"
         );
 
-        function generateFunc(consumed, succeeded, vals, states, errs) {
+        function generateFunc(consumed, success, vals, states, errs) {
             return (i, v) => new Parser(state => {
                 expect(State.equal(state, i === 0 ? initState : states[i - 1])).to.be.true;
                 expect(v).to.equal(vals[i]);
-                let _consumed  = consumed[i];
-                let _succeeded = succeeded[i];
-                let _val       = vals[i];
-                let _state     = states[i];
-                let _err       = errs[i];
-                return new Result(_consumed, _succeeded, _err, _val, _state);
+                let _consumed = consumed[i];
+                let _success  = success[i];
+                let _val      = vals[i];
+                let _state    = states[i];
+                let _err      = errs[i];
+                return new Result(_consumed, _success, _err, _val, _state);
             });
         }
 
@@ -59,7 +59,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         // csuc, csuc
         {
             let consumed = [true, true];
-            let succeeded = [true, true];
+            let success = [true, true];
             let vals = ["nyan", "cat"];
             let states = [
                 new State(
@@ -85,7 +85,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, succeeded, vals, states, errs);
+            let func = generateFunc(consumed, success, vals, states, errs);
             let parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
             assertParser(parser);
             let res = parser.run(initState);
@@ -110,7 +110,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         // csuc, cerr
         {
             let consumed = [true, true];
-            let succeeded = [true, false];
+            let success = [true, false];
             let vals = ["nyan", "cat"];
             let states = [
                 new State(
@@ -130,7 +130,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, succeeded, vals, states, errs);
+            let func = generateFunc(consumed, success, vals, states, errs);
             let parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
             assertParser(parser);
             let res = parser.run(initState);
@@ -148,7 +148,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         // csuc, esuc
         {
             let consumed = [true, false];
-            let succeeded = [true, true];
+            let success = [true, true];
             let vals = ["nyan", "cat"];
             let states = [
                 new State(
@@ -174,7 +174,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, succeeded, vals, states, errs);
+            let func = generateFunc(consumed, success, vals, states, errs);
             let parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
             assertParser(parser);
             let res = parser.run(initState);
@@ -202,7 +202,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         // csuc, eerr
         {
             let consumed = [true, false];
-            let succeeded = [true, false];
+            let success = [true, false];
             let vals = ["nyan", "cat"];
             let states = [
                 new State(
@@ -222,7 +222,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, succeeded, vals, states, errs);
+            let func = generateFunc(consumed, success, vals, states, errs);
             let parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
             assertParser(parser);
             let res = parser.run(initState);
@@ -243,7 +243,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         // cerr
         {
             let consumed = [true];
-            let succeeded = [false];
+            let success = [false];
             let vals = ["nyan", "cat"];
             let states = [];
             let errs = [
@@ -252,7 +252,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let func = generateFunc(consumed, succeeded, vals, states, errs);
+            let func = generateFunc(consumed, success, vals, states, errs);
             let parser = zipWithM(func, [0], ["nyan", "cat"]);
             assertParser(parser);
             let res = parser.run(initState);
@@ -270,7 +270,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         // esuc, csuc
         {
             let consumed = [false, true];
-            let succeeded = [true, true];
+            let success = [true, true];
             let vals = ["nyan", "cat"];
             let states = [
                 new State(
@@ -296,7 +296,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, succeeded, vals, states, errs);
+            let func = generateFunc(consumed, success, vals, states, errs);
             let parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
             assertParser(parser);
             let res = parser.run(initState);
@@ -321,7 +321,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         // esuc, cerr
         {
             let consumed = [false, true];
-            let succeeded = [true, false];
+            let success = [true, false];
             let vals = ["nyan", "cat"];
             let states = [
                 new State(
@@ -341,7 +341,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, succeeded, vals, states, errs);
+            let func = generateFunc(consumed, success, vals, states, errs);
             let parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
             assertParser(parser);
             let res = parser.run(initState);
@@ -359,7 +359,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         // esuc, esuc
         {
             let consumed = [false, false];
-            let succeeded = [true, true];
+            let success = [true, true];
             let vals = ["nyan", "cat"];
             let states = [
                 new State(
@@ -385,7 +385,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, succeeded, vals, states, errs);
+            let func = generateFunc(consumed, success, vals, states, errs);
             let parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
             assertParser(parser);
             let res = parser.run(initState);
@@ -413,7 +413,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         // esuc, eerr
         {
             let consumed = [false, false];
-            let succeeded = [true, false];
+            let success = [true, false];
             let vals = ["nyan", "cat"];
             let states = [
                 new State(
@@ -433,7 +433,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, succeeded, vals, states, errs);
+            let func = generateFunc(consumed, success, vals, states, errs);
             let parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
             assertParser(parser);
             let res = parser.run(initState);
@@ -454,7 +454,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         // eerr
         {
             let consumed = [false];
-            let succeeded = [false];
+            let success = [false];
             let vals = ["nyan", "cat"];
             let states = [];
             let errs = [
@@ -463,7 +463,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let func = generateFunc(consumed, succeeded, vals, states, errs);
+            let func = generateFunc(consumed, success, vals, states, errs);
             let parser = zipWithM(func, [0], ["nyan", "cat"]);
             assertParser(parser);
             let res = parser.run(initState);
