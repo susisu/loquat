@@ -244,7 +244,7 @@ describe(".regexp(re, groupId = 0)", () => {
         }
     });
 
-    it("(>= 6.0.0) should enables unicode features if `u' flag is used", function () {
+    it("(Node.js >= 6.0.0) should enables unicode features if `u' flag is used", function () {
         // u flag is not supported by Node.js < 6.0.0
         if (parseInt(process.versions.node.split(".")[0]) < 6) {
             this.skip();
