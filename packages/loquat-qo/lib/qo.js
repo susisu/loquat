@@ -56,7 +56,7 @@ module.exports = _core => {
 
             while (!genRes.done) {
                 const res = genRes.value.run(currentState);
-                if (res.succeeded) {
+                if (res.success) {
                     if (res.consumed) {
                         consumed = true;
                         currentState = res.state;
