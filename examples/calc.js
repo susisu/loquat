@@ -62,7 +62,7 @@ const calc = spaces.and(expr).left(lq.eof);
 
 function parse(src) {
     const result = lq.parse(calc, "", src);
-    if (result.succeeded) {
+    if (result.success) {
         console.log(result.value);
     }
     else {
