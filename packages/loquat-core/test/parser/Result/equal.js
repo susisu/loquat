@@ -156,7 +156,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
             );
             expect(Result.equal(resA, resB)).to.be.false;
         }
-        // different `succeeded'
+        // different `success'
         {
             let resA = new Result(
                 true,
@@ -371,11 +371,11 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         }
     });
 
-    it("should compare `val' and `state' properties only when both results are succeeded", () => {
+    it("should compare `val' and `state' properties only when both results are success", () => {
         let ieq = () => {
             throw new Error("unexpected call");
         };
-        // both failed
+        // both are failure
         {
             let resA = new Result(
                 true,
@@ -405,7 +405,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
             );
             expect(() => { Result.equal(resA, resB, ieq, ieq, ieq); }).not.to.throw(Error);
         }
-        // either resA or resB failed
+        // one of resA or resB is failure
         {
             let resA = new Result(
                 true,

@@ -18,7 +18,7 @@ const Config = _parser.Config;
 const State  = _parser.State;
 const Result = _parser.Result;
 
-describe("constructor(consumed, succeeded, err, val, state)", () => {
+describe("constructor(consumed, success, err, val, state)", () => {
     it("should create a new `Result' instance", () => {
         {
             let res = new Result(
@@ -43,7 +43,7 @@ describe("constructor(consumed, succeeded, err, val, state)", () => {
             );
             expect(res).to.be.an.instanceOf(Result);
             expect(res.consumed).to.be.true;
-            expect(res.succeeded).to.be.true,
+            expect(res.success).to.be.true,
             expect(ParseError.equal(
                 res.err,
                 new ParseError(
@@ -84,7 +84,7 @@ describe("constructor(consumed, succeeded, err, val, state)", () => {
             );
             expect(res).to.be.an.instanceOf(Result);
             expect(res.consumed).to.be.false;
-            expect(res.succeeded).to.be.false;
+            expect(res.success).to.be.false;
             expect(ParseError.equal(
                 res.err,
                 new ParseError(

@@ -196,23 +196,23 @@ module.exports = (_pos, _error) => {
         /**
          * Creates a new `Result` instance.
          * @param {boolean} consumed Indicates the parser consumed input or not.
-         * @param {boolean} succeeded Indicates the parser was succeeded or not.
+         * @param {boolean} success Indicates parsing succeeded or not.
          * If `true`, `val` and `state` must be specified.
          * @param {module:error.AbstractParseError} err Parse error object.
          * @param {*} [val = undefined] Obtained value.
          * @param {(module:parser.State|undefined)} [state = undefined] Next state.
          */
-        constructor(consumed, succeeded, err, val, state) {
-            this._consumed  = consumed;
-            this._succeeded = succeeded;
-            this._err       = err;
-            this._val       = val;
-            this._state     = state;
+        constructor(consumed, success, err, val, state) {
+            this._consumed = consumed;
+            this._success  = success;
+            this._err      = err;
+            this._val      = val;
+            this._state    = state;
         }
 
         /**
          * Checks if two results are equal.
-         * The properties `val` and `state` are compared only when both results are succeeded.
+         * The properties `val` and `state` are compared only when both results are success.
          * @param {module:parser.Result} resA
          * @param {module:parser.Result} resB
          * @param {(function|undefined)} valEqual
@@ -221,7 +221,7 @@ module.exports = (_pos, _error) => {
          * @returns {boolean}
          */
         static equal(resA, resB, valEqual, inputEqual, userStateEqual) {
-            if (resA.succeeded && resB.succeeded) {
+            if (resA.success && resB.success) {
                 return resA.consumed === resB.consumed
                     && (valEqual === undefined
                         ? resA.val === resB.val
@@ -230,14 +230,14 @@ module.exports = (_pos, _error) => {
                     && ParseError.equal(resA.err, resB.err);
             }
             else {
-                return resA.succeeded === resB.succeeded
+                return resA.success === resB.success
                     && resA.consumed === resB.consumed
                     && ParseError.equal(resA.err, resB.err);
             }
         }
 
         /**
-         * Returns consumed and succeeded result object.
+         * Returns a consumed success result object.
          * @param {module:error.AbstractParseError} err
          * @param {*} val
          * @param {module:parser.State} state
@@ -248,7 +248,7 @@ module.exports = (_pos, _error) => {
         }
 
         /**
-         * Returns consumed but error result object.
+         * Returns a consumed failure result object.
          * @param {module:error.AbstractParseError} err
          * @returns {module:parser.Result}
          */
@@ -257,7 +257,7 @@ module.exports = (_pos, _error) => {
         }
 
         /**
-         * Returns not consumed and succeeded result object.
+         * Returns an empty success result object.
          * @param {module:error.AbstractParseError} err
          * @param {*} val
          * @param {module:parser.State} state
@@ -268,7 +268,7 @@ module.exports = (_pos, _error) => {
         }
 
         /**
-         * Returns not consumed but error result object.
+         * Returns an empty failure result object.
          * @param {module:error.AbstractParseError} err
          * @returns {module:parser.Result}
          */
@@ -288,8 +288,8 @@ module.exports = (_pos, _error) => {
          * @readonly
          * @type {boolean}
          */
-        get succeeded() {
-            return this._succeeded;
+        get success() {
+            return this._success;
         }
 
         /**
@@ -454,9 +454,9 @@ module.exports = (_pos, _error) => {
         }
         const state = new State(new Config(opts), input, SourcePos.init(name), userState);
         const res   = parser.run(state);
-        return res.succeeded
-            ? { succeeded: true, value: res.val }
-            : { succeeded: false, error: res.err };
+        return res.success
+            ? { success: true, value: res.val }
+            : { success: false, error: res.err };
     }
 
     /**

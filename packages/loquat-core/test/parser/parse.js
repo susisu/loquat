@@ -55,8 +55,8 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
             });
             let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(res).to.deep.equal({
-                succeeded: true,
-                value    : "nyancat"
+                success: true,
+                value  : "nyancat"
             });
         }
         // cerr
@@ -85,7 +85,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
             });
             let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(res).to.be.an("object");
-            expect(res.succeeded).to.be.false;
+            expect(res.success).to.be.false;
             expect(ParseError.equal(
                 res.error,
                 new ParseError(
@@ -132,8 +132,8 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
             });
             let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(res).to.deep.equal({
-                succeeded: true,
-                value    : "nyancat"
+                success: true,
+                value  : "nyancat"
             });
         }
         // eerr
@@ -162,7 +162,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
             });
             let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(res).to.be.an("object");
-            expect(res.succeeded).to.be.false;
+            expect(res.success).to.be.false;
             expect(ParseError.equal(
                 res.error,
                 new ParseError(
@@ -209,8 +209,8 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
             });
             let res = parse(parser, "foobar", "test");
             expect(res).to.deep.equal({
-                succeeded: true,
-                value    : "nyancat"
+                success: true,
+                value  : "nyancat"
             });
         }
     });
