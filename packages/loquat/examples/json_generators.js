@@ -122,14 +122,14 @@ function parse(filename) {
             process.exit(1);
         }
         const result = lq.parse(json, filename, data);
-        if (result.succeeded) {
+        if (result.success) {
             console.log(util.inspect(
                 result.value,
                 { colors: true, depth: undefined }
             ));
         }
         else {
-            throw result.error;
+            console.error(result.error.toString());
         }
     });
 }
