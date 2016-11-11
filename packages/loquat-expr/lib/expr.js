@@ -209,7 +209,7 @@ module.exports = (_core, _prim, _combinators) => {
                         const initState = currentState;
 
                         const opRes = rassocOp.run(currentState);
-                        if (opRes.succeeded) {
+                        if (opRes.success) {
                             if (opRes.consumed) {
                                 consumed = true;
                                 operations.push(opRes.val);
@@ -244,7 +244,7 @@ module.exports = (_core, _prim, _combinators) => {
                         }
 
                         const termRes = termP.run(currentState);
-                        if (termRes.succeeded) {
+                        if (termRes.success) {
                             if (termRes.consumed) {
                                 consumed = true;
                                 vals.push(termRes.val);
@@ -309,7 +309,7 @@ module.exports = (_core, _prim, _combinators) => {
                         const initState = currentState;
 
                         const opRes = lassocOp.run(currentState);
-                        if (opRes.succeeded) {
+                        if (opRes.success) {
                             if (opRes.consumed) {
                                 consumed = true;
                                 currentOperation = opRes.val;
@@ -336,7 +336,7 @@ module.exports = (_core, _prim, _combinators) => {
                         }
 
                         const termRes = termP.run(currentState);
-                        if (termRes.succeeded) {
+                        if (termRes.success) {
                             if (termRes.consumed) {
                                 consumed = true;
                                 currentVal = currentOperation(currentVal, termRes.val);
