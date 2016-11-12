@@ -28,9 +28,9 @@
   "description": "",
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^3.6.1",
-    "jsdoc": "^3.4.1",
-    "loquat-core": "git+https://github.com/susisu/loquat-core.git",
+    "eslint": "^3.10.0",
+    "jsdoc": "^3.4.0",
+    "loquat-core": "^2.0.0-0",
     "mocha": "^3.1.0"
   }
 }
