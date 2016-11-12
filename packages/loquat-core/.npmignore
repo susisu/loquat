@@ -1,3 +1,7 @@
 /temp/
 /test/
 /docs/
+.gitignore
+.eslintrc.json
+jsdoc.conf.json
+test.js
