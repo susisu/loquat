@@ -29,9 +29,12 @@
   "homepage": "https://github.com/susisu/loquat-qo#readme",
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^3.8.0",
-    "jsdoc": "^3.4.2",
-    "loquat-core": "git+https://github.com/susisu/loquat-core.git",
-    "mocha": "^3.1.2"
+    "eslint": "^3.10.0",
+    "jsdoc": "^3.4.0",
+    "loquat-core": "^2.0.0-0",
+    "mocha": "^3.1.0"
+  },
+  "peerDependencies": {
+    "loquat-core": "^2.0.0-0"
   }
 }
