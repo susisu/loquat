@@ -36,5 +36,8 @@
   },
   "dependencies": {
     "loquat-prim": "^2.0.0-0"
+  },
+  "peerDependencies": {
+    "loquat-core": "^2.0.0-0"
   }
 }
