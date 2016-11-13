@@ -1,7 +1,7 @@
 {
   "name": "loquat-qo",
-  "version": "2.0.0",
-  "description": "",
+  "version": "2.0.0-0",
+  "description": "Allow friendly syntax for loquat using generators",
   "main": "index.js",
   "directories": {
     "doc": "docs",
