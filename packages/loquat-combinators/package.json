@@ -1,7 +1,7 @@
 {
   "name": "loquat-combinators",
-  "version": "2.0.0",
-  "description": "",
+  "version": "2.0.0-0",
+  "description": "Combinators for loquat",
   "main": "index.js",
   "directories": {
     "doc": "docs",
