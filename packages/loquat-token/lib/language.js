@@ -27,7 +27,7 @@ module.exports = () => {
             this.commentStart    = obj.commentStart;
             this.commentEnd      = obj.commentEnd;
             this.commentLine     = obj.commentLine;
-            this.nestedComments  = obj.nestedComments === undefined ? false : obj.nestedComments;
+            this.nestedComments  = obj.nestedComments === undefined ? true : obj.nestedComments;
             this.idStart         = obj.idStart;
             this.idLetter        = obj.idLetter;
             this.opStart         = obj.opStart;
