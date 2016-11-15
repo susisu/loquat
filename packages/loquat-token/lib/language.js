@@ -21,9 +21,12 @@ module.exports = () => {
      */
     class LanguageDef {
         /**
-         * @param {Object} obj
+         * @param {(Object|undefined)} [obj = undefined]
          */
         constructor(obj) {
+            if (obj === undefined) {
+                obj = {};
+            }
             this.commentStart    = obj.commentStart;
             this.commentEnd      = obj.commentEnd;
             this.commentLine     = obj.commentLine;
