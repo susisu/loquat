@@ -4,7 +4,7 @@
 
 "use strict";
 
-const lq = require("../index.js"); // require("loquat");
+const lq = require("../index.js")(); // require("loquat")();
 
 // skips trailing spaces
 const spaces = lq.spaces.label("");
