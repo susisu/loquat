@@ -32,7 +32,7 @@ module.exports = opts => {
     /**
      * @param {Function} ext
      * @param {Object} [opts = {}]
-     * @returns {undefined}
+     * @returns {*}
      */
     function use(ext, opts) {
         if (opts === undefined) {
@@ -45,6 +45,7 @@ module.exports = opts => {
         if (opts.name !== undefined) {
             _loquat.extensions[opts.name] = _ext;
         }
+        return _ext;
     }
 
     if (!opts.noUsingDefaults) {
