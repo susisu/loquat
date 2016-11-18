@@ -320,7 +320,7 @@ module.exports = (_core, _prim) => {
         const expectStr = show(re);
         return new Parser(state => {
             if (typeof state.input !== "string") {
-                throw new Error("'regexp' is only applicable to string input");
+                throw new Error("`regexp' is only applicable to string input");
             }
             const match = anchored.exec(state.input);
             if (match) {
