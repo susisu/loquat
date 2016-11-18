@@ -326,7 +326,7 @@ module.exports = _core => {
                         currentState = res.state;
                     }
                     else {
-                        throw new Error("'many' is applied to a parser that accepts an empty string");
+                        throw new Error("`many' is applied to a parser that accepts an empty string");
                     }
                 }
                 else {
@@ -364,7 +364,7 @@ module.exports = _core => {
                         currentState = res.state;
                     }
                     else {
-                        throw new Error("'many' is applied to a parser that accepts an empty string");
+                        throw new Error("`many' is applied to a parser that accepts an empty string");
                     }
                 }
                 else {
