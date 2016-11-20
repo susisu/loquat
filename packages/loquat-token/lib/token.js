@@ -31,6 +31,7 @@ module.exports = (_core, _prim, _char, _combinators) => {
     const oneOf   = _char.oneOf;
     const noneOf  = _char.noneOf;
 
+    const between   = _combinators.between;
     const skipMany1 = _combinators.skipMany1;
 
     const spaceChars  = new Set(" \f\n\r\t\v");
@@ -124,10 +125,35 @@ module.exports = (_core, _prim, _char, _combinators) => {
             return lexeme(string(name));
         }
 
+        const parens = (() => {
+            const lparen = symbol("(");
+            const rparen = symbol(")");
+            return parser => between(lparen, rparen, parser);
+        })();
+        const braces = (() => {
+            const lbrace = symbol("{");
+            const rbrace = symbol("}");
+            return parser => between(lbrace, rbrace, parser);
+        })();
+        const angles = (() => {
+            const langle = symbol("<");
+            const rangle = symbol(">");
+            return parser => between(langle, rangle, parser);
+        })();
+        const brackets = (() => {
+            const lbracket = symbol("[");
+            const rbracket = symbol("]");
+            return parser => between(lbracket, rbracket, parser);
+        })();
+
         return {
             whiteSpace,
             lexeme,
-            symbol
+            symbol,
+            parens,
+            braces,
+            angles,
+            brackets
         };
     }
 
