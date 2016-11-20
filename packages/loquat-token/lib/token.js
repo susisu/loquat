@@ -146,6 +146,11 @@ module.exports = (_core, _prim, _char, _combinators) => {
             return parser => between(lbracket, rbracket, parser);
         })();
 
+        const semi  = symbol(";");
+        const comma = symbol(",");
+        const colon = symbol(":");
+        const dot   = symbol(".");
+
         return {
             whiteSpace,
             lexeme,
@@ -153,7 +158,11 @@ module.exports = (_core, _prim, _char, _combinators) => {
             parens,
             braces,
             angles,
-            brackets
+            brackets,
+            semi,
+            comma,
+            colon,
+            dot
         };
     }
 
