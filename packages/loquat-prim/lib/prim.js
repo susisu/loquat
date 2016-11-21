@@ -192,9 +192,51 @@ module.exports = _core => {
      * @returns {AbstractParser}
      */
     function tailRecM(initVal, func) {
-        return bind(func(initVal), res =>
-            res.done ? pure(res.value) : tailRecM(res.value, func)
-        );
+        return new Parser(state => {
+            let consumed = false;
+            let currentVal = initVal;
+            let currentState = state;
+            let currentErr = ParseError.unknown(state.pos);
+            while (true) {
+                const parser = func(currentVal);
+                const res = parser.run(currentState);
+                if (res.success) {
+                    if (res.consumed) {
+                        if (res.val.done) {
+                            return Result.csuc(res.err, res.val.value, res.state);
+                        }
+                        else {
+                            consumed = true;
+                            currentVal = res.val.value;
+                            currentState = res.state;
+                            currentErr = res.err;
+                        }
+                    }
+                    else {
+                        if (res.val.done) {
+                            return consumed
+                                ? Result.csuc(ParseError.merge(currentErr, res.err), res.val.value, res.state)
+                                : Result.esuc(ParseError.merge(currentErr, res.err), res.val.value, res.state);
+                        }
+                        else {
+                            currentVal = res.val.value;
+                            currentState = res.state;
+                            currentErr = ParseError.merge(currentErr, res.err);
+                        }
+                    }
+                }
+                else {
+                    if (res.consumed) {
+                        return Result.cerr(res.err);
+                    }
+                    else {
+                        return consumed
+                            ? Result.cerr(ParseError.merge(currentErr, res.err))
+                            : Result.eerr(ParseError.merge(currentErr, res.err));
+                    }
+                }
+            }
+        });
     }
 
     /**
