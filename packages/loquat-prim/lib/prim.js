@@ -21,6 +21,7 @@ module.exports = _core => {
             bind,
             then,
             fail,
+            tailRecM,
             mzero,
             mplus,
             label,
@@ -181,6 +182,19 @@ module.exports = _core => {
         return new Parser(state => Result.eerr(
             new ParseError(state.pos, [new ErrorMessage(ErrorMessageType.MESSAGE, msgStr)])
         ));
+    }
+
+    /**
+     * @function module:prim.tailRecM
+     * @static
+     * @param {*} initVal
+     * @param {function} func
+     * @returns {AbstractParser}
+     */
+    function tailRecM(initVal, func) {
+        return bind(func(initVal), res =>
+            res.done ? pure(res.value) : tailRecM(res.value, func)
+        );
     }
 
     /**
