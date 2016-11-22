@@ -16,6 +16,7 @@ describe("prim", () => {
     require("./prim/then.js");
     require("./prim/fail.js");
     require("./prim/tailRecM.js");
+    require("./prim/ftailRecM.js");
     require("./prim/mzero.js");
     require("./prim/mplus.js");
     require("./prim/label.js");
