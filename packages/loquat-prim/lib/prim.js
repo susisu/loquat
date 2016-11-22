@@ -22,6 +22,7 @@ module.exports = _core => {
             then,
             fail,
             tailRecM,
+            ftailRecM,
             mzero,
             mplus,
             label,
@@ -237,6 +238,16 @@ module.exports = _core => {
                 }
             }
         });
+    }
+
+    /**
+     * @function module:prim.ftailRecM
+     * @static
+     * @param {function} func
+     * @returns {function}
+     */
+    function ftailRecM(func) {
+        return initVal => tailRecM(initVal, func);
     }
 
     /**
