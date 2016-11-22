@@ -29,6 +29,8 @@ module.exports = (_core, opts) => {
         then        : _prim.then,
         and         : _prim.then,
         fail        : _prim.fail,
+        tailRecM    : _prim.tailRecM,
+        ftailRecM   : _prim.ftailRecM,
         mzero       : _prim.mzero,
         mplus       : _prim.mplus,
         or          : _prim.mplus,
