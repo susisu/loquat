@@ -56,6 +56,12 @@ module.exports = (_core, _prim) => {
         fail: function (msgStr) {
             return then(this, fail(msgStr));
         },
+        done: function () {
+            return map(this, x => ({ done: true, value: x }));
+        },
+        cont: function () {
+            return map(this, x => ({ done: false, value: x }));
+        },
         or: function (parser) {
             return mplus(this, parser);
         },
