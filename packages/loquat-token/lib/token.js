@@ -33,6 +33,8 @@ module.exports = (_core, _prim, _char, _combinators) => {
 
     const between   = _combinators.between;
     const skipMany1 = _combinators.skipMany1;
+    const sepBy     = _combinators.sepBy;
+    const sepBy1    = _combinators.sepBy1;
 
     const spaceChars  = new Set(" \f\n\r\t\v");
     const simpleSpace = skipMany1(satisfy(char => spaceChars.has(char)));
@@ -151,6 +153,22 @@ module.exports = (_core, _prim, _char, _combinators) => {
         const colon = symbol(":");
         const dot   = symbol(".");
 
+        function semiSep(parser) {
+            return sepBy(parser, semi);
+        }
+
+        function semiSep1(parser) {
+            return sepBy1(parser, semi);
+        }
+
+        function commaSep(parser) {
+            return sepBy(parser, comma);
+        }
+
+        function commaSep1(parser) {
+            return sepBy1(parser, comma);
+        }
+
         return {
             whiteSpace,
             lexeme,
@@ -162,7 +180,11 @@ module.exports = (_core, _prim, _char, _combinators) => {
             semi,
             comma,
             colon,
-            dot
+            dot,
+            semiSep,
+            semiSep1,
+            commaSep,
+            commaSep1
         };
     }
 
