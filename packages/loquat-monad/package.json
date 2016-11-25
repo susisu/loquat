@@ -35,7 +35,7 @@
     "mocha": "^3.1.0"
   },
   "dependencies": {
-    "loquat-prim": "^2.0.0-0"
+    "loquat-prim": "^2.0.0-2"
   },
   "peerDependencies": {
     "loquat-core": "^2.0.0-0"
