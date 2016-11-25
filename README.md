@@ -11,7 +11,7 @@ Monadic parser combinator library for JavaScript, inspired by (and almost clone 
 
 ## Install
 ``` shell
-npm i --save loquat@2.0.0-1
+npm i --save loquat@2.0.0-2
 ```
 
 ## Examples
