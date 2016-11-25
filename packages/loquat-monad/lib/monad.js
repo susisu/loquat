@@ -49,14 +49,14 @@ module.exports = (_core, _prim) => {
     const ParseError = _core.ParseError;
     const Result     = _core.Result;
     const Parser     = _core.Parser;
-    const lazy       = _core.lazy;
 
-    const map   = _prim.map;
-    const pure  = _prim.pure;
-    const bind  = _prim.bind;
-    const then  = _prim.then;
-    const mzero = _prim.mzero;
-    const mplus = _prim.mplus;
+    const map      = _prim.map;
+    const pure     = _prim.pure;
+    const bind     = _prim.bind;
+    const then     = _prim.then;
+    const tailRecM = _prim.tailRecM;
+    const mzero    = _prim.mzero;
+    const mplus    = _prim.mplus;
 
     /**
      * @function module:monad.forever
@@ -65,8 +65,10 @@ module.exports = (_core, _prim) => {
      * @returns {AbstractParser}
      */
     function forever(parser) {
-        const rec = lazy(() => then(parser, rec));
-        return rec;
+        return tailRecM(
+            undefined,
+            () => map(parser, () => ({ done: false, value: undefined }))
+        );
     }
 
     /**
