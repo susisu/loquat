@@ -26,10 +26,14 @@ module.exports = (_core, _prim, _char, _combinators) => {
     const tryParse = _prim.tryParse;
     const skipMany = _prim.skipMany;
 
-    const string  = _char.string;
-    const satisfy = _char.satisfy;
-    const oneOf   = _char.oneOf;
-    const noneOf  = _char.noneOf;
+    const string    = _char.string;
+    const satisfy   = _char.satisfy;
+    const oneOf     = _char.oneOf;
+    const noneOf    = _char.noneOf;
+    const digit     = _char.digit;
+    const octDigit  = _char.octDigit;
+    const hexDigit  = _char.hexDigit;
+    const manyChar1 = _char.manyChar1;
 
     const between   = _combinators.between;
     const skipMany1 = _combinators.skipMany1;
@@ -175,6 +179,17 @@ module.exports = (_core, _prim, _char, _combinators) => {
             return sepBy1(parser, comma);
         }
 
+        /*
+         * numbers
+         */
+        function number(base, baseDigit) {
+            return bind(manyChar1(baseDigit), digits => pure(parseInt(digits, base)));
+        }
+
+        const decimal     = number(10, digit);
+        const hexadecimal = then(oneOf("Xx"), number(16, hexDigit));
+        const octal       = then(oneOf("Oo"), number(8, octDigit));
+
         return {
             whiteSpace,
             lexeme,
@@ -190,7 +205,10 @@ module.exports = (_core, _prim, _char, _combinators) => {
             semiSep,
             semiSep1,
             commaSep,
-            commaSep1
+            commaSep1,
+            decimal,
+            hexadecimal,
+            octal
         };
     }
 
