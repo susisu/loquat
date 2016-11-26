@@ -46,6 +46,9 @@ module.exports = (_core, _prim, _char, _combinators) => {
      * @returns {Object}
      */
     function makeTokenParser(def) {
+        /*
+         * white space
+         */
         const whiteSpace = (() => {
             const noOneLineComment = def.commentLine === "" || def.commentLine === undefined;
             const noMultiLineComment = def.commentStart === ""
@@ -127,6 +130,9 @@ module.exports = (_core, _prim, _char, _combinators) => {
             return lexeme(string(name));
         }
 
+        /*
+         * symbols
+         */
         const parens = (() => {
             const lparen = symbol("(");
             const rparen = symbol(")");
