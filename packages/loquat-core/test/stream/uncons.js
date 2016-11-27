@@ -43,26 +43,65 @@ describe(".uncons(input, unicode)", () => {
     });
 
     it("should return an object describing empty input if `input' is an empty stream object", () => {
-        let stream = {
-            uncons: () => ({ empty: true })
-        };
-        expect(uncons(stream, false)).to.deep.equal({ empty: true });
-        expect(uncons(stream, true)).to.deep.equal({ empty: true });
+        {
+            let stream = {
+                uncons: unicode => {
+                    expect(unicode).to.be.false;
+                    return { empty: true };
+                }
+            };
+            expect(uncons(stream, false)).to.deep.equal({ empty: true });
+        }
+        {
+            let stream = {
+                uncons: unicode => {
+                    expect(unicode).to.be.true;
+                    return { empty: true };
+                }
+            };
+            expect(uncons(stream, true)).to.deep.equal({ empty: true });
+        }
     });
 
     it("should return an object containing head and tail if `input' is an non-empty stream object", () => {
-        let tail = {
-            uncons: () => ({ empty: true })
-        };
-        let stream = {
-            uncons: () => ({
-                empty: false,
-                head : "nyancat",
-                tail : tail
-            })
-        };
-        expect(uncons(stream, false)).to.deep.equal({ empty: false, head: "nyancat", tail: tail });
-        expect(uncons(stream, true)).to.deep.equal({ empty: false, head: "nyancat", tail: tail });
+        {
+            let tail = {
+                uncons: unicode => {
+                    expect(unicode).to.be.false;
+                    return { empty: true };
+                }
+            };
+            let stream = {
+                uncons: unicode => {
+                    expect(unicode).to.be.false;
+                    return {
+                        empty: false,
+                        head : "nyancat",
+                        tail : tail
+                    };
+                }
+            };
+            expect(uncons(stream, false)).to.deep.equal({ empty: false, head: "nyancat", tail: tail });
+        }
+        {
+            let tail = {
+                uncons: unicode => {
+                    expect(unicode).to.be.true;
+                    return { empty: true };
+                }
+            };
+            let stream = {
+                uncons: unicode => {
+                    expect(unicode).to.be.true;
+                    return {
+                        empty: false,
+                        head : "nyancat",
+                        tail : tail
+                    };
+                }
+            };
+            expect(uncons(stream, true)).to.deep.equal({ empty: false, head: "nyancat", tail: tail });
+        }
     });
 
     it("should throw a `TypeError' if `input' does not implement `IStream' interface", () => {

@@ -33,6 +33,7 @@ module.exports = () => {
      * <tr><td>`head`</td><td></td><td>The head of the stream.</td></tr>
      * <tr><td>`tail`</td><td>{@link module:stream.IStream}</td><td>The tail (rest) of the stream.</td></tr>
      * </table>
+     * @param {boolean} unicode If `true` specified, string-like stream should enable unicode features.
      * @returns {Object} An object that have properties describes above.
      */
 
@@ -51,7 +52,9 @@ module.exports = () => {
      * @static
      * @param {(string|Array|module:stream.IStream)} input A string, an array,
      * or an {@link module:stream.IStream} object.
-     * @param {boolean} unicode For string input, if `true` specified, the input is unconsed in units of code points.
+     * @param {boolean} unicode For string input, if `true` specified characters are unconsed in code point unit.
+     * For string-like stream, if `true` specified it would enable unicode features
+     * through {@link module:stream.IStream#uncons} method.
      * @returns {Object} An object that have properties describes above.
      * @throws {TypeError} `input` is not a string nor an array,
      * or object does not implement the {@link module:stream.IStream} interface.
@@ -81,7 +84,7 @@ module.exports = () => {
         }
         else if (typeof input === "object" && input !== null) {
             if (typeof input.uncons === "function") {
-                return input.uncons();
+                return input.uncons(unicode);
             }
             else {
                 throw new TypeError("not a stream");
