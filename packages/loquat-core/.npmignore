@@ -1,6 +1,7 @@
 /temp/
 /test/
 /docs/
+/coverage/
 .gitignore
 .eslintrc.json
 jsdoc.conf.json
