@@ -12,8 +12,32 @@ const show = _utils.show;
 
 describe(".show(value)", () => {
     it("should return escaped and double-quoted (\"...\") string if `value' is a string", () => {
-        let str = "0\\9\"A\bZ\ta\nz\r'\f`\v\u3042\u5b89\uD83C\uDF63";
-        expect(show(str)).to.equal("\"0\\\\9\\\"A\\bZ\\ta\\nz\\r'\\f`\\v\u3042\u5b89\uD83C\uDF63\"");
+        // empty
+        {
+            expect(show("")).to.equal("\"\"");
+        }
+        // single character
+        {
+            expect(show("0")).to.equal("\"0\"");
+            expect(show("A")).to.equal("\"A\"");
+            expect(show("a")).to.equal("\"a\"");
+            expect(show("\\")).to.equal("\"\\\\\"");
+            expect(show("\"")).to.equal("\"\\\"\"");
+            expect(show("\b")).to.equal("\"\\b\"");
+            expect(show("\t")).to.equal("\"\\t\"");
+            expect(show("\n")).to.equal("\"\\n\"");
+            expect(show("\r")).to.equal("\"\\r\"");
+            expect(show("\f")).to.equal("\"\\f\"");
+            expect(show("\v")).to.equal("\"\\v\"");
+            expect(show("\u3042")).to.equal("\"\u3042\"");
+            expect(show("\u5b89")).to.equal("\"\u5b89\"");
+            expect(show("\uD83C\uDF63")).to.equal("\"\uD83C\uDF63\"");
+        }
+        // multiple characters
+        {
+            let str = "0\\9\"A\bZ\ta\nz\r'\f`\v\u3042\u5b89\uD83C\uDF63";
+            expect(show(str)).to.equal("\"0\\\\9\\\"A\\bZ\\ta\\nz\\r'\\f`\\v\u3042\u5b89\uD83C\uDF63\"");
+        }
     });
 
     it("should stringify each element by `show()' and return joined string separated by commas (,)"
