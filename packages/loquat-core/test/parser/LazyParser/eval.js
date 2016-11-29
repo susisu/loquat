@@ -60,6 +60,26 @@ describe("#eval()", () => {
             expect(evalCount).to.equal(1);
             expect(resA).to.equal(resB);
         }
+        {
+            let intermediateEvalCount = 0;
+            let intermediateParser = new LazyParser(() => {
+                intermediateEvalCount += 1;
+                return new Parser(() => {});
+            });
+            let evalCount = 0;
+            let parser = new LazyParser(() => {
+                evalCount += 1;
+                return intermediateParser;
+            });
+            // evaluate intermediate one first
+            let intermediateRes = intermediateParser.eval();
+            let resA = parser.eval();
+            let resB = parser.eval();
+            expect(intermediateEvalCount).to.equal(1);
+            expect(evalCount).to.equal(1);
+            expect(resA).to.equal(resB);
+            expect(resA).to.equal(intermediateRes);
+        }
     });
 
     it("should throw a `TypeError' if invalid thunk (not a function) found in the evaluation", () => {
