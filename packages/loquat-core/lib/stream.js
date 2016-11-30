@@ -12,7 +12,8 @@
 module.exports = () => {
     function end() {
         return Object.freeze({
-            uncons
+            uncons,
+            ArrayStream
         });
     }
 
@@ -92,6 +93,54 @@ module.exports = () => {
         }
         else {
             throw new TypeError("not a stream");
+        }
+    }
+
+    /**
+     * The `ArrayStream` class provide more efficient stream of arrays.
+     * @static
+     * @implements {module:stream.IStream}
+     */
+    class ArrayStream {
+        /**
+         * Creates a new `ArrayStream` instance.
+         * @param {Array} arr An array object.
+         * @param {number} index Current index.
+         */
+        constructor(arr, index) {
+            this._arr   = arr;
+            this._index = index;
+        }
+
+        /**
+         * @readonly
+         * @type {Array}
+         */
+        get arr() {
+            return this._arr;
+        }
+
+        /**
+         * @readonly
+         * @type {number}
+         */
+        get index() {
+            return this._index;
+        }
+
+        /**
+         * Returns a pair of the element at the current index and rest of the stream.
+         * @param {boolean} unicode Will not be considered.
+         * @returns {Object}
+         */
+        uncons() {
+            return this._index >= this._arr.length
+                ? { empty: true }
+                : {
+                    empty: false,
+                    head : this._arr[this._index],
+                    tail : new ArrayStream(this._arr, this._index + 1)
+                };
         }
     }
 
