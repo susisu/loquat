@@ -11,7 +11,8 @@
     "docs": "jsdoc lib -c jsdoc.conf.json",
     "lint": "eslint lib --fix",
     "lint-test": "eslint test --env mocha --global _core,_prim --fix",
-    "lint-all": "npm run lint && npm run lint-test"
+    "lint-all": "npm run lint && npm run lint-test",
+    "cover": "istanbul cover _mocha -- test.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "eslint": "^3.10.0",
+    "istanbul": "^0.4.5",
     "jsdoc": "^3.4.0",
     "loquat-core": "^2.0.0-0",
     "mocha": "^3.1.0"
