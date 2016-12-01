@@ -455,104 +455,230 @@ describe(".qo(genFunc)", () => {
         );
         // csuc
         {
-            let stateA = new State(
-                new Config({ tabWidth: 8 }),
-                "restA",
-                new SourcePos("foobar", 1, 2),
-                "someA"
-            );
-            let errA = new ParseError(
-                new SourcePos("foobar", 1, 2),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-            );
-            let parserA = new Parser(state => {
-                expect(State.equal(state, initState));
-                return Result.csuc(errA, "nyan", stateA);
-            });
-            let parser = qo(function* () {
-                throw parserA;
-            });
-            let res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.cerr(errA)
-            )).to.be.true;
+            {
+                let stateA = new State(
+                    new Config({ tabWidth: 8 }),
+                    "restA",
+                    new SourcePos("foobar", 1, 2),
+                    "someA"
+                );
+                let errA = new ParseError(
+                    new SourcePos("foobar", 1, 2),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+                );
+                let parserA = new Parser(state => {
+                    expect(State.equal(state, initState));
+                    return Result.csuc(errA, "nyan", stateA);
+                });
+                let parser = qo(function* () {
+                    throw parserA;
+                });
+                let res = parser.run(initState);
+                expect(Result.equal(
+                    res,
+                    Result.cerr(errA)
+                )).to.be.true;
+            }
+            {
+                let stateA = new State(
+                    new Config({ tabWidth: 8 }),
+                    "restA",
+                    new SourcePos("foobar", 1, 2),
+                    "someA"
+                );
+                let errA = new ParseError(
+                    new SourcePos("foobar", 1, 2),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+                );
+                let parserA = new Parser(state => {
+                    expect(State.equal(state, initState));
+                    return Result.csuc(errA, "nyan", stateA);
+                });
+                let dummy = new Parser(state =>
+                    Result.esuc(ParseError.unknown(state.pos), undefined, state)
+                );
+                let parser = qo(function* () {
+                    yield dummy;
+                    throw parserA;
+                });
+                let res = parser.run(initState);
+                expect(Result.equal(
+                    res,
+                    Result.cerr(errA)
+                )).to.be.true;
+            }
         }
         // cerr
         {
-            let errA = new ParseError(
-                new SourcePos("foobar", 1, 2),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-            );
-            let parserA = new Parser(state => {
-                expect(State.equal(state, initState));
-                return Result.cerr(errA);
-            });
-            let parser = qo(function* () {
-                throw parserA;
-            });
-            let res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.cerr(errA)
-            )).to.be.true;
+            {
+                let errA = new ParseError(
+                    new SourcePos("foobar", 1, 2),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+                );
+                let parserA = new Parser(state => {
+                    expect(State.equal(state, initState));
+                    return Result.cerr(errA);
+                });
+                let parser = qo(function* () {
+                    throw parserA;
+                });
+                let res = parser.run(initState);
+                expect(Result.equal(
+                    res,
+                    Result.cerr(errA)
+                )).to.be.true;
+            }
+            {
+                let errA = new ParseError(
+                    new SourcePos("foobar", 1, 2),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+                );
+                let parserA = new Parser(state => {
+                    expect(State.equal(state, initState));
+                    return Result.cerr(errA);
+                });
+                let dummy = new Parser(state =>
+                    Result.esuc(ParseError.unknown(state.pos), undefined, state)
+                );
+                let parser = qo(function* () {
+                    yield dummy;
+                    throw parserA;
+                });
+                let res = parser.run(initState);
+                expect(Result.equal(
+                    res,
+                    Result.cerr(errA)
+                )).to.be.true;
+            }
         }
         // esuc
         {
-            let stateA = new State(
-                new Config({ tabWidth: 8 }),
-                "restA",
-                new SourcePos("foobar", 1, 1),
-                "someA"
-            );
-            let errA = new ParseError(
-                new SourcePos("foobar", 1, 1),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-            );
-            let parserA = new Parser(state => {
-                expect(State.equal(state, initState));
-                return Result.esuc(errA, "nyan", stateA);
-            });
-            let parser = qo(function* () {
-                throw parserA;
-            });
-            let res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.eerr(errA)
-            )).to.be.true;
+            {
+                let stateA = new State(
+                    new Config({ tabWidth: 8 }),
+                    "restA",
+                    new SourcePos("foobar", 1, 1),
+                    "someA"
+                );
+                let errA = new ParseError(
+                    new SourcePos("foobar", 1, 1),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+                );
+                let parserA = new Parser(state => {
+                    expect(State.equal(state, initState));
+                    return Result.esuc(errA, "nyan", stateA);
+                });
+                let parser = qo(function* () {
+                    throw parserA;
+                });
+                let res = parser.run(initState);
+                expect(Result.equal(
+                    res,
+                    Result.eerr(errA)
+                )).to.be.true;
+            }
+            {
+                let stateA = new State(
+                    new Config({ tabWidth: 8 }),
+                    "restA",
+                    new SourcePos("foobar", 1, 1),
+                    "someA"
+                );
+                let errA = new ParseError(
+                    new SourcePos("foobar", 1, 1),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+                );
+                let parserA = new Parser(state => {
+                    expect(State.equal(state, initState));
+                    return Result.esuc(errA, "nyan", stateA);
+                });
+                let dummy = new Parser(state =>
+                    Result.esuc(ParseError.unknown(state.pos), undefined, state)
+                );
+                let parser = qo(function* () {
+                    yield dummy;
+                    throw parserA;
+                });
+                let res = parser.run(initState);
+                expect(Result.equal(
+                    res,
+                    Result.eerr(errA)
+                )).to.be.true;
+            }
         }
         // eerr
         {
-            let errA = new ParseError(
-                new SourcePos("foobar", 1, 1),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-            );
-            let parserA = new Parser(state => {
-                expect(State.equal(state, initState));
-                return Result.eerr(errA);
-            });
-            let parser = qo(function* () {
-                throw parserA;
-            });
-            let res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.eerr(errA)
-            )).to.be.true;
+            {
+                let errA = new ParseError(
+                    new SourcePos("foobar", 1, 1),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+                );
+                let parserA = new Parser(state => {
+                    expect(State.equal(state, initState));
+                    return Result.eerr(errA);
+                });
+                let parser = qo(function* () {
+                    throw parserA;
+                });
+                let res = parser.run(initState);
+                expect(Result.equal(
+                    res,
+                    Result.eerr(errA)
+                )).to.be.true;
+            }
+            {
+                let errA = new ParseError(
+                    new SourcePos("foobar", 1, 1),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+                );
+                let parserA = new Parser(state => {
+                    expect(State.equal(state, initState));
+                    return Result.eerr(errA);
+                });
+                let dummy = new Parser(state =>
+                    Result.esuc(ParseError.unknown(state.pos), undefined, state)
+                );
+                let parser = qo(function* () {
+                    yield dummy;
+                    throw parserA;
+                });
+                let res = parser.run(initState);
+                expect(Result.equal(
+                    res,
+                    Result.eerr(errA)
+                )).to.be.true;
+            }
         }
     });
 
     it("should rethrow error thrown by the generator if it is not a parser", () => {
-        let initState = new State(
-            new Config({ tabWidth: 8 }),
-            "input",
-            new SourcePos("foobar", 1, 1),
-            "none"
-        );
-        let parser = qo(function* () {
-            throw new Error("test");
-        });
-        expect(() => { parser.run(initState); }).to.throw(Error, /test/);
+        {
+            let initState = new State(
+                new Config({ tabWidth: 8 }),
+                "input",
+                new SourcePos("foobar", 1, 1),
+                "none"
+            );
+            let parser = qo(function* () {
+                throw new Error("test");
+            });
+            expect(() => { parser.run(initState); }).to.throw(Error, /test/);
+        }
+        {
+            let initState = new State(
+                new Config({ tabWidth: 8 }),
+                "input",
+                new SourcePos("foobar", 1, 1),
+                "none"
+            );
+            let dummy = new Parser(state =>
+                Result.esuc(ParseError.unknown(state.pos), undefined, state)
+            );
+            let parser = qo(function* () {
+                yield dummy;
+                throw new Error("test");
+            });
+            expect(() => { parser.run(initState); }).to.throw(Error, /test/);
+        }
     });
 });
