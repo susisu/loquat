@@ -1677,7 +1677,7 @@ describe(".chainr1(term, op)", () => {
                 )
             )).to.be.true;
         }
-        // left to right: csuc, csuc, csuc, csuc, csuc, eerr
+        // right to left: csuc, csuc, csuc, csuc, csuc, eerr
         {
             let consumed = [true, true, true, true, true, false];
             let success = [true, true, true, true, true, false];
@@ -1758,6 +1758,111 @@ describe(".chainr1(term, op)", () => {
                         [
                             new ErrorMessage(ErrorMessageType.MESSAGE, "testE"),
                             new ErrorMessage(ErrorMessageType.MESSAGE, "testF")
+                        ]
+                    ),
+                    "cAT",
+                    new State(
+                        new Config({ tabWidth: 8 }),
+                        "restE",
+                        new SourcePos("foobar", 1, 6),
+                        "someE"
+                    )
+                )
+            )).to.be.true;
+        }
+        // right to left: csuc, csuc, csuc, csuc, csuc, esuc, eerr
+        {
+            let consumed = [true, true, true, true, true, false, false];
+            let success = [true, true, true, true, true, true, false];
+            let vals = [
+                "c",
+                (x, y) => x + y.toUpperCase(),
+                "a",
+                (x, y) => x + y.toLowerCase(),
+                "T",
+                (x, y) => x + y.toUpperCase()
+            ];
+            let states = [
+                new State(
+                    new Config({ tabWidth: 8 }),
+                    "restA",
+                    new SourcePos("foobar", 1, 2),
+                    "someA"
+                ),
+                new State(
+                    new Config({ tabWidth: 8 }),
+                    "restB",
+                    new SourcePos("foobar", 1, 3),
+                    "someB"
+                ),
+                new State(
+                    new Config({ tabWidth: 8 }),
+                    "restC",
+                    new SourcePos("foobar", 1, 4),
+                    "someC"
+                ),
+                new State(
+                    new Config({ tabWidth: 8 }),
+                    "restD",
+                    new SourcePos("foobar", 1, 5),
+                    "someD"
+                ),
+                new State(
+                    new Config({ tabWidth: 8 }),
+                    "restE",
+                    new SourcePos("foobar", 1, 6),
+                    "someE"
+                ),
+                new State(
+                    new Config({ tabWidth: 8 }),
+                    "restF",
+                    new SourcePos("foobar", 1, 6),
+                    "someF"
+                )
+            ];
+            let errs = [
+                new ParseError(
+                    new SourcePos("foobar", 1, 2),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+                ),
+                new ParseError(
+                    new SourcePos("foobar", 1, 3),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+                ),
+                new ParseError(
+                    new SourcePos("foobar", 1, 4),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+                ),
+                new ParseError(
+                    new SourcePos("foobar", 1, 5),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+                ),
+                new ParseError(
+                    new SourcePos("foobar", 1, 6),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
+                ),
+                new ParseError(
+                    new SourcePos("foobar", 1, 6),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testF")]
+                ),
+                new ParseError(
+                    new SourcePos("foobar", 1, 6),
+                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testG")]
+                )
+            ];
+            let parsers = generateParsers(consumed, success, vals, states, errs);
+            let manyParser = chainr1(parsers[0], parsers[1]);
+            assertParser(manyParser);
+            let res = manyParser.run(initState);
+            expect(Result.equal(
+                res,
+                Result.csuc(
+                    new ParseError(
+                        new SourcePos("foobar", 1, 6),
+                        [
+                            new ErrorMessage(ErrorMessageType.MESSAGE, "testE"),
+                            new ErrorMessage(ErrorMessageType.MESSAGE, "testF"),
+                            new ErrorMessage(ErrorMessageType.MESSAGE, "testG")
                         ]
                     ),
                     "cAT",
