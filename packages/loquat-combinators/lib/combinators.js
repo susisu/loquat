@@ -33,7 +33,9 @@ module.exports = (_core, _prim) => {
             anyToken,
             notFollowedBy,
             eof,
-            manyTill
+            reduceManyTill,
+            manyTill,
+            skipManyTill
         });
     }
 
@@ -617,6 +619,70 @@ module.exports = (_core, _prim) => {
     const eof = label(notFollowedBy(anyToken), "end of input");
 
     /**
+     * @function module:combinators.reduceManyTill
+     * @static
+     * @param {AbstractParser} parser
+     * @param {AbstractParser} end
+     * @param {function} callback
+     * @param {*} initVal
+     * @returns {AbstractParser}
+     */
+    function reduceManyTill(parser, end, callback, initVal) {
+        return new Parser(state => {
+            let accum = initVal;
+            let currentState = state;
+            let currentErr = ParseError.unknown(state.pos);
+            let consumed = false;
+            while (true) {
+                const endRes = end.run(currentState);
+                if (endRes.success) {
+                    if (endRes.consumed) {
+                        return Result.csuc(endRes.err, accum, endRes.state);
+                    }
+                    else {
+                        return consumed
+                            ? Result.csuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state)
+                            : Result.esuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state);
+                    }
+                }
+                else {
+                    if (endRes.consumed) {
+                        return Result.cerr(endRes.err);
+                    }
+                    else {
+                        currentErr = ParseError.merge(currentErr, endRes.err);
+                    }
+                }
+
+                const res = parser.run(currentState);
+                if (res.success) {
+                    if (res.consumed) {
+                        consumed = true;
+                        accum = callback(accum, res.val);
+                        currentState = res.state;
+                        currentErr = res.err;
+                    }
+                    else {
+                        accum = callback(accum, res.val);
+                        currentState = res.state;
+                        currentErr = ParseError.merge(currentErr, res.err);
+                    }
+                }
+                else {
+                    if (res.consumed) {
+                        return Result.cerr(res.err);
+                    }
+                    else {
+                        return consumed
+                            ? Result.cerr(ParseError.merge(currentErr, res.err))
+                            : Result.eerr(ParseError.merge(currentErr, res.err));
+                    }
+                }
+            }
+        });
+    }
+
+    /**
      * @function module:combinators.manyTill
      * @static
      * @param {AbstractParser} parser
@@ -676,6 +742,17 @@ module.exports = (_core, _prim) => {
                 }
             }
         });
+    }
+
+    /**
+     * @function module:combinators.skipManyTill
+     * @static
+     * @param {AbstractParser} parser
+     * @param {AbstractParser} end
+     * @returns {AbstractParser}
+     */
+    function skipManyTill(parser, end) {
+        return reduceManyTill(parser, end, accum => accum, undefined);
     }
 
     return end();
