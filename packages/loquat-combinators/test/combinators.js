@@ -27,5 +27,6 @@ describe("combinators", () => {
     require("./combinators/anyToken.js");
     require("./combinators/notFollowedBy.js");
     require("./combinators/eof.js");
+    require("./combinators/reduceManyTill.js");
     require("./combinators/manyTill.js");
 });
