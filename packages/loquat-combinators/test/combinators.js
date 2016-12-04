@@ -29,4 +29,5 @@ describe("combinators", () => {
     require("./combinators/eof.js");
     require("./combinators/reduceManyTill.js");
     require("./combinators/manyTill.js");
+    require("./combinators/skipManyTill.js");
 });
