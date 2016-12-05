@@ -26,14 +26,15 @@ module.exports = (_core, _prim, _char, _combinators) => {
     const tryParse = _prim.tryParse;
     const skipMany = _prim.skipMany;
 
-    const string    = _char.string;
-    const satisfy   = _char.satisfy;
-    const oneOf     = _char.oneOf;
-    const noneOf    = _char.noneOf;
-    const digit     = _char.digit;
-    const octDigit  = _char.octDigit;
-    const hexDigit  = _char.hexDigit;
-    const manyChar1 = _char.manyChar1;
+    const string     = _char.string;
+    const satisfy    = _char.satisfy;
+    const oneOf      = _char.oneOf;
+    const noneOf     = _char.noneOf;
+    const char       = _char.char;
+    const digit      = _char.digit;
+    const octDigit   = _char.octDigit;
+    const hexDigit   = _char.hexDigit;
+    const manyChars1 = _char.manyChars1;
 
     const between   = _combinators.between;
     const skipMany1 = _combinators.skipMany1;
@@ -183,7 +184,7 @@ module.exports = (_core, _prim, _char, _combinators) => {
          * numbers
          */
         function number(base, baseDigit) {
-            return bind(manyChar1(baseDigit), digits => pure(parseInt(digits, base)));
+            return bind(manyChars1(baseDigit), digits => pure(parseInt(digits, base)));
         }
 
         const decimal     = number(10, digit);
