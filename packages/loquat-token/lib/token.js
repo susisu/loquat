@@ -31,11 +31,13 @@ module.exports = (_core, _prim, _char, _combinators) => {
     const oneOf      = _char.oneOf;
     const noneOf     = _char.noneOf;
     const char       = _char.char;
+    const upper      = _char.upper;
     const digit      = _char.digit;
     const octDigit   = _char.octDigit;
     const hexDigit   = _char.hexDigit;
     const manyChars1 = _char.manyChars1;
 
+    const choice    = _combinators.choice;
     const option    = _combinators.option;
     const between   = _combinators.between;
     const skipMany1 = _combinators.skipMany1;
@@ -211,6 +213,98 @@ module.exports = (_core, _prim, _char, _combinators) => {
         decimalFloat
     );
 
+    /*
+     * character / string literals
+     */
+    const escMap = {
+        "a" : "\u0007",
+        "b" : "\b",
+        "f" : "\f",
+        "n" : "\n",
+        "r" : "\r",
+        "t" : "\t",
+        "v" : "\v",
+        "\\": "\\",
+        "\"": "\"",
+        "'" : "'"
+    };
+    const asciiMap = {
+        "BS" : "\u0008",
+        "HT" : "\u0009",
+        "LF" : "\u000a",
+        "VT" : "\u000b",
+        "FF" : "\u000c",
+        "CR" : "\u000d",
+        "SO" : "\u000e",
+        "SI" : "\u000f",
+        "EM" : "\u0019",
+        "FS" : "\u001c",
+        "GS" : "\u001d",
+        "RS" : "\u001e",
+        "US" : "\u001f",
+        "SP" : "\u0020",
+        "NUL": "\u0000",
+        "SOH": "\u0001",
+        "STX": "\u0002",
+        "ETX": "\u0003",
+        "EOT": "\u0004",
+        "ENQ": "\u0005",
+        "ACK": "\u0006",
+        "BEL": "\u0007",
+        "DLE": "\u0010",
+        "DC1": "\u0011",
+        "DC2": "\u0012",
+        "DC3": "\u0013",
+        "DC4": "\u0014",
+        "NAK": "\u0015",
+        "SYN": "\u0016",
+        "ETB": "\u0017",
+        "CAN": "\u0018",
+        "SUB": "\u001a",
+        "ESC": "\u001b",
+        "DEL": "\u007f"
+    };
+    const charEsc = choice(
+        Object.keys(escMap).sort().map(c =>
+            then(char(c), pure(escMap[c]))
+        )
+    );
+    const charNum = bind(
+        mplus(
+            decimal,
+            mplus(
+                then(char("o"), number(8, octDigit)),
+                then(char("x"), number(16, hexDigit))
+            )
+        ),
+        code => pure(String.fromCharCode(code))
+    );
+    const charAscii = choice(
+        Object.keys(asciiMap).sort().map(asc =>
+            tryParse(
+                then(string(asc), pure(asciiMap[asc]))
+            )
+        )
+    );
+    const charControl = then(
+        char("^"),
+        bind(upper, code =>
+            pure(
+                String.fromCharCode(code.charCodeAt(0) - "A".charCodeAt(0) + 1)
+            )
+        )
+    );
+    const escapeCode = label(
+        mplus(charEsc, mplus(charNum, mplus(charAscii, charControl))),
+        "escape code"
+    );
+    const charLetter = satisfy(c => c !== "'" && c !== "\\" && c > "\u001a");
+    const charEscape = then(char("\\"), escapeCode);
+    const characterChar = label(
+        mplus(charLetter, charEscape),
+        "literal character"
+    );
+
     /**
      * @function module:token.makeTokenParser
      * @static
@@ -294,6 +388,20 @@ module.exports = (_core, _prim, _char, _combinators) => {
         const float = label(lexeme(floating), "float");
         const naturalOrFloat = label(lexeme(natFloat), "number");
 
+        /*
+         * character / string literals
+         */
+        const charLiteral = label(
+            lexeme(
+                between(
+                    char("'"),
+                    label(char("'"), "end of character"),
+                    characterChar
+                )
+            ),
+            "character"
+        );
+
         return {
             whiteSpace,
             lexeme,
@@ -316,7 +424,8 @@ module.exports = (_core, _prim, _char, _combinators) => {
             natural,
             integer,
             float,
-            naturalOrFloat
+            naturalOrFloat,
+            charLiteral
         };
     }
 
