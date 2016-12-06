@@ -42,8 +42,101 @@ module.exports = (_core, _prim, _char, _combinators) => {
     const sepBy     = _combinators.sepBy;
     const sepBy1    = _combinators.sepBy1;
 
+    /*
+     * white space
+     */
     const spaceChars  = new Set(" \f\n\r\t\v");
     const simpleSpace = skipMany1(satisfy(char => spaceChars.has(char)));
+
+    /*
+     * number literals
+     */
+    function number(base, baseDigit) {
+        return bind(manyChars1(baseDigit), digits => pure(parseInt(digits, base)));
+    }
+    const decimal     = number(10, digit);
+    const hexadecimal = then(oneOf("Xx"), number(16, hexDigit));
+    const octal       = then(oneOf("Oo"), number(8, octDigit));
+
+    // natural
+    const zeroNumber = label(
+        then(
+            char("0"),
+            mplus(hexadecimal, mplus(octal, mplus(decimal, pure(0))))
+        ),
+        ""
+    );
+    const nat = mplus(zeroNumber, decimal);
+
+    // integer
+    const sign = mplus(
+        then(char("-"), pure(x => -x)),
+        mplus(
+            then(char("+"), pure(x => x)),
+            pure(x => x)
+        )
+    );
+
+    // float
+    const fraction = label(
+        then(
+            char("."),
+            bind(label(manyChars1(digit), "fraction"), digits =>
+                pure(parseFloat("0." + digits))
+            )
+        ),
+        "fraction"
+    );
+    const exponent = label(
+        then(
+            oneOf("Ee"),
+            bind(sign, f =>
+                bind(label(decimal, "exponent"), e =>
+                    pure(Math.pow(10, f(e)))
+                )
+            )
+        ),
+        "exponent"
+    );
+    function fractExponent(n) {
+        return mplus(
+            bind(fraction, fract =>
+                bind(option(1, exponent), expo =>
+                    pure((n + fract) * expo)
+                )
+            ),
+            bind(exponent, expo =>
+                pure(n * expo)
+            )
+        );
+    }
+    const floating = bind(decimal, fractExponent);
+
+    // natural or float
+    function fractFloat(n) {
+        return bind(fractExponent(n), f =>
+            pure({ type: "float", value: f })
+        );
+    }
+    const decimalFloat = bind(decimal, n =>
+        option({ type: "natural", value: n }, fractFloat(n))
+    );
+    const zeroNumFloat = mplus(
+        bind(mplus(hexadecimal, octal), n =>
+            pure({ type: "natural", value: n })
+        ),
+        mplus(
+            decimalFloat,
+            mplus(
+                fractFloat(0),
+                pure({ type: "natural", value: 0 })
+            )
+        )
+    );
+    const natFloat = mplus(
+        then(char("0"), zeroNumFloat),
+        decimalFloat
+    );
 
     /**
      * @function module:token.makeTokenParser
@@ -184,97 +277,14 @@ module.exports = (_core, _prim, _char, _combinators) => {
         /*
          * number literals
          */
-        function number(base, baseDigit) {
-            return bind(manyChars1(baseDigit), digits => pure(parseInt(digits, base)));
-        }
-
-        const decimal     = number(10, digit);
-        const hexadecimal = then(oneOf("Xx"), number(16, hexDigit));
-        const octal       = then(oneOf("Oo"), number(8, octDigit));
-
-        const zeroNumber = label(
-            then(
-                char("0"),
-                mplus(hexadecimal, mplus(octal, mplus(decimal, pure(0))))
-            ),
-            ""
-        );
-        const nat = mplus(zeroNumber, decimal);
         const natural = label(lexeme(nat), "natural");
-
-        const sign = mplus(
-            then(char("-"), pure(x => -x)),
-            mplus(
-                then(char("+"), pure(x => x)),
-                pure(x => x)
-            )
-        );
         const int = bind(lexeme(sign), f =>
             bind(nat, n =>
                 pure(f(n))
             )
         );
         const integer = label(lexeme(int), "integer");
-
-        const fraction = label(
-            then(
-                char("."),
-                bind(label(manyChars1(digit), "fraction"), digits =>
-                    pure(parseFloat("0." + digits))
-                )
-            ),
-            "fraction"
-        );
-        const exponent = label(
-            then(
-                oneOf("Ee"),
-                bind(sign, f =>
-                    bind(label(decimal, "exponent"), e =>
-                        pure(Math.pow(10, f(e)))
-                    )
-                )
-            ),
-            "exponent"
-        );
-        function fractExponent(n) {
-            return mplus(
-                bind(fraction, fract =>
-                    bind(option(1, exponent), expo =>
-                        pure((n + fract) * expo)
-                    )
-                ),
-                bind(exponent, expo =>
-                    pure(n * expo)
-                )
-            );
-        }
-        const floating = bind(decimal, fractExponent);
         const float = label(lexeme(floating), "float");
-
-        function fractFloat(n) {
-            return bind(fractExponent(n), f =>
-                pure({ type: "float", value: f })
-            );
-        }
-        const decimalFloat = bind(decimal, n =>
-            option({ type: "natural", value: n }, fractFloat(n))
-        );
-        const zeroNumFloat = mplus(
-            bind(mplus(hexadecimal, octal), n =>
-                pure({ type: "natural", value: n })
-            ),
-            mplus(
-                decimalFloat,
-                mplus(
-                    fractFloat(0),
-                    pure({ type: "natural", value: 0 })
-                )
-            )
-        );
-        const natFloat = mplus(
-            then(char("0"), zeroNumFloat),
-            decimalFloat
-        );
         const naturalOrFloat = label(lexeme(natFloat), "number");
 
         return {
