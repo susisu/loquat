@@ -319,7 +319,7 @@ module.exports = (_core, _prim, _char, _combinators) => {
         mplus(
             then(escapeGap, pure("")),
             mplus(
-                then(escapeEmpty), pure(""),
+                then(escapeEmpty, pure("")),
                 escapeCode
             )
         )
