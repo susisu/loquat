@@ -31,15 +31,18 @@ module.exports = (_core, _prim, _char, _combinators) => {
     const oneOf      = _char.oneOf;
     const noneOf     = _char.noneOf;
     const char       = _char.char;
+    const space      = _char.space;
     const upper      = _char.upper;
     const digit      = _char.digit;
     const octDigit   = _char.octDigit;
     const hexDigit   = _char.hexDigit;
+    const manyChars  = _char.manyChars;
     const manyChars1 = _char.manyChars1;
 
     const choice    = _combinators.choice;
     const option    = _combinators.option;
     const between   = _combinators.between;
+    const many1     = _combinators.many1;
     const skipMany1 = _combinators.skipMany1;
     const sepBy     = _combinators.sepBy;
     const sepBy1    = _combinators.sepBy1;
@@ -305,6 +308,27 @@ module.exports = (_core, _prim, _char, _combinators) => {
         "literal character"
     );
 
+    const stringLetter = satisfy(c => c !== "\"" && c !== "\\" && c > "\u001a");
+    const escapeGap = then(
+        many1(space),
+        label(char("\\"), "end of string gap")
+    );
+    const escapeEmpty = char("&");
+    const stringEscape = then(
+        char("\\"),
+        mplus(
+            then(escapeGap, pure("")),
+            mplus(
+                then(escapeEmpty), pure(""),
+                escapeCode
+            )
+        )
+    );
+    const stringChar = label(
+        mplus(stringLetter, stringEscape),
+        "string character"
+    );
+
     /**
      * @function module:token.makeTokenParser
      * @static
@@ -401,6 +425,16 @@ module.exports = (_core, _prim, _char, _combinators) => {
             ),
             "character"
         );
+        const stringLiteral = lexeme(
+            label(
+                between(
+                    char("\""),
+                    label(char("\""), "end of string"),
+                    manyChars(stringChar)
+                )
+            ),
+            "literal string"
+        );
 
         return {
             whiteSpace,
@@ -425,7 +459,8 @@ module.exports = (_core, _prim, _char, _combinators) => {
             integer,
             float,
             naturalOrFloat,
-            charLiteral
+            charLiteral,
+            stringLiteral
         };
     }
 
