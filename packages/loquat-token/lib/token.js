@@ -53,77 +53,65 @@ module.exports = (_core, _prim, _char, _combinators) => {
     const spaceChars  = new Set(" \f\n\r\t\v");
     const simpleSpace = skipMany1(satisfy(char => spaceChars.has(char)));
 
-    function makeWhiteSpaceParser(commentStart, commentEnd, commentLine, nestedComments) {
-        const noOneLineComment = commentLine === "" || commentLine === undefined;
-        const noMultiLineComment = commentStart === ""
-            || commentStart === undefined || commentEnd === undefined;
-        const oneLineComment = noOneLineComment
-            ? undefined
-            : then(
-                tryParse(string(commentLine)),
+    function oneLineComment(commentLine) {
+        return then(
+            tryParse(string(commentLine)),
+            then(
+                skipMany(satisfy(char => char !== "\n")),
+                pure(undefined)
+            )
+        );
+    }
+
+    function multiLineComment(commentStart, commentEnd, nestedComments) {
+        const commentStartEnd = commentStart + commentEnd;
+        const inCommentMulti = lazy(() => label(
+            mplus(
                 then(
-                    skipMany(satisfy(char => char !== "\n")),
+                    tryParse(string(commentEnd)),
                     pure(undefined)
+                ),
+                mplus(
+                    then(comment, inCommentMulti),
+                    mplus(
+                        then(
+                            skipMany1(noneOf(commentStartEnd)),
+                            inCommentMulti
+                        ),
+                        then(
+                            oneOf(commentStartEnd),
+                            inCommentMulti
+                        )
+                    )
                 )
-            );
-        const multiLineComment = noMultiLineComment
-            ? undefined
-            : (() => {
-                const commentStartEnd = commentStart + commentEnd;
-                const inCommentMulti = lazy(() => label(
-                    mplus(
-                        then(
-                            tryParse(string(commentEnd)),
-                            pure(undefined)
-                        ),
-                        mplus(
-                            then(multiLineComment, inCommentMulti),
-                            mplus(
-                                then(
-                                    skipMany1(noneOf(commentStartEnd)),
-                                    inCommentMulti
-                                ),
-                                then(
-                                    oneOf(commentStartEnd),
-                                    inCommentMulti
-                                )
-                            )
-                        )
-                    ),
-                    "end of comment"
-                ));
-                const inCommentSingle = lazy(() => label(
-                    mplus(
-                        then(
-                            tryParse(string(commentEnd)),
-                            pure(undefined)
-                        ),
-                        mplus(
-                            then(
-                                skipMany1(noneOf(commentStartEnd)),
-                                inCommentSingle
-                            ),
-                            then(
-                                oneOf(commentStartEnd),
-                                inCommentSingle
-                            )
-                        )
-                    ),
-                    "end of comment"
-                ));
-                const inComment = nestedComments ? inCommentMulti : inCommentSingle;
-                return then(
-                    tryParse(string(commentStart)),
-                    inComment
-                );
-            })();
-        return skipMany(label(
-              noOneLineComment && noMultiLineComment ? simpleSpace
-            : noOneLineComment                       ? mplus(simpleSpace, multiLineComment)
-            : noMultiLineComment                     ? mplus(simpleSpace, oneLineComment)
-            : mplus(simpleSpace, mplus(oneLineComment, multiLineComment)),
-            ""
+            ),
+            "end of comment"
         ));
+        const inCommentSingle = lazy(() => label(
+            mplus(
+                then(
+                    tryParse(string(commentEnd)),
+                    pure(undefined)
+                ),
+                mplus(
+                    then(
+                        skipMany1(noneOf(commentStartEnd)),
+                        inCommentSingle
+                    ),
+                    then(
+                        oneOf(commentStartEnd),
+                        inCommentSingle
+                    )
+                )
+            ),
+            "end of comment"
+        ));
+        const inComment = nestedComments ? inCommentMulti : inCommentSingle;
+        const comment = then(
+            tryParse(string(commentStart)),
+            inComment
+        );
+        return comment;
     }
 
     /*
@@ -339,12 +327,28 @@ module.exports = (_core, _prim, _char, _combinators) => {
         /*
          * white space
          */
-        const whiteSpace = makeWhiteSpaceParser(
-            def.commentStart,
-            def.commentEnd,
-            def.commentLine,
-            def.nestedComments
-        );
+        const noOneLineComment = def.commentLine === "" || def.commentLine === undefined;
+        const noMultiLineComment = def.commentStart === ""
+            || def.commentStart === undefined || def.commentEnd === undefined;
+        const whiteSpace = skipMany(label(
+              noOneLineComment && noMultiLineComment ? simpleSpace
+            : noOneLineComment ? mplus(
+                simpleSpace,
+                multiLineComment(def.commentStart, def.commentEnd, def.nestedComments)
+            )
+            : noMultiLineComment ? mplus(
+                simpleSpace,
+                oneLineComment(def.commentLine)
+            )
+            : mplus(
+                simpleSpace,
+                mplus(
+                    oneLineComment(def.commentLine),
+                    multiLineComment(def.commentStart, def.commentEnd, def.nestedComments)
+                )
+            ),
+            ""
+        ));
 
         function lexeme(parser) {
             return bind(parser, x => then(whiteSpace, pure(x)));
