@@ -357,26 +357,30 @@ module.exports = (_core, _prim, _char, _combinators) => {
         /*
          * symbols
          */
-        const parens = (() => {
-            const lparen = symbol("(");
-            const rparen = symbol(")");
-            return parser => between(lparen, rparen, parser);
-        })();
-        const braces = (() => {
-            const lbrace = symbol("{");
-            const rbrace = symbol("}");
-            return parser => between(lbrace, rbrace, parser);
-        })();
-        const angles = (() => {
-            const langle = symbol("<");
-            const rangle = symbol(">");
-            return parser => between(langle, rangle, parser);
-        })();
-        const brackets = (() => {
-            const lbracket = symbol("[");
-            const rbracket = symbol("]");
-            return parser => between(lbracket, rbracket, parser);
-        })();
+        const lparen   = symbol("(");
+        const rparen   = symbol(")");
+        const lbrace   = symbol("{");
+        const rbrace   = symbol("}");
+        const langle   = symbol("<");
+        const rangle   = symbol(">");
+        const lbracket = symbol("[");
+        const rbracket = symbol("]");
+
+        function parens(parser) {
+            return between(lparen, rparen, parser);
+        }
+
+        function braces(parser) {
+            return between(lbrace, rbrace, parser);
+        }
+
+        function angles(parser) {
+            return between(langle, rangle, parser);
+        }
+
+        function brackets(parser) {
+            return between(lbracket, rbracket, parser);
+        }
 
         const semi  = symbol(";");
         const comma = symbol(",");
@@ -402,14 +406,15 @@ module.exports = (_core, _prim, _char, _combinators) => {
         /*
          * number literals
          */
-        const natural = label(lexeme(nat), "natural");
         const int = bind(lexeme(sign), f =>
             bind(nat, n =>
                 pure(f(n))
             )
         );
-        const integer = label(lexeme(int), "integer");
-        const float = label(lexeme(floating), "float");
+
+        const natural        = label(lexeme(nat), "natural");
+        const integer        = label(lexeme(int), "integer");
+        const float          = label(lexeme(floating), "float");
         const naturalOrFloat = label(lexeme(natFloat), "number");
 
         /*
