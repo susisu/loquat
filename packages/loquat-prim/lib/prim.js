@@ -148,13 +148,15 @@ module.exports = _core => {
             if (resA.success) {
                 const parserB = func(resA.val);
                 const resB = parserB.run(resA.state);
-                return new Result(
-                    resA.consumed || resB.consumed,
-                    resB.success,
-                    resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err),
-                    resB.val,
-                    resB.state
-                );
+                return resB.consumed
+                    ? resB
+                    : new Result(
+                        resA.consumed || resB.consumed,
+                        resB.success,
+                        ParseError.merge(resA.err, resB.err),
+                        resB.val,
+                        resB.state
+                    );
             }
             else {
                 return resA;
@@ -228,7 +230,7 @@ module.exports = _core => {
                 }
                 else {
                     if (res.consumed) {
-                        return Result.cerr(res.err);
+                        return res;
                     }
                     else {
                         return consumed
@@ -269,13 +271,15 @@ module.exports = _core => {
             const resA = parserA.run(state);
             if (!resA.consumed && !resA.success) {
                 const resB = parserB.run(state);
-                return new Result(
-                    resB.consumed,
-                    resB.success,
-                    resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err),
-                    resB.val,
-                    resB.state
-                );
+                return resB.consumed
+                    ? resB
+                    : new Result(
+                        resB.consumed,
+                        resB.success,
+                        ParseError.merge(resA.err, resB.err),
+                        resB.val,
+                        resB.state
+                    );
             }
             else {
                 return resA;
