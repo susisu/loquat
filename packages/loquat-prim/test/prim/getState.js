@@ -18,7 +18,7 @@ const assertParser = _core.assertParser;
 const getState = _prim.getState;
 
 describe(".getState", () => {
-    it("should get current state of parser", () => {
+    it("should get the current user state of parser", () => {
         assertParser(getState);
         let initState = new State(
             new Config({ tabWidth: 8 }),
@@ -31,7 +31,7 @@ describe(".getState", () => {
             res,
             Result.esuc(
                 ParseError.unknown(new SourcePos("foobar", 1, 1)),
-                initState,
+                initState.userState,
                 initState
             )
         )).to.be.true;

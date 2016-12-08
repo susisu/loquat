@@ -1,5 +1,5 @@
 /*
- * loquat-prim test / prim.setUserState()
+ * loquat-prim test / prim.getParserState
  * copyright (c) 2016 Susisu
  */
 
@@ -15,30 +15,24 @@ const State        = _core.State;
 const Result       = _core.Result;
 const assertParser = _core.assertParser;
 
-const setUserState = _prim.setUserState;
+const getParserState = _prim.getParserState;
 
-describe(".setUserState(userState)", () => {
-    it("should return a parser that sets parser user state to `userState' and empty succeeds", () => {
+describe(".getParserState", () => {
+    it("should get current state of parser", () => {
+        assertParser(getParserState);
         let initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let parser = setUserState("some");
-        assertParser(parser);
-        let res = parser.run(initState);
+        let res = getParserState.run(initState);
         expect(Result.equal(
             res,
             Result.esuc(
                 ParseError.unknown(new SourcePos("foobar", 1, 1)),
-                undefined,
-                new State(
-                    new Config({ tabWidth: 8 }),
-                    "input",
-                    new SourcePos("foobar", 1, 1),
-                    "some"
-                )
+                initState,
+                initState
             )
         )).to.be.true;
     });

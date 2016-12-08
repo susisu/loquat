@@ -36,17 +36,17 @@ module.exports = _core => {
             tokens,
             token,
             tokenPrim,
-            getState,
-            setState,
-            updateState,
+            getParserState,
+            setParserState,
+            updateParserState,
             getConfig,
             setConfig,
             getInput,
             setInput,
             getPosition,
             setPosition,
-            getUserState,
-            setUserState
+            getState,
+            setState
         });
     }
 
@@ -580,29 +580,29 @@ module.exports = _core => {
     }
 
     /**
-     * @constant module:prim.getState
+     * @constant module:prim.getParserState
      * @static
      * @type {AbstractParser}
      */
-    const getState = new Parser(state => Result.esuc(ParseError.unknown(state.pos), state, state));
+    const getParserState = new Parser(state => Result.esuc(ParseError.unknown(state.pos), state, state));
 
     /**
-     * @function module:prim.setState
+     * @function module:prim.setParserState
      * @static
      * @param {State} state
      * @returns {AbstractParser}
      */
-    function setState(state) {
-        return updateState(() => state);
+    function setParserState(state) {
+        return updateParserState(() => state);
     }
 
     /**
-     * @function module:prim.updateState
+     * @function module:prim.updateParserState
      * @static
      * @param {function} func
      * @returns {AbstractParser}
      */
-    function updateState(func) {
+    function updateParserState(func) {
         return new Parser(state => {
             const newState = func(state);
             return Result.esuc(ParseError.unknown(newState.pos), newState, newState);
@@ -614,7 +614,7 @@ module.exports = _core => {
      * @static
      * @type {AbstractParser}
      */
-    const getConfig = bind(getState, state => pure(state.config));
+    const getConfig = bind(getParserState, state => pure(state.config));
 
     /**
      * @function module:prim.setConfig
@@ -624,7 +624,7 @@ module.exports = _core => {
      */
     function setConfig(config) {
         return then(
-            updateState(state => state.setConfig(config)),
+            updateParserState(state => state.setConfig(config)),
             pure(undefined)
         );
     }
@@ -634,7 +634,7 @@ module.exports = _core => {
      * @static
      * @type {AbstractParser}
      */
-    const getInput = bind(getState, state => pure(state.input));
+    const getInput = bind(getParserState, state => pure(state.input));
 
     /**
      * @function module:prim.setInput
@@ -644,7 +644,7 @@ module.exports = _core => {
      */
     function setInput(input) {
         return then(
-            updateState(state => state.setInput(input)),
+            updateParserState(state => state.setInput(input)),
             pure(undefined)
         );
     }
@@ -654,7 +654,7 @@ module.exports = _core => {
      * @static
      * @type {AbstractParser}
      */
-    const getPosition = bind(getState, state => pure(state.pos));
+    const getPosition = bind(getParserState, state => pure(state.pos));
 
     /**
      * @function module:prim.setPosition
@@ -664,27 +664,27 @@ module.exports = _core => {
      */
     function setPosition(pos) {
         return then(
-            updateState(state => state.setPosition(pos)),
+            updateParserState(state => state.setPosition(pos)),
             pure(undefined)
         );
     }
 
     /**
-     * @constant module:prim.getUserState
+     * @constant module:prim.getState
      * @static
      * @type {AbstractParser}
      */
-    const getUserState = bind(getState, state => pure(state.userState));
+    const getState = bind(getParserState, state => pure(state.userState));
 
     /**
-     * @function module:prim.setUserState
+     * @function module:prim.setState
      * @static
      * @param {*} userState
      * @returns {AbstractParser}
      */
-    function setUserState(userState) {
+    function setState(userState) {
         return then(
-            updateState(state => state.setUserState(userState)),
+            updateParserState(state => state.setUserState(userState)),
             pure(undefined)
         );
     }
