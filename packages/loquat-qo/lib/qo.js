@@ -42,11 +42,15 @@ module.exports = _core => {
             catch (err) {
                 if (isParser(err)) {
                     const errRes = err.run(currentState);
-                    if (errRes.consumed) {
-                        return Result.cerr(errRes.err);
+                    if (errRes.success) {
+                        return errRes.consumed
+                            ? Result.cerr(errRes.err)
+                            : Result.eerr(ParseError.merge(currentErr, errRes.err));
                     }
                     else {
-                        return Result.eerr(ParseError.merge(currentErr, errRes.err));
+                        return errRes.consumed
+                            ? errRes
+                            : Result.eerr(ParseError.merge(currentErr, errRes.err));
                     }
                 }
                 else {
@@ -69,7 +73,7 @@ module.exports = _core => {
                 }
                 else {
                     if (res.consumed) {
-                        return Result.cerr(res.err);
+                        return res;
                     }
                     else {
                         return consumed
@@ -84,11 +88,15 @@ module.exports = _core => {
                 catch (err) {
                     if (isParser(err)) {
                         const errRes = err.run(currentState);
-                        if (errRes.consumed) {
-                            return Result.cerr(errRes.err);
+                        if (errRes.success) {
+                            return errRes.consumed
+                                ? Result.cerr(errRes.err)
+                                : Result.eerr(ParseError.merge(currentErr, errRes.err));
                         }
                         else {
-                            return Result.eerr(ParseError.merge(currentErr, errRes.err));
+                            return errRes.consumed
+                                ? errRes
+                                : Result.eerr(ParseError.merge(currentErr, errRes.err));
                         }
                     }
                     else {
