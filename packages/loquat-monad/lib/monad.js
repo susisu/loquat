@@ -246,7 +246,7 @@ module.exports = (_core, _prim) => {
                 }
                 else {
                     if (res.consumed) {
-                        return Result.cerr(res.err);
+                        return res;
                     }
                     else {
                         return consumed
@@ -350,7 +350,7 @@ module.exports = (_core, _prim) => {
                 }
                 else {
                     if (res.consumed) {
-                        return Result.cerr(res.err);
+                        return res;
                     }
                     else {
                         return consumed
@@ -439,7 +439,7 @@ module.exports = (_core, _prim) => {
                 }
                 else {
                     if (res.consumed) {
-                        return Result.cerr(res.err);
+                        return res;
                     }
                     else {
                         return consumed
