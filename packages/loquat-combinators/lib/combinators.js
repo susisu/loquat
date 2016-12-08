@@ -202,7 +202,7 @@ module.exports = (_core, _prim) => {
                 }
                 else {
                     if (res.consumed) {
-                        return Result.cerr(res.err);
+                        return res;
                     }
                     else {
                         return consumed
@@ -224,7 +224,7 @@ module.exports = (_core, _prim) => {
                 }
                 else {
                     if (sepRes.consumed) {
-                        return Result.cerr(sepRes.err);
+                        return sepRes;
                     }
                     else {
                         return consumed
@@ -320,7 +320,7 @@ module.exports = (_core, _prim) => {
                     }
                     else {
                         if (res.consumed) {
-                            return Result.cerr(res.err);
+                            return res;
                         }
                         else {
                             return consumed
@@ -381,7 +381,7 @@ module.exports = (_core, _prim) => {
             }
             else {
                 return headRes.consumed
-                    ? Result.cerr(headRes.err)
+                    ? headRes
                     : Result.eerr(ParseError.merge(currentErr, headRes.err));
             }
 
@@ -405,7 +405,7 @@ module.exports = (_core, _prim) => {
                 }
                 else {
                     if (opRes.consumed) {
-                        return Result.cerr(opRes.err);
+                        return opRes;
                     }
                     else {
                         return consumed
@@ -430,7 +430,7 @@ module.exports = (_core, _prim) => {
                 }
                 else {
                     if (termRes.consumed) {
-                        return Result.cerr(termRes.err);
+                        return termRes;
                     }
                     else {
                         if (opRes.consumed) {
@@ -492,7 +492,7 @@ module.exports = (_core, _prim) => {
             }
             else {
                 return headRes.consumed
-                    ? Result.cerr(headRes.err)
+                    ? headRes
                     : Result.eerr(ParseError.merge(currentErr, headRes.err));
             }
 
@@ -517,7 +517,7 @@ module.exports = (_core, _prim) => {
                 }
                 else {
                     if (opRes.consumed) {
-                        return Result.cerr(opRes.err);
+                        return opRes;
                     }
                     else {
                         if (accum.length > 0) {
@@ -549,7 +549,7 @@ module.exports = (_core, _prim) => {
                 }
                 else {
                     if (termRes.consumed) {
-                        return Result.cerr(termRes.err);
+                        return termRes;
                     }
                     else {
                         if (opRes.consumed) {
@@ -647,7 +647,7 @@ module.exports = (_core, _prim) => {
                 }
                 else {
                     if (endRes.consumed) {
-                        return Result.cerr(endRes.err);
+                        return endRes;
                     }
                     else {
                         currentErr = ParseError.merge(currentErr, endRes.err);
@@ -670,7 +670,7 @@ module.exports = (_core, _prim) => {
                 }
                 else {
                     if (res.consumed) {
-                        return Result.cerr(res.err);
+                        return res;
                     }
                     else {
                         return consumed
@@ -709,7 +709,7 @@ module.exports = (_core, _prim) => {
                 }
                 else {
                     if (endRes.consumed) {
-                        return Result.cerr(endRes.err);
+                        return endRes;
                     }
                     else {
                         currentErr = ParseError.merge(currentErr, endRes.err);
@@ -732,7 +732,7 @@ module.exports = (_core, _prim) => {
                 }
                 else {
                     if (res.consumed) {
-                        return Result.cerr(res.err);
+                        return res;
                     }
                     else {
                         return consumed
