@@ -324,6 +324,8 @@ module.exports = (_core, _prim, _char, _combinators) => {
      * @returns {Object}
      */
     function makeTokenParser(def) {
+        const tp = {};
+
         /*
          * white space
          */
@@ -357,6 +359,10 @@ module.exports = (_core, _prim, _char, _combinators) => {
         function symbol(name) {
             return lexeme(string(name));
         }
+
+        tp.whiteSpace = whiteSpace;
+        tp.lexeme     = lexeme;
+        tp.symbol     = symbol;
 
         /*
          * symbols
@@ -407,6 +413,19 @@ module.exports = (_core, _prim, _char, _combinators) => {
             return sepBy1(parser, comma);
         }
 
+        tp.parens    = parens;
+        tp.braces    = braces;
+        tp.angles    = angles;
+        tp.brackets  = brackets;
+        tp.semi      = semi;
+        tp.comma     = comma;
+        tp.colon     = colon;
+        tp.dot       = dot;
+        tp.semiSep   = semiSep;
+        tp.semiSep1  = semiSep1;
+        tp.commaSep  = commaSep;
+        tp.commaSep1 = commaSep1;
+
         /*
          * number literals
          */
@@ -420,6 +439,14 @@ module.exports = (_core, _prim, _char, _combinators) => {
         const integer        = label(lexeme(int), "integer");
         const float          = label(lexeme(floating), "float");
         const naturalOrFloat = label(lexeme(natFloat), "number");
+
+        tp.decimal        = decimal;
+        tp.hexadecimal    = hexadecimal;
+        tp.octal          = octal;
+        tp.natural        = natural;
+        tp.integer        = integer;
+        tp.float          = float;
+        tp.naturalOrFloat = naturalOrFloat;
 
         /*
          * character / string literals
@@ -445,32 +472,10 @@ module.exports = (_core, _prim, _char, _combinators) => {
             "literal string"
         );
 
-        return {
-            whiteSpace,
-            lexeme,
-            symbol,
-            parens,
-            braces,
-            angles,
-            brackets,
-            semi,
-            comma,
-            colon,
-            dot,
-            semiSep,
-            semiSep1,
-            commaSep,
-            commaSep1,
-            decimal,
-            hexadecimal,
-            octal,
-            natural,
-            integer,
-            float,
-            naturalOrFloat,
-            charLiteral,
-            stringLiteral
-        };
+        tp.charLiteral   = charLiteral;
+        tp.stringLiteral = stringLiteral;
+
+        return tp;
     }
 
     return end();
