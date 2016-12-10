@@ -328,7 +328,7 @@ module.exports = (_core, _prim, _char, _combinators) => {
          * white space
          */
         const noOneLineComment = def.commentLine === "" || def.commentLine === undefined;
-        const noMultiLineComment = def.commentStart === ""
+        const noMultiLineComment = def.commentStart === "" || def.commentEnd === ""
             || def.commentStart === undefined || def.commentEnd === undefined;
         const whiteSpace = skipMany(label(
               noOneLineComment && noMultiLineComment ? simpleSpace
