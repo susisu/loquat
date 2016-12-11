@@ -16,15 +16,18 @@ module.exports = (_core, _prim, _char, _combinators) => {
         });
     }
 
-    const lazy = _core.lazy;
+    const show     = _core.show;
+    const lazy     = _core.lazy;
+    const isParser = _core.isParser;
 
-    const pure     = _prim.pure;
-    const bind     = _prim.bind;
-    const then     = _prim.then;
-    const mplus    = _prim.mplus;
-    const label    = _prim.label;
-    const tryParse = _prim.tryParse;
-    const skipMany = _prim.skipMany;
+    const pure       = _prim.pure;
+    const bind       = _prim.bind;
+    const then       = _prim.then;
+    const mplus      = _prim.mplus;
+    const label      = _prim.label;
+    const unexpected = _prim.unexpected;
+    const tryParse   = _prim.tryParse;
+    const skipMany   = _prim.skipMany;
 
     const string     = _char.string;
     const satisfy    = _char.satisfy;
@@ -39,13 +42,14 @@ module.exports = (_core, _prim, _char, _combinators) => {
     const manyChars  = _char.manyChars;
     const manyChars1 = _char.manyChars1;
 
-    const choice    = _combinators.choice;
-    const option    = _combinators.option;
-    const between   = _combinators.between;
-    const many1     = _combinators.many1;
-    const skipMany1 = _combinators.skipMany1;
-    const sepBy     = _combinators.sepBy;
-    const sepBy1    = _combinators.sepBy1;
+    const choice        = _combinators.choice;
+    const option        = _combinators.option;
+    const between       = _combinators.between;
+    const many1         = _combinators.many1;
+    const skipMany1     = _combinators.skipMany1;
+    const sepBy         = _combinators.sepBy;
+    const sepBy1        = _combinators.sepBy1;
+    const notFollowedBy = _combinators.notFollowedBy;
 
     /*
      * white space
@@ -474,6 +478,52 @@ module.exports = (_core, _prim, _char, _combinators) => {
 
         tp.charLiteral   = charLiteral;
         tp.stringLiteral = stringLiteral;
+
+        /*
+         * operator
+         */
+        if (isParser(def.opStart) && isParser(def.opLetter)) {
+            const opStart  = def.opStart;
+            const opLetter = def.opLetter;
+
+            const reservedOps   = def.reservedOps === undefined ? [] : def.reservedOps;
+            const reservedOpSet = new Set(reservedOps);
+            const isReservedOp  = name => reservedOpSet.has(name);
+
+            const oper = label(
+                bind(opStart, c =>
+                    bind(manyChars(opLetter), cs =>
+                        pure(c + cs)
+                    )
+                ),
+                "operator"
+            );
+            const operator = lexeme(
+                tryParse(
+                    bind(oper, name =>
+                        isReservedOp(name)
+                        ? unexpected("reserved operator " + show(name))
+                        : pure(name)
+                    )
+                )
+            );
+
+            const reservedOp = name =>
+                lexeme(
+                    tryParse(
+                        then(
+                            string(name),
+                            label(
+                                notFollowedBy(opLetter),
+                                "end of " + show(name)
+                            )
+                        )
+                    )
+                );
+
+            tp.operator   = operator;
+            tp.reservedOp = reservedOp;
+        }
 
         return tp;
     }
