@@ -17,17 +17,20 @@ module.exports = (_core, _prim, _char, _combinators) => {
     }
 
     const show     = _core.show;
+    const uncons   = _core.uncons;
     const lazy     = _core.lazy;
     const isParser = _core.isParser;
 
     const pure       = _prim.pure;
     const bind       = _prim.bind;
     const then       = _prim.then;
+    const ftailRecM  = _prim.ftailRecM;
     const mplus      = _prim.mplus;
     const label      = _prim.label;
     const unexpected = _prim.unexpected;
     const tryParse   = _prim.tryParse;
     const skipMany   = _prim.skipMany;
+    const getConfig  = _prim.getConfig;
 
     const string     = _char.string;
     const satisfy    = _char.satisfy;
@@ -321,6 +324,40 @@ module.exports = (_core, _prim, _char, _combinators) => {
         "string character"
     );
 
+    /*
+     * identifier
+     */
+    const alpha = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+    function caseChar(c) {
+        return alpha.has(c)
+            ? mplus(
+                char(c.toLowerCase()),
+                char(c.toUpperCase())
+            )
+            : char(c);
+    }
+
+    function caseString(caseSensitive, str) {
+        if (caseSensitive) {
+            return string(str);
+        }
+        const msg = show(str);
+        return bind(getConfig, config => {
+            const unicode = config.unicode;
+            const walk = ftailRecM(str => {
+                const unconsed = uncons(str, unicode);
+                return unconsed.empty
+                    ? pure(undefined).map(x => ({ done: true, value: x }))
+                    : label(
+                        caseChar(unconsed.head),
+                        msg
+                    ).map(() => ({ done: false, value: unconsed.tail }));
+            });
+            return then(walk(str), pure(str));
+        });
+    }
+
     /**
      * @function module:token.makeTokenParser
      * @static
@@ -478,6 +515,55 @@ module.exports = (_core, _prim, _char, _combinators) => {
 
         tp.charLiteral   = charLiteral;
         tp.stringLiteral = stringLiteral;
+
+        /*
+         * identifier
+         */
+        if (isParser(def.idStart) && isParser(def.idLetter)) {
+            const idStart  = def.idStart;
+            const idLetter = def.idLetter;
+
+            const caseSensitive = def.caseSensitive;
+
+            const reservedIds   = def.reservedIds === undefined ? [] : def.reservedIds;
+            const alphaToLower  = name => name.replace(/([A-Z])/g, c => c.toLowerCase());
+            const reservedIdSet = new Set(caseSensitive ? reservedIds : reservedIds.map(alphaToLower));
+            const isReservedId  = name => reservedIdSet.has(caseSensitive ? name : alphaToLower(name));
+
+            const ident = label(
+                bind(idStart, c =>
+                    bind(manyChars(idLetter), cs =>
+                        pure(c + cs)
+                    )
+                ),
+                "identifier"
+            );
+            const identifier = lexeme(
+                tryParse(
+                    bind(ident, name =>
+                        isReservedId(name)
+                        ? unexpected("reserved word " + show(name))
+                        : pure(name)
+                    )
+                )
+            );
+
+            const reserved = name =>
+                lexeme(
+                    tryParse(
+                        then(
+                            caseString(name),
+                            label(
+                                notFollowedBy(idLetter),
+                                "end of " + show(name)
+                            )
+                        )
+                    )
+                );
+
+            tp.identifier = identifier;
+            tp.reserved   = reserved;
+        }
 
         /*
          * operator
