@@ -16,10 +16,10 @@ module.exports = (_core, _prim, _char, _combinators) => {
         });
     }
 
-    const show     = _core.show;
-    const uncons   = _core.uncons;
-    const lazy     = _core.lazy;
-    const isParser = _core.isParser;
+    const show         = _core.show;
+    const unconsString = _core.unconsString;
+    const lazy         = _core.lazy;
+    const isParser     = _core.isParser;
 
     const pure       = _prim.pure;
     const bind       = _prim.bind;
@@ -350,7 +350,7 @@ module.exports = (_core, _prim, _char, _combinators) => {
         return bind(getConfig, config => {
             const unicode = config.unicode;
             const walk = ftailRecM(str => {
-                const unconsed = uncons(str, unicode);
+                const unconsed = unconsString(str, unicode);
                 return unconsed.empty
                     ? pure(undefined).map(x => ({ done: true, value: x }))
                     : label(
