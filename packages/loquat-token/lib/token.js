@@ -329,6 +329,10 @@ module.exports = (_core, _prim, _char, _combinators) => {
      */
     const alpha = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
+    function alphaToLower(name) {
+        return name.replace(/([A-Z])/g, c => c.toLowerCase());
+    }
+
     function caseChar(c) {
         return alpha.has(c)
             ? mplus(
@@ -526,7 +530,6 @@ module.exports = (_core, _prim, _char, _combinators) => {
             const caseSensitive = def.caseSensitive;
 
             const reservedIds   = def.reservedIds === undefined ? [] : def.reservedIds;
-            const alphaToLower  = name => name.replace(/([A-Z])/g, c => c.toLowerCase());
             const reservedIdSet = new Set(caseSensitive ? reservedIds : reservedIds.map(alphaToLower));
             const isReservedId  = name => reservedIdSet.has(caseSensitive ? name : alphaToLower(name));
 
