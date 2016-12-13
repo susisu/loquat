@@ -13,7 +13,8 @@ module.exports = () => {
     const _parser = require("./lib/parser.js")(_pos, _error);
 
     return Object.freeze({
-        show: _utils.show,
+        show        : _utils.show,
+        unconsString: _utils.unconsString,
 
         SourcePos: _pos.SourcePos,
 
