@@ -13,6 +13,7 @@ module.exports = () => {
     function end() {
         return Object.freeze({
             show,
+            unconsString,
             _internal: {
                 escapeChar
             }
@@ -72,6 +73,42 @@ module.exports = () => {
         }
         else {
             return String(value);
+        }
+    }
+
+    /**
+     * @function module:utils.unconsString
+     * @description Reads string.
+     * This is a specialized version of {@module:stream.uncons} for string.
+     * A result object contains the following properties.
+     * <table>
+     * <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+     * <tr><td>`empty`</td><td>boolean</td><td>Indicates the string is empty or not.
+     * If not empty, the object have `head` and `tail` properties.</td></tr>
+     * <tr><td>`head`</td><td></td><td>The head of the string.</td></tr>
+     * <tr><td>`tail`</td><td>string</td>
+     * <td>The tail (rest) of the string.</td></tr>
+     * </table>
+     * @static
+     * @param {string} str A string.
+     * @param {boolean} unicode If `true` specified characters are unconsed in code point unit.
+     * @returns {Object} An object that have properties describes above.
+     */
+    function unconsString(str, unicode) {
+        if (unicode) {
+            const cp = str.codePointAt(0);
+            if (cp === undefined) {
+                return { empty: true };
+            }
+            else {
+                const char = String.fromCodePoint(cp);
+                return { empty: false, head: char, tail: str.substr(char.length) };
+            }
+        }
+        else {
+            return str === ""
+                ? { empty: true }
+                : { empty: false, head: str[0], tail: str.substr(1) };
         }
     }
 

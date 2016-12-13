@@ -9,13 +9,15 @@
 
 "use strict";
 
-module.exports = () => {
+module.exports = _utils => {
     function end() {
         return Object.freeze({
             uncons,
             ArrayStream
         });
     }
+
+    const unconsString = _utils.unconsString;
 
     /**
      * @interface IStream
@@ -40,8 +42,8 @@ module.exports = () => {
 
     /**
      * @function module:stream.uncons
-     * @description Reads the input.
-     * A returned object has the following properties.
+     * @description Reads input.
+     * A result object should contain the following properties.
      * <table>
      * <tr><th>Property</th><th>Type</th><th>Description</th></tr>
      * <tr><td>`empty`</td><td>boolean</td><td>Indicates the input is empty or not.
@@ -62,21 +64,7 @@ module.exports = () => {
      */
     function uncons(input, unicode) {
         if (typeof input === "string") {
-            if (unicode) {
-                const cp = input.codePointAt(0);
-                if (cp === undefined) {
-                    return { empty: true };
-                }
-                else {
-                    const char = String.fromCodePoint(cp);
-                    return { empty: false, head: char, tail: input.substr(char.length) };
-                }
-            }
-            else {
-                return input === ""
-                    ? { empty: true }
-                    : { empty: false, head: input[0], tail: input.substr(1) };
-            }
+            return unconsString(input, unicode);
         }
         else if (Array.isArray(input)) {
             return input.length === 0
