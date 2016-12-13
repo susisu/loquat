@@ -33,7 +33,7 @@
     "eslint": "^3.10.0",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.4.0",
-    "loquat-core": "^2.0.0-0",
+    "loquat-core": "git+https://github.com/susisu/loquat-core.git",
     "mocha": "^3.1.0"
   },
   "dependencies": {
@@ -42,6 +42,6 @@
     "loquat-prim": "^2.0.0-2"
   },
   "peerDependencies": {
-    "loquat-core": "^2.0.0-0"
+    "loquat-core": "git+https://github.com/susisu/loquat-core.git"
   }
 }
