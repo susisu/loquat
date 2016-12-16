@@ -1,6 +1,6 @@
 {
   "name": "loquat",
-  "version": "2.0.0-2",
+  "version": "2.0.0-3",
   "description": "Monadic parser combinator",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,10 @@
     "url": "git+https://github.com/susisu/loquat2.git"
   },
   "keywords": [
-    "parsing"
+    "parsing",
+    "monadic",
+    "parser",
+    "combinator"
   ],
   "author": "Susisu <susisu2413@yahoo.co.jp> (https://github.com/susisu)",
   "license": "MIT",
@@ -20,12 +23,12 @@
   },
   "homepage": "https://github.com/susisu/loquat2#readme",
   "dependencies": {
-    "loquat-char": "2.0.0-1",
-    "loquat-combinators": "2.0.0-0",
-    "loquat-core": "2.0.0-0",
+    "loquat-char": "2.0.0-2",
+    "loquat-combinators": "2.0.0-1",
+    "loquat-core": "2.0.0-1",
     "loquat-expr": "2.0.0-0",
-    "loquat-monad": "2.0.0-1",
-    "loquat-prim": "2.0.0-2",
-    "loquat-qo": "2.0.0-0"
+    "loquat-monad": "2.0.0-2",
+    "loquat-prim": "2.0.0-3",
+    "loquat-qo": "2.0.0-1"
   }
 }
