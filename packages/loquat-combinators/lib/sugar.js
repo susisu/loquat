@@ -15,20 +15,34 @@ module.exports = (_core, _prim, _combinators) => {
     const left     = _prim.left;
     const tryParse = _prim.tryParse;
 
-    const between       = _combinators.between;
-    const many1         = _combinators.many1;
-    const skipMany1     = _combinators.skipMany1;
-    const sepBy         = _combinators.sepBy;
-    const sepBy1        = _combinators.sepBy1;
-    const sepEndBy      = _combinators.sepEndBy;
-    const sepEndBy1     = _combinators.sepEndBy1;
-    const endBy         = _combinators.endBy;
-    const endBy1        = _combinators.endBy1;
-    const count         = _combinators.count;
-    const notFollowedBy = _combinators.notFollowedBy;
-    const manyTill      = _combinators.manyTill;
+    const option         = _combinators.option;
+    const optionMaybe    = _combinators.optionMaybe;
+    const optional       = _combinators.optional;
+    const between        = _combinators.between;
+    const many1          = _combinators.many1;
+    const skipMany1      = _combinators.skipMany1;
+    const sepBy          = _combinators.sepBy;
+    const sepBy1         = _combinators.sepBy1;
+    const sepEndBy       = _combinators.sepEndBy;
+    const sepEndBy1      = _combinators.sepEndBy1;
+    const endBy          = _combinators.endBy;
+    const endBy1         = _combinators.endBy1;
+    const count          = _combinators.count;
+    const notFollowedBy  = _combinators.notFollowedBy;
+    const reduceManyTill = _combinators.reduceManyTill;
+    const manyTill       = _combinators.manyTill;
+    const skipManyTill   = _combinators.skipManyTill;
 
     return Object.freeze({
+        option: function (val) {
+            return option(this, val);
+        },
+        optionMaybe: function () {
+            return optionMaybe(this);
+        },
+        optional: function () {
+            return optional(this);
+        },
         between: function (open, close) {
             return between(open, close, this);
         },
@@ -66,8 +80,14 @@ module.exports = (_core, _prim, _combinators) => {
                 ? tryParse(left(this, notFollowedBy(parser)))
                 : notFollowedBy(this);
         },
+        reduceManyTill: function (end, callback, initVal) {
+            return reduceManyTill(this, end, callback, initVal);
+        },
         manyTill: function (end) {
             return manyTill(this, end);
+        },
+        skipManyTill: function (end) {
+            return skipManyTill(this, end);
         }
     });
 };
