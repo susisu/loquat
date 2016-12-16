@@ -79,6 +79,34 @@ describe(".whiteSpace", () => {
                         )
                     )).to.be.true;
                 }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 1, 1),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
                 // some white spaces
                 {
                     const initState = new State(
@@ -102,6 +130,34 @@ describe(".whiteSpace", () => {
                             new State(
                                 new Config({ tabWidth: 8 }),
                                 "ABC",
+                                new SourcePos("test", 2, 9),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        " \f\r\v\n\t",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 2, 9),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
                                 new SourcePos("test", 2, 9),
                                 "none"
                             )
@@ -171,6 +227,64 @@ describe(".whiteSpace", () => {
                         )
                     )).to.be.true;
                 }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "/ABC",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "/ABC",
+                                new SourcePos("test", 1, 1),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 1, 1),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
                 // some spaces and comments
                 {
                     const initState = new State(
@@ -196,6 +310,123 @@ describe(".whiteSpace", () => {
                                 new Config({ tabWidth: 8 }),
                                 "ABC",
                                 new SourcePos("test", 4, 9),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "// nyancat\n \f\r\v////\n\n\t/ABC",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 4, 9),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "/ABC",
+                                new SourcePos("test", 4, 9),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "// nyancat\n \f\r\v////\n\n\t",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 4, 9),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 4, 9),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                // comment in the last line
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "// nyancat",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 11),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 1, 11),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "//",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 3),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 1, 3),
                                 "none"
                             )
                         )
@@ -255,6 +486,64 @@ describe(".whiteSpace", () => {
                         )
                     )).to.be.true;
                 }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "/ABC",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "/ABC",
+                                new SourcePos("test", 1, 1),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 1, 1),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
                 // some spaces and comments
                 {
                     const initState = new State(
@@ -281,6 +570,112 @@ describe(".whiteSpace", () => {
                                 "ABC",
                                 new SourcePos("test", 4, 9),
                                 "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "/* nyan\ncat */\n \f\r\v/****/\n\t/ABC",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 4, 9),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "/ABC",
+                                new SourcePos("test", 4, 9),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "/* nyan\ncat */\n \f\r\v/****/\n\t",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 4, 9),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 4, 9),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                // unclosed comment
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "/* nyan\ncat",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.cerr(
+                            new ParseError(
+                                new SourcePos("test", 2, 4),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "end of comment")
+                                ]
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "/*",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.cerr(
+                            new ParseError(
+                                new SourcePos("test", 1, 3),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "end of comment")
+                                ]
                             )
                         )
                     )).to.be.true;
@@ -374,6 +769,64 @@ describe(".whiteSpace", () => {
                         )
                     )).to.be.true;
                 }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "{ABC",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "{ABC",
+                                new SourcePos("test", 1, 1),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 1, 1),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
                 // some spaces and comments
                 {
                     const initState = new State(
@@ -400,6 +853,114 @@ describe(".whiteSpace", () => {
                                 "ABC",
                                 new SourcePos("test", 4, 9),
                                 "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "{- nyan\ncat -}\n \f\r\v{----}\n\t{ABC",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 4, 9),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "{ABC",
+                                new SourcePos("test", 4, 9),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "{- nyan\ncat -}\n \f\r\v{----}\n\t",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 4, 9),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 4, 9),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                // unclosed comment
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "{- nyan\ncat",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.cerr(
+                            new ParseError(
+                                new SourcePos("test", 2, 4),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "end of comment")
+                                ]
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "{-",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.cerr(
+                            new ParseError(
+                                new SourcePos("test", 1, 3),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "end of comment")
+                                ]
                             )
                         )
                     )).to.be.true;
@@ -495,6 +1056,66 @@ describe(".whiteSpace", () => {
                         )
                     )).to.be.true;
                 }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "/ABC",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "/ABC",
+                                new SourcePos("test", 1, 1),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 1, 1),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
                 // some spaces and comments
                 {
                     const initState = new State(
@@ -522,6 +1143,175 @@ describe(".whiteSpace", () => {
                                 "ABC",
                                 new SourcePos("test", 5, 9),
                                 "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "/* nyan\ncat */\n \f\r\v/****/\n// foobar\n\t/ABC",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 5, 9),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "/ABC",
+                                new SourcePos("test", 5, 9),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "/* nyan\ncat */\n \f\r\v/****/\n// foobar\n\t",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 5, 9),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 5, 9),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                // comment in the last line
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "// nyancat",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 11),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 1, 11),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "//",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 3),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 1, 3),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                // unclosed comment
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "/* nyan\ncat",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.cerr(
+                            new ParseError(
+                                new SourcePos("test", 2, 4),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "end of comment")
+                                ]
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "/*",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.cerr(
+                            new ParseError(
+                                new SourcePos("test", 1, 3),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "end of comment")
+                                ]
                             )
                         )
                     )).to.be.true;
@@ -618,6 +1408,96 @@ describe(".whiteSpace", () => {
                         )
                     )).to.be.true;
                 }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "-ABC",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("-")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("-")),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "-ABC",
+                                new SourcePos("test", 1, 1),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "{ABC",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "{ABC",
+                                new SourcePos("test", 1, 1),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 1, 1),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
                 // some spaces and comments
                 {
                     const initState = new State(
@@ -645,6 +1525,207 @@ describe(".whiteSpace", () => {
                                 "ABC",
                                 new SourcePos("test", 5, 9),
                                 "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "{- nyan\ncat -}\n \f\r\v{----}\n-- foobar\n\t-ABC",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 5, 9),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("-")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("-")),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "-ABC",
+                                new SourcePos("test", 5, 9),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "{- nyan\ncat -}\n \f\r\v{----}\n-- foobar\n\t{ABC",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 5, 9),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "{ABC",
+                                new SourcePos("test", 5, 9),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "{- nyan\ncat -}\n \f\r\v{----}\n-- foobar\n\t",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 5, 9),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 5, 9),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                // comment in the last line
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "-- nyancat",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 11),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 1, 11),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "--",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("test", 1, 3),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "")
+                                ]
+                            ),
+                            undefined,
+                            new State(
+                                new Config({ tabWidth: 8 }),
+                                "",
+                                new SourcePos("test", 1, 3),
+                                "none"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                // unclosed comment
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "{- nyan\ncat",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.cerr(
+                            new ParseError(
+                                new SourcePos("test", 2, 4),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "end of comment")
+                                ]
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "{-",
+                        new SourcePos("test", 1, 1),
+                        "none"
+                    );
+                    const res = whiteSpace.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.cerr(
+                            new ParseError(
+                                new SourcePos("test", 1, 3),
+                                [
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "end of comment")
+                                ]
                             )
                         )
                     )).to.be.true;
