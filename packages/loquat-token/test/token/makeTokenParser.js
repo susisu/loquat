@@ -112,4 +112,5 @@ describe(".makeTokenParser(def)", () => {
     });
 
     // tests for each token parser will follow
+    require("./makeTokenParser/whiteSpace.js");
 });
