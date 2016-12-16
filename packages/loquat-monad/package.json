@@ -1,6 +1,6 @@
 {
   "name": "loquat-monad",
-  "version": "2.0.0-1",
+  "version": "2.0.0-2",
   "description": "Monadic functions for loquat",
   "main": "index.js",
   "directories": {
