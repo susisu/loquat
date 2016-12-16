@@ -13,7 +13,7 @@ const SourcePos        = _core.SourcePos;
 const ErrorMessageType = _core.ErrorMessageType;
 const ErrorMessage     = _core.ErrorMessage;
 const ParseError       = _core.ParseError;
-const Config           = _core.Config
+const Config           = _core.Config;
 const State            = _core.State;
 const Result           = _core.Result;
 const assertParser     = _core.assertParser;
@@ -1732,7 +1732,7 @@ describe(".whiteSpace", () => {
                 }
             }
         });
-        
+
         it("should allow nested comments", () => {
             for (const def of defs) {
                 const tp = makeTokenParser(def);
