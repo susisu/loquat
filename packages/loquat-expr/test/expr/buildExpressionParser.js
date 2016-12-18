@@ -24,103 +24,105 @@ const Operator              = _expr.Operator;
 const buildExpressionParser = _expr.buildExpressionParser;
 
 describe(".buildExpressionParser(opTable, atom)", () => {
-    it("should build expression parser from given operator table `opTable' and term (atom) parser `atom'", () => {
-        function genP(chars, val) {
-            let csuc = chars[0];
-            let cerr = chars[1];
-            let esuc = chars[2];
-            let eerr = chars[3];
-            return new Parser(state => {
-                switch (state.input[0]) {
-                case csuc:
-                    {
-                        let newPos = state.pos.setColumn(state.pos.column + 1);
-                        return Result.csuc(
-                            new ParseError(
-                                newPos,
-                                [new ErrorMessage(ErrorMessageType.MESSAGE, "csuc")]
-                            ),
-                            val,
-                            new State(
-                                state.config,
-                                state.input.substr(1),
-                                newPos,
-                                "some"
-                            )
-                        );
-                    }
-                case cerr:
-                    return Result.cerr(
+    function genP(chars, val) {
+        const csuc = chars[0];
+        const cerr = chars[1];
+        const esuc = chars[2];
+        const eerr = chars[3];
+        return new Parser(state => {
+            switch (state.input[0]) {
+            case csuc:
+                {
+                    const newPos = state.pos.setColumn(state.pos.column + 1);
+                    return Result.csuc(
                         new ParseError(
-                            state.pos.setColumn(state.pos.column + 1),
-                            [new ErrorMessage(ErrorMessageType.MESSAGE, "cerr")]
-                        )
-                    );
-                case esuc:
-                    return Result.esuc(
-                        new ParseError(
-                            state.pos,
-                            [new ErrorMessage(ErrorMessageType.MESSAGE, "esuc")]
+                            newPos,
+                            [new ErrorMessage(ErrorMessageType.MESSAGE, "csuc")]
                         ),
                         val,
                         new State(
                             state.config,
                             state.input.substr(1),
-                            state.pos,
+                            newPos,
                             "some"
                         )
                     );
-                case eerr:
-                default:
-                    return Result.eerr(
-                        new ParseError(
-                            state.pos,
-                            [new ErrorMessage(ErrorMessageType.MESSAGE, "eerr")]
-                        )
-                    );
                 }
-            });
-        }
-        function genInfixP(chars, symbol) {
-            return genP(chars, (x, y) => `(${x}${symbol}${y})`);
-        }
-        function genPrefixP(chars, symbol) {
-            return genP(chars, x => `(${symbol}${x})`);
-        }
-        function genPostfixP(chars, symbol) {
-            return genP(chars, x => `(${x}${symbol})`);
-        }
+            case cerr:
+                return Result.cerr(
+                    new ParseError(
+                        state.pos.setColumn(state.pos.column + 1),
+                        [new ErrorMessage(ErrorMessageType.MESSAGE, "cerr")]
+                    )
+                );
+            case esuc:
+                return Result.esuc(
+                    new ParseError(
+                        state.pos,
+                        [new ErrorMessage(ErrorMessageType.MESSAGE, "esuc")]
+                    ),
+                    val,
+                    new State(
+                        state.config,
+                        state.input.substr(1),
+                        state.pos,
+                        "some"
+                    )
+                );
+            case eerr:
+            default:
+                return Result.eerr(
+                    new ParseError(
+                        state.pos,
+                        [new ErrorMessage(ErrorMessageType.MESSAGE, "eerr")]
+                    )
+                );
+            }
+        });
+    }
+    function genInfixP(chars, symbol) {
+        return genP(chars, (x, y) => `(${x}${symbol}${y})`);
+    }
+    function genPrefixP(chars, symbol) {
+        return genP(chars, x => `(${symbol}${x})`);
+    }
+    function genPostfixP(chars, symbol) {
+        return genP(chars, x => `(${x}${symbol})`);
+    }
 
-        function infixOp(chars, symbol) {
-            return new Operator(OperatorType.INFIX, genInfixP(chars, symbol), OperatorAssoc.NONE);
-        }
-        function infixlOp(chars, symbol) {
-            return new Operator(OperatorType.INFIX, genInfixP(chars, symbol), OperatorAssoc.LEFT);
-        }
-        function infixrOp(chars, symbol) {
-            return new Operator(OperatorType.INFIX, genInfixP(chars, symbol), OperatorAssoc.RIGHT);
-        }
-        function prefixOp(chars, symbol) {
-            return new Operator(OperatorType.PREFIX, genPrefixP(chars, symbol));
-        }
-        function postfixOp(chars, symbol) {
-            return new Operator(OperatorType.POSTFIX, genPostfixP(chars, symbol));
-        }
+    function infixOp(chars, symbol) {
+        return new Operator(OperatorType.INFIX, genInfixP(chars, symbol), OperatorAssoc.NONE);
+    }
+    function infixlOp(chars, symbol) {
+        return new Operator(OperatorType.INFIX, genInfixP(chars, symbol), OperatorAssoc.LEFT);
+    }
+    function infixrOp(chars, symbol) {
+        return new Operator(OperatorType.INFIX, genInfixP(chars, symbol), OperatorAssoc.RIGHT);
+    }
+    function prefixOp(chars, symbol) {
+        return new Operator(OperatorType.PREFIX, genPrefixP(chars, symbol));
+    }
+    function postfixOp(chars, symbol) {
+        return new Operator(OperatorType.POSTFIX, genPostfixP(chars, symbol));
+    }
 
-        let atom = genP("CcEe", "X");
+    const atom = genP("CcEe", "X");
 
-        // no operators
-        {
-            let parser = buildExpressionParser([], atom);
+    context("when no operators given", () => {
+        const opTable = [];
+
+        it("should return a parser that is identical to `atom'", () => {
+            const parser = buildExpressionParser(opTable, atom);
             assertParser(parser);
+            // csuc
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "Ce",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(
@@ -138,14 +140,15 @@ describe(".buildExpressionParser(opTable, atom)", () => {
                     )
                 )).to.be.true;
             }
+            // cerr
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "ce",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.cerr(
@@ -156,14 +159,15 @@ describe(".buildExpressionParser(opTable, atom)", () => {
                     )
                 )).to.be.true;
             }
+            // esuc
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -181,14 +185,15 @@ describe(".buildExpressionParser(opTable, atom)", () => {
                     )
                 )).to.be.true;
             }
+            // eerr
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.eerr(
@@ -199,24 +204,26 @@ describe(".buildExpressionParser(opTable, atom)", () => {
                     )
                 )).to.be.true;
             }
-        }
-        // prefix operator
-        {
-            let parser = buildExpressionParser(
-                [
-                    [prefixOp("+-*/", "+")]
-                ],
-                atom
-            );
+        });
+    });
+
+    context("when a prefix operator is given", () => {
+        const opTable = [
+            [prefixOp("+-*/", "+")]
+        ];
+
+        it("should return an expression parser that applies the operator to value", () => {
+            const parser = buildExpressionParser(opTable, atom);
+            assertParser(parser);
             // csuc
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "+Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(
@@ -240,13 +247,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // cerr
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "-Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.cerr(
@@ -261,13 +268,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // esuc
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "*Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -292,13 +299,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // eerr
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "/Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.eerr(
@@ -313,24 +320,26 @@ describe(".buildExpressionParser(opTable, atom)", () => {
                     )
                 )).to.be.true;
             }
-        }
-        // postfix operator
-        {
-            let parser = buildExpressionParser(
-                [
-                    [postfixOp("+-*/", "+")]
-                ],
-                atom
-            );
+        });
+    });
+
+    context("when a postfix operator is given", () => {
+        const opTable = [
+            [postfixOp("+-*/", "+")]
+        ];
+
+        it("should return an expression parser that applies the operator to value", () => {
+            const parser = buildExpressionParser(opTable, atom);
+            assertParser(parser);
             // csuc
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E+e",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(
@@ -352,13 +361,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // cerr
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E-e",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.cerr(
@@ -373,13 +382,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // esuc
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E*e",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -404,13 +413,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // eerr
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E/e",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -433,24 +442,26 @@ describe(".buildExpressionParser(opTable, atom)", () => {
                     )
                 )).to.be.true;
             }
-        }
-        // infix
-        {
-            let parser = buildExpressionParser(
-                [
-                    [infixOp("+-*/", "+")]
-                ],
-                atom
-            );
+        });
+    });
+
+    context("when a non-associative infix operator", () => {
+        const opTable = [
+            [infixOp("+-*/", "+")]
+        ];
+
+        it("should return an expression parser that applies the operator to operands", () => {
+            const parser = buildExpressionParser(opTable, atom);
+            assertParser(parser);
             // csuc
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E+Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(
@@ -476,13 +487,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // cerr
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E-Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.cerr(
@@ -497,13 +508,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // esuc
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E*Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -543,13 +554,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // eerr
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E/Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -577,13 +588,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // multiple
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E*E*Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -625,24 +636,26 @@ describe(".buildExpressionParser(opTable, atom)", () => {
                     )
                 )).to.be.true;
             }
-        }
-        // infixl
-        {
-            let parser = buildExpressionParser(
-                [
-                    [infixlOp("+-*/", "+")]
-                ],
-                atom
-            );
+        });
+    });
+
+    context("when a left-associative infix operator is given", () => {
+        const opTable = [
+            [infixlOp("+-*/", "+")]
+        ];
+
+        it("should return an expression parser that applies the operator to operands", () => {
+            const parser = buildExpressionParser(opTable, atom);
+            assertParser(parser);
             // csuc
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E+Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(
@@ -668,13 +681,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // cerr
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E-Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.cerr(
@@ -689,13 +702,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // esuc
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E*Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -730,13 +743,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // eerr
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E/Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -763,13 +776,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // multiple
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E*E*Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -806,24 +819,26 @@ describe(".buildExpressionParser(opTable, atom)", () => {
                     )
                 )).to.be.true;
             }
-        }
-        // infixr
-        {
-            let parser = buildExpressionParser(
-                [
-                    [infixrOp("+-*/", "+")]
-                ],
-                atom
-            );
+        });
+    });
+
+    context("when a right-associative infix operator is given", () => {
+        const opTable = [
+            [infixrOp("+-*/", "+")]
+        ];
+
+        it("should return an expression parser that applies the operator to operands", () => {
+            const parser = buildExpressionParser(opTable, atom);
+            assertParser(parser);
             // csuc
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E+Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(
@@ -849,13 +864,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // cerr
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E-Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.cerr(
@@ -870,13 +885,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // esuc
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E*Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -906,13 +921,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // eerr
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E/Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -939,13 +954,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             }
             // multiple
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "E*E*Ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -977,25 +992,27 @@ describe(".buildExpressionParser(opTable, atom)", () => {
                     )
                 )).to.be.true;
             }
-        }
-        // single precedence, multiple operators
-        {
-            let parser = buildExpressionParser(
-                [
-                    [
-                        infixrOp("|o&a", "|"),
-                        infixlOp("+-*/", "+")
-                    ]
-                ],
-                atom
-            );
-            let initState = new State(
+        });
+    });
+
+    context("when two infix operators are given in single precedence", () => {
+        const opTable = [
+            [
+                infixrOp("|o&a", "|"),
+                infixlOp("+-*/", "+")
+            ]
+        ];
+
+        it("should return an expression parser that does not parse operators hierarchically", () => {
+            const parser = buildExpressionParser(opTable, atom);
+            assertParser(parser);
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "E*E&Ee",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -1033,23 +1050,25 @@ describe(".buildExpressionParser(opTable, atom)", () => {
                     )
                 )
             )).to.be.true;
-        }
-        // some precedence
-        {
-            let parser = buildExpressionParser(
-                [
-                    [infixrOp("|o&a", "|")],
-                    [infixlOp("+-*/", "+")]
-                ],
-                atom
-            );
-            let initState = new State(
+        });
+    });
+
+    context("when two operators are given in different precedences", () => {
+        const opTable = [
+            [infixrOp("|o&a", "|")],
+            [infixlOp("+-*/", "+")]
+        ];
+
+        it("should return an expression parser that parses operators hierarchically", () => {
+            const parser = buildExpressionParser(opTable, atom);
+            assertParser(parser);
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "E*E&Ee",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -1091,22 +1110,22 @@ describe(".buildExpressionParser(opTable, atom)", () => {
                     )
                 )
             )).to.be.true;
-        }
+        });
     });
 
     it("should throw an Error if an operator in `opTable' has unknown operator type", () => {
-        let opTable = [
+        const opTable = [
             [new Operator("__unknown_type__", new Parser(() => {}))]
         ];
-        let atom = new Parser(() => {});
+        const atom = new Parser(() => {});
         expect(() => { buildExpressionParser(opTable, atom); }).to.throw(Error, /operator/);
     });
 
     it("should throw an Error if an infix operator in `opTable' has unknown operator associativity", () => {
-        let opTable = [
+        const opTable = [
             [new Operator(OperatorType.INFIX, new Parser(() => {}), "__unknown_assoc__")]
         ];
-        let atom = new Parser(() => {});
+        const atom = new Parser(() => {});
         expect(() => { buildExpressionParser(opTable, atom); }).to.throw(Error, /operator/);
     });
 });
