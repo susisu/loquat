@@ -1093,4 +1093,20 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             )).to.be.true;
         }
     });
+
+    it("should throw an Error if an operator in `opTable' has unknown operator type", () => {
+        let opTable = [
+            [new Operator("__unknown_type__", new Parser(() => {}))]
+        ];
+        let atom = new Parser(() => {});
+        expect(() => { buildExpressionParser(opTable, atom); }).to.throw(Error, /operator/);
+    });
+
+    it("should throw an Error if an infix operator in `opTable' has unknown operator associativity", () => {
+        let opTable = [
+            [new Operator(OperatorType.INFIX, new Parser(() => {}), "__unknown_assoc__")]
+        ];
+        let atom = new Parser(() => {});
+        expect(() => { buildExpressionParser(opTable, atom); }).to.throw(Error, /operator/);
+    });
 });
