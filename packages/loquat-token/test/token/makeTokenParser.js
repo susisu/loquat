@@ -118,4 +118,5 @@ describe(".makeTokenParser(def)", () => {
     require("./makeTokenParser/parens.js");
     require("./makeTokenParser/braces.js");
     require("./makeTokenParser/angles.js");
+    require("./makeTokenParser/brackets.js");
 });
