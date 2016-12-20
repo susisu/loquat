@@ -115,4 +115,5 @@ describe(".makeTokenParser(def)", () => {
     require("./makeTokenParser/whiteSpace.js");
     require("./makeTokenParser/lexeme.js");
     require("./makeTokenParser/symbol.js");
+    require("./makeTokenParser/parens.js");
 });
