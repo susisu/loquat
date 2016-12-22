@@ -95,18 +95,28 @@ module.exports = () => {
      * @returns {Object} An object that have properties describes above.
      */
     function unconsString(str, unicode) {
+        const len = str.length;
         if (unicode) {
-            const cp = str.codePointAt(0);
-            if (cp === undefined) {
+            if (len === 0) {
                 return { empty: true };
             }
+            else if (len === 1) {
+                return { empty: false, head: str[0], tail: str.substr(1) };
+            }
             else {
-                const char = String.fromCodePoint(cp);
-                return { empty: false, head: char, tail: str.substr(char.length) };
+                const first = str.charCodeAt(0);
+                if (first < 0xD800 || 0xDBFF < first) {
+                    return { empty: false, head: str[0], tail: str.substr(1) };
+                }
+                const second = str.charCodeAt(1);
+                if (second < 0xDC00 || 0xDFFF < second) {
+                    return { empty: false, head: str[0], tail: str.substr(1) };
+                }
+                return { empty: false, head: String.fromCharCode(first, second), tail: str.substr(2) };
             }
         }
         else {
-            return str === ""
+            return len === 0
                 ? { empty: true }
                 : { empty: false, head: str[0], tail: str.substr(1) };
         }
