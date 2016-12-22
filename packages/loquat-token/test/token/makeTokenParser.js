@@ -120,4 +120,5 @@ describe(".makeTokenParser(def)", () => {
     require("./makeTokenParser/angles.js");
     require("./makeTokenParser/brackets.js");
     require("./makeTokenParser/semi.js");
+    require("./makeTokenParser/comma.js");
 });
