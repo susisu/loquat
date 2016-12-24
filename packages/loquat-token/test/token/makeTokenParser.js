@@ -123,4 +123,5 @@ describe(".makeTokenParser(def)", () => {
     require("./makeTokenParser/comma.js");
     require("./makeTokenParser/colon.js");
     require("./makeTokenParser/dot.js");
+    require("./makeTokenParser/semiSep.js");
 });
