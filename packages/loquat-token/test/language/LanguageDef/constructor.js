@@ -16,7 +16,7 @@ describe("constructor(obj)", () => {
     it("should create a new `LanguageDef' instance", () => {
         // use default parameter
         {
-            let def = new LanguageDef();
+            const def = new LanguageDef();
             expect(def.commentStart).to.be.undefined;
             expect(def.commentEnd).to.be.undefined;
             expect(def.commentLine).to.be.undefined;
@@ -31,7 +31,7 @@ describe("constructor(obj)", () => {
         }
         // empty object
         {
-            let def = new LanguageDef({});
+            const def = new LanguageDef({});
             expect(def.commentStart).to.be.undefined;
             expect(def.commentEnd).to.be.undefined;
             expect(def.commentLine).to.be.undefined;
@@ -46,11 +46,11 @@ describe("constructor(obj)", () => {
         }
         // fully specified object
         {
-            let idStart  = new Parser(() => {});
-            let idLetter = new Parser(() => {});
-            let opStart  = new Parser(() => {});
-            let opLetter = new Parser(() => {});
-            let def = new LanguageDef({
+            const idStart  = new Parser(() => {});
+            const idLetter = new Parser(() => {});
+            const opStart  = new Parser(() => {});
+            const opLetter = new Parser(() => {});
+            const def = new LanguageDef({
                 commentStart  : "/*",
                 commentEnd    : "*/",
                 commentLine   : "//",

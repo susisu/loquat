@@ -14,7 +14,7 @@ const LanguageDef = _language.LanguageDef;
 
 describe("#clone()", () => {
     it("should create a copy of the language definition object", () => {
-        let def = new LanguageDef({
+        const def = new LanguageDef({
             commentStart  : "/*",
             commentEnd    : "*/",
             commentLine   : "//",
@@ -27,7 +27,7 @@ describe("#clone()", () => {
             reservedOps   : ["+", "-", "*", "/"],
             caseSensitive : false
         });
-        let copy = def.clone();
+        const copy = def.clone();
         expect(copy.commentStart).to.equal("/*");
         expect(copy.commentEnd).to.equal("*/");
         expect(copy.commentLine).to.equal("//");
