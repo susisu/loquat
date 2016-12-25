@@ -60,7 +60,7 @@ describe(".octal", () => {
         {
             const initState = new State(
                 new Config({ tabWidth: 8 }),
-                "o12345670UVW",
+                "o12345670 UVW",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
@@ -71,14 +71,14 @@ describe(".octal", () => {
                     new ParseError(
                         new SourcePos("foobar", 1, 10),
                         [
-                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show(" ")),
                             new ErrorMessage(ErrorMessageType.EXPECT, "octal digit")
                         ]
                     ),
                     2739128, // 0o12345670
                     new State(
                         new Config({ tabWidth: 8 }),
-                        "UVW",
+                        " UVW",
                         new SourcePos("foobar", 1, 10),
                         "none"
                     )
