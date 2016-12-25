@@ -127,4 +127,5 @@ describe(".makeTokenParser(def)", () => {
     require("./makeTokenParser/semiSep1.js");
     require("./makeTokenParser/commaSep.js");
     require("./makeTokenParser/commaSep1.js");
+    require("./makeTokenParser/decimal.js");
 });
