@@ -131,4 +131,5 @@ describe(".makeTokenParser(def)", () => {
     require("./makeTokenParser/hexadecimal.js");
     require("./makeTokenParser/octal.js");
     require("./makeTokenParser/natural.js");
+    require("./makeTokenParser/integer.js");
 });
