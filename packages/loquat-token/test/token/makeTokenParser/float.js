@@ -25,8 +25,10 @@ const makeTokenParser = _token.makeTokenParser;
 const EPS = 1e-15;
 
 function floatEqual(x, y) {
-    const mean = (x + y) * 0.5;
-    return Math.abs(x - y) / mean < EPS;
+    const m = Math.abs(Math.max(x, y));
+    return m === 0
+        ? Math.abs(x - y) < EPS
+        : Math.abs(x - y) / m < EPS;
 }
 
 describe(".float", () => {
