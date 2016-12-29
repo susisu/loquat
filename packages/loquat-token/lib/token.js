@@ -512,9 +512,9 @@ module.exports = (_core, _prim, _char, _combinators) => {
                     char("\""),
                     label(char("\""), "end of string"),
                     manyChars(stringChar)
-                )
-            ),
-            "literal string"
+                ),
+                "literal string"
+            )
         );
 
         tp.charLiteral   = charLiteral;
