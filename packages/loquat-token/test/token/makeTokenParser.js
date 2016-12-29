@@ -135,4 +135,5 @@ describe(".makeTokenParser(def)", () => {
     require("./makeTokenParser/float.js");
     require("./makeTokenParser/naturalOrFloat.js");
     require("./makeTokenParser/charLiteral.js");
+    require("./makeTokenParser/stringLiteral.js");
 });
