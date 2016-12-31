@@ -69,20 +69,21 @@ const idLetter = genCharParser(/[0-9A-Za-z]/);
 
 describe(".reserved(name)", () => {
     context("when `caseSensitive' is true", () => {
+        const def = new LanguageDef({
+            idStart      : idStart,
+            idLetter     : idLetter,
+            caseSensitive: true
+        });
+        const tp = makeTokenParser(def);
+        const reserved = tp.reserved;
+
         it("should parse a reserved word `name'", () => {
-            const def = new LanguageDef({
-                idStart      : idStart,
-                idLetter     : idLetter,
-                caseSensitive: true
-            });
-            const tp = makeTokenParser(def);
-            const reserved = tp.reserved;
             expect(reserved).to.be.a("function");
             const parser = reserved("nyan0CAT");
             assertParser(parser);
             {
                 const initState = new State(
-                    new Config({ tabWidth: 8 }),
+                    new Config({ tabWidth: 8, unicode: false }),
                     "nyan0CAT XYZ",
                     new SourcePos("foobar", 1, 1),
                     "none"
@@ -100,7 +101,7 @@ describe(".reserved(name)", () => {
                         ),
                         undefined,
                         new State(
-                            new Config({ tabWidth: 8 }),
+                            new Config({ tabWidth: 8, unicode: false }),
                             "XYZ",
                             new SourcePos("foobar", 1, 10),
                             "none"
@@ -110,7 +111,7 @@ describe(".reserved(name)", () => {
             }
             {
                 const initState = new State(
-                    new Config({ tabWidth: 8 }),
+                    new Config({ tabWidth: 8, unicode: false }),
                     "NYAN0CAT XYZ",
                     new SourcePos("foobar", 1, 1),
                     "none"
@@ -131,7 +132,7 @@ describe(".reserved(name)", () => {
             }
             {
                 const initState = new State(
-                    new Config({ tabWidth: 8 }),
+                    new Config({ tabWidth: 8, unicode: false }),
                     "nyan XYZ",
                     new SourcePos("foobar", 1, 1),
                     "none"
@@ -152,7 +153,7 @@ describe(".reserved(name)", () => {
             }
             {
                 const initState = new State(
-                    new Config({ tabWidth: 8 }),
+                    new Config({ tabWidth: 8, unicode: false }),
                     "nyan0CATXYZ",
                     new SourcePos("foobar", 1, 1),
                     "none"
@@ -174,7 +175,7 @@ describe(".reserved(name)", () => {
             }
             {
                 const initState = new State(
-                    new Config({ tabWidth: 8 }),
+                    new Config({ tabWidth: 8, unicode: false }),
                     "XYZ",
                     new SourcePos("foobar", 1, 1),
                     "none"
@@ -194,23 +195,85 @@ describe(".reserved(name)", () => {
                 )).to.be.true;
             }
         });
+
+        it("should treat surrogate pairs correctly", () => {
+            const parser = reserved("\uD83C\uDF63");
+            assertParser(parser);
+            {
+                const initState = new State(
+                    new Config({ tabWidth: 8, unicode: false }),
+                    "\uD83C\uDF63 XYZ",
+                    new SourcePos("foobar", 1, 1),
+                    "none"
+                );
+                const res = parser.run(initState);
+                expect(Result.equal(
+                    res,
+                    Result.csuc(
+                        new ParseError(
+                            new SourcePos("foobar", 1, 4),
+                            [
+                                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+                                new ErrorMessage(ErrorMessageType.EXPECT, "")
+                            ]
+                        ),
+                        undefined,
+                        new State(
+                            new Config({ tabWidth: 8, unicode: false }),
+                            "XYZ",
+                            new SourcePos("foobar", 1, 4),
+                            "none"
+                        )
+                    )
+                )).to.be.true;
+            }
+            {
+                const initState = new State(
+                    new Config({ tabWidth: 8, unicode: true }),
+                    "\uD83C\uDF63 XYZ",
+                    new SourcePos("foobar", 1, 1),
+                    "none"
+                );
+                const res = parser.run(initState);
+                expect(Result.equal(
+                    res,
+                    Result.csuc(
+                        new ParseError(
+                            new SourcePos("foobar", 1, 3),
+                            [
+                                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+                                new ErrorMessage(ErrorMessageType.EXPECT, "")
+                            ]
+                        ),
+                        undefined,
+                        new State(
+                            new Config({ tabWidth: 8, unicode: true }),
+                            "XYZ",
+                            new SourcePos("foobar", 1, 3),
+                            "none"
+                        )
+                    )
+                )).to.be.true;
+            }
+        });
     });
 
     context("when `caseSensitive' is false", () => {
+        const def = new LanguageDef({
+            idStart      : idStart,
+            idLetter     : idLetter,
+            caseSensitive: false
+        });
+        const tp = makeTokenParser(def);
+        const reserved = tp.reserved;
+
         it("should parse a reserved word `name', without considering case", () => {
-            const def = new LanguageDef({
-                idStart      : idStart,
-                idLetter     : idLetter,
-                caseSensitive: false
-            });
-            const tp = makeTokenParser(def);
-            const reserved = tp.reserved;
             expect(reserved).to.be.a("function");
             const parser = reserved("nyan0CAT");
             assertParser(parser);
             {
                 const initState = new State(
-                    new Config({ tabWidth: 8 }),
+                    new Config({ tabWidth: 8, unicode: false }),
                     "nyan0CAT XYZ",
                     new SourcePos("foobar", 1, 1),
                     "none"
@@ -228,7 +291,7 @@ describe(".reserved(name)", () => {
                         ),
                         undefined,
                         new State(
-                            new Config({ tabWidth: 8 }),
+                            new Config({ tabWidth: 8, unicode: false }),
                             "XYZ",
                             new SourcePos("foobar", 1, 10),
                             "none"
@@ -238,7 +301,7 @@ describe(".reserved(name)", () => {
             }
             {
                 const initState = new State(
-                    new Config({ tabWidth: 8 }),
+                    new Config({ tabWidth: 8, unicode: false }),
                     "NYAN0cat XYZ",
                     new SourcePos("foobar", 1, 1),
                     "none"
@@ -256,7 +319,7 @@ describe(".reserved(name)", () => {
                         ),
                         undefined,
                         new State(
-                            new Config({ tabWidth: 8 }),
+                            new Config({ tabWidth: 8, unicode: false }),
                             "XYZ",
                             new SourcePos("foobar", 1, 10),
                             "none"
@@ -266,7 +329,7 @@ describe(".reserved(name)", () => {
             }
             {
                 const initState = new State(
-                    new Config({ tabWidth: 8 }),
+                    new Config({ tabWidth: 8, unicode: false }),
                     "nyan XYZ",
                     new SourcePos("foobar", 1, 1),
                     "none"
@@ -287,7 +350,7 @@ describe(".reserved(name)", () => {
             }
             {
                 const initState = new State(
-                    new Config({ tabWidth: 8 }),
+                    new Config({ tabWidth: 8, unicode: false }),
                     "nyan0 XYZ",
                     new SourcePos("foobar", 1, 1),
                     "none"
@@ -309,7 +372,7 @@ describe(".reserved(name)", () => {
             }
             {
                 const initState = new State(
-                    new Config({ tabWidth: 8 }),
+                    new Config({ tabWidth: 8, unicode: false }),
                     "nyan0CATXYZ",
                     new SourcePos("foobar", 1, 1),
                     "none"
@@ -331,7 +394,7 @@ describe(".reserved(name)", () => {
             }
             {
                 const initState = new State(
-                    new Config({ tabWidth: 8 }),
+                    new Config({ tabWidth: 8, unicode: false }),
                     "XYZ",
                     new SourcePos("foobar", 1, 1),
                     "none"
@@ -347,6 +410,67 @@ describe(".reserved(name)", () => {
                                 new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
                                 new ErrorMessage(ErrorMessageType.EXPECT, show("nyan0CAT"))
                             ]
+                        )
+                    )
+                )).to.be.true;
+            }
+        });
+
+        it("should treat surrogate pairs correctly", () => {
+            const parser = reserved("\uD83C\uDF63");
+            assertParser(parser);
+            {
+                const initState = new State(
+                    new Config({ tabWidth: 8, unicode: false }),
+                    "\uD83C\uDF63 XYZ",
+                    new SourcePos("foobar", 1, 1),
+                    "none"
+                );
+                const res = parser.run(initState);
+                expect(Result.equal(
+                    res,
+                    Result.csuc(
+                        new ParseError(
+                            new SourcePos("foobar", 1, 4),
+                            [
+                                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+                                new ErrorMessage(ErrorMessageType.EXPECT, "")
+                            ]
+                        ),
+                        undefined,
+                        new State(
+                            new Config({ tabWidth: 8, unicode: false }),
+                            "XYZ",
+                            new SourcePos("foobar", 1, 4),
+                            "none"
+                        )
+                    )
+                )).to.be.true;
+            }
+            {
+                const initState = new State(
+                    new Config({ tabWidth: 8, unicode: true }),
+                    "\uD83C\uDF63 XYZ",
+                    new SourcePos("foobar", 1, 1),
+                    "none"
+                );
+                const res = parser.run(initState);
+                expect(Result.equal(
+                    res,
+                    Result.csuc(
+                        new ParseError(
+                            new SourcePos("foobar", 1, 3),
+                            [
+                                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+                                new ErrorMessage(ErrorMessageType.EXPECT, "")
+                            ]
+                        ),
+                        undefined,
+                        new State(
+                            new Config({ tabWidth: 8, unicode: true }),
+                            "XYZ",
+                            new SourcePos("foobar", 1, 3),
+                            "none"
                         )
                     )
                 )).to.be.true;
