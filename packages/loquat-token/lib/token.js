@@ -21,6 +21,7 @@ module.exports = (_core, _prim, _char, _combinators) => {
     const lazy         = _core.lazy;
     const isParser     = _core.isParser;
 
+    const map        = _prim.map;
     const pure       = _prim.pure;
     const bind       = _prim.bind;
     const then       = _prim.then;
@@ -327,7 +328,7 @@ module.exports = (_core, _prim, _char, _combinators) => {
     /*
      * identifier
      */
-    const alpha = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    const alpha = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 
     function alphaToLower(name) {
         return name.replace(/([A-Z])/g, c => c.toLowerCase());
@@ -352,11 +353,14 @@ module.exports = (_core, _prim, _char, _combinators) => {
             const walk = ftailRecM(str => {
                 const unconsed = unconsString(str, unicode);
                 return unconsed.empty
-                    ? pure(undefined).map(x => ({ done: true, value: x }))
-                    : label(
-                        caseChar(unconsed.head),
-                        msg
-                    ).map(() => ({ done: false, value: unconsed.tail }));
+                    ? map(pure(undefined), () => ({ done: true, value: undefined }))
+                    : map(
+                        label(
+                            caseChar(unconsed.head),
+                            msg
+                        ),
+                        () => ({ done: false, value: unconsed.tail })
+                    );
             });
             return then(walk(str), pure(str));
         });
@@ -555,7 +559,7 @@ module.exports = (_core, _prim, _char, _combinators) => {
                 lexeme(
                     tryParse(
                         then(
-                            caseString(name),
+                            caseString(caseSensitive, name),
                             label(
                                 notFollowedBy(idLetter),
                                 "end of " + show(name)
