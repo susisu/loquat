@@ -139,4 +139,5 @@ describe(".makeTokenParser(def)", () => {
     require("./makeTokenParser/identifier.js");
     require("./makeTokenParser/reserved.js");
     require("./makeTokenParser/operator.js");
+    require("./makeTokenParser/reservedOp.js");
 });
