@@ -138,4 +138,5 @@ describe(".makeTokenParser(def)", () => {
     require("./makeTokenParser/stringLiteral.js");
     require("./makeTokenParser/identifier.js");
     require("./makeTokenParser/reserved.js");
+    require("./makeTokenParser/operator.js");
 });
