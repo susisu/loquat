@@ -70,9 +70,8 @@ const opLetter = genCharParser(/[\+\-\*\/\%=<>\:]/);
 describe(".operator", () => {
     it("should parse an operator", () => {
         const def = new LanguageDef({
-            opStart      : opStart,
-            opLetter     : opLetter,
-            caseSensitive: true
+            opStart : opStart,
+            opLetter: opLetter
         });
         const tp = makeTokenParser(def);
         const operator = tp.operator;
@@ -131,10 +130,9 @@ describe(".operator", () => {
     it("should not accept reserved operator", () => {
         {
             const def = new LanguageDef({
-                opStart      : opStart,
-                opLetter     : opLetter,
-                reservedOps  : [],
-                caseSensitive: true
+                opStart    : opStart,
+                opLetter   : opLetter,
+                reservedOps: []
             });
             const tp = makeTokenParser(def);
             const operator = tp.operator;
@@ -168,10 +166,9 @@ describe(".operator", () => {
         }
         {
             const def = new LanguageDef({
-                opStart      : opStart,
-                opLetter     : opLetter,
-                reservedOps  : ["=", "->", "<-"],
-                caseSensitive: true
+                opStart    : opStart,
+                opLetter   : opLetter,
+                reservedOps: ["=", "->", "<-"]
             });
             const tp = makeTokenParser(def);
             const operator = tp.operator;
