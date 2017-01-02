@@ -510,15 +510,15 @@ module.exports = (_core, _prim, _char, _combinators) => {
             ),
             "character"
         );
-        const stringLiteral = lexeme(
-            label(
+        const stringLiteral = label(
+            lexeme(
                 between(
                     char("\""),
                     label(char("\""), "end of string"),
                     manyChars(stringChar)
-                ),
-                "literal string"
-            )
+                )
+            ),
+            "literal string"
         );
 
         tp.charLiteral   = charLiteral;
