@@ -25,6 +25,7 @@ module.exports = (_core, _prim, _char, _combinators) => {
     const pure       = _prim.pure;
     const bind       = _prim.bind;
     const then       = _prim.then;
+    const tailRecM   = _prim.tailRecM;
     const ftailRecM  = _prim.ftailRecM;
     const mplus      = _prim.mplus;
     const label      = _prim.label;
@@ -73,47 +74,55 @@ module.exports = (_core, _prim, _char, _combinators) => {
 
     function multiLineComment(commentStart, commentEnd, nestedComments) {
         const commentStartEnd = commentStart + commentEnd;
-        const inCommentMulti = lazy(() => label(
-            mplus(
-                then(
-                    tryParse(string(commentEnd)),
-                    pure(undefined)
-                ),
-                mplus(
-                    then(comment, inCommentMulti),
+        const inCommentMulti = lazy(() =>
+            tailRecM(
+                undefined,
+                () => label(
                     mplus(
                         then(
-                            skipMany1(noneOf(commentStartEnd)),
-                            inCommentMulti
+                            tryParse(string(commentEnd)),
+                            pure({ done: true, value: undefined })
                         ),
-                        then(
-                            oneOf(commentStartEnd),
-                            inCommentMulti
+                        mplus(
+                            map(comment, () => ({ done: false, value: undefined })),
+                            mplus(
+                                map(
+                                    skipMany1(noneOf(commentStartEnd)),
+                                    () => ({ done: false, value: undefined })
+                                ),
+                                map(
+                                    oneOf(commentStartEnd),
+                                    () => ({ done: false, value: undefined })
+                                )
+                            )
                         )
-                    )
+                    ),
+                    "end of comment"
                 )
-            ),
-            "end of comment"
-        ));
-        const inCommentSingle = lazy(() => label(
-            mplus(
-                then(
-                    tryParse(string(commentEnd)),
-                    pure(undefined)
-                ),
+            )
+        );
+        const inCommentSingle = tailRecM(
+            undefined,
+            () => label(
                 mplus(
                     then(
-                        skipMany1(noneOf(commentStartEnd)),
-                        inCommentSingle
+                        tryParse(string(commentEnd)),
+                        pure({ done: true, value: undefined })
                     ),
-                    then(
-                        oneOf(commentStartEnd),
-                        inCommentSingle
+                    mplus(
+                        map(
+                            skipMany1(noneOf(commentStartEnd)),
+                            () => ({ done: false, value: undefined })
+                        ),
+                        map(
+                            oneOf(commentStartEnd),
+                            () => ({ done: false, value: undefined })
+                        )
                     )
-                )
-            ),
-            "end of comment"
-        ));
+                ),
+                "end of comment"
+            )
+        );
         const inComment = nestedComments ? inCommentMulti : inCommentSingle;
         const comment = then(
             tryParse(string(commentStart)),
