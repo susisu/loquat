@@ -20,7 +20,7 @@ const assertParser     = _core.assertParser;
 
 const label = _prim.label;
 
-describe(".label(labelStr)", () => {
+describe(".label(parser, labelStr)", () => {
     it("should return a parser labelled by a string `labelStr'", () => {
         let initState = new State(
             new Config({ tabWidth: 8 }),
