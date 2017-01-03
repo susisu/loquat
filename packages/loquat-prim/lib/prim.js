@@ -27,6 +27,7 @@ module.exports = _core => {
             mplus,
             label,
             labels,
+            hidden,
             unexpected,
             tryParse,
             lookAhead,
@@ -327,6 +328,16 @@ module.exports = _core => {
                 );
             }
         });
+    }
+
+    /**
+     * @function module:prim.hidden
+     * @static
+     * @param {AbstractParser} parser
+     * @returns {AbstractParser}
+     */
+    function hidden(parser) {
+        return label(parser, "");
     }
 
     /**

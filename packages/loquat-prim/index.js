@@ -36,6 +36,7 @@ module.exports = (_core, opts) => {
         or               : _prim.mplus,
         label            : _prim.label,
         labels           : _prim.labels,
+        hidden           : _prim.hidden,
         unexpected       : _prim.unexpected,
         tryParse         : _prim.tryParse,
         try              : _prim.tryParse,
