@@ -22,6 +22,7 @@ module.exports = (_core, _prim) => {
     const fail       = _prim.fail;
     const mplus      = _prim.mplus;
     const label      = _prim.label;
+    const hidden     = _prim.hidden;
     const tryParse   = _prim.tryParse;
     const lookAhead  = _prim.lookAhead;
     const reduceMany = _prim.reduceMany;
@@ -67,6 +68,9 @@ module.exports = (_core, _prim) => {
         },
         label: function (labelStr) {
             return label(this, labelStr);
+        },
+        hidden: function () {
+            return hidden(this);
         },
         try: function () {
             return tryParse(this);
