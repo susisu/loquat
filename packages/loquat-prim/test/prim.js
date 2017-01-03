@@ -21,6 +21,7 @@ describe("prim", () => {
     require("./prim/mplus.js");
     require("./prim/label.js");
     require("./prim/labels.js");
+    require("./prim/hidden.js");
     require("./prim/unexpected.js");
     require("./prim/tryParse.js");
     require("./prim/lookAhead.js");
