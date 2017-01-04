@@ -18,7 +18,6 @@ module.exports = (_core, _prim, _char, _combinators) => {
 
     const show         = _core.show;
     const unconsString = _core.unconsString;
-    const lazy         = _core.lazy;
     const isParser     = _core.isParser;
 
     const map        = _prim.map;
@@ -74,31 +73,29 @@ module.exports = (_core, _prim, _char, _combinators) => {
 
     function multiLineComment(commentStart, commentEnd, nestedComments) {
         const commentStartEnd = commentStart + commentEnd;
-        const inCommentMulti = lazy(() =>
-            tailRecM(
-                undefined,
-                () => label(
+        const inCommentMulti = tailRecM(
+            undefined,
+            () => label(
+                mplus(
+                    then(
+                        tryParse(string(commentEnd)),
+                        pure({ done: true, value: undefined })
+                    ),
                     mplus(
-                        then(
-                            tryParse(string(commentEnd)),
-                            pure({ done: true, value: undefined })
-                        ),
+                        map(comment, () => ({ done: false, value: undefined })),
                         mplus(
-                            map(comment, () => ({ done: false, value: undefined })),
-                            mplus(
-                                map(
-                                    skipMany1(noneOf(commentStartEnd)),
-                                    () => ({ done: false, value: undefined })
-                                ),
-                                map(
-                                    oneOf(commentStartEnd),
-                                    () => ({ done: false, value: undefined })
-                                )
+                            map(
+                                skipMany1(noneOf(commentStartEnd)),
+                                () => ({ done: false, value: undefined })
+                            ),
+                            map(
+                                oneOf(commentStartEnd),
+                                () => ({ done: false, value: undefined })
                             )
                         )
-                    ),
-                    "end of comment"
-                )
+                    )
+                ),
+                "end of comment"
             )
         );
         const inCommentSingle = tailRecM(
