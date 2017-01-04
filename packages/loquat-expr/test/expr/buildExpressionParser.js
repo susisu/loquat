@@ -647,11 +647,445 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         it("should return an expression parser that applies the operator to operands", () => {
             const parser = buildExpressionParser(opTable, atom);
             assertParser(parser);
-            // csuc
+            // 1 operator
+            {
+                // csuc
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "E+Ee",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    );
+                    const res = parser.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("foobar", 1, 2),
+                                [
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // infixl
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // term
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "eerr")  // infixl
+                                ]
+                            ),
+                            "(X+X)",
+                            new State(
+                                initState.config,
+                                "e",
+                                new SourcePos("foobar", 1, 2),
+                                "some"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                // cerr
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "E-Ee",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    );
+                    const res = parser.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.cerr(
+                            new ParseError(
+                                new SourcePos("foobar", 1, 2),
+                                [
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "cerr") // infixl
+                                ]
+                            )
+                        )
+                    )).to.be.true;
+                }
+                // esuc
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "E*Ee",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    );
+                    const res = parser.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("foobar", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
+                                    new ErrorMessage(
+                                        ErrorMessageType.MESSAGE,
+                                        "ambiguous use of a left associative operator"
+                                    ),
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
+                                    // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
+                                    // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixl
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "operator") // label
+                                ]
+                            ),
+                            "(X+X)",
+                            new State(
+                                initState.config,
+                                "e",
+                                new SourcePos("foobar", 1, 1),
+                                "some"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                // eerr
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "E/Ee",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    );
+                    const res = parser.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("foobar", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixl
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixr
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "operator") // label
+                                ]
+                            ),
+                            "X",
+                            new State(
+                                initState.config,
+                                "/Ee",
+                                new SourcePos("foobar", 1, 1),
+                                "some"
+                            )
+                        )
+                    )).to.be.true;
+                }
+            }
+            // 2 operators
+            {
+                // csuc
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "E*E+Ce",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    );
+                    const res = parser.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("foobar", 1, 3),
+                                [
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // term
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "eerr")  // infixl
+                                ]
+                            ),
+                            "((X+X)+X)",
+                            new State(
+                                initState.config,
+                                "e",
+                                new SourcePos("foobar", 1, 3),
+                                "some"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "E*E+ce",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    );
+                    const res = parser.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.cerr(
+                            new ParseError(
+                                new SourcePos("foobar", 1, 3),
+                                [
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "cerr") // term
+                                ]
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "E*E+Ee",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    );
+                    const res = parser.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("foobar", 1, 2),
+                                [
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // infixl
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // term
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "eerr")  // infixl
+                                ]
+                            ),
+                            "((X+X)+X)",
+                            new State(
+                                initState.config,
+                                "e",
+                                new SourcePos("foobar", 1, 2),
+                                "some"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "E*E+ee",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    );
+                    const res = parser.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.cerr(
+                            new ParseError(
+                                new SourcePos("foobar", 1, 2),
+                                [
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // infixl
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "eerr")  // term
+                                ]
+                            )
+                        )
+                    )).to.be.true;
+                }
+                // cerr
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "E*E-Ee",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    );
+                    const res = parser.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.cerr(
+                            new ParseError(
+                                new SourcePos("foobar", 1, 2),
+                                [
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "cerr") // infixl
+                                ]
+                            )
+                        )
+                    )).to.be.true;
+                }
+                // esuc
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "E*E*Ce",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    );
+                    const res = parser.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.csuc(
+                            new ParseError(
+                                new SourcePos("foobar", 1, 2),
+                                [
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // term
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "eerr")  // infixl
+                                ]
+                            ),
+                            "((X+X)+X)",
+                            new State(
+                                initState.config,
+                                "e",
+                                new SourcePos("foobar", 1, 2),
+                                "some"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "E*E*ce",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    );
+                    const res = parser.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.cerr(
+                            new ParseError(
+                                new SourcePos("foobar", 1, 2),
+                                [
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "cerr") // term
+                                ]
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "E*E*Ee",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    );
+                    const res = parser.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("foobar", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
+                                    new ErrorMessage(
+                                        ErrorMessageType.MESSAGE,
+                                        "ambiguous use of a left associative operator"
+                                    ),
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
+                                    // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
+                                    // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
+                                    // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
+                                    // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixl
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "operator") // label
+                                ]
+                            ),
+                            "((X+X)+X)",
+                            new State(
+                                initState.config,
+                                "e",
+                                new SourcePos("foobar", 1, 1),
+                                "some"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "E*E*ee",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    );
+                    const res = parser.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("foobar", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
+                                    new ErrorMessage(
+                                        ErrorMessageType.MESSAGE,
+                                        "ambiguous use of a left associative operator"
+                                    ),
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
+                                    // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
+                                    // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
+                                    // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // term
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "operator") // label
+                                ]
+                            ),
+                            "(X+X)",
+                            new State(
+                                initState.config,
+                                "*ee",
+                                new SourcePos("foobar", 1, 1),
+                                "some"
+                            )
+                        )
+                    )).to.be.true;
+                }
+                // eerr
+                {
+                    const initState = new State(
+                        new Config({ tabWidth: 8 }),
+                        "E*E/Ee",
+                        new SourcePos("foobar", 1, 1),
+                        "none"
+                    );
+                    const res = parser.run(initState);
+                    expect(Result.equal(
+                        res,
+                        Result.esuc(
+                            new ParseError(
+                                new SourcePos("foobar", 1, 1),
+                                [
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
+                                    new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
+                                    new ErrorMessage(
+                                        ErrorMessageType.MESSAGE,
+                                        "ambiguous use of a left associative operator"
+                                    ),
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
+                                    // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
+                                    // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
+                                    new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixl
+                                    new ErrorMessage(ErrorMessageType.EXPECT, "operator") // label
+                                ]
+                            ),
+                            "(X+X)",
+                            new State(
+                                initState.config,
+                                "/Ee",
+                                new SourcePos("foobar", 1, 1),
+                                "some"
+                            )
+                        )
+                    )).to.be.true;
+                }
+            }
+            // 3 operators
             {
                 const initState = new State(
                     new Config({ tabWidth: 8 }),
-                    "E+Ee",
+                    "E*E+E*ee",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
@@ -666,154 +1100,16 @@ describe(".buildExpressionParser(opTable, atom)", () => {
                                 new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
                                 new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // term
                                 new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr")  // infixl
-                            ]
-                        ),
-                        "(X+X)",
-                        new State(
-                            initState.config,
-                            "e",
-                            new SourcePos("foobar", 1, 2),
-                            "some"
-                        )
-                    )
-                )).to.be.true;
-            }
-            // cerr
-            {
-                const initState = new State(
-                    new Config({ tabWidth: 8 }),
-                    "E-Ee",
-                    new SourcePos("foobar", 1, 1),
-                    "none"
-                );
-                const res = parser.run(initState);
-                expect(Result.equal(
-                    res,
-                    Result.cerr(
-                        new ParseError(
-                            new SourcePos("foobar", 1, 2),
-                            [
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "cerr") // infixl
-                            ]
-                        )
-                    )
-                )).to.be.true;
-            }
-            // esuc
-            {
-                const initState = new State(
-                    new Config({ tabWidth: 8 }),
-                    "E*Ee",
-                    new SourcePos("foobar", 1, 1),
-                    "none"
-                );
-                const res = parser.run(initState);
-                expect(Result.equal(
-                    res,
-                    Result.esuc(
-                        new ParseError(
-                            new SourcePos("foobar", 1, 1),
-                            [
-                                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                                new ErrorMessage(
-                                    ErrorMessageType.MESSAGE,
-                                    "ambiguous use of a left associative operator"
-                                ),
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
-                                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixl
-                                new ErrorMessage(ErrorMessageType.EXPECT, "operator") // label
-                            ]
-                        ),
-                        "(X+X)",
-                        new State(
-                            initState.config,
-                            "e",
-                            new SourcePos("foobar", 1, 1),
-                            "some"
-                        )
-                    )
-                )).to.be.true;
-            }
-            // eerr
-            {
-                const initState = new State(
-                    new Config({ tabWidth: 8 }),
-                    "E/Ee",
-                    new SourcePos("foobar", 1, 1),
-                    "none"
-                );
-                const res = parser.run(initState);
-                expect(Result.equal(
-                    res,
-                    Result.esuc(
-                        new ParseError(
-                            new SourcePos("foobar", 1, 1),
-                            [
-                                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixl
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixr
-                                new ErrorMessage(ErrorMessageType.EXPECT, "operator") // label
-                            ]
-                        ),
-                        "X",
-                        new State(
-                            initState.config,
-                            "/Ee",
-                            new SourcePos("foobar", 1, 1),
-                            "some"
-                        )
-                    )
-                )).to.be.true;
-            }
-            // multiple
-            {
-                const initState = new State(
-                    new Config({ tabWidth: 8 }),
-                    "E*E*Ee",
-                    new SourcePos("foobar", 1, 1),
-                    "none"
-                );
-                const res = parser.run(initState);
-                expect(Result.equal(
-                    res,
-                    Result.esuc(
-                        new ParseError(
-                            new SourcePos("foobar", 1, 1),
-                            [
-                                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                                new ErrorMessage(
-                                    ErrorMessageType.MESSAGE,
-                                    "ambiguous use of a left associative operator"
-                                ),
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
-                                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
-                                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixl
-                                new ErrorMessage(ErrorMessageType.EXPECT, "operator") // label
+                                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // infixl
+                                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
+                                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr")  // term
                             ]
                         ),
                         "((X+X)+X)",
                         new State(
                             initState.config,
-                            "e",
-                            new SourcePos("foobar", 1, 1),
+                            "*ee",
+                            new SourcePos("foobar", 1, 2),
                             "some"
                         )
                     )
