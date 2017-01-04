@@ -216,7 +216,7 @@ module.exports = (_core, _prim, _combinators) => {
                     }
                     else {
                         if (opRes.consumed) {
-                            return Result.cerr(opRes.err);
+                            return opRes;
                         }
                         else {
                             const ambRes = mplus(ambiguousLeft, ambiguousNon).run(initState); // always eerr
@@ -251,7 +251,7 @@ module.exports = (_core, _prim, _combinators) => {
                     }
                     else {
                         if (termRes.consumed) {
-                            return Result.cerr(termRes.err);
+                            return termRes;
                         }
                         else {
                             if (opRes.consumed) {
@@ -316,7 +316,7 @@ module.exports = (_core, _prim, _combinators) => {
                     }
                     else {
                         if (opRes.consumed) {
-                            return Result.cerr(opRes.err);
+                            return opRes;
                         }
                         else {
                             const ambRes = mplus(ambiguousRight, ambiguousNon).run(initState); // always eerr
@@ -343,7 +343,7 @@ module.exports = (_core, _prim, _combinators) => {
                     }
                     else {
                         if (termRes.consumed) {
-                            return Result.cerr(termRes.err);
+                            return termRes;
                         }
                         else {
                             if (opRes.consumed) {
