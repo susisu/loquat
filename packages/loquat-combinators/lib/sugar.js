@@ -86,8 +86,10 @@ module.exports = (_core, _prim, _combinators) => {
         manyTill: function (end) {
             return manyTill(this, end);
         },
-        skipManyTill: function (end) {
-            return skipManyTill(this, end);
+        skipManyTill: function (parser, end) {
+            return isParser(end)
+                ? left(this, skipManyTill(parser, end))
+                : skipManyTill(this, parser);
         }
     });
 };
