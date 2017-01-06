@@ -342,6 +342,17 @@ module.exports = (_pos, _error) => {
         run() {
             throw new Error("not implemented");
         }
+
+        /**
+         * @param {string} name
+         * @param {(string | Array | module:stream.IStream)} input
+         * @param {*} [userState = undefined]
+         * @param {Object} [opts = {}]
+         * @returns {Object}
+         */
+        parse(name, input, userState, opts) {
+            return parse(this, name, input, userState, opts);
+        }
     }
 
     /**
