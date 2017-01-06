@@ -16,21 +16,21 @@ const ParseError         = _error.ParseError;
 
 describe("#setMessages(msgs)", () => {
     it("should return an `AbstractParseError' object with the specified messages `msgs'", () => {
-        let pos = new SourcePos("foobar", 496, 28);
-        let msgs = [
+        const pos = new SourcePos("foobar", 496, 28);
+        const msgs = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
             new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
             new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat")
         ];
-        let err = new ParseError(pos, msgs);
-        let newMsgs = [
+        const err = new ParseError(pos, msgs);
+        const newMsgs = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
             new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
             new ErrorMessage(ErrorMessageType.EXPECT, "z"),
             new ErrorMessage(ErrorMessageType.MESSAGE, "w")
         ];
-        let newErr = err.setMessages(newMsgs);
+        const newErr = err.setMessages(newMsgs);
         expect(SourcePos.equal(newErr.pos, pos)).to.be.true;
         expect(ErrorMessage.messagesEqual(newErr.msgs, newMsgs)).to.be.true;
     });

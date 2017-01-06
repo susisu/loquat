@@ -14,18 +14,18 @@ const LazyParser = _parser.LazyParser;
 describe("#eval()", () => {
     it("should evaluate the thunk then return a `Parser' object obtained as a result and cahce it"
         + " if there is no cache", () => {
-        let p = new Parser(() => {});
+        const p = new Parser(() => {});
         {
-            let parser = new LazyParser(() => p);
-            let res = parser.eval();
+            const parser = new LazyParser(() => p);
+            const res = parser.eval();
             expect(res).to.equal(p);
         }
         // a multiply-nested LazyParser object is also evaluated to a Parser object
         {
-            let parser = new LazyParser(() =>
+            const parser = new LazyParser(() =>
                 new LazyParser(() => p)
             );
-            let res = parser.eval();
+            const res = parser.eval();
             expect(res).to.equal(p);
         }
     });
@@ -33,12 +33,12 @@ describe("#eval()", () => {
     it("should return the cached result if it exists", () => {
         {
             let evalCount = 0;
-            let parser = new LazyParser(() => {
+            const parser = new LazyParser(() => {
                 evalCount += 1;
                 return new Parser(() => {});
             });
-            let resA = parser.eval();
-            let resB = parser.eval();
+            const resA = parser.eval();
+            const resB = parser.eval();
             // the cached result is returned
             expect(evalCount).to.equal(1);
             expect(resA).to.equal(resB);
@@ -47,34 +47,34 @@ describe("#eval()", () => {
         {
             let intermediateEvalCount = 0;
             let evalCount = 0;
-            let parser = new LazyParser(() => {
+            const parser = new LazyParser(() => {
                 evalCount += 1;
                 return new LazyParser(() => {
                     intermediateEvalCount += 1;
                     return new Parser(() => {});
                 });
             });
-            let resA = parser.eval();
-            let resB = parser.eval();
+            const resA = parser.eval();
+            const resB = parser.eval();
             expect(intermediateEvalCount).to.equal(1);
             expect(evalCount).to.equal(1);
             expect(resA).to.equal(resB);
         }
         {
             let intermediateEvalCount = 0;
-            let intermediateParser = new LazyParser(() => {
+            const intermediateParser = new LazyParser(() => {
                 intermediateEvalCount += 1;
                 return new Parser(() => {});
             });
             let evalCount = 0;
-            let parser = new LazyParser(() => {
+            const parser = new LazyParser(() => {
                 evalCount += 1;
                 return intermediateParser;
             });
             // evaluate intermediate one first
-            let intermediateRes = intermediateParser.eval();
-            let resA = parser.eval();
-            let resB = parser.eval();
+            const intermediateRes = intermediateParser.eval();
+            const resA = parser.eval();
+            const resB = parser.eval();
             expect(intermediateEvalCount).to.equal(1);
             expect(evalCount).to.equal(1);
             expect(resA).to.equal(resB);
@@ -83,7 +83,7 @@ describe("#eval()", () => {
     });
 
     it("should throw a `TypeError' if invalid thunk (not a function) found in the evaluation", () => {
-        let invalidThunks = [
+        const invalidThunks = [
             null,
             undefined,
             "foobar",
@@ -91,20 +91,20 @@ describe("#eval()", () => {
             true,
             {}
         ];
-        for (let thunk of invalidThunks) {
+        for (const thunk of invalidThunks) {
             {
-                let parser = new LazyParser(thunk);
+                const parser = new LazyParser(thunk);
                 expect(() => { parser.eval(); }).to.throw(TypeError);
             }
             {
-                let parser = new LazyParser(() => new LazyParser(thunk));
+                const parser = new LazyParser(() => new LazyParser(thunk));
                 expect(() => { parser.eval(); }).to.throw(TypeError);
             }
         }
     });
 
     it("should throw a `TypeError' if the final evaluation result is not a `Parser' object", () => {
-        let invalidResults = [
+        const invalidResults = [
             null,
             undefined,
             "foobar",
@@ -113,13 +113,13 @@ describe("#eval()", () => {
             {},
             () => {}
         ];
-        for (let res of invalidResults) {
+        for (const res of invalidResults) {
             {
-                let parser = new LazyParser(() => res);
+                const parser = new LazyParser(() => res);
                 expect(() => { parser.eval(); }).to.throw(TypeError);
             }
             {
-                let parser = new LazyParser(() => new LazyParser(() => res));
+                const parser = new LazyParser(() => new LazyParser(() => res));
                 expect(() => { parser.eval(); }).to.throw(TypeError);
             }
         }

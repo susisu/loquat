@@ -17,20 +17,20 @@ const LazyParseError     = _error.LazyParseError;
 
 describe("#setPosition(pos)", () => {
     it("should return an `AbstractParseError' object with the specified position `pos'", () => {
-        let pos = new SourcePos("foobar", 496, 28);
-        let msgs = [
+        const pos = new SourcePos("foobar", 496, 28);
+        const msgs = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
             new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
             new ErrorMessage(ErrorMessageType.EXPECT, "z"),
             new ErrorMessage(ErrorMessageType.MESSAGE, "w")
         ];
         let evaluated = false;
-        let err = new LazyParseError(() => {
+        const err = new LazyParseError(() => {
             evaluated = true;
             return new ParseError(pos, msgs);
         });
-        let newPos = new SourcePos("nyancat", 128, 256);
-        let newErr = err.setPosition(newPos);
+        const newPos = new SourcePos("nyancat", 128, 256);
+        const newErr = err.setPosition(newPos);
         // not evaluated yet
         expect(evaluated).to.be.false;
         expect(SourcePos.equal(newErr.pos, newPos)).to.be.true;

@@ -18,19 +18,19 @@ const LazyParseError     = _error.LazyParseError;
 describe("#setSpecificTypeMessages(type, msgStrs)", () => {
     it("should return an `AbstractParseError' object with all the messages of the specified `type' removed"
         + " and new messages given by `msgStrs' added to the tail of the messages", () => {
-        let pos = new SourcePos("foobar", 496, 28);
-        let msgs = [
+        const pos = new SourcePos("foobar", 496, 28);
+        const msgs = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
             new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
             new ErrorMessage(ErrorMessageType.EXPECT, "z"),
             new ErrorMessage(ErrorMessageType.MESSAGE, "w")
         ];
         let evaluated = false;
-        let err = new LazyParseError(() => {
+        const err = new LazyParseError(() => {
             evaluated = true;
             return new ParseError(pos, msgs);
         });
-        let newErr = err.setSpecificTypeMessages(ErrorMessageType.UNEXPECT, ["nyan", "cat"]);
+        const newErr = err.setSpecificTypeMessages(ErrorMessageType.UNEXPECT, ["nyan", "cat"]);
         // not evaluated yet
         expect(evaluated).to.be.false;
         expect(SourcePos.equal(newErr.pos, pos)).to.be.true;

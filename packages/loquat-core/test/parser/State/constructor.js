@@ -17,7 +17,7 @@ describe("constructor(config, input, pos, userState)", () => {
     it("should create a new `State' instance", () => {
         // use default argument
         {
-            let state = new State(
+            const state = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28)
@@ -36,7 +36,7 @@ describe("constructor(config, input, pos, userState)", () => {
         }
         // specify userState
         {
-            let state = new State(
+            const state = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),

@@ -12,12 +12,12 @@ const AbstractParseError = _error.AbstractParseError;
 
 describe("#toString()", () => {
     it("should throw an `Error'", () => {
-        let TestParseError = class extends AbstractParseError {
+        const TestParseError = class extends AbstractParseError {
             constructor() {
                 super();
             }
         };
-        let err = new TestParseError();
+        const err = new TestParseError();
         expect(() => { err.toString(); }).to.throw(Error);
     });
 });

@@ -18,7 +18,7 @@ const Result = _parser.Result;
 
 describe(".eerr(err)", () => {
     it("should create an empty failure result object", () => {
-        let res = Result.eerr(
+        const res = Result.eerr(
             new ParseError(
                 new SourcePos("foobar", 6, 6),
                 [

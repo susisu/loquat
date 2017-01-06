@@ -44,7 +44,7 @@ describe(".uncons(input, unicode)", () => {
 
     it("should return an object describing empty input if `input' is an empty stream object", () => {
         {
-            let stream = {
+            const stream = {
                 uncons: unicode => {
                     expect(unicode).to.be.false;
                     return { empty: true };
@@ -53,7 +53,7 @@ describe(".uncons(input, unicode)", () => {
             expect(uncons(stream, false)).to.deep.equal({ empty: true });
         }
         {
-            let stream = {
+            const stream = {
                 uncons: unicode => {
                     expect(unicode).to.be.true;
                     return { empty: true };
@@ -65,13 +65,13 @@ describe(".uncons(input, unicode)", () => {
 
     it("should return an object containing head and tail if `input' is an non-empty stream object", () => {
         {
-            let tail = {
+            const tail = {
                 uncons: unicode => {
                     expect(unicode).to.be.false;
                     return { empty: true };
                 }
             };
-            let stream = {
+            const stream = {
                 uncons: unicode => {
                     expect(unicode).to.be.false;
                     return {
@@ -84,13 +84,13 @@ describe(".uncons(input, unicode)", () => {
             expect(uncons(stream, false)).to.deep.equal({ empty: false, head: "nyancat", tail: tail });
         }
         {
-            let tail = {
+            const tail = {
                 uncons: unicode => {
                     expect(unicode).to.be.true;
                     return { empty: true };
                 }
             };
-            let stream = {
+            const stream = {
                 uncons: unicode => {
                     expect(unicode).to.be.true;
                     return {
@@ -110,14 +110,14 @@ describe(".uncons(input, unicode)", () => {
     });
 
     it("should throw a `TypeError' if `input' is not a string, an array, nor an object", () => {
-        let values = [
+        const values = [
             null,
             undefined,
             496,
             true,
             () => {}
         ];
-        for (let value of values) {
+        for (const value of values) {
             expect(() => { uncons(value, false); }).to.throw(TypeError);
             expect(() => { uncons(value, true); }).to.throw(TypeError);
         }

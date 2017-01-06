@@ -15,8 +15,8 @@ const ParseError   = _error.ParseError;
 
 describe(".unknown(pos)", () => {
     it("should create a new `ParseError' object describing unknown error (with empty error messages)", () => {
-        let pos = new SourcePos("foobar", 496, 28);
-        let err = ParseError.unknown(pos);
+        const pos = new SourcePos("foobar", 496, 28);
+        const err = ParseError.unknown(pos);
         expect(err).to.be.an.instanceOf(ParseError);
         expect(SourcePos.equal(err.pos, pos)).to.be.true;
         expect(ErrorMessage.messagesEqual(err.msgs, [])).to.be.true;

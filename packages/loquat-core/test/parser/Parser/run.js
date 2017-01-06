@@ -22,7 +22,7 @@ const Parser = _parser.Parser;
 describe("#run(state)", () => {
     it("should call the parser function with `state' and return the result", () => {
         let flag = false;
-        let parser = new Parser(state => {
+        const parser = new Parser(state => {
             flag = true;
             expect(State.equal(
                 state,
@@ -54,7 +54,7 @@ describe("#run(state)", () => {
                 )
             );
         });
-        let res = parser.run(new State(
+        const res = parser.run(new State(
             new Config({ tabWidth: 4, unicode: true }),
             "init",
             new SourcePos("foobar", 496, 28),

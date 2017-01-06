@@ -12,8 +12,8 @@ const SourcePos = _pos.SourcePos;
 
 describe("#setColumn(column)", () => {
     it("should create a copy of the `SourcePos' object with the specified column", () => {
-        let pos  = new SourcePos("foobar", 496, 28);
-        let copy = pos.setColumn(6);
+        const pos  = new SourcePos("foobar", 496, 28);
+        const copy = pos.setColumn(6);
         // different objects
         expect(copy).not.to.equal(pos);
         // with different columns

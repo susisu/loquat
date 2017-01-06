@@ -12,12 +12,12 @@ const AbstractParser = _parser.AbstractParser;
 
 describe("#parse()", () => {
     it("should throw an `Error'", () => {
-        let TestParser = class extends AbstractParser {
+        const TestParser = class extends AbstractParser {
             constructor() {
                 super();
             }
         };
-        let parser = new TestParser();
+        const parser = new TestParser();
         expect(() => {
             parser.parse("foobar", "input", "none", { tabWidth: 4, unicode: true });
         }).to.throw(Error);

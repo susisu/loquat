@@ -15,13 +15,13 @@ const State  = _parser.State;
 
 describe("#setConfig(config)", () => {
     it("should a copy of the state, with specified `config'", () => {
-        let state = new State(
+        const state = new State(
             new Config({ tabWidth: 4, unicode: true }),
             "foo",
             new SourcePos("nyancat", 496, 28),
             "none"
         );
-        let copy = state.setConfig(new Config({ tabWidth: 8, unicode: false }));
+        const copy = state.setConfig(new Config({ tabWidth: 8, unicode: false }));
         expect(copy).not.to.equal(state);
         expect(State.equal(
             copy,

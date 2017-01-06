@@ -12,7 +12,7 @@ const SourcePos = _pos.SourcePos;
 
 describe("constructor(name, line, column)", () => {
     it("should create a new `SourcePos' instance", () => {
-        let pos = new SourcePos("foobar", 496, 28);
+        const pos = new SourcePos("foobar", 496, 28);
         expect(pos).to.be.an.instanceOf(SourcePos);
         expect(pos.name).to.equal("foobar");
         expect(pos.line).to.equal(496);

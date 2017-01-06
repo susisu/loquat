@@ -22,7 +22,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
     it("should return `true' if two results are the same", () => {
         // use default arguments
         {
-            let resA = new Result(
+            const resA = new Result(
                 true,
                 true,
                 new ParseError(
@@ -42,7 +42,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                     "none"
                 )
             );
-            let resB = new Result(
+            const resB = new Result(
                 true,
                 true,
                 new ParseError(
@@ -66,7 +66,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         }
         // specify equal functions
         {
-            let resA = new Result(
+            const resA = new Result(
                 true,
                 true,
                 new ParseError(
@@ -86,7 +86,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                     "none"
                 )
             );
-            let resB = new Result(
+            const resB = new Result(
                 true,
                 true,
                 new ParseError(
@@ -106,7 +106,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                     "NONE"
                 )
             );
-            let ieq = (strA, strB) => strA.toLowerCase() === strB.toLowerCase();
+            const ieq = (strA, strB) => strA.toLowerCase() === strB.toLowerCase();
             expect(Result.equal(resA, resB, ieq, ieq, ieq)).to.be.true;
         }
     });
@@ -114,7 +114,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
     it("should return `false' if two results are different", () => {
         // different `consumed'
         {
-            let resA = new Result(
+            const resA = new Result(
                 true,
                 true,
                 new ParseError(
@@ -134,7 +134,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                     "none"
                 )
             );
-            let resB = new Result(
+            const resB = new Result(
                 false,
                 true,
                 new ParseError(
@@ -158,7 +158,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         }
         // different `success'
         {
-            let resA = new Result(
+            const resA = new Result(
                 true,
                 true,
                 new ParseError(
@@ -178,7 +178,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                     "none"
                 )
             );
-            let resB = new Result(
+            const resB = new Result(
                 false,
                 true,
                 new ParseError(
@@ -202,7 +202,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         }
         // different errors
         {
-            let resA = new Result(
+            const resA = new Result(
                 true,
                 true,
                 new ParseError(
@@ -222,7 +222,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                     "none"
                 )
             );
-            let resB = new Result(
+            const resB = new Result(
                 true,
                 true,
                 new ParseError(
@@ -246,7 +246,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         }
         // different values
         {
-            let resA = new Result(
+            const resA = new Result(
                 true,
                 true,
                 new ParseError(
@@ -266,7 +266,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                     "none"
                 )
             );
-            let resB = new Result(
+            const resB = new Result(
                 true,
                 true,
                 new ParseError(
@@ -290,7 +290,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         }
         // different states
         {
-            let resA = new Result(
+            const resA = new Result(
                 true,
                 true,
                 new ParseError(
@@ -310,7 +310,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                     "none"
                 )
             );
-            let resB = new Result(
+            const resB = new Result(
                 true,
                 true,
                 new ParseError(
@@ -334,7 +334,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         }
         // all
         {
-            let resA = new Result(
+            const resA = new Result(
                 true,
                 true,
                 new ParseError(
@@ -354,7 +354,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                     "none"
                 )
             );
-            let resB = new Result(
+            const resB = new Result(
                 false,
                 false,
                 new ParseError(
@@ -372,12 +372,12 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
     });
 
     it("should compare `val' and `state' properties only when both results are success", () => {
-        let ieq = () => {
+        const ieq = () => {
             throw new Error("unexpected call");
         };
         // both are failure
         {
-            let resA = new Result(
+            const resA = new Result(
                 true,
                 false,
                 new ParseError(
@@ -390,7 +390,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                     ]
                 )
             );
-            let resB = new Result(
+            const resB = new Result(
                 true,
                 false,
                 new ParseError(
@@ -407,7 +407,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         }
         // one of resA or resB is failure
         {
-            let resA = new Result(
+            const resA = new Result(
                 true,
                 true,
                 new ParseError(
@@ -427,7 +427,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
                     "none"
                 )
             );
-            let resB = new Result(
+            const resB = new Result(
                 true,
                 false,
                 new ParseError(

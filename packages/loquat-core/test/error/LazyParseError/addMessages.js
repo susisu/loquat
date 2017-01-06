@@ -18,21 +18,21 @@ const LazyParseError     = _error.LazyParseError;
 describe("#addMessages(msgs)", () => {
     it("should return an `AbstractParseError' object with the specified messages `msgs'"
         + " concatenated to the original messages", () => {
-        let pos = new SourcePos("foobar", 496, 28);
-        let msgs = [
+        const pos = new SourcePos("foobar", 496, 28);
+        const msgs = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
             new ErrorMessage(ErrorMessageType.UNEXPECT, "y")
         ];
         let evaluated = false;
-        let err = new LazyParseError(() => {
+        const err = new LazyParseError(() => {
             evaluated = true;
             return new ParseError(pos, msgs);
         });
-        let additionalMsgs = [
+        const additionalMsgs = [
             new ErrorMessage(ErrorMessageType.EXPECT, "z"),
             new ErrorMessage(ErrorMessageType.MESSAGE, "w")
         ];
-        let newErr = err.addMessages(additionalMsgs);
+        const newErr = err.addMessages(additionalMsgs);
         // not evaluated yet
         expect(evaluated).to.be.false;
         expect(SourcePos.equal(newErr.pos, pos)).to.be.true;

@@ -13,12 +13,12 @@ const AbstractParseError = _error.AbstractParseError;
 
 describe("#setSpecificTypeMessages(type, msgStrs)", () => {
     it("should throw an `Error'", () => {
-        let TestParseError = class extends AbstractParseError {
+        const TestParseError = class extends AbstractParseError {
             constructor() {
                 super();
             }
         };
-        let err = new TestParseError();
+        const err = new TestParseError();
         expect(() => {
             err.setSpecificTypeMessages(ErrorMessageType.MESSAGE, ["foo", "bar", "baz"]);
         }).to.throw(Error);

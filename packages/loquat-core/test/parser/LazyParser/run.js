@@ -24,7 +24,7 @@ describe("#run(state)", () => {
     it("should evluate the thunk and call `#run()' method of the resultant parser object with `state'", () => {
         let flag = false;
         let evaluated = false;
-        let parser = new LazyParser(() => {
+        const parser = new LazyParser(() => {
             evaluated = true;
             return new Parser(state => {
                 flag = true;
@@ -59,7 +59,7 @@ describe("#run(state)", () => {
                 );
             });
         });
-        let res = parser.run(new State(
+        const res = parser.run(new State(
             new Config({ tabWidth: 4, unicode: true }),
             "init",
             new SourcePos("foobar", 496, 28),

@@ -16,11 +16,11 @@ describe(".cleanMessageStrings(msgStrs)", () => {
             expect(cleanMessageStrings([])).to.deep.equal([]);
         }
         {
-            let msgStrs = ["", ""];
+            const msgStrs = ["", ""];
             expect(cleanMessageStrings(msgStrs)).to.deep.equal([]);
         }
         {
-            let msgStrs = [
+            const msgStrs = [
                 "",
                 "foo",
                 "bar",

@@ -21,7 +21,7 @@ const Result = _parser.Result;
 describe("constructor(consumed, success, err, val, state)", () => {
     it("should create a new `Result' instance", () => {
         {
-            let res = new Result(
+            const res = new Result(
                 true,
                 true,
                 new ParseError(
@@ -69,7 +69,7 @@ describe("constructor(consumed, success, err, val, state)", () => {
         }
         // use default arguments
         {
-            let res = new Result(
+            const res = new Result(
                 false,
                 false,
                 new ParseError(

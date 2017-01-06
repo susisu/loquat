@@ -13,7 +13,7 @@ const LazyParser = _parser.LazyParser;
 
 describe("constructor(thunk)", () => {
     it("should create a new `LazyParser' instance", () => {
-        let parser = new LazyParser(() => new Parser(() => {}));
+        const parser = new LazyParser(() => new Parser(() => {}));
         expect(parser).to.be.an.instanceOf(LazyParser);
     });
 });

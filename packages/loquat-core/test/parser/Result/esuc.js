@@ -20,7 +20,7 @@ const Result = _parser.Result;
 
 describe(".esuc(err, val, state)", () => {
     it("should create an empty success result object", () => {
-        let res = Result.esuc(
+        const res = Result.esuc(
             new ParseError(
                 new SourcePos("foobar", 6, 6),
                 [

@@ -14,13 +14,13 @@ const AbstractParseError = _error.AbstractParseError;
 
 describe("#addMessages(msgs)", () => {
     it("should throw an `Error'", () => {
-        let TestParseError = class extends AbstractParseError {
+        const TestParseError = class extends AbstractParseError {
             constructor() {
                 super();
             }
         };
-        let err = new TestParseError();
-        let msgs = [
+        const err = new TestParseError();
+        const msgs = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
             new ErrorMessage(ErrorMessageType.EXPECT, "baz"),

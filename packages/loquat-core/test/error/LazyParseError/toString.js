@@ -17,15 +17,15 @@ const LazyParseError     = _error.LazyParseError;
 
 describe("#toString()", () => {
     it("should first evaluate the thunk and return the string representation of the error", () => {
-        let pos = new SourcePos("foobar", 496, 28);
-        let msgs = [
+        const pos = new SourcePos("foobar", 496, 28);
+        const msgs = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
             new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
             new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat")
         ];
         let evaluated = false;
-        let err = new LazyParseError(() => {
+        const err = new LazyParseError(() => {
             evaluated = true;
             return new ParseError(pos, msgs);
         });

@@ -25,7 +25,7 @@ describe(".joinWithCommasOr(msgStrs)", () => {
 
     it("should joined string of the initial elements separated by commas (,),"
         + " with the last element joined with \"or\"", () => {
-        let msgStrs = ["foo", "bar", "baz", "nyan", "cat"];
+        const msgStrs = ["foo", "bar", "baz", "nyan", "cat"];
         expect(joinWithCommasOr(msgStrs)).to.equal("foo, bar, baz, nyan or cat");
     });
 });

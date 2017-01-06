@@ -14,13 +14,13 @@ const AbstractParseError = _error.AbstractParseError;
 
 describe("#setPosition(pos)", () => {
     it("should throw an `Error'", () => {
-        let TestParseError = class extends AbstractParseError {
+        const TestParseError = class extends AbstractParseError {
             constructor() {
                 super();
             }
         };
-        let err = new TestParseError();
-        let pos = new SourcePos("foobar", 496, 28);
+        const err = new TestParseError();
+        const pos = new SourcePos("foobar", 496, 28);
         expect(() => { err.setPosition(pos); }).to.throw(Error);
     });
 });

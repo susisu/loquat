@@ -16,7 +16,7 @@ describe("constructor()", () => {
     });
 
     it("should not throw an `Error' if it is called as `super' from child constructor", () => {
-        let TestParseError = class extends AbstractParseError {
+        const TestParseError = class extends AbstractParseError {
             constructor() {
                 super();
             }

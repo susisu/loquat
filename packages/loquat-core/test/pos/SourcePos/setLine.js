@@ -12,8 +12,8 @@ const SourcePos = _pos.SourcePos;
 
 describe("#setLine(line)", () => {
     it("should create a copy of the `SourcePos' object with the specified line", () => {
-        let pos  = new SourcePos("foobar", 496, 28);
-        let copy = pos.setLine(6);
+        const pos  = new SourcePos("foobar", 496, 28);
+        const copy = pos.setLine(6);
         // different objects
         expect(copy).not.to.equal(pos);
         // with different lines

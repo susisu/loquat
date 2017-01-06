@@ -25,7 +25,7 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
         // csuc
         {
             let evaluated = false;
-            let parser = new LazyParser(() => {
+            const parser = new LazyParser(() => {
                 evaluated = true;
                 return new Parser(state => {
                     expect(State.equal(
@@ -57,7 +57,7 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
                     );
                 });
             });
-            let res = parser.parse("foobar", "test", "none", { tabWidth: 4, unicode: true });
+            const res = parser.parse("foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(evaluated).to.be.true;
             expect(res).to.deep.equal({
                 success: true,
@@ -67,7 +67,7 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
         // cerr
         {
             let evaluated = false;
-            let parser = new LazyParser(() => {
+            const parser = new LazyParser(() => {
                 evaluated = true;
                 return new Parser(state => {
                     expect(State.equal(
@@ -92,7 +92,7 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
                     );
                 });
             });
-            let res = parser.parse("foobar", "test", "none", { tabWidth: 4, unicode: true });
+            const res = parser.parse("foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(evaluated).to.be.true;
             expect(res).to.be.an("object");
             expect(res.success).to.be.false;
@@ -112,7 +112,7 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
         // esuc
         {
             let evaluated = false;
-            let parser = new LazyParser(() => {
+            const parser = new LazyParser(() => {
                 evaluated = true;
                 return new Parser(state => {
                     expect(State.equal(
@@ -144,7 +144,7 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
                     );
                 });
             });
-            let res = parser.parse("foobar", "test", "none", { tabWidth: 4, unicode: true });
+            const res = parser.parse("foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(evaluated).to.be.true;
             expect(res).to.deep.equal({
                 success: true,
@@ -154,7 +154,7 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
         // eerr
         {
             let evaluated = false;
-            let parser = new LazyParser(() => {
+            const parser = new LazyParser(() => {
                 evaluated = true;
                 return new Parser(state => {
                     expect(State.equal(
@@ -179,7 +179,7 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
                     );
                 });
             });
-            let res = parser.parse("foobar", "test", "none", { tabWidth: 4, unicode: true });
+            const res = parser.parse("foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(evaluated).to.be.true;
             expect(res).to.be.an("object");
             expect(res.success).to.be.false;
@@ -199,7 +199,7 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
         // use default parameters
         {
             let evaluated = false;
-            let parser = new LazyParser(() => {
+            const parser = new LazyParser(() => {
                 evaluated = true;
                 return new Parser(state => {
                     expect(State.equal(
@@ -231,7 +231,7 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
                     );
                 });
             });
-            let res = parser.parse("foobar", "test");
+            const res = parser.parse("foobar", "test");
             expect(evaluated).to.be.true;
             expect(res).to.deep.equal({
                 success: true,

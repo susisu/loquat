@@ -35,14 +35,14 @@ describe(".show(value)", () => {
         }
         // multiple characters
         {
-            let str = "0\\9\"A\bZ\ta\nz\r'\f`\v\u3042\u5b89\uD83C\uDF63";
+            const str = "0\\9\"A\bZ\ta\nz\r'\f`\v\u3042\u5b89\uD83C\uDF63";
             expect(show(str)).to.equal("\"0\\\\9\\\"A\\bZ\\ta\\nz\\r'\\f`\\v\u3042\u5b89\uD83C\uDF63\"");
         }
     });
 
     it("should stringify each element by `show()' and return joined string separated by commas (,)"
         + " and wrapped by braces ([...]) if `value' is an array", () => {
-        let arr = [
+        const arr = [
             null,
             undefined,
             "0\\9\"A\bZ\ta\nz\r'\f`\v\u3042\u5b89\uD83C\uDF63",
@@ -64,7 +64,7 @@ describe(".show(value)", () => {
 
     it("should call `Object.prototype.toString()' with `value' as the `this' argument"
         + " if `value' is an object and `value.toString' is not a function", () => {
-        let obj = Object.create(null);
+        const obj = Object.create(null);
         expect(show(obj)).to.equal(Object.prototype.toString.call(obj));
     });
 

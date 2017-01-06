@@ -17,13 +17,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
     it("should return `true' if two states are equal", () => {
         // use default arguments
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
-            let stateB = new State(
+            const stateB = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
@@ -33,13 +33,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         }
         // specify undefined
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
-            let stateB = new State(
+            const stateB = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
@@ -49,21 +49,21 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         }
         // specify functions
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 ["foo", "bar", "baz"],
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
-            let stateB = new State(
+            const stateB = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 ["foo", "bar", "baz"],
                 new SourcePos("nyancat", 496, 28),
                 "NONE"
             );
-            let inputEqual = (arrA, arrB) => (arrA.length === arrB.length
+            const inputEqual = (arrA, arrB) => (arrA.length === arrB.length
                 && arrA.every((elemA, i) => elemA === arrB[i]));
-            let userStateEqual = (strA, strB) => strA.toLowerCase() === strB.toLowerCase();
+            const userStateEqual = (strA, strB) => strA.toLowerCase() === strB.toLowerCase();
             expect(State.equal(stateA, stateB, inputEqual, userStateEqual)).to.be.true;
         }
     });
@@ -71,13 +71,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
     it("should return `false' if two states are different", () => {
         // different config
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
-            let stateB = new State(
+            const stateB = new State(
                 new Config({ tabWidth: 8, unicode: false }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
@@ -87,13 +87,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         }
         // different input
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
-            let stateB = new State(
+            const stateB = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "FOOBAR",
                 new SourcePos("nyancat", 496, 28),
@@ -103,13 +103,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         }
         // different pos
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
-            let stateB = new State(
+            const stateB = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 6, 28),
@@ -119,13 +119,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         }
         // different userState
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
-            let stateB = new State(
+            const stateB = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
@@ -135,13 +135,13 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         }
         // all
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
-            let stateB = new State(
+            const stateB = new State(
                 new Config({ tabWidth: 8, unicode: false }),
                 "FOOBAR",
                 new SourcePos("nyancat", 6, 28),
@@ -151,35 +151,35 @@ describe(".equal(stateA, stateB, inputEqual = undefined, userStateEqual = undefi
         }
         // specify equal functions
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
-            let stateB = new State(
+            const stateB = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
-            let inputEqual = () => false;
+            const inputEqual = () => false;
             expect(State.equal(stateA, stateB, inputEqual)).to.be.false;
         }
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
-            let stateB = new State(
+            const stateB = new State(
                 new Config({ tabWidth: 4, unicode: true }),
                 "foobar",
                 new SourcePos("nyancat", 496, 28),
                 "none"
             );
-            let userStateEqual = () => false;
+            const userStateEqual = () => false;
             expect(State.equal(stateA, stateB, undefined, userStateEqual)).to.be.false;
         }
     });

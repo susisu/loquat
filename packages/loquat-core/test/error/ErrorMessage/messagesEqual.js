@@ -13,13 +13,13 @@ const ErrorMessage     = _error.ErrorMessage;
 
 describe(".messagesEqual(msgsA, msgsB)", () => {
     it("should return `true' if two messages have the same error messages with the same order", () => {
-        let msgsA = [
+        const msgsA = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
             new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
             new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat")
         ];
-        let msgsB = [
+        const msgsB = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
             new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
@@ -31,13 +31,13 @@ describe(".messagesEqual(msgsA, msgsB)", () => {
     it("should return `false' if two messages have different errors or are differently ordered", () => {
         // different messages
         {
-            let msgsA = [
+            const msgsA = [
                 new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
                 new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
                 new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
                 new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat")
             ];
-            let msgsB = [
+            const msgsB = [
                 new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
                 new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
                 new ErrorMessage(ErrorMessageType.EXPECT, "z"),
@@ -47,13 +47,13 @@ describe(".messagesEqual(msgsA, msgsB)", () => {
         }
         // lacks some messages
         {
-            let msgsA = [
+            const msgsA = [
                 new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
                 new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
                 new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
                 new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat")
             ];
-            let msgsB = [
+            const msgsB = [
                 new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
                 new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
                 new ErrorMessage(ErrorMessageType.EXPECT, "baz")
@@ -62,13 +62,13 @@ describe(".messagesEqual(msgsA, msgsB)", () => {
         }
         // differently ordered
         {
-            let msgsA = [
+            const msgsA = [
                 new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
                 new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
                 new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
                 new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat")
             ];
-            let msgsB = [
+            const msgsB = [
                 new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
                 new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
                 new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),

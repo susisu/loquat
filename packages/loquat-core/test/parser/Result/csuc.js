@@ -20,7 +20,7 @@ const Result = _parser.Result;
 
 describe(".csuc(err, val, state)", () => {
     it("should create a consumed success result object", () => {
-        let res = Result.csuc(
+        const res = Result.csuc(
             new ParseError(
                 new SourcePos("foobar", 6, 6),
                 [

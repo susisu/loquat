@@ -12,8 +12,8 @@ const SourcePos = _pos.SourcePos;
 
 describe("#setName(name)", () => {
     it("should create a copy of the `SourcePos' object with the specified name", () => {
-        let pos  = new SourcePos("foobar", 496, 28);
-        let copy = pos.setName("nyancat");
+        const pos  = new SourcePos("foobar", 496, 28);
+        const copy = pos.setName("nyancat");
         // different objects
         expect(copy).not.to.equal(pos);
         // with different names

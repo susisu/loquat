@@ -16,16 +16,16 @@ const ParseError         = _error.ParseError;
 
 describe("#setPosition(pos)", () => {
     it("should return an `AbstractParseError' object with the specified position `pos'", () => {
-        let pos = new SourcePos("foobar", 496, 28);
-        let msgs = [
+        const pos = new SourcePos("foobar", 496, 28);
+        const msgs = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
             new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
             new ErrorMessage(ErrorMessageType.EXPECT, "z"),
             new ErrorMessage(ErrorMessageType.MESSAGE, "w")
         ];
-        let err = new ParseError(pos, msgs);
-        let newPos = new SourcePos("nyancat", 128, 256);
-        let newErr = err.setPosition(newPos);
+        const err = new ParseError(pos, msgs);
+        const newPos = new SourcePos("nyancat", 128, 256);
+        const newErr = err.setPosition(newPos);
         expect(SourcePos.equal(newErr.pos, newPos)).to.be.true;
         expect(ErrorMessage.messagesEqual(newErr.msgs, msgs)).to.be.true;
     });

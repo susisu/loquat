@@ -13,16 +13,16 @@ const ErrorMessage     = _error.ErrorMessage;
 
 describe("constructor(type, msgStr)", () => {
     it("should create a new `ErrorMessage' instance", () => {
-        let types = [
+        const types = [
             ErrorMessageType.SYSTEM_UNEXPECT,
             ErrorMessageType.UNEXPECT,
             ErrorMessageType.EXPECT,
             ErrorMessageType.MESSAGE
         ];
-        for (let type of types) {
+        for (const type of types) {
             // assert type exists
             expect(type).to.be.a("string");
-            let msg = new ErrorMessage(type, "foobar");
+            const msg = new ErrorMessage(type, "foobar");
             expect(msg).to.be.an.instanceOf(ErrorMessage);
             expect(msg.type).to.equal(type);
             expect(msg.msgStr).to.equal("foobar");

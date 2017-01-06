@@ -17,17 +17,17 @@ const ParseError         = _error.ParseError;
 describe("#addMessages(msgs)", () => {
     it("should return an `AbstractParseError' object with the specified messages `msgs'"
         + " concatenated to the original messages", () => {
-        let pos = new SourcePos("foobar", 496, 28);
-        let msgs = [
+        const pos = new SourcePos("foobar", 496, 28);
+        const msgs = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
             new ErrorMessage(ErrorMessageType.UNEXPECT, "y")
         ];
-        let err = new ParseError(pos, msgs);
-        let additionalMsgs = [
+        const err = new ParseError(pos, msgs);
+        const additionalMsgs = [
             new ErrorMessage(ErrorMessageType.EXPECT, "z"),
             new ErrorMessage(ErrorMessageType.MESSAGE, "w")
         ];
-        let newErr = err.addMessages(additionalMsgs);
+        const newErr = err.addMessages(additionalMsgs);
         expect(SourcePos.equal(newErr.pos, pos)).to.be.true;
         expect(ErrorMessage.messagesEqual(newErr.msgs, msgs.concat(additionalMsgs))).to.be.true;
     });

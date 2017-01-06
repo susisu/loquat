@@ -18,28 +18,28 @@ const LazyParseError     = _error.LazyParseError;
 describe("#eval()", () => {
     it("should evaluate the thunk then return a `ParseError` object obtained as a result and cahce it"
         + " if there is no cache", () => {
-        let pos = new SourcePos("foobar", 496, 28);
-        let msgs = [
+        const pos = new SourcePos("foobar", 496, 28);
+        const msgs = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
             new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
             new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat")
         ];
         {
-            let err = new LazyParseError(() => new ParseError(pos, msgs));
-            let res = err.eval();
+            const err = new LazyParseError(() => new ParseError(pos, msgs));
+            const res = err.eval();
             expect(res).to.be.an.instanceOf(ParseError);
             expect(SourcePos.equal(res.pos, pos)).to.be.true;
             expect(ErrorMessage.messagesEqual(res.msgs, msgs)).to.be.true;
         }
         // a multiply-nested LazyParseError object is also evaluated to a ParseError object
         {
-            let err = new LazyParseError(() =>
+            const err = new LazyParseError(() =>
                 new LazyParseError(() =>
                     new ParseError(pos, msgs)
                 )
             );
-            let res = err.eval();
+            const res = err.eval();
             expect(res).to.be.an.instanceOf(ParseError);
             expect(SourcePos.equal(res.pos, pos)).to.be.true;
             expect(ErrorMessage.messagesEqual(res.msgs, msgs)).to.be.true;
@@ -47,8 +47,8 @@ describe("#eval()", () => {
     });
 
     it("should return the cached result if it exists", () => {
-        let pos = new SourcePos("foobar", 496, 28);
-        let msgs = [
+        const pos = new SourcePos("foobar", 496, 28);
+        const msgs = [
             new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
             new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
@@ -56,12 +56,12 @@ describe("#eval()", () => {
         ];
         {
             let evalCount = 0;
-            let err = new LazyParseError(() => {
+            const err = new LazyParseError(() => {
                 evalCount += 1;
                 return new ParseError(pos, msgs);
             });
-            let resA = err.eval();
-            let resB = err.eval();
+            const resA = err.eval();
+            const resB = err.eval();
             // the cached result is returned
             expect(evalCount).to.equal(1);
             expect(ParseError.equal(resA, resB)).to.be.true;
@@ -70,34 +70,34 @@ describe("#eval()", () => {
         {
             let intermediateEvalCount = 0;
             let evalCount = 0;
-            let err = new LazyParseError(() => {
+            const err = new LazyParseError(() => {
                 evalCount += 1;
                 return new LazyParseError(() => {
                     intermediateEvalCount += 1;
                     return new ParseError(pos, msgs);
                 });
             });
-            let resA = err.eval();
-            let resB = err.eval();
+            const resA = err.eval();
+            const resB = err.eval();
             expect(intermediateEvalCount).to.equal(1);
             expect(evalCount).to.equal(1);
             expect(ParseError.equal(resA, resB)).to.be.true;
         }
         {
             let intermediateEvalCount = 0;
-            let intermediateErr = new LazyParseError(() => {
+            const intermediateErr = new LazyParseError(() => {
                 intermediateEvalCount += 1;
                 return new ParseError(pos, msgs);
             });
             let evalCount = 0;
-            let err = new LazyParseError(() => {
+            const err = new LazyParseError(() => {
                 evalCount += 1;
                 return intermediateErr;
             });
             // evaluate intermediate one first
-            let intermediateRes = intermediateErr.eval();
-            let resA = err.eval();
-            let resB = err.eval();
+            const intermediateRes = intermediateErr.eval();
+            const resA = err.eval();
+            const resB = err.eval();
             expect(intermediateEvalCount).to.equal(1);
             expect(evalCount).to.equal(1);
             expect(ParseError.equal(resA, resB)).to.be.true;
@@ -106,7 +106,7 @@ describe("#eval()", () => {
     });
 
     it("should throw a `TypeError' if invalid thunk (not a function) found in the evaluation", () => {
-        let invalidThunks = [
+        const invalidThunks = [
             null,
             undefined,
             "foobar",
@@ -114,20 +114,20 @@ describe("#eval()", () => {
             true,
             {}
         ];
-        for (let thunk of invalidThunks) {
+        for (const thunk of invalidThunks) {
             {
-                let err = new LazyParseError(thunk);
+                const err = new LazyParseError(thunk);
                 expect(() => { err.eval(); }).to.throw(TypeError);
             }
             {
-                let err = new LazyParseError(() => new LazyParseError(thunk));
+                const err = new LazyParseError(() => new LazyParseError(thunk));
                 expect(() => { err.eval(); }).to.throw(TypeError);
             }
         }
     });
 
     it("should throw a `TypeError' if the final evaluation result is not a `ParseError' object", () => {
-        let invalidResults = [
+        const invalidResults = [
             null,
             undefined,
             "foobar",
@@ -136,13 +136,13 @@ describe("#eval()", () => {
             {},
             () => {}
         ];
-        for (let res of invalidResults) {
+        for (const res of invalidResults) {
             {
-                let err = new LazyParseError(() => res);
+                const err = new LazyParseError(() => res);
                 expect(() => { err.eval(); }).to.throw(TypeError);
             }
             {
-                let err = new LazyParseError(() => new LazyParseError(() => res));
+                const err = new LazyParseError(() => new LazyParseError(() => res));
                 expect(() => { err.eval(); }).to.throw(TypeError);
             }
         }
