@@ -19,15 +19,15 @@ const setPosition = _prim.setPosition;
 
 describe(".setPosition(pos)", () => {
     it("should return a parser that sets parser position to `pos' and empty succeeds", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let parser = setPosition(new SourcePos("nyancat", 496, 28));
+        const parser = setPosition(new SourcePos("nyancat", 496, 28));
         assertParser(parser);
-        let res = parser.run(initState);
+        const res = parser.run(initState);
         expect(Result.equal(
             res,
             Result.esuc(

@@ -20,13 +20,13 @@ const getPosition = _prim.getPosition;
 describe(".getPosition", () => {
     it("should get the current position of parser", () => {
         assertParser(getPosition);
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let res = getPosition.run(initState);
+        const res = getPosition.run(initState);
         expect(Result.equal(
             res,
             Result.esuc(

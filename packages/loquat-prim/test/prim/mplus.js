@@ -23,42 +23,42 @@ const mplus = _prim.mplus;
 
 describe(".mplus(parserA, parserB)", () => {
     it("should return a parser that runs `parserA', and if the result is empty error, runs `parserB'", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let stateA = new State(
+        const stateA = new State(
             new Config({ tabWidth: 4 }),
             "restA",
             new SourcePos("foobar", 1, 2),
             "someA"
         );
-        let errA = new ParseError(
+        const errA = new ParseError(
             new SourcePos("foobar", 1, 2),
             [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
         );
-        let stateB = new State(
+        const stateB = new State(
             new Config({ tabWidth: 2 }),
             "restB",
             new SourcePos("foobar", 1, 2),
             "someB"
         );
-        let errB = new ParseError(
+        const errB = new ParseError(
             new SourcePos("foobar", 1, 2),
             [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
         );
         // csuc
         {
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errA, "nyan", stateA);
             });
-            let parserB = new Parser(() => { throw new Error("unexpected call"); });
-            let composed = mplus(parserA, parserB);
+            const parserB = new Parser(() => { throw new Error("unexpected call"); });
+            const composed = mplus(parserA, parserB);
             assertParser(composed);
-            let res = composed.run(initState);
+            const res = composed.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(errA, "nyan", stateA)
@@ -66,14 +66,14 @@ describe(".mplus(parserA, parserB)", () => {
         }
         // cerr
         {
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.cerr(errA);
             });
-            let parserB = new Parser(() => { throw new Error("unexpected call"); });
-            let composed = mplus(parserA, parserB);
+            const parserB = new Parser(() => { throw new Error("unexpected call"); });
+            const composed = mplus(parserA, parserB);
             assertParser(composed);
-            let res = composed.run(initState);
+            const res = composed.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(errA)
@@ -81,14 +81,14 @@ describe(".mplus(parserA, parserB)", () => {
         }
         // esuc
         {
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errA, "nyan", stateA);
             });
-            let parserB = new Parser(() => { throw new Error("unexpected call"); });
-            let composed = mplus(parserA, parserB);
+            const parserB = new Parser(() => { throw new Error("unexpected call"); });
+            const composed = mplus(parserA, parserB);
             assertParser(composed);
-            let res = composed.run(initState);
+            const res = composed.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(errA, "nyan", stateA)
@@ -96,17 +96,17 @@ describe(".mplus(parserA, parserB)", () => {
         }
         // eerr, csuc
         {
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.eerr(errA);
             });
-            let parserB = new Parser(state => {
+            const parserB = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errB, "cat", stateB);
             });
-            let composed = mplus(parserA, parserB);
+            const composed = mplus(parserA, parserB);
             assertParser(composed);
-            let res = composed.run(initState);
+            const res = composed.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(errB, "cat", stateB)
@@ -114,17 +114,17 @@ describe(".mplus(parserA, parserB)", () => {
         }
         // eerr, cerr
         {
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.eerr(errA);
             });
-            let parserB = new Parser(state => {
+            const parserB = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.cerr(errB);
             });
-            let composed = mplus(parserA, parserB);
+            const composed = mplus(parserA, parserB);
             assertParser(composed);
-            let res = composed.run(initState);
+            const res = composed.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(errB)
@@ -132,17 +132,17 @@ describe(".mplus(parserA, parserB)", () => {
         }
         // eerr, esuc
         {
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.eerr(errA);
             });
-            let parserB = new Parser(state => {
+            const parserB = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errB, "cat", stateB);
             });
-            let composed = mplus(parserA, parserB);
+            const composed = mplus(parserA, parserB);
             assertParser(composed);
-            let res = composed.run(initState);
+            const res = composed.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(ParseError.merge(errA, errB), "cat", stateB)
@@ -150,17 +150,17 @@ describe(".mplus(parserA, parserB)", () => {
         }
         // eerr, eerr
         {
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.eerr(errA);
             });
-            let parserB = new Parser(state => {
+            const parserB = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.eerr(errB);
             });
-            let composed = mplus(parserA, parserB);
+            const composed = mplus(parserA, parserB);
             assertParser(composed);
-            let res = composed.run(initState);
+            const res = composed.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(ParseError.merge(errA, errB))
@@ -169,7 +169,7 @@ describe(".mplus(parserA, parserB)", () => {
     });
 
     it("should obey the monoid laws", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
@@ -177,60 +177,60 @@ describe(".mplus(parserA, parserB)", () => {
         );
         // (u `mplus` v) `mplus` w = u `mplus` (v `mplus` w)
         {
-            let stateU = new State(
+            const stateU = new State(
                 new Config({ tabWidth: 4 }),
                 "restU",
                 new SourcePos("foobar", 1, 2),
                 "someU"
             );
-            let errU = new ParseError(
+            const errU = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testU")]
             );
-            let us = [
+            const us = [
                 new Parser(() => Result.csuc(errU, "u", stateU)),
                 new Parser(() => Result.cerr(errU)),
                 new Parser(() => Result.esuc(errU, "u", stateU)),
                 new Parser(() => Result.eerr(errU))
             ];
 
-            let stateV = new State(
+            const stateV = new State(
                 new Config({ tabWidth: 4 }),
                 "restV",
                 new SourcePos("foobar", 1, 2),
                 "someV"
             );
-            let errV = new ParseError(
+            const errV = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testV")]
             );
-            let vs = [
+            const vs = [
                 new Parser(() => Result.csuc(errV, "u", stateV)),
                 new Parser(() => Result.cerr(errV)),
                 new Parser(() => Result.esuc(errV, "u", stateV)),
                 new Parser(() => Result.eerr(errV))
             ];
 
-            let stateW = new State(
+            const stateW = new State(
                 new Config({ tabWidth: 4 }),
                 "restW",
                 new SourcePos("foobar", 1, 2),
                 "someW"
             );
-            let errW = new ParseError(
+            const errW = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testW")]
             );
-            let ws = [
+            const ws = [
                 new Parser(() => Result.csuc(errW, "u", stateW)),
                 new Parser(() => Result.cerr(errW)),
                 new Parser(() => Result.esuc(errW, "u", stateW)),
                 new Parser(() => Result.eerr(errW))
             ];
 
-            for (let u of us) {
-                for (let v of vs) {
-                    for (let w of ws) {
+            for (const u of us) {
+                for (const v of vs) {
+                    for (const w of ws) {
                         expect(Result.equal(
                             mplus(mplus(u, v), w).run(initState),
                             mplus(u, mplus(v, w)).run(initState)
@@ -241,23 +241,23 @@ describe(".mplus(parserA, parserB)", () => {
         }
         // parser `mplus` mzero = mzero `mplus` parser = parser
         {
-            let finalState = new State(
+            const finalState = new State(
                 new Config({ tabWidth: 4 }),
                 "rest",
                 new SourcePos("foobar", 1, 2),
                 "some"
             );
-            let err = new ParseError(
+            const err = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
             );
-            let parsers = [
+            const parsers = [
                 new Parser(() => Result.csuc(err, "nyancat", finalState)),
                 new Parser(() => Result.cerr(err)),
                 new Parser(() => Result.esuc(err, "nyancat", finalState)),
                 new Parser(() => Result.eerr(err))
             ];
-            for (let parser of parsers) {
+            for (const parser of parsers) {
                 expect(Result.equal(
                     mplus(parser, mzero).run(initState),
                     parser.run(initState)

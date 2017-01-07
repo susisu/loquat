@@ -20,13 +20,13 @@ const getParserState = _prim.getParserState;
 describe(".getParserState", () => {
     it("should get current state of parser", () => {
         assertParser(getParserState);
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let res = getParserState.run(initState);
+        const res = getParserState.run(initState);
         expect(Result.equal(
             res,
             Result.esuc(

@@ -21,10 +21,10 @@ const tokens = _prim.tokens;
 
 describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () => {
     it("should return a parser that parses tokens given by `expectTokens'", () => {
-        let arrayEqual = (xs, ys) => xs.length === ys.length && xs.every((x, i) => x === ys[i]);
+        const arrayEqual = (xs, ys) => xs.length === ys.length && xs.every((x, i) => x === ys[i]);
 
-        let initConfig = new Config({ tabWidth: 8, unicode: false });
-        let initPos    = new SourcePos("foobar", 1, 1);
+        const initConfig = new Config({ tabWidth: 8, unicode: false });
+        const initPos    = new SourcePos("foobar", 1, 1);
         function generateParser(expectTokens) {
             return tokens(
                 expectTokens,
@@ -41,16 +41,16 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
 
         // expect empty
         {
-            let initState = new State(
+            const initState = new State(
                 initConfig,
                 "ABC",
                 initPos,
                 "none"
             );
-            let expectTokens = [];
-            let parser = generateParser(expectTokens);
+            const expectTokens = [];
+            const parser = generateParser(expectTokens);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -63,16 +63,16 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
         }
         // expect many, correct input
         {
-            let initState = new State(
+            const initState = new State(
                 initConfig,
                 "ABC",
                 initPos,
                 "none"
             );
-            let expectTokens = ["A", "B"];
-            let parser = generateParser(expectTokens);
+            const expectTokens = ["A", "B"];
+            const parser = generateParser(expectTokens);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -90,16 +90,16 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
         }
         // expect many, totally wrong input
         {
-            let initState = new State(
+            const initState = new State(
                 initConfig,
                 "CDE",
                 initPos,
                 "none"
             );
-            let expectTokens = ["A", "B"];
-            let parser = generateParser(expectTokens);
+            const expectTokens = ["A", "B"];
+            const parser = generateParser(expectTokens);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -116,16 +116,16 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
         }
         // expect many, partially wrong input
         {
-            let initState = new State(
+            const initState = new State(
                 initConfig,
                 "ACD",
                 initPos,
                 "none"
             );
-            let expectTokens = ["A", "B"];
-            let parser = generateParser(expectTokens);
+            const expectTokens = ["A", "B"];
+            const parser = generateParser(expectTokens);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -142,16 +142,16 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
         }
         // expect many, no input
         {
-            let initState = new State(
+            const initState = new State(
                 initConfig,
                 "",
                 initPos,
                 "none"
             );
-            let expectTokens = ["A", "B"];
-            let parser = generateParser(expectTokens);
+            const expectTokens = ["A", "B"];
+            const parser = generateParser(expectTokens);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -168,16 +168,16 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
         }
         // expect many, less input
         {
-            let initState = new State(
+            const initState = new State(
                 initConfig,
                 "A",
                 initPos,
                 "none"
             );
-            let expectTokens = ["A", "B"];
-            let parser = generateParser(expectTokens);
+            const expectTokens = ["A", "B"];
+            const parser = generateParser(expectTokens);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -195,18 +195,18 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
     });
 
     it("should treat input in unicode mode if `unicode' flag of the config is `true'", () => {
-        let arrayEqual = (xs, ys) => xs.length === ys.length && xs.every((x, i) => x === ys[i]);
+        const arrayEqual = (xs, ys) => xs.length === ys.length && xs.every((x, i) => x === ys[i]);
 
         // non-unicode mode
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8, unicode: false }),
                 "\uD83C\uDF63ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let expectTokens = ["\uD83C\uDF63", "A"];
-            let parser = tokens(
+            const expectTokens = ["\uD83C\uDF63", "A"];
+            const parser = tokens(
                 expectTokens,
                 (x, y) => x === y,
                 tokens => tokens.join(""),
@@ -218,7 +218,7 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
                 }
             );
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -235,14 +235,14 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
         }
         // unicode mode
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8, unicode: true }),
                 "\uD83C\uDF63ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let expectTokens = ["\uD83C\uDF63", "A"];
-            let parser = tokens(
+            const expectTokens = ["\uD83C\uDF63", "A"];
+            const parser = tokens(
                 expectTokens,
                 (x, y) => x === y,
                 tokens => tokens.join(""),
@@ -254,7 +254,7 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
                 }
             );
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(

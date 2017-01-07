@@ -23,7 +23,7 @@ const reduceMany = _prim.reduceMany;
 describe(".reduceMany(parser, callback, initVal)", () => {
     it("should return a parser that runs `parser' until it empty fails "
         + "and reduces the resultant values by `callback'", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "abc",
             new SourcePos("foobar", 1, 1),
@@ -33,11 +33,11 @@ describe(".reduceMany(parser, callback, initVal)", () => {
             let i = 0;
             return new Parser(state => {
                 expect(State.equal(state, i === 0 ? initState : states[i - 1])).to.be.true;
-                let _consumed = consumed[i];
-                let _success  = success[i];
-                let _val      = vals[i];
-                let _state    = states[i];
-                let _err      = errs[i];
+                const _consumed = consumed[i];
+                const _success  = success[i];
+                const _val      = vals[i];
+                const _state    = states[i];
+                const _err      = errs[i];
                 i += 1;
                 return new Result(_consumed, _success, _err, _val, _state);
             });
@@ -45,21 +45,21 @@ describe(".reduceMany(parser, callback, initVal)", () => {
 
         // cerr
         {
-            let consumed = [true];
-            let success = [false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [true];
+            const success = [false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
 
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let manyParser = reduceMany(parser, (x, y) => x + y, "?");
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const manyParser = reduceMany(parser, (x, y) => x + y, "?");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -72,10 +72,10 @@ describe(".reduceMany(parser, callback, initVal)", () => {
         }
         // many csuc, cerr
         {
-            let consumed = [true, true, true];
-            let success = [true, true, false];
-            let vals = ["A", "B"];
-            let states = [
+            const consumed = [true, true, true];
+            const success = [true, true, false];
+            const vals = ["A", "B"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 4 }),
                     "restA",
@@ -89,7 +89,7 @@ describe(".reduceMany(parser, callback, initVal)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -104,10 +104,10 @@ describe(".reduceMany(parser, callback, initVal)", () => {
                 )
             ];
 
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let manyParser = reduceMany(parser, (x, y) => x + y, "?");
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const manyParser = reduceMany(parser, (x, y) => x + y, "?");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -120,21 +120,21 @@ describe(".reduceMany(parser, callback, initVal)", () => {
         }
         // eerr
         {
-            let consumed = [false];
-            let success = [false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [false];
+            const success = [false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
 
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let manyParser = reduceMany(parser, (x, y) => x + y, "?");
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const manyParser = reduceMany(parser, (x, y) => x + y, "?");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -149,10 +149,10 @@ describe(".reduceMany(parser, callback, initVal)", () => {
         }
         // many csuc, eerr
         {
-            let consumed = [true, true, false];
-            let success = [true, true, false];
-            let vals = ["A", "B"];
-            let states = [
+            const consumed = [true, true, false];
+            const success = [true, true, false];
+            const vals = ["A", "B"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 4 }),
                     "restA",
@@ -166,7 +166,7 @@ describe(".reduceMany(parser, callback, initVal)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -181,10 +181,10 @@ describe(".reduceMany(parser, callback, initVal)", () => {
                 )
             ];
 
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let manyParser = reduceMany(parser, (x, y) => x + y, "?");
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const manyParser = reduceMany(parser, (x, y) => x + y, "?");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -205,7 +205,7 @@ describe(".reduceMany(parser, callback, initVal)", () => {
     });
 
     it("should throw an `Error' if `parser' empty succeeds", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "abc",
             new SourcePos("foobar", 1, 1),
@@ -215,11 +215,11 @@ describe(".reduceMany(parser, callback, initVal)", () => {
             let i = 0;
             return new Parser(state => {
                 expect(State.equal(state, i === 0 ? initState : states[i - 1])).to.be.true;
-                let _consumed = consumed[i];
-                let _success  = success[i];
-                let _val      = vals[i];
-                let _state    = states[i];
-                let _err      = errs[i];
+                const _consumed = consumed[i];
+                const _success  = success[i];
+                const _val      = vals[i];
+                const _state    = states[i];
+                const _err      = errs[i];
                 i += 1;
                 return new Result(_consumed, _success, _err, _val, _state);
             });
@@ -227,10 +227,10 @@ describe(".reduceMany(parser, callback, initVal)", () => {
 
         // esuc, eerr
         {
-            let consumed = [false, false];
-            let success = [true, false];
-            let vals = ["A"];
-            let states = [
+            const consumed = [false, false];
+            const success = [true, false];
+            const vals = ["A"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 4 }),
                     "restA",
@@ -238,7 +238,7 @@ describe(".reduceMany(parser, callback, initVal)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -249,17 +249,17 @@ describe(".reduceMany(parser, callback, initVal)", () => {
                 )
             ];
 
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let manyParser = reduceMany(parser, (x, y) => x + y, "?");
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const manyParser = reduceMany(parser, (x, y) => x + y, "?");
             assertParser(manyParser);
             expect(() => { manyParser.run(initState); }).to.throw(Error, /many/);
         }
         // many csuc, esuc, eerr
         {
-            let consumed = [true, true, false, false];
-            let success = [true, true, true, false];
-            let vals = ["A", "B", "C"];
-            let states = [
+            const consumed = [true, true, false, false];
+            const success = [true, true, true, false];
+            const vals = ["A", "B", "C"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 4 }),
                     "restA",
@@ -279,7 +279,7 @@ describe(".reduceMany(parser, callback, initVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -298,8 +298,8 @@ describe(".reduceMany(parser, callback, initVal)", () => {
                 )
             ];
 
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let manyParser = reduceMany(parser, (x, y) => x + y, "?");
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const manyParser = reduceMany(parser, (x, y) => x + y, "?");
             assertParser(manyParser);
             expect(() => { manyParser.run(initState); }).to.throw(Error, /many/);
         }

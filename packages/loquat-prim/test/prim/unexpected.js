@@ -21,15 +21,15 @@ const unexpected = _prim.unexpected;
 
 describe(".unexpected(msgStr)", () => {
     it("should return a parser that always yield empty unexpected error with a message `msgStr'", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let parser = unexpected("nyancat");
+        const parser = unexpected("nyancat");
         assertParser(parser);
-        let res = parser.run(initState);
+        const res = parser.run(initState);
         expect(Result.equal(
             res,
             Result.eerr(

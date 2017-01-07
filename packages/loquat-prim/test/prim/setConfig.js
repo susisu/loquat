@@ -19,15 +19,15 @@ const setConfig = _prim.setConfig;
 
 describe(".setConfig(config)", () => {
     it("should return a parser that sets parser config to `config' and empty succeeds", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let parser = setConfig(new Config({ tabWidth: 4, unicode: true }));
+        const parser = setConfig(new Config({ tabWidth: 4, unicode: true }));
         assertParser(parser);
-        let res = parser.run(initState);
+        const res = parser.run(initState);
         expect(Result.equal(
             res,
             Result.esuc(

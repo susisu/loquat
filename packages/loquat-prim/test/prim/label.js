@@ -22,13 +22,13 @@ const label = _prim.label;
 
 describe(".label(parser, labelStr)", () => {
     it("should return a parser labelled by a string `labelStr'", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let finalState = new State(
+        const finalState = new State(
             new Config({ tabWidth: 4 }),
             "rest",
             new SourcePos("foobar", 1, 2),
@@ -36,54 +36,54 @@ describe(".label(parser, labelStr)", () => {
         );
         // unknown error case
         {
-            let err = ParseError.unknown(new SourcePos("foobar", 1, 2));
+            const err = ParseError.unknown(new SourcePos("foobar", 1, 2));
             {
-                let parser = new Parser(state => {
+                const parser = new Parser(state => {
                     expect(State.equal(state, initState)).to.be.true;
                     return Result.csuc(err, "nyancat", finalState);
                 });
-                let labeled = label(parser, "label");
+                const labeled = label(parser, "label");
                 assertParser(labeled);
-                let res = labeled.run(initState);
+                const res = labeled.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(err, "nyancat", finalState)
                 )).to.be.true;
             }
             {
-                let parser = new Parser(state => {
+                const parser = new Parser(state => {
                     expect(State.equal(state, initState)).to.be.true;
                     return Result.cerr(err);
                 });
-                let labeled = label(parser, "label");
+                const labeled = label(parser, "label");
                 assertParser(labeled);
-                let res = labeled.run(initState);
+                const res = labeled.run(initState);
                 expect(Result.equal(
                     res,
                     Result.cerr(err)
                 )).to.be.true;
             }
             {
-                let parser = new Parser(state => {
+                const parser = new Parser(state => {
                     expect(State.equal(state, initState)).to.be.true;
                     return Result.esuc(err, "nyancat", finalState);
                 });
-                let labeled = label(parser, "label");
+                const labeled = label(parser, "label");
                 assertParser(labeled);
-                let res = labeled.run(initState);
+                const res = labeled.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(err, "nyancat", finalState)
                 )).to.be.true;
             }
             {
-                let parser = new Parser(state => {
+                const parser = new Parser(state => {
                     expect(State.equal(state, initState)).to.be.true;
                     return Result.eerr(err);
                 });
-                let labeled = label(parser, "label");
+                const labeled = label(parser, "label");
                 assertParser(labeled);
-                let res = labeled.run(initState);
+                const res = labeled.run(initState);
                 expect(Result.equal(
                     res,
                     Result.eerr(
@@ -97,7 +97,7 @@ describe(".label(parser, labelStr)", () => {
         }
         // known error case
         {
-            let err = new ParseError(
+            const err = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [
                     new ErrorMessage(ErrorMessageType.EXPECT, "expect1"),
@@ -106,39 +106,39 @@ describe(".label(parser, labelStr)", () => {
                 ]
             );
             {
-                let parser = new Parser(state => {
+                const parser = new Parser(state => {
                     expect(State.equal(state, initState)).to.be.true;
                     return Result.csuc(err, "nyancat", finalState);
                 });
-                let labeled = label(parser, "label");
+                const labeled = label(parser, "label");
                 assertParser(labeled);
-                let res = labeled.run(initState);
+                const res = labeled.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(err, "nyancat", finalState)
                 )).to.be.true;
             }
             {
-                let parser = new Parser(state => {
+                const parser = new Parser(state => {
                     expect(State.equal(state, initState)).to.be.true;
                     return Result.cerr(err);
                 });
-                let labeled = label(parser, "label");
+                const labeled = label(parser, "label");
                 assertParser(labeled);
-                let res = labeled.run(initState);
+                const res = labeled.run(initState);
                 expect(Result.equal(
                     res,
                     Result.cerr(err)
                 )).to.be.true;
             }
             {
-                let parser = new Parser(state => {
+                const parser = new Parser(state => {
                     expect(State.equal(state, initState)).to.be.true;
                     return Result.esuc(err, "nyancat", finalState);
                 });
-                let labeled = label(parser, "label");
+                const labeled = label(parser, "label");
                 assertParser(labeled);
-                let res = labeled.run(initState);
+                const res = labeled.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -155,13 +155,13 @@ describe(".label(parser, labelStr)", () => {
                 )).to.be.true;
             }
             {
-                let parser = new Parser(state => {
+                const parser = new Parser(state => {
                     expect(State.equal(state, initState)).to.be.true;
                     return Result.eerr(err);
                 });
-                let labeled = label(parser, "label");
+                const labeled = label(parser, "label");
                 assertParser(labeled);
-                let res = labeled.run(initState);
+                const res = labeled.run(initState);
                 expect(Result.equal(
                     res,
                     Result.eerr(

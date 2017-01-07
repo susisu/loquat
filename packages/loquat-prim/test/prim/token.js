@@ -23,13 +23,13 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
     it("should return a parser that parses a token", () => {
         // calcValue succeeds, abundant input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8, unicode: false }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = token(
+            const parser = token(
                 (x, config) => {
                     expect(x).to.equal("A");
                     expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
@@ -43,7 +43,7 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
                 }
             );
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -60,13 +60,13 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
         }
         // calcValue succeeds, minimal input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8, unicode: false }),
                 "A",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = token(
+            const parser = token(
                 (x, config) => {
                     expect(x).to.equal("A");
                     expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
@@ -80,7 +80,7 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
                 }
             );
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -97,13 +97,13 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
         }
         // calcValue fails
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8, unicode: false }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = token(
+            const parser = token(
                 (x, config) => {
                     expect(x).to.equal("A");
                     expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
@@ -116,7 +116,7 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
                 () => { throw new Error("unexpected call"); }
             );
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -129,19 +129,19 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8, unicode: false }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = token(
+            const parser = token(
                 () => { throw new Error("unexpected call"); },
                 () => { throw new Error("unexpected call"); },
                 () => { throw new Error("unexpected call"); }
             );
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -157,13 +157,13 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
     it("should treat input in unicode mode if `unicode' flag of the config is `true'", () => {
         // non-unicode mode
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8, unicode: false }),
                 "\uD83C\uDF63\uD83C\uDF64ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = token(
+            const parser = token(
                 (x, config) => {
                     expect(x).to.equal("\uD83C");
                     expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
@@ -177,7 +177,7 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
                 }
             );
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -194,13 +194,13 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
         }
         // unicode mode
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8, unicode: true }),
                 "\uD83C\uDF63\uD83C\uDF64ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = token(
+            const parser = token(
                 (x, config) => {
                     expect(x).to.equal("\uD83C\uDF63");
                     expect(Config.equal(config, new Config({ tabWidth: 8, unicode: true }))).to.be.true;
@@ -214,7 +214,7 @@ describe(".token(calcValue, tokenToString, calcPos)", () => {
                 }
             );
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(

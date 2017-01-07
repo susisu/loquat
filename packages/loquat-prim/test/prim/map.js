@@ -22,63 +22,63 @@ const map = _prim.map;
 
 describe(".map(parser, func)", () => {
     it("should return a parser that runs `parser' and maps `func' to the result value", () => {
-        let func = x => x.toUpperCase();
+        const func = x => x.toUpperCase();
 
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let finalState = new State(
+        const finalState = new State(
             new Config({ tabWidth: 4 }),
             "rest",
             new SourcePos("foobar", 1, 2),
             "some"
         );
-        let err = new ParseError(
+        const err = new ParseError(
             new SourcePos("foobar", 1, 2),
             [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
         );
 
         {
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(err, "nyancat", finalState);
             });
-            let mapped = map(parser, func);
+            const mapped = map(parser, func);
             assertParser(mapped);
-            let res = mapped.run(initState);
+            const res = mapped.run(initState);
             expect(Result.equal(res, Result.csuc(err, "NYANCAT", finalState))).to.be.true;
         }
         {
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.cerr(err);
             });
-            let mapped = map(parser, func);
+            const mapped = map(parser, func);
             assertParser(mapped);
-            let res = mapped.run(initState);
+            const res = mapped.run(initState);
             expect(Result.equal(res, Result.cerr(err))).to.be.true;
         }
         {
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(err, "nyancat", finalState);
             });
-            let mapped = map(parser, func);
+            const mapped = map(parser, func);
             assertParser(mapped);
-            let res = mapped.run(initState);
+            const res = mapped.run(initState);
             expect(Result.equal(res, Result.esuc(err, "NYANCAT", finalState))).to.be.true;
         }
         {
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.eerr(err);
             });
-            let mapped = map(parser, func);
+            const mapped = map(parser, func);
             assertParser(mapped);
-            let res = mapped.run(initState);
+            const res = mapped.run(initState);
             expect(Result.equal(res, Result.eerr(err))).to.be.true;
         }
     });

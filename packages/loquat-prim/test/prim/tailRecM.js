@@ -25,25 +25,25 @@ const tailRecM = _prim.tailRecM;
 describe(".tailRecM(initVal, func)", () => {
     it("should return a parser that calls `func' with `initValue', runs the returned parser,"
         + " and repeats it until parser returnes done", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let initVal = "abc";
+        const initVal = "abc";
         function generateFunc(consumed, success, vals, states, errs) {
             let i = 0;
-            let len = consumed.length;
+            const len = consumed.length;
             return val => {
                 expect(val).to.equal(i === 0 ? initVal : vals[i - 1]);
                 return new Parser(state => {
                     expect(State.equal(state, i === 0 ? initState : states[i - 1]));
-                    let _consumed = consumed[i];
-                    let _success  = success[i];
-                    let _val      = { done: i === len - 1, value: vals[i] };
-                    let _state    = states[i];
-                    let _err      = errs[i];
+                    const _consumed = consumed[i];
+                    const _success  = success[i];
+                    const _val      = { done: i === len - 1, value: vals[i] };
+                    const _state    = states[i];
+                    const _err      = errs[i];
                     i += 1;
                     return new Result(_consumed, _success, _err, _val, _state);
                 });
@@ -53,26 +53,26 @@ describe(".tailRecM(initVal, func)", () => {
         {
             // csuc
             {
-                let finalState = new State(
+                const finalState = new State(
                     new Config({ tabWidth: 4 }),
                     "rest",
                     new SourcePos("foobar", 1, 2),
                     "some"
                 );
-                let err = new ParseError(
+                const err = new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
                 );
-                let func = val => {
+                const func = val => {
                     expect(val).to.equal("nyan");
                     return new Parser(state => {
                         expect(State.equal(state, initState));
                         return Result.csuc(err, { done: true, value: "cat" }, finalState);
                     });
                 };
-                let parser = tailRecM("nyan", func);
+                const parser = tailRecM("nyan", func);
                 assertParser(parser);
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(
@@ -84,20 +84,20 @@ describe(".tailRecM(initVal, func)", () => {
             }
             // cerr
             {
-                let err = new ParseError(
+                const err = new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
                 );
-                let func = val => {
+                const func = val => {
                     expect(val).to.equal("nyan");
                     return new Parser(state => {
                         expect(State.equal(state, initState));
                         return Result.cerr(err);
                     });
                 };
-                let parser = tailRecM("nyan", func);
+                const parser = tailRecM("nyan", func);
                 assertParser(parser);
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.cerr(err)
@@ -105,26 +105,26 @@ describe(".tailRecM(initVal, func)", () => {
             }
             // esuc
             {
-                let finalState = new State(
+                const finalState = new State(
                     new Config({ tabWidth: 4 }),
                     "rest",
                     new SourcePos("foobar", 1, 1),
                     "some"
                 );
-                let err = new ParseError(
+                const err = new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
                 );
-                let func = val => {
+                const func = val => {
                     expect(val).to.equal("nyan");
                     return new Parser(state => {
                         expect(State.equal(state, initState));
                         return Result.esuc(err, { done: true, value: "cat" }, finalState);
                     });
                 };
-                let parser = tailRecM("nyan", func);
+                const parser = tailRecM("nyan", func);
                 assertParser(parser);
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -136,20 +136,20 @@ describe(".tailRecM(initVal, func)", () => {
             }
             // eerr
             {
-                let err = new ParseError(
+                const err = new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
                 );
-                let func = val => {
+                const func = val => {
                     expect(val).to.equal("nyan");
                     return new Parser(state => {
                         expect(State.equal(state, initState));
                         return Result.eerr(err);
                     });
                 };
-                let parser = tailRecM("nyan", func);
+                const parser = tailRecM("nyan", func);
                 assertParser(parser);
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.eerr(err)
@@ -160,10 +160,10 @@ describe(".tailRecM(initVal, func)", () => {
         {
             // csuc, csuc
             {
-                let consumed = [true, true];
-                let success = [true, true];
-                let vals = ["nyan", "cat"];
-                let states = [
+                const consumed = [true, true];
+                const success = [true, true];
+                const vals = ["nyan", "cat"];
+                const states = [
                     new State(
                         new Config({ tabWidth: 4 }),
                         "restA",
@@ -177,7 +177,7 @@ describe(".tailRecM(initVal, func)", () => {
                         "someB"
                     )
                 ];
-                let errs = [
+                const errs = [
                     new ParseError(
                         new SourcePos("foobar", 1, 2),
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -187,10 +187,10 @@ describe(".tailRecM(initVal, func)", () => {
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                     )
                 ];
-                let func = generateFunc(consumed, success, vals, states, errs);
-                let parser = tailRecM(initVal, func);
+                const func = generateFunc(consumed, success, vals, states, errs);
+                const parser = tailRecM(initVal, func);
                 assertParser(parser);
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(
@@ -210,10 +210,10 @@ describe(".tailRecM(initVal, func)", () => {
             }
             // csuc, cerr
             {
-                let consumed = [true, true];
-                let success = [true, false];
-                let vals = ["nyan"];
-                let states = [
+                const consumed = [true, true];
+                const success = [true, false];
+                const vals = ["nyan"];
+                const states = [
                     new State(
                         new Config({ tabWidth: 4 }),
                         "restA",
@@ -221,7 +221,7 @@ describe(".tailRecM(initVal, func)", () => {
                         "someA"
                     )
                 ];
-                let errs = [
+                const errs = [
                     new ParseError(
                         new SourcePos("foobar", 1, 2),
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -231,10 +231,10 @@ describe(".tailRecM(initVal, func)", () => {
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                     )
                 ];
-                let func = generateFunc(consumed, success, vals, states, errs);
-                let parser = tailRecM(initVal, func);
+                const func = generateFunc(consumed, success, vals, states, errs);
+                const parser = tailRecM(initVal, func);
                 assertParser(parser);
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.cerr(
@@ -247,10 +247,10 @@ describe(".tailRecM(initVal, func)", () => {
             }
             // csuc, esuc
             {
-                let consumed = [true, false];
-                let success = [true, true];
-                let vals = ["nyan", "cat"];
-                let states = [
+                const consumed = [true, false];
+                const success = [true, true];
+                const vals = ["nyan", "cat"];
+                const states = [
                     new State(
                         new Config({ tabWidth: 4 }),
                         "restA",
@@ -264,7 +264,7 @@ describe(".tailRecM(initVal, func)", () => {
                         "someB"
                     )
                 ];
-                let errs = [
+                const errs = [
                     new ParseError(
                         new SourcePos("foobar", 1, 2),
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -274,10 +274,10 @@ describe(".tailRecM(initVal, func)", () => {
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                     )
                 ];
-                let func = generateFunc(consumed, success, vals, states, errs);
-                let parser = tailRecM(initVal, func);
+                const func = generateFunc(consumed, success, vals, states, errs);
+                const parser = tailRecM(initVal, func);
                 assertParser(parser);
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(
@@ -300,10 +300,10 @@ describe(".tailRecM(initVal, func)", () => {
             }
             // csuc, eerr
             {
-                let consumed = [true, false];
-                let success = [true, false];
-                let vals = ["nyan"];
-                let states = [
+                const consumed = [true, false];
+                const success = [true, false];
+                const vals = ["nyan"];
+                const states = [
                     new State(
                         new Config({ tabWidth: 4 }),
                         "restA",
@@ -311,7 +311,7 @@ describe(".tailRecM(initVal, func)", () => {
                         "someA"
                     )
                 ];
-                let errs = [
+                const errs = [
                     new ParseError(
                         new SourcePos("foobar", 1, 2),
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -321,10 +321,10 @@ describe(".tailRecM(initVal, func)", () => {
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                     )
                 ];
-                let func = generateFunc(consumed, success, vals, states, errs);
-                let parser = tailRecM(initVal, func);
+                const func = generateFunc(consumed, success, vals, states, errs);
+                const parser = tailRecM(initVal, func);
                 assertParser(parser);
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.cerr(
@@ -340,20 +340,20 @@ describe(".tailRecM(initVal, func)", () => {
             }
             // cerr
             {
-                let consumed = [true];
-                let success = [false];
-                let vals = [];
-                let states = [];
-                let errs = [
+                const consumed = [true];
+                const success = [false];
+                const vals = [];
+                const states = [];
+                const errs = [
                     new ParseError(
                         new SourcePos("foobar", 1, 2),
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                     )
                 ];
-                let func = generateFunc(consumed, success, vals, states, errs);
-                let parser = tailRecM(initVal, func);
+                const func = generateFunc(consumed, success, vals, states, errs);
+                const parser = tailRecM(initVal, func);
                 assertParser(parser);
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.cerr(
@@ -366,10 +366,10 @@ describe(".tailRecM(initVal, func)", () => {
             }
             // esuc, csuc
             {
-                let consumed = [false, true];
-                let success = [true, true];
-                let vals = ["nyan", "cat"];
-                let states = [
+                const consumed = [false, true];
+                const success = [true, true];
+                const vals = ["nyan", "cat"];
+                const states = [
                     new State(
                         new Config({ tabWidth: 4 }),
                         "restA",
@@ -383,7 +383,7 @@ describe(".tailRecM(initVal, func)", () => {
                         "someB"
                     )
                 ];
-                let errs = [
+                const errs = [
                     new ParseError(
                         new SourcePos("foobar", 1, 1),
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -393,10 +393,10 @@ describe(".tailRecM(initVal, func)", () => {
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                     )
                 ];
-                let func = generateFunc(consumed, success, vals, states, errs);
-                let parser = tailRecM(initVal, func);
+                const func = generateFunc(consumed, success, vals, states, errs);
+                const parser = tailRecM(initVal, func);
                 assertParser(parser);
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(
@@ -416,10 +416,10 @@ describe(".tailRecM(initVal, func)", () => {
             }
             // esuc, cerr
             {
-                let consumed = [false, true];
-                let success = [true, false];
-                let vals = ["nyan"];
-                let states = [
+                const consumed = [false, true];
+                const success = [true, false];
+                const vals = ["nyan"];
+                const states = [
                     new State(
                         new Config({ tabWidth: 4 }),
                         "restA",
@@ -427,7 +427,7 @@ describe(".tailRecM(initVal, func)", () => {
                         "someA"
                     )
                 ];
-                let errs = [
+                const errs = [
                     new ParseError(
                         new SourcePos("foobar", 1, 1),
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -437,10 +437,10 @@ describe(".tailRecM(initVal, func)", () => {
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                     )
                 ];
-                let func = generateFunc(consumed, success, vals, states, errs);
-                let parser = tailRecM(initVal, func);
+                const func = generateFunc(consumed, success, vals, states, errs);
+                const parser = tailRecM(initVal, func);
                 assertParser(parser);
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.cerr(
@@ -453,10 +453,10 @@ describe(".tailRecM(initVal, func)", () => {
             }
             // esuc, esuc
             {
-                let consumed = [false, false];
-                let success = [true, true];
-                let vals = ["nyan", "cat"];
-                let states = [
+                const consumed = [false, false];
+                const success = [true, true];
+                const vals = ["nyan", "cat"];
+                const states = [
                     new State(
                         new Config({ tabWidth: 4 }),
                         "restA",
@@ -470,7 +470,7 @@ describe(".tailRecM(initVal, func)", () => {
                         "someB"
                     )
                 ];
-                let errs = [
+                const errs = [
                     new ParseError(
                         new SourcePos("foobar", 1, 1),
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -480,10 +480,10 @@ describe(".tailRecM(initVal, func)", () => {
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                     )
                 ];
-                let func = generateFunc(consumed, success, vals, states, errs);
-                let parser = tailRecM(initVal, func);
+                const func = generateFunc(consumed, success, vals, states, errs);
+                const parser = tailRecM(initVal, func);
                 assertParser(parser);
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(
@@ -506,10 +506,10 @@ describe(".tailRecM(initVal, func)", () => {
             }
             // esuc, eerr
             {
-                let consumed = [false, false];
-                let success = [true, false];
-                let vals = ["nyan"];
-                let states = [
+                const consumed = [false, false];
+                const success = [true, false];
+                const vals = ["nyan"];
+                const states = [
                     new State(
                         new Config({ tabWidth: 4 }),
                         "restA",
@@ -517,7 +517,7 @@ describe(".tailRecM(initVal, func)", () => {
                         "someA"
                     )
                 ];
-                let errs = [
+                const errs = [
                     new ParseError(
                         new SourcePos("foobar", 1, 1),
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -527,10 +527,10 @@ describe(".tailRecM(initVal, func)", () => {
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                     )
                 ];
-                let func = generateFunc(consumed, success, vals, states, errs);
-                let parser = tailRecM(initVal, func);
+                const func = generateFunc(consumed, success, vals, states, errs);
+                const parser = tailRecM(initVal, func);
                 assertParser(parser);
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.eerr(
@@ -546,20 +546,20 @@ describe(".tailRecM(initVal, func)", () => {
             }
             // eerr
             {
-                let consumed = [false];
-                let success = [false];
-                let vals = [];
-                let states = [];
-                let errs = [
+                const consumed = [false];
+                const success = [false];
+                const vals = [];
+                const states = [];
+                const errs = [
                     new ParseError(
                         new SourcePos("foobar", 1, 1),
                         [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                     )
                 ];
-                let func = generateFunc(consumed, success, vals, states, errs);
-                let parser = tailRecM(initVal, func);
+                const func = generateFunc(consumed, success, vals, states, errs);
+                const parser = tailRecM(initVal, func);
                 assertParser(parser);
-                let res = parser.run(initState);
+                const res = parser.run(initState);
                 expect(Result.equal(
                     res,
                     Result.eerr(
@@ -574,26 +574,26 @@ describe(".tailRecM(initVal, func)", () => {
     });
 
     it("should return the same result as the parser that calls `bind' recursively", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let initVal = "nyan";
+        const initVal = "nyan";
         function generateParsers(consumed, success, vals, states, errs) {
             let i = 0;
-            let len = consumed.length;
+            const len = consumed.length;
             return {
                 tailRecM: tailRecM(initVal, val => {
                     expect(val).to.equal(i === 0 ? initVal : vals[i - 1]);
                     return new Parser(state => {
                         expect(State.equal(state, i === 0 ? initState : states[i - 1]));
-                        let _consumed = consumed[i];
-                        let _success  = success[i];
-                        let _val      = { done: i === len - 1, value: vals[i] };
-                        let _state    = states[i];
-                        let _err      = errs[i];
+                        const _consumed = consumed[i];
+                        const _success  = success[i];
+                        const _val      = { done: i === len - 1, value: vals[i] };
+                        const _state    = states[i];
+                        const _err      = errs[i];
                         i += 1;
                         return new Result(_consumed, _success, _err, _val, _state);
                     });
@@ -603,11 +603,11 @@ describe(".tailRecM(initVal, func)", () => {
                         expect(val).to.equal(i === 0 ? initVal : vals[i - 1]);
                         return new Parser(state => {
                             expect(State.equal(state, i === 0 ? initState : states[i - 1]));
-                            let _consumed = consumed[i];
-                            let _success  = success[i];
-                            let _val      = vals[i];
-                            let _state    = states[i];
-                            let _err      = errs[i];
+                            const _consumed = consumed[i];
+                            const _success  = success[i];
+                            const _val      = vals[i];
+                            const _state    = states[i];
+                            const _err      = errs[i];
                             i += 1;
                             return new Result(_consumed, _success, _err, _val, _state);
                         });
@@ -616,8 +616,8 @@ describe(".tailRecM(initVal, func)", () => {
                 )
             };
         }
-        let vals = ["c", "a", "t"];
-        let states = [
+        const vals = ["c", "a", "t"];
+        const states = [
             new State(
                 new Config({ tabWidth: 4 }),
                 "restA",
@@ -637,7 +637,7 @@ describe(".tailRecM(initVal, func)", () => {
                 "someC"
             )
         ];
-        let errs = [
+        const errs = [
             new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -651,20 +651,20 @@ describe(".tailRecM(initVal, func)", () => {
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             )
         ];
-        let tf = [true, false];
-        let consumed = [];
-        let success = [];
-        for (let b1 of tf) {
-            for (let b2 of tf) {
-                for (let b3 of tf) {
+        const tf = [true, false];
+        const consumed = [];
+        const success = [];
+        for (const b1 of tf) {
+            for (const b2 of tf) {
+                for (const b3 of tf) {
                     consumed.push([b1, b2, b3]);
                     success.push([b1, b2, b3]);
                 }
             }
         }
-        for (let c of consumed) {
-            for (let s of success) {
-                let ps = generateParsers(c, s, vals, states, errs);
+        for (const c of consumed) {
+            for (const s of success) {
+                const ps = generateParsers(c, s, vals, states, errs);
                 expect(Result.equal(
                     ps.tailRecM.run(initState),
                     ps.bind.run(initState)
@@ -674,19 +674,19 @@ describe(".tailRecM(initVal, func)", () => {
     });
 
     it("should be stack-safe", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
         let i = 0;
-        let func = () => {
-            let done = i >= 20000;
+        const func = () => {
+            const done = i >= 20000;
             i += 1;
             return pure({ done: done, value: undefined });
         };
-        let parser = tailRecM(undefined, func);
+        const parser = tailRecM(undefined, func);
         expect(() => { parser.run(initState); }).not.to.throw(RangeError, /stack/);
     });
 });

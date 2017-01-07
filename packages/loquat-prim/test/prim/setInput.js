@@ -19,15 +19,15 @@ const setInput = _prim.setInput;
 
 describe(".setInput(input)", () => {
     it("should return a parser that sets parser input to `input' and empty succeeds", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let parser = setInput("rest");
+        const parser = setInput("rest");
         assertParser(parser);
-        let res = parser.run(initState);
+        const res = parser.run(initState);
         expect(Result.equal(
             res,
             Result.esuc(

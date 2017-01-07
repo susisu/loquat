@@ -19,15 +19,15 @@ const pure = _prim.pure;
 
 describe(".pure(val)", () => {
     it("should return a parser that always empty succeeds with `val'", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let parser = pure("nyancat");
+        const parser = pure("nyancat");
         assertParser(parser);
-        let res = parser.run(initState);
+        const res = parser.run(initState);
         expect(Result.equal(
             res,
             Result.esuc(
