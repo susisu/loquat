@@ -22,9 +22,9 @@ const sequence = _monad.sequence;
 
 describe(".sequence(parsers)", () => {
     it("should return a parser that runs `parsers' sequentially", () => {
-        let arrayEqual = (arrA, arrB) => arrA.length === arrB.length && arrA.every((elem, i) => elem === arrB[i]);
+        const arrayEqual = (arrA, arrB) => arrA.length === arrB.length && arrA.every((elem, i) => elem === arrB[i]);
 
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
@@ -32,9 +32,9 @@ describe(".sequence(parsers)", () => {
         );
         // empty
         {
-            let parser = sequence([]);
+            const parser = sequence([]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(ParseError.unknown(initState.pos), [], initState),
@@ -43,39 +43,39 @@ describe(".sequence(parsers)", () => {
         }
         // csuc, csuc
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 8 }),
                 "restA",
                 new SourcePos("foobar", 1, 2),
                 "someA"
             );
-            let errA = new ParseError(
+            const errA = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
             );
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errA, "nyan", stateA);
             });
 
-            let stateB = new State(
+            const stateB = new State(
                 new Config({ tabWidth: 8 }),
                 "restB",
                 new SourcePos("foobar", 1, 3),
                 "someB"
             );
-            let errB = new ParseError(
+            const errB = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
             );
-            let parserB = new Parser(state => {
+            const parserB = new Parser(state => {
                 expect(State.equal(state, stateA)).to.be.true;
                 return Result.csuc(errB, "cat", stateB);
             });
 
-            let parser = sequence([parserA, parserB]);
+            const parser = sequence([parserA, parserB]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(errB, ["nyan", "cat"], stateB),
@@ -84,33 +84,33 @@ describe(".sequence(parsers)", () => {
         }
         // csuc, cerr
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 8 }),
                 "restA",
                 new SourcePos("foobar", 1, 2),
                 "someA"
             );
-            let errA = new ParseError(
+            const errA = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
             );
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errA, "nyan", stateA);
             });
 
-            let errB = new ParseError(
+            const errB = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
             );
-            let parserB = new Parser(state => {
+            const parserB = new Parser(state => {
                 expect(State.equal(state, stateA)).to.be.true;
                 return Result.cerr(errB);
             });
 
-            let parser = sequence([parserA, parserB]);
+            const parser = sequence([parserA, parserB]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(errB),
@@ -119,39 +119,39 @@ describe(".sequence(parsers)", () => {
         }
         // csuc, esuc
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 8 }),
                 "restA",
                 new SourcePos("foobar", 1, 2),
                 "someA"
             );
-            let errA = new ParseError(
+            const errA = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
             );
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errA, "nyan", stateA);
             });
 
-            let stateB = new State(
+            const stateB = new State(
                 new Config({ tabWidth: 8 }),
                 "restB",
                 new SourcePos("foobar", 1, 3),
                 "someB"
             );
-            let errB = new ParseError(
+            const errB = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
             );
-            let parserB = new Parser(state => {
+            const parserB = new Parser(state => {
                 expect(State.equal(state, stateA)).to.be.true;
                 return Result.esuc(errB, "cat", stateB);
             });
 
-            let parser = sequence([parserA, parserB]);
+            const parser = sequence([parserA, parserB]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(ParseError.merge(errA, errB), ["nyan", "cat"], stateB),
@@ -160,33 +160,33 @@ describe(".sequence(parsers)", () => {
         }
         // csuc, eerr
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 8 }),
                 "restA",
                 new SourcePos("foobar", 1, 2),
                 "someA"
             );
-            let errA = new ParseError(
+            const errA = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
             );
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errA, "nyan", stateA);
             });
 
-            let errB = new ParseError(
+            const errB = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
             );
-            let parserB = new Parser(state => {
+            const parserB = new Parser(state => {
                 expect(State.equal(state, stateA)).to.be.true;
                 return Result.eerr(errB);
             });
 
-            let parser = sequence([parserA, parserB]);
+            const parser = sequence([parserA, parserB]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(ParseError.merge(errA, errB)),
@@ -195,20 +195,20 @@ describe(".sequence(parsers)", () => {
         }
         // cerr, *
         {
-            let errA = new ParseError(
+            const errA = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
             );
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.cerr(errA);
             });
 
-            let parserB = new Parser(() => { throw new Error("unexpected call"); });
+            const parserB = new Parser(() => { throw new Error("unexpected call"); });
 
-            let parser = sequence([parserA, parserB]);
+            const parser = sequence([parserA, parserB]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(errA),
@@ -217,39 +217,39 @@ describe(".sequence(parsers)", () => {
         }
         // esuc, csuc
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 8 }),
                 "restA",
                 new SourcePos("foobar", 1, 2),
                 "someA"
             );
-            let errA = new ParseError(
+            const errA = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
             );
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errA, "nyan", stateA);
             });
 
-            let stateB = new State(
+            const stateB = new State(
                 new Config({ tabWidth: 8 }),
                 "restB",
                 new SourcePos("foobar", 1, 3),
                 "someB"
             );
-            let errB = new ParseError(
+            const errB = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
             );
-            let parserB = new Parser(state => {
+            const parserB = new Parser(state => {
                 expect(State.equal(state, stateA)).to.be.true;
                 return Result.csuc(errB, "cat", stateB);
             });
 
-            let parser = sequence([parserA, parserB]);
+            const parser = sequence([parserA, parserB]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(errB, ["nyan", "cat"], stateB),
@@ -258,33 +258,33 @@ describe(".sequence(parsers)", () => {
         }
         // esuc, cerr
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 8 }),
                 "restA",
                 new SourcePos("foobar", 1, 2),
                 "someA"
             );
-            let errA = new ParseError(
+            const errA = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
             );
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errA, "nyan", stateA);
             });
 
-            let errB = new ParseError(
+            const errB = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
             );
-            let parserB = new Parser(state => {
+            const parserB = new Parser(state => {
                 expect(State.equal(state, stateA)).to.be.true;
                 return Result.cerr(errB);
             });
 
-            let parser = sequence([parserA, parserB]);
+            const parser = sequence([parserA, parserB]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(errB),
@@ -293,39 +293,39 @@ describe(".sequence(parsers)", () => {
         }
         // esuc, esuc
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 8 }),
                 "restA",
                 new SourcePos("foobar", 1, 2),
                 "someA"
             );
-            let errA = new ParseError(
+            const errA = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
             );
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errA, "nyan", stateA);
             });
 
-            let stateB = new State(
+            const stateB = new State(
                 new Config({ tabWidth: 8 }),
                 "restB",
                 new SourcePos("foobar", 1, 3),
                 "someB"
             );
-            let errB = new ParseError(
+            const errB = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
             );
-            let parserB = new Parser(state => {
+            const parserB = new Parser(state => {
                 expect(State.equal(state, stateA)).to.be.true;
                 return Result.esuc(errB, "cat", stateB);
             });
 
-            let parser = sequence([parserA, parserB]);
+            const parser = sequence([parserA, parserB]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(ParseError.merge(errA, errB), ["nyan", "cat"], stateB),
@@ -334,33 +334,33 @@ describe(".sequence(parsers)", () => {
         }
         // esuc, eerr
         {
-            let stateA = new State(
+            const stateA = new State(
                 new Config({ tabWidth: 8 }),
                 "restA",
                 new SourcePos("foobar", 1, 2),
                 "someA"
             );
-            let errA = new ParseError(
+            const errA = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
             );
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errA, "nyan", stateA);
             });
 
-            let errB = new ParseError(
+            const errB = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
             );
-            let parserB = new Parser(state => {
+            const parserB = new Parser(state => {
                 expect(State.equal(state, stateA)).to.be.true;
                 return Result.eerr(errB);
             });
 
-            let parser = sequence([parserA, parserB]);
+            const parser = sequence([parserA, parserB]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(ParseError.merge(errA, errB)),
@@ -369,20 +369,20 @@ describe(".sequence(parsers)", () => {
         }
         // eerr, *
         {
-            let errA = new ParseError(
+            const errA = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
             );
-            let parserA = new Parser(state => {
+            const parserA = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.eerr(errA);
             });
 
-            let parserB = new Parser(() => { throw new Error("unexpected call"); });
+            const parserB = new Parser(() => { throw new Error("unexpected call"); });
 
-            let parser = sequence([parserA, parserB]);
+            const parser = sequence([parserA, parserB]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(errA),

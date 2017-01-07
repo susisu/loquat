@@ -22,9 +22,9 @@ const forM = _monad.forM;
 
 describe(".forM(arr, func)", () => {
     it("should map `func' to `arr' and return a parser that runs obtained parsers sequentially", () => {
-        let arrayEqual = (arrA, arrB) => arrA.length === arrB.length && arrA.every((elem, i) => elem === arrB[i]);
+        const arrayEqual = (arrA, arrB) => arrA.length === arrB.length && arrA.every((elem, i) => elem === arrB[i]);
 
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
@@ -34,21 +34,21 @@ describe(".forM(arr, func)", () => {
         function generateFunc(consumed, success, vals, states, errs) {
             return i => new Parser(state => {
                 expect(State.equal(state, i === 0 ? initState : states[i - 1])).to.be.true;
-                let _consumed = consumed[i];
-                let _success  = success[i];
-                let _val      = vals[i];
-                let _state    = states[i];
-                let _err      = errs[i];
+                const _consumed = consumed[i];
+                const _success  = success[i];
+                const _val      = vals[i];
+                const _state    = states[i];
+                const _err      = errs[i];
                 return new Result(_consumed, _success, _err, _val, _state);
             });
         }
 
         // empty
         {
-            let func = generateFunc([], [], [], [], []);
-            let parser = forM([], func);
+            const func = generateFunc([], [], [], [], []);
+            const parser = forM([], func);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(ParseError.unknown(initState.pos), [], initState),
@@ -57,10 +57,10 @@ describe(".forM(arr, func)", () => {
         }
         // csuc, csuc
         {
-            let consumed = [true, true];
-            let success = [true, true];
-            let vals = ["nyan", "cat"];
-            let states = [
+            const consumed = [true, true];
+            const success = [true, true];
+            const vals = ["nyan", "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -74,7 +74,7 @@ describe(".forM(arr, func)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -84,10 +84,10 @@ describe(".forM(arr, func)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = forM([0, 1], func);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = forM([0, 1], func);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -108,10 +108,10 @@ describe(".forM(arr, func)", () => {
         }
         // csuc, cerr
         {
-            let consumed = [true, true];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [true, true];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -119,7 +119,7 @@ describe(".forM(arr, func)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -129,10 +129,10 @@ describe(".forM(arr, func)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = forM([0, 1], func);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = forM([0, 1], func);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -146,10 +146,10 @@ describe(".forM(arr, func)", () => {
         }
         // csuc, esuc
         {
-            let consumed = [true, false];
-            let success = [true, true];
-            let vals = ["nyan", "cat"];
-            let states = [
+            const consumed = [true, false];
+            const success = [true, true];
+            const vals = ["nyan", "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -163,7 +163,7 @@ describe(".forM(arr, func)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -173,10 +173,10 @@ describe(".forM(arr, func)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = forM([0, 1], func);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = forM([0, 1], func);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -200,10 +200,10 @@ describe(".forM(arr, func)", () => {
         }
         // csuc, eerr
         {
-            let consumed = [true, false];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [true, false];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -211,7 +211,7 @@ describe(".forM(arr, func)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -221,10 +221,10 @@ describe(".forM(arr, func)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = forM([0, 1], func);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = forM([0, 1], func);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -241,20 +241,20 @@ describe(".forM(arr, func)", () => {
         }
         // cerr
         {
-            let consumed = [true];
-            let success = [false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [true];
+            const success = [false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = forM([0], func);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = forM([0], func);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -268,10 +268,10 @@ describe(".forM(arr, func)", () => {
         }
         // esuc, csuc
         {
-            let consumed = [false, true];
-            let success = [true, true];
-            let vals = ["nyan", "cat"];
-            let states = [
+            const consumed = [false, true];
+            const success = [true, true];
+            const vals = ["nyan", "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -285,7 +285,7 @@ describe(".forM(arr, func)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -295,10 +295,10 @@ describe(".forM(arr, func)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = forM([0, 1], func);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = forM([0, 1], func);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -319,10 +319,10 @@ describe(".forM(arr, func)", () => {
         }
         // esuc, cerr
         {
-            let consumed = [false, true];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [false, true];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -330,7 +330,7 @@ describe(".forM(arr, func)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -340,10 +340,10 @@ describe(".forM(arr, func)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = forM([0, 1], func);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = forM([0, 1], func);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -357,10 +357,10 @@ describe(".forM(arr, func)", () => {
         }
         // esuc, esuc
         {
-            let consumed = [false, false];
-            let success = [true, true];
-            let vals = ["nyan", "cat"];
-            let states = [
+            const consumed = [false, false];
+            const success = [true, true];
+            const vals = ["nyan", "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -374,7 +374,7 @@ describe(".forM(arr, func)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -384,10 +384,10 @@ describe(".forM(arr, func)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = forM([0, 1], func);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = forM([0, 1], func);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -411,10 +411,10 @@ describe(".forM(arr, func)", () => {
         }
         // esuc, eerr
         {
-            let consumed = [false, false];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [false, false];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -422,7 +422,7 @@ describe(".forM(arr, func)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -432,10 +432,10 @@ describe(".forM(arr, func)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = forM([0, 1], func);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = forM([0, 1], func);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -452,20 +452,20 @@ describe(".forM(arr, func)", () => {
         }
         // eerr
         {
-            let consumed = [false];
-            let success = [false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [false];
+            const success = [false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = forM([0], func);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = forM([0], func);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

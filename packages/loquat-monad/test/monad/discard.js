@@ -22,7 +22,7 @@ const discard = _monad.discard;
 
 describe(".discard(parser)", () => {
     it("should return a parser that runs `parser' and discards the resultant value", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
@@ -30,23 +30,23 @@ describe(".discard(parser)", () => {
         );
         // csuc
         {
-            let finalState = new State(
+            const finalState = new State(
                 new Config({ tabWidth: 8 }),
                 "rest",
                 new SourcePos("foobar", 1, 2),
                 "some"
             );
-            let err = new ParseError(
+            const err = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
             );
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(err, "nyancat", finalState);
             });
-            let voidParser = discard(parser);
+            const voidParser = discard(parser);
             assertParser(voidParser);
-            let res = voidParser.run(initState);
+            const res = voidParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(err, undefined, finalState)
@@ -54,17 +54,17 @@ describe(".discard(parser)", () => {
         }
         // cerr
         {
-            let err = new ParseError(
+            const err = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
             );
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.cerr(err);
             });
-            let voidParser = discard(parser);
+            const voidParser = discard(parser);
             assertParser(voidParser);
-            let res = voidParser.run(initState);
+            const res = voidParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(err)
@@ -72,23 +72,23 @@ describe(".discard(parser)", () => {
         }
         // esuc
         {
-            let finalState = new State(
+            const finalState = new State(
                 new Config({ tabWidth: 8 }),
                 "rest",
                 new SourcePos("foobar", 1, 1),
                 "some"
             );
-            let err = new ParseError(
+            const err = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
             );
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(err, "nyancat", finalState);
             });
-            let voidParser = discard(parser);
+            const voidParser = discard(parser);
             assertParser(voidParser);
-            let res = voidParser.run(initState);
+            const res = voidParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(err, undefined, finalState)
@@ -96,17 +96,17 @@ describe(".discard(parser)", () => {
         }
         // eerr
         {
-            let err = new ParseError(
+            const err = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
             );
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.eerr(err);
             });
-            let voidParser = discard(parser);
+            const voidParser = discard(parser);
             assertParser(voidParser);
-            let res = voidParser.run(initState);
+            const res = voidParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(err)

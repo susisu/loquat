@@ -23,7 +23,7 @@ const foldM_ = _monad.foldM_;
 describe(".foldM_(func, initVal, arr)", () => {
     it("should return a parser that call `func' with accumulator and an element of `arr' sequentially,"
         + " runs returned parser, and returns last value as a result", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
@@ -33,21 +33,21 @@ describe(".foldM_(func, initVal, arr)", () => {
         function generateFunc(consumed, success, vals, states, errs) {
             return (acc, i) => new Parser(state => {
                 expect(State.equal(state, i === 0 ? initState : states[i - 1])).to.be.true;
-                let _consumed = consumed[i];
-                let _success  = success[i];
-                let _val      = acc + vals[i];
-                let _state    = states[i];
-                let _err      = errs[i];
+                const _consumed = consumed[i];
+                const _success  = success[i];
+                const _val      = acc + vals[i];
+                const _state    = states[i];
+                const _err      = errs[i];
                 return new Result(_consumed, _success, _err, _val, _state);
             });
         }
 
         // empty
         {
-            let func = generateFunc([], [], [], [], []);
-            let parser = foldM_(func, "xyz", []);
+            const func = generateFunc([], [], [], [], []);
+            const parser = foldM_(func, "xyz", []);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(ParseError.unknown(initState.pos), undefined, initState)
@@ -55,10 +55,10 @@ describe(".foldM_(func, initVal, arr)", () => {
         }
         // csuc, csuc
         {
-            let consumed = [true, true];
-            let success = [true, true];
-            let vals = ["nyan", "cat"];
-            let states = [
+            const consumed = [true, true];
+            const success = [true, true];
+            const vals = ["nyan", "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -72,7 +72,7 @@ describe(".foldM_(func, initVal, arr)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -82,10 +82,10 @@ describe(".foldM_(func, initVal, arr)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = foldM_(func, "xyz", [0, 1]);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = foldM_(func, "xyz", [0, 1]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -105,10 +105,10 @@ describe(".foldM_(func, initVal, arr)", () => {
         }
         // csuc, cerr
         {
-            let consumed = [true, true];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [true, true];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -116,7 +116,7 @@ describe(".foldM_(func, initVal, arr)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -126,10 +126,10 @@ describe(".foldM_(func, initVal, arr)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = foldM_(func, "xyz", [0, 1]);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = foldM_(func, "xyz", [0, 1]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -142,10 +142,10 @@ describe(".foldM_(func, initVal, arr)", () => {
         }
         // csuc, esuc
         {
-            let consumed = [true, false];
-            let success = [true, true];
-            let vals = ["nyan", "cat"];
-            let states = [
+            const consumed = [true, false];
+            const success = [true, true];
+            const vals = ["nyan", "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -159,7 +159,7 @@ describe(".foldM_(func, initVal, arr)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -169,10 +169,10 @@ describe(".foldM_(func, initVal, arr)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = foldM_(func, "xyz", [0, 1]);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = foldM_(func, "xyz", [0, 1]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -195,10 +195,10 @@ describe(".foldM_(func, initVal, arr)", () => {
         }
         // csuc, eerr
         {
-            let consumed = [true, false];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [true, false];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -206,7 +206,7 @@ describe(".foldM_(func, initVal, arr)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -216,10 +216,10 @@ describe(".foldM_(func, initVal, arr)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = foldM_(func, "xyz", [0, 1]);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = foldM_(func, "xyz", [0, 1]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -235,20 +235,20 @@ describe(".foldM_(func, initVal, arr)", () => {
         }
         // cerr
         {
-            let consumed = [true];
-            let success = [false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [true];
+            const success = [false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = foldM_(func, "xyz", [0]);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = foldM_(func, "xyz", [0]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -261,10 +261,10 @@ describe(".foldM_(func, initVal, arr)", () => {
         }
         // esuc, csuc
         {
-            let consumed = [false, true];
-            let success = [true, true];
-            let vals = ["nyan", "cat"];
-            let states = [
+            const consumed = [false, true];
+            const success = [true, true];
+            const vals = ["nyan", "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -278,7 +278,7 @@ describe(".foldM_(func, initVal, arr)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -288,10 +288,10 @@ describe(".foldM_(func, initVal, arr)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = foldM_(func, "xyz", [0, 1]);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = foldM_(func, "xyz", [0, 1]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -311,10 +311,10 @@ describe(".foldM_(func, initVal, arr)", () => {
         }
         // esuc, cerr
         {
-            let consumed = [false, true];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [false, true];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -322,7 +322,7 @@ describe(".foldM_(func, initVal, arr)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -332,10 +332,10 @@ describe(".foldM_(func, initVal, arr)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = foldM_(func, "xyz", [0, 1]);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = foldM_(func, "xyz", [0, 1]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -348,10 +348,10 @@ describe(".foldM_(func, initVal, arr)", () => {
         }
         // esuc, esuc
         {
-            let consumed = [false, false];
-            let success = [true, true];
-            let vals = ["nyan", "cat"];
-            let states = [
+            const consumed = [false, false];
+            const success = [true, true];
+            const vals = ["nyan", "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -365,7 +365,7 @@ describe(".foldM_(func, initVal, arr)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -375,10 +375,10 @@ describe(".foldM_(func, initVal, arr)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = foldM_(func, "xyz", [0, 1]);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = foldM_(func, "xyz", [0, 1]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -401,10 +401,10 @@ describe(".foldM_(func, initVal, arr)", () => {
         }
         // esuc, eerr
         {
-            let consumed = [false, false];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [false, false];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -412,7 +412,7 @@ describe(".foldM_(func, initVal, arr)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -422,10 +422,10 @@ describe(".foldM_(func, initVal, arr)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = foldM_(func, "xyz", [0, 1]);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = foldM_(func, "xyz", [0, 1]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -441,20 +441,20 @@ describe(".foldM_(func, initVal, arr)", () => {
         }
         // eerr
         {
-            let consumed = [false];
-            let success = [false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [false];
+            const success = [false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let func = generateFunc(consumed, success, vals, states, errs);
-            let parser = foldM_(func, "xyz", [0]);
+            const func = generateFunc(consumed, success, vals, states, errs);
+            const parser = foldM_(func, "xyz", [0]);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

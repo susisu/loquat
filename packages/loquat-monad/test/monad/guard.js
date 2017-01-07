@@ -19,15 +19,15 @@ const guard = _monad.guard;
 
 describe(".guard(cond)", () => {
     it("returns a parser that empty succeeds with undefined if `cond' is `true'", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let parser = guard(true);
+        const parser = guard(true);
         assertParser(parser);
-        let res = parser.run(initState);
+        const res = parser.run(initState);
         expect(Result.equal(
             res,
             Result.esuc(
@@ -39,15 +39,15 @@ describe(".guard(cond)", () => {
     });
 
     it("returns a parser that empty fails with undefined if `cond' is `empty fails'", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let parser = guard(false);
+        const parser = guard(false);
         assertParser(parser);
-        let res = parser.run(initState);
+        const res = parser.run(initState);
         expect(Result.equal(
             res,
             Result.eerr(ParseError.unknown(initState.pos))

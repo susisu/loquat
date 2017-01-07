@@ -23,7 +23,7 @@ const mfilter = _monad.mfilter;
 describe(".mfilter(test, parser)", () => {
     it("returns a parser that runs `parser' and calls `test' with its resultant value,"
         + " then only succeeds when `test' returns `true'", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
@@ -31,29 +31,29 @@ describe(".mfilter(test, parser)", () => {
         );
         // csuc
         {
-            let finalState = new State(
+            const finalState = new State(
                 new Config({ tabWidth: 8 }),
                 "rest",
                 new SourcePos("foobar", 1, 2),
                 "some"
             );
-            let err = new ParseError(
+            const err = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
             );
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(err, "nyancat", finalState);
             });
             // true
             {
-                let test = val => {
+                const test = val => {
                     expect(val).to.equal("nyancat");
                     return true;
                 };
-                let filtered = mfilter(test, parser);
+                const filtered = mfilter(test, parser);
                 assertParser(filtered);
-                let res = filtered.run(initState);
+                const res = filtered.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(err, "nyancat", finalState)
@@ -61,13 +61,13 @@ describe(".mfilter(test, parser)", () => {
             }
             // false
             {
-                let test = val => {
+                const test = val => {
                     expect(val).to.equal("nyancat");
                     return false;
                 };
-                let filtered = mfilter(test, parser);
+                const filtered = mfilter(test, parser);
                 assertParser(filtered);
-                let res = filtered.run(initState);
+                const res = filtered.run(initState);
                 expect(Result.equal(
                     res,
                     Result.cerr(err)
@@ -76,18 +76,18 @@ describe(".mfilter(test, parser)", () => {
         }
         // cerr
         {
-            let err = new ParseError(
+            const err = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
             );
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.cerr(err);
             });
-            let test = () => { throw new Error("unexpected call"); };
-            let filtered = mfilter(test, parser);
+            const test = () => { throw new Error("unexpected call"); };
+            const filtered = mfilter(test, parser);
             assertParser(filtered);
-            let res = filtered.run(initState);
+            const res = filtered.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(err)
@@ -95,29 +95,29 @@ describe(".mfilter(test, parser)", () => {
         }
         // esuc
         {
-            let finalState = new State(
+            const finalState = new State(
                 new Config({ tabWidth: 8 }),
                 "rest",
                 new SourcePos("foobar", 1, 1),
                 "some"
             );
-            let err = new ParseError(
+            const err = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
             );
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(err, "nyancat", finalState);
             });
             // true
             {
-                let test = val => {
+                const test = val => {
                     expect(val).to.equal("nyancat");
                     return true;
                 };
-                let filtered = mfilter(test, parser);
+                const filtered = mfilter(test, parser);
                 assertParser(filtered);
-                let res = filtered.run(initState);
+                const res = filtered.run(initState);
                 expect(Result.equal(
                     res,
                     Result.esuc(err, "nyancat", finalState)
@@ -125,13 +125,13 @@ describe(".mfilter(test, parser)", () => {
             }
             // false
             {
-                let test = val => {
+                const test = val => {
                     expect(val).to.equal("nyancat");
                     return false;
                 };
-                let filtered = mfilter(test, parser);
+                const filtered = mfilter(test, parser);
                 assertParser(filtered);
-                let res = filtered.run(initState);
+                const res = filtered.run(initState);
                 expect(Result.equal(
                     res,
                     Result.eerr(err)
@@ -140,18 +140,18 @@ describe(".mfilter(test, parser)", () => {
         }
         // eerr
         {
-            let err = new ParseError(
+            const err = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
             );
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.eerr(err);
             });
-            let test = () => { throw new Error("unexpected call"); };
-            let filtered = mfilter(test, parser);
+            const test = () => { throw new Error("unexpected call"); };
+            const filtered = mfilter(test, parser);
             assertParser(filtered);
-            let res = filtered.run(initState);
+            const res = filtered.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(err)

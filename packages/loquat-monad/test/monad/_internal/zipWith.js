@@ -13,7 +13,7 @@ const zipWith = _monad._internal.zipWith;
 describe(".zipWith(func, arrA, arrB)", () => {
     it("should zip two arrays `arrA' and `arrB' with a function `func'", () => {
         {
-            let arr = zipWith(
+            const arr = zipWith(
                 () => { throw new Error("unexpected call"); },
                 [],
                 []
@@ -21,7 +21,7 @@ describe(".zipWith(func, arrA, arrB)", () => {
             expect(arr).to.deep.equal([]);
         }
         {
-            let arr = zipWith(
+            const arr = zipWith(
                 (x, y) => x + y,
                 [1, 2, 3],
                 [4, 5, 6]
@@ -29,7 +29,7 @@ describe(".zipWith(func, arrA, arrB)", () => {
             expect(arr).to.deep.equal([5, 7, 9]);
         }
         {
-            let arr = zipWith(
+            const arr = zipWith(
                 () => { throw new Error("unexpected call"); },
                 [1, 2, 3],
                 []
@@ -37,7 +37,7 @@ describe(".zipWith(func, arrA, arrB)", () => {
             expect(arr).to.deep.equal([]);
         }
         {
-            let arr = zipWith(
+            const arr = zipWith(
                 () => { throw new Error("unexpected call"); },
                 [],
                 [1, 2, 3]
@@ -45,7 +45,7 @@ describe(".zipWith(func, arrA, arrB)", () => {
             expect(arr).to.deep.equal([]);
         }
         {
-            let arr = zipWith(
+            const arr = zipWith(
                 (x, y) => x + y,
                 [1, 2, 3],
                 [4, 5]
@@ -53,7 +53,7 @@ describe(".zipWith(func, arrA, arrB)", () => {
             expect(arr).to.deep.equal([5, 7]);
         }
         {
-            let arr = zipWith(
+            const arr = zipWith(
                 (x, y) => x + y,
                 [1, 2],
                 [4, 5, 6]

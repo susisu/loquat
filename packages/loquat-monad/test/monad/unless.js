@@ -22,7 +22,7 @@ const unless = _monad.unless;
 
 describe(".unless(cond, parser)", () => {
     it("should return a parser that runs `parser' only when `cond' is `false'", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
@@ -30,24 +30,24 @@ describe(".unless(cond, parser)", () => {
         );
         // false, csuc
         {
-            let finalState = new State(
+            const finalState = new State(
                 new Config({ tabWidth: 8 }),
                 "rest",
                 new SourcePos("foobar", 1, 2),
                 "some"
             );
-            let err = new ParseError(
+            const err = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
             );
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(err, "nyancat", finalState);
             });
 
-            let condParser = unless(false, parser);
+            const condParser = unless(false, parser);
             assertParser(condParser);
-            let res = condParser.run(initState);
+            const res = condParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(err, "nyancat", finalState)
@@ -55,18 +55,18 @@ describe(".unless(cond, parser)", () => {
         }
         // false, cerr
         {
-            let err = new ParseError(
+            const err = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
             );
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.cerr(err);
             });
 
-            let condParser = unless(false, parser);
+            const condParser = unless(false, parser);
             assertParser(condParser);
-            let res = condParser.run(initState);
+            const res = condParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(err)
@@ -74,24 +74,24 @@ describe(".unless(cond, parser)", () => {
         }
         // false, esuc
         {
-            let finalState = new State(
+            const finalState = new State(
                 new Config({ tabWidth: 8 }),
                 "rest",
                 new SourcePos("foobar", 1, 1),
                 "some"
             );
-            let err = new ParseError(
+            const err = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
             );
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(err, "nyancat", finalState);
             });
 
-            let condParser = unless(false, parser);
+            const condParser = unless(false, parser);
             assertParser(condParser);
-            let res = condParser.run(initState);
+            const res = condParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(err, "nyancat", finalState)
@@ -99,18 +99,18 @@ describe(".unless(cond, parser)", () => {
         }
         // false, eerr
         {
-            let err = new ParseError(
+            const err = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
             );
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.eerr(err);
             });
 
-            let condParser = unless(false, parser);
+            const condParser = unless(false, parser);
             assertParser(condParser);
-            let res = condParser.run(initState);
+            const res = condParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(err)
@@ -118,11 +118,11 @@ describe(".unless(cond, parser)", () => {
         }
         // true
         {
-            let parser = new Parser(() => { throw new Error("unexpected call"); });
+            const parser = new Parser(() => { throw new Error("unexpected call"); });
 
-            let condParser = unless(true, parser);
+            const condParser = unless(true, parser);
             assertParser(condParser);
-            let res = condParser.run(initState);
+            const res = condParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(ParseError.unknown(initState.pos), undefined, initState)
