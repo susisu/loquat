@@ -25,15 +25,15 @@ describe(".regexp(re, groupId = 0)", () => {
         + " and returns sequence specified by `groupId'", () => {
         // empty match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: false }),
                 "XYZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(new RegExp(""), 0);
+            const parser = regexp(new RegExp(""), 0);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -50,15 +50,15 @@ describe(".regexp(re, groupId = 0)", () => {
         }
         // many match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: false }),
                 "XYZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(/.{2}/, 0);
+            const parser = regexp(/.{2}/, 0);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -75,15 +75,15 @@ describe(".regexp(re, groupId = 0)", () => {
         }
         // use default groupId = 0
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: false }),
                 "XYZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(/.{2}/);
+            const parser = regexp(/.{2}/);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -100,15 +100,15 @@ describe(".regexp(re, groupId = 0)", () => {
         }
         // specify groupId
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: false }),
                 "XYZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(/.(.)/, 1);
+            const parser = regexp(/.(.)/, 1);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -125,15 +125,15 @@ describe(".regexp(re, groupId = 0)", () => {
         }
         // doesn't match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: false }),
                 "XYZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(/abc/, 0);
+            const parser = regexp(/abc/, 0);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -149,15 +149,15 @@ describe(".regexp(re, groupId = 0)", () => {
     it("should ignore case if `i' flag is used", () => {
         // not used
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: false }),
                 "XYZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(/xy/, 0);
+            const parser = regexp(/xy/, 0);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -170,15 +170,15 @@ describe(".regexp(re, groupId = 0)", () => {
         }
         // used
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: false }),
                 "XYZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(/xy/i, 0);
+            const parser = regexp(/xy/i, 0);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -198,15 +198,15 @@ describe(".regexp(re, groupId = 0)", () => {
     it("should match `$' at end of any line if `m' flag is used", () => {
         // not used
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: false }),
                 "XY\nZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(/XY$/, 0);
+            const parser = regexp(/XY$/, 0);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -219,15 +219,15 @@ describe(".regexp(re, groupId = 0)", () => {
         }
         // used
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: false }),
                 "XY\nZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(/XY$/m, 0);
+            const parser = regexp(/XY$/m, 0);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -252,15 +252,15 @@ describe(".regexp(re, groupId = 0)", () => {
         }
         // not used
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: true }),
                 "\uD83C\uDF63XYZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(/./, 0);
+            const parser = regexp(/./, 0);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -276,15 +276,15 @@ describe(".regexp(re, groupId = 0)", () => {
             )).to.be.true;
         }
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: true }),
                 "\uD83C\uDF63XYZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(/\u{1F363}/, 0);
+            const parser = regexp(/\u{1F363}/, 0);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -297,15 +297,15 @@ describe(".regexp(re, groupId = 0)", () => {
         }
         // used
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: true }),
                 "\uD83C\uDF63XYZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(/./u, 0);
+            const parser = regexp(/./u, 0);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -321,15 +321,15 @@ describe(".regexp(re, groupId = 0)", () => {
             )).to.be.true;
         }
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: true }),
                 "\uD83C\uDF63XYZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(/\u{1F363}/u, 0);
+            const parser = regexp(/\u{1F363}/u, 0);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -349,25 +349,25 @@ describe(".regexp(re, groupId = 0)", () => {
     it("should throw an `Error' if input is not a string", () => {
         // Array
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: true }),
                 ["X", "Y", "Z"],
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(/./, 0);
+            const parser = regexp(/./, 0);
             assertParser(parser);
             expect(() => { parser.run(initState); }).to.throw(Error, /regexp/);
         }
         // IStream
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ unicode: true }),
                 { uncons: () => ({ empty: true }) },
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = regexp(/./, 0);
+            const parser = regexp(/./, 0);
             assertParser(parser);
             expect(() => { parser.run(initState); }).to.throw(Error, /regexp/);
         }

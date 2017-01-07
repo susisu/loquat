@@ -24,13 +24,13 @@ describe(".satisfy(test)", () => {
     it("should return a parser that parses a character satisfying `test'", () => {
         // test succeeds
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = satisfy(
+            const parser = satisfy(
                 (char, config) => {
                     expect(char).to.equal("A");
                     expect(Config.equal(config, new Config({ tabWidth: 8}))).to.be.true;
@@ -38,7 +38,7 @@ describe(".satisfy(test)", () => {
                 }
             );
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -55,13 +55,13 @@ describe(".satisfy(test)", () => {
         }
         // test fails
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = satisfy(
+            const parser = satisfy(
                 (x, config) => {
                     expect(x).to.equal("A");
                     expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
@@ -69,7 +69,7 @@ describe(".satisfy(test)", () => {
                 }
             );
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -82,15 +82,15 @@ describe(".satisfy(test)", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = satisfy(() => { throw new Error("unexpected call"); });
+            const parser = satisfy(() => { throw new Error("unexpected call"); });
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

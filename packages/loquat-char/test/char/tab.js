@@ -25,13 +25,13 @@ describe(".tab", () => {
         assertParser(tab);
         // match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "\tABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = tab.run(initState);
+            const res = tab.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -48,13 +48,13 @@ describe(".tab", () => {
         }
         // not match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = tab.run(initState);
+            const res = tab.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -70,13 +70,13 @@ describe(".tab", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = tab.run(initState);
+            const res = tab.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

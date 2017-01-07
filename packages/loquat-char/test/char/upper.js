@@ -24,14 +24,14 @@ describe(".upper", () => {
     it("should return a parser that parses a uppercase letter", () => {
         assertParser(upper);
         // match
-        for (let c of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
-            let initState = new State(
+        for (const c of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 c + "abc",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = upper.run(initState);
+            const res = upper.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -48,13 +48,13 @@ describe(".upper", () => {
         }
         // not match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "abc",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = upper.run(initState);
+            const res = upper.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -70,13 +70,13 @@ describe(".upper", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = upper.run(initState);
+            const res = upper.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

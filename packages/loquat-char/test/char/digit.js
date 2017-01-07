@@ -24,14 +24,14 @@ describe(".digit", () => {
     it("should return a parser that parses a digit", () => {
         assertParser(digit);
         // match
-        for (let c of "0123456789") {
-            let initState = new State(
+        for (const c of "0123456789") {
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 c + "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = digit.run(initState);
+            const res = digit.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -48,13 +48,13 @@ describe(".digit", () => {
         }
         // not match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = digit.run(initState);
+            const res = digit.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -70,13 +70,13 @@ describe(".digit", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = digit.run(initState);
+            const res = digit.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

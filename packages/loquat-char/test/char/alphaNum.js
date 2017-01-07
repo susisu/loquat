@@ -24,14 +24,14 @@ describe(".alphaNum", () => {
     it("should return a parser that parses a letter or digit", () => {
         assertParser(alphaNum);
         // match
-        for (let c of "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") {
-            let initState = new State(
+        for (const c of "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") {
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 c + "+-*",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = alphaNum.run(initState);
+            const res = alphaNum.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -48,13 +48,13 @@ describe(".alphaNum", () => {
         }
         // not match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "+-*",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = alphaNum.run(initState);
+            const res = alphaNum.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -70,13 +70,13 @@ describe(".alphaNum", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = alphaNum.run(initState);
+            const res = alphaNum.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

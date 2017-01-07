@@ -24,15 +24,15 @@ describe(".oneOf(str)", () => {
     it("should return a parser that parses a character contained by `str'", () => {
         // contained
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8, unicode: false }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = oneOf("AXYZ");
+            const parser = oneOf("AXYZ");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -49,15 +49,15 @@ describe(".oneOf(str)", () => {
         }
         // not contained
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = oneOf("XYZ");
+            const parser = oneOf("XYZ");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -70,15 +70,15 @@ describe(".oneOf(str)", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = oneOf("AXYZ");
+            const parser = oneOf("AXYZ");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -94,15 +94,15 @@ describe(".oneOf(str)", () => {
     it("should treat characters in `str' as code points if `unicode' flag of the config is `true'", () => {
         // non-unicode mode
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8, unicode: false }),
                 "\uD83C\uDF63ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = oneOf("\uD83C\uDF63XYZ");
+            const parser = oneOf("\uD83C\uDF63XYZ");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -119,15 +119,15 @@ describe(".oneOf(str)", () => {
         }
         // unicode mode
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8, unicode: true }),
                 "\uD83C\uDF63ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = oneOf("\uD83C\uDF63XYZ");
+            const parser = oneOf("\uD83C\uDF63XYZ");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(

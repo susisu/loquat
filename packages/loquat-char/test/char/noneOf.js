@@ -24,15 +24,15 @@ describe(".noneOf(str)", () => {
     it("should return a parser that parses a character not contained by `str'", () => {
         // not contained
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8, unicode: false }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = noneOf("XYZ");
+            const parser = noneOf("XYZ");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -49,15 +49,15 @@ describe(".noneOf(str)", () => {
         }
         // contained
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = noneOf("AXYZ");
+            const parser = noneOf("AXYZ");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -70,15 +70,15 @@ describe(".noneOf(str)", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = noneOf("XYZ");
+            const parser = noneOf("XYZ");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -94,15 +94,15 @@ describe(".noneOf(str)", () => {
     it("should treat characters in `str' as code points if `unicode' flag of the config is `true'", () => {
         // non-unicode mode
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8, unicode: false }),
                 "\uD83C\uDF63ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = noneOf("\uD83C\uDF63XYZ");
+            const parser = noneOf("\uD83C\uDF63XYZ");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -115,15 +115,15 @@ describe(".noneOf(str)", () => {
         }
         // unicode mode
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8, unicode: true }),
                 "\uD83C\uDF63ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = noneOf("\uD83C\uDF63XYZ");
+            const parser = noneOf("\uD83C\uDF63XYZ");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

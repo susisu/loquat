@@ -25,13 +25,13 @@ describe(".spaces", () => {
         assertParser(spaces);
         // match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 " \f\n\r\t\vABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = spaces.run(initState);
+            const res = spaces.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -53,13 +53,13 @@ describe(".spaces", () => {
             )).to.be.true;
         }
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 " \f\n\r\t\v",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = spaces.run(initState);
+            const res = spaces.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -82,13 +82,13 @@ describe(".spaces", () => {
         }
         // not match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = spaces.run(initState);
+            const res = spaces.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -111,13 +111,13 @@ describe(".spaces", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = spaces.run(initState);
+            const res = spaces.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(

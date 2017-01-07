@@ -24,14 +24,14 @@ describe(".letter", () => {
     it("should return a parser that parses a letter", () => {
         assertParser(letter);
         // match
-        for (let c of "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") {
-            let initState = new State(
+        for (const c of "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") {
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 c + "012",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = letter.run(initState);
+            const res = letter.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -48,13 +48,13 @@ describe(".letter", () => {
         }
         // not match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "012",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = letter.run(initState);
+            const res = letter.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -70,13 +70,13 @@ describe(".letter", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = letter.run(initState);
+            const res = letter.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

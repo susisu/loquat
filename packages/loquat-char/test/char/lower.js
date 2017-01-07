@@ -24,14 +24,14 @@ describe(".lower", () => {
     it("should return a parser that parses a lowercase letter", () => {
         assertParser(lower);
         // match
-        for (let c of "abcdefghijklmnopqrstuvwxyz") {
-            let initState = new State(
+        for (const c of "abcdefghijklmnopqrstuvwxyz") {
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 c + "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = lower.run(initState);
+            const res = lower.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -48,13 +48,13 @@ describe(".lower", () => {
         }
         // not match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = lower.run(initState);
+            const res = lower.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -70,13 +70,13 @@ describe(".lower", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = lower.run(initState);
+            const res = lower.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

@@ -24,15 +24,15 @@ describe(".char(expectChar)", () => {
     it("should return a parser that parses a character `expectChar'", () => {
         // match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = char("A");
+            const parser = char("A");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -49,15 +49,15 @@ describe(".char(expectChar)", () => {
         }
         // not match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "XYZ",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = char("A");
+            const parser = char("A");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -73,15 +73,15 @@ describe(".char(expectChar)", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let parser = char("A");
+            const parser = char("A");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

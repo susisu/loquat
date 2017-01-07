@@ -24,13 +24,13 @@ describe(".anyChar", () => {
         assertParser(anyChar);
         // non-empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = anyChar.run(initState);
+            const res = anyChar.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -47,13 +47,13 @@ describe(".anyChar", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = anyChar.run(initState);
+            const res = anyChar.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

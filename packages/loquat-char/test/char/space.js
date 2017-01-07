@@ -25,14 +25,14 @@ describe(".space", () => {
         assertParser(space);
         // match
         {
-            for (let c of " \f\r\v") {
-                let initState = new State(
+            for (const c of " \f\r\v") {
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     c + "ABC",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = space.run(initState);
+                const res = space.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(
@@ -49,13 +49,13 @@ describe(".space", () => {
             }
             // \n
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "\nABC",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = space.run(initState);
+                const res = space.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(
@@ -72,13 +72,13 @@ describe(".space", () => {
             }
             // \t
             {
-                let initState = new State(
+                const initState = new State(
                     new Config({ tabWidth: 8 }),
                     "\tABC",
                     new SourcePos("foobar", 1, 1),
                     "none"
                 );
-                let res = space.run(initState);
+                const res = space.run(initState);
                 expect(Result.equal(
                     res,
                     Result.csuc(
@@ -96,13 +96,13 @@ describe(".space", () => {
         }
         // not match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = space.run(initState);
+            const res = space.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -118,13 +118,13 @@ describe(".space", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = space.run(initState);
+            const res = space.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

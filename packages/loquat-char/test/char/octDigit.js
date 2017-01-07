@@ -24,14 +24,14 @@ describe(".octDigit", () => {
     it("should return a parser that parses a octal digit", () => {
         assertParser(octDigit);
         // match
-        for (let c of "01234567") {
-            let initState = new State(
+        for (const c of "01234567") {
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 c + "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = octDigit.run(initState);
+            const res = octDigit.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -48,13 +48,13 @@ describe(".octDigit", () => {
         }
         // not match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = octDigit.run(initState);
+            const res = octDigit.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -70,13 +70,13 @@ describe(".octDigit", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = octDigit.run(initState);
+            const res = octDigit.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

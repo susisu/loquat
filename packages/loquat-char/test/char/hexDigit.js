@@ -24,14 +24,14 @@ describe(".hexDigit", () => {
     it("should return a parser that parses a hexadecimal digit", () => {
         assertParser(hexDigit);
         // match
-        for (let c of "0123456789ABCDEFabcdef") {
-            let initState = new State(
+        for (const c of "0123456789ABCDEFabcdef") {
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 c + "GHI",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = hexDigit.run(initState);
+            const res = hexDigit.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -48,13 +48,13 @@ describe(".hexDigit", () => {
         }
         // not match
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "GHI",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = hexDigit.run(initState);
+            const res = hexDigit.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -70,13 +70,13 @@ describe(".hexDigit", () => {
         }
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = hexDigit.run(initState);
+            const res = hexDigit.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
