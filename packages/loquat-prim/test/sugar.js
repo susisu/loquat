@@ -85,7 +85,7 @@ describe("sugar", () => {
             new Parser(() => {})
         ));
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "input",
                 new SourcePos("foobar", 1, 1),
@@ -222,7 +222,7 @@ describe("sugar", () => {
             new Parser(() => {})
         ));
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "input",
                 new SourcePos("foobar", 1, 1),

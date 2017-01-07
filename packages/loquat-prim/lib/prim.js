@@ -434,7 +434,7 @@ module.exports = _core => {
      */
     function many(parser) {
         return new Parser(state => {
-            let accum = [];
+            const accum = [];
             let consumed = false;
             let currentState = state;
             while (true) {
