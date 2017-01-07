@@ -23,9 +23,9 @@ const endBy = _combinators.endBy;
 describe(".endBy(parser, sep)", () => {
     it("should return a parser that parses zero or more tokens accepted by `parser'"
         + " ended by token accepted by `sep', and concats the resultant values into an array", () => {
-        let arrayEqual = (arrA, arrB) => arrA.length === arrB.length && arrA.every((elem, i) => elem === arrB[i]);
+        const arrayEqual = (arrA, arrB) => arrA.length === arrB.length && arrA.every((elem, i) => elem === arrB[i]);
 
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
@@ -37,21 +37,21 @@ describe(".endBy(parser, sep)", () => {
             return [
                 new Parser(state => {
                     expect(State.equal(state, i === 0 ? initState : states[j - 2])).to.be.true;
-                    let _consumed = consumed[i];
-                    let _success  = success[i];
-                    let _val      = vals[i];
-                    let _state    = states[i];
-                    let _err      = errs[i];
+                    const _consumed = consumed[i];
+                    const _success  = success[i];
+                    const _val      = vals[i];
+                    const _state    = states[i];
+                    const _err      = errs[i];
                     i += 2;
                     return new Result(_consumed, _success, _err, _val, _state);
                 }),
                 new Parser(state => {
                     expect(State.equal(state, states[i - 2])).to.be.true;
-                    let _consumed = consumed[j];
-                    let _success  = success[j];
-                    let _val      = vals[j];
-                    let _state    = states[j];
-                    let _err      = errs[j];
+                    const _consumed = consumed[j];
+                    const _success  = success[j];
+                    const _val      = vals[j];
+                    const _state    = states[j];
+                    const _err      = errs[j];
                     j += 2;
                     return new Result(_consumed, _success, _err, _val, _state);
                 })
@@ -59,10 +59,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, csuc, csuc, csuc, cerr
         {
-            let consumed = [true, true, true, true, true];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [true, true, true, true, true];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -88,7 +88,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -110,10 +110,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -127,10 +127,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, csuc, csuc, csuc, eerr
         {
-            let consumed = [true, true, true, true, false];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [true, true, true, true, false];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -156,7 +156,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -178,10 +178,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -202,10 +202,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, csuc, csuc, cerr
         {
-            let consumed = [true, true, true, true];
-            let success = [true, true, true, false];
-            let vals = ["nyan", undefined, "cat"];
-            let states = [
+            const consumed = [true, true, true, true];
+            const success = [true, true, true, false];
+            const vals = ["nyan", undefined, "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -225,7 +225,7 @@ describe(".endBy(parser, sep)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -243,10 +243,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -260,10 +260,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, csuc, csuc, esuc, cerr
         {
-            let consumed = [true, true, true, false, true];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [true, true, true, false, true];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -289,7 +289,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -311,10 +311,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -328,10 +328,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, csuc, csuc, esuc, eerr
         {
-            let consumed = [true, true, true, false, false];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [true, true, true, false, false];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -357,7 +357,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -379,10 +379,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -403,10 +403,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, csuc, csuc, eerr
         {
-            let consumed = [true, true, true, false];
-            let success = [true, true, true, false];
-            let vals = ["nyan", undefined, "cat"];
-            let states = [
+            const consumed = [true, true, true, false];
+            const success = [true, true, true, false];
+            const vals = ["nyan", undefined, "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -426,7 +426,7 @@ describe(".endBy(parser, sep)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -444,10 +444,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -464,10 +464,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, csuc, cerr
         {
-            let consumed = [true, true, true];
-            let success = [true, true, false];
-            let vals = ["nyan", undefined];
-            let states = [
+            const consumed = [true, true, true];
+            const success = [true, true, false];
+            const vals = ["nyan", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -481,7 +481,7 @@ describe(".endBy(parser, sep)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -495,10 +495,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -512,10 +512,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, csuc, esuc, csuc, cerr
         {
-            let consumed = [true, true, false, true, true];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [true, true, false, true, true];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -541,7 +541,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -563,10 +563,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -580,10 +580,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, csuc, esuc, csuc, eerr
         {
-            let consumed = [true, true, false, true, false];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [true, true, false, true, false];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -609,7 +609,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -631,10 +631,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -655,10 +655,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, csuc, esuc, cerr
         {
-            let consumed = [true, true, false, true];
-            let success = [true, true, true, false];
-            let vals = ["nyan", undefined, "cat"];
-            let states = [
+            const consumed = [true, true, false, true];
+            const success = [true, true, true, false];
+            const vals = ["nyan", undefined, "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -678,7 +678,7 @@ describe(".endBy(parser, sep)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -696,10 +696,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -715,10 +715,10 @@ describe(".endBy(parser, sep)", () => {
         // csuc, csuc, esuc, esuc, eerr -> error
         // csuc, csuc, esuc, eerr
         {
-            let consumed = [true, true, false, false];
-            let success = [true, true, true, false];
-            let vals = ["nyan", undefined, "cat"];
-            let states = [
+            const consumed = [true, true, false, false];
+            const success = [true, true, true, false];
+            const vals = ["nyan", undefined, "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -738,7 +738,7 @@ describe(".endBy(parser, sep)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -756,10 +756,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -783,10 +783,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, csuc, eerr
         {
-            let consumed = [true, true, false];
-            let success = [true, true, false];
-            let vals = ["nyan", undefined];
-            let states = [
+            const consumed = [true, true, false];
+            const success = [true, true, false];
+            const vals = ["nyan", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -800,7 +800,7 @@ describe(".endBy(parser, sep)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -814,10 +814,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -838,10 +838,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, cerr
         {
-            let consumed = [true, true];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [true, true];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -849,7 +849,7 @@ describe(".endBy(parser, sep)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -859,10 +859,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -876,10 +876,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, esuc, csuc, csuc, cerr
         {
-            let consumed = [true, false, true, true, true];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [true, false, true, true, true];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -905,7 +905,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -927,10 +927,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -944,10 +944,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, esuc, csuc, csuc, eerr
         {
-            let consumed = [true, false, true, true, false];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [true, false, true, true, false];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -973,7 +973,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -995,10 +995,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -1019,10 +1019,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, esuc, csuc, cerr
         {
-            let consumed = [true, false, true, true];
-            let success = [true, true, true, false];
-            let vals = ["nyan", undefined, "cat"];
-            let states = [
+            const consumed = [true, false, true, true];
+            const success = [true, true, true, false];
+            const vals = ["nyan", undefined, "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1042,7 +1042,7 @@ describe(".endBy(parser, sep)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1060,10 +1060,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1077,10 +1077,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, esuc, csuc, esuc, cerr
         {
-            let consumed = [true, false, true, false, true];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [true, false, true, false, true];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1106,7 +1106,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1128,10 +1128,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1145,10 +1145,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, esuc, csuc, esuc, eerr
         {
-            let consumed = [true, false, true, false, false];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [true, false, true, false, false];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1174,7 +1174,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1196,10 +1196,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -1220,10 +1220,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, esuc, csuc, eerr
         {
-            let consumed = [true, false, true, false];
-            let success = [true, true, true, false];
-            let vals = ["nyan", undefined, "cat"];
-            let states = [
+            const consumed = [true, false, true, false];
+            const success = [true, true, true, false];
+            const vals = ["nyan", undefined, "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1243,7 +1243,7 @@ describe(".endBy(parser, sep)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1261,10 +1261,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1281,10 +1281,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, esuc, cerr
         {
-            let consumed = [true, false, true];
-            let success = [true, true, false];
-            let vals = ["nyan", undefined];
-            let states = [
+            const consumed = [true, false, true];
+            const success = [true, true, false];
+            const vals = ["nyan", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1298,7 +1298,7 @@ describe(".endBy(parser, sep)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1312,10 +1312,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1329,10 +1329,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, esuc, esuc, csuc, cerr
         {
-            let consumed = [true, false, false, true, true];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [true, false, false, true, true];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1358,7 +1358,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1380,10 +1380,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1397,10 +1397,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, esuc, esuc, csuc, eerr
         {
-            let consumed = [true, false, false, true, false];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [true, false, false, true, false];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1426,7 +1426,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1448,10 +1448,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -1472,10 +1472,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, esuc, esuc, cerr
         {
-            let consumed = [true, false, false, true];
-            let success = [true, true, true, false];
-            let vals = ["nyan", undefined, "cat"];
-            let states = [
+            const consumed = [true, false, false, true];
+            const success = [true, true, true, false];
+            const vals = ["nyan", undefined, "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1495,7 +1495,7 @@ describe(".endBy(parser, sep)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1513,10 +1513,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1532,10 +1532,10 @@ describe(".endBy(parser, sep)", () => {
         // csuc, esuc, esuc, esuc, eerr -> error
         // csuc, esuc, esuc, eerr
         {
-            let consumed = [true, false, false, false];
-            let success = [true, true, true, false];
-            let vals = ["nyan", undefined, "cat"];
-            let states = [
+            const consumed = [true, false, false, false];
+            const success = [true, true, true, false];
+            const vals = ["nyan", undefined, "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1555,7 +1555,7 @@ describe(".endBy(parser, sep)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1573,10 +1573,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -1600,10 +1600,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, esuc, eerr
         {
-            let consumed = [true, false, false];
-            let success = [true, true, false];
-            let vals = ["nyan", undefined];
-            let states = [
+            const consumed = [true, false, false];
+            const success = [true, true, false];
+            const vals = ["nyan", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1617,7 +1617,7 @@ describe(".endBy(parser, sep)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1631,10 +1631,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -1655,10 +1655,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, eerr
         {
-            let consumed = [true, false];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [true, false];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1666,7 +1666,7 @@ describe(".endBy(parser, sep)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1676,10 +1676,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1696,20 +1696,20 @@ describe(".endBy(parser, sep)", () => {
         }
         // cerr
         {
-            let consumed = [true];
-            let success = [false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [true];
+            const success = [false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1723,10 +1723,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // esuc, csuc, csuc, csuc, cerr
         {
-            let consumed = [false, true, true, true, true];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [false, true, true, true, true];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1752,7 +1752,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1774,10 +1774,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1791,10 +1791,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // esuc, csuc, csuc, csuc, eerr
         {
-            let consumed = [false, true, true, true, false];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [false, true, true, true, false];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1820,7 +1820,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1842,10 +1842,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -1866,10 +1866,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // esuc, csuc, csuc, cerr
         {
-            let consumed = [false, true, true, true];
-            let success = [true, true, true, false];
-            let vals = ["nyan", undefined, "cat"];
-            let states = [
+            const consumed = [false, true, true, true];
+            const success = [true, true, true, false];
+            const vals = ["nyan", undefined, "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1889,7 +1889,7 @@ describe(".endBy(parser, sep)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1907,10 +1907,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1924,10 +1924,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // esuc, csuc, csuc, esuc, cerr
         {
-            let consumed = [false, true, true, false, true];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [false, true, true, false, true];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1953,7 +1953,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1975,10 +1975,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1992,10 +1992,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // esuc, csuc, csuc, esuc, eerr
         {
-            let consumed = [false, true, true, false, false];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [false, true, true, false, false];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -2021,7 +2021,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -2043,10 +2043,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -2067,10 +2067,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // esuc, csuc, csuc, eerr
         {
-            let consumed = [false, true, true, false];
-            let success = [true, true, true, false];
-            let vals = ["nyan", undefined, "cat"];
-            let states = [
+            const consumed = [false, true, true, false];
+            const success = [true, true, true, false];
+            const vals = ["nyan", undefined, "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -2090,7 +2090,7 @@ describe(".endBy(parser, sep)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -2108,10 +2108,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -2128,10 +2128,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // esuc, csuc, cerr
         {
-            let consumed = [false, true, true];
-            let success = [true, true, false];
-            let vals = ["nyan", undefined];
-            let states = [
+            const consumed = [false, true, true];
+            const success = [true, true, false];
+            const vals = ["nyan", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -2145,7 +2145,7 @@ describe(".endBy(parser, sep)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -2159,10 +2159,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -2176,10 +2176,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // esuc, csuc, esuc, csuc, cerr
         {
-            let consumed = [false, true, false, true, true];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [false, true, false, true, true];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -2205,7 +2205,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -2227,10 +2227,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -2244,10 +2244,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // esuc, csuc, esuc, csuc, eerr
         {
-            let consumed = [false, true, false, true, false];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [false, true, false, true, false];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -2273,7 +2273,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -2295,10 +2295,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -2319,10 +2319,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // esuc, csuc, esuc, cerr
         {
-            let consumed = [false, true, false, true];
-            let success = [true, true, true, false];
-            let vals = ["nyan", undefined, "cat"];
-            let states = [
+            const consumed = [false, true, false, true];
+            const success = [true, true, true, false];
+            const vals = ["nyan", undefined, "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -2342,7 +2342,7 @@ describe(".endBy(parser, sep)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -2360,10 +2360,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -2379,10 +2379,10 @@ describe(".endBy(parser, sep)", () => {
         // esuc, csuc, esuc, esuc, eerr -> error
         // esuc, csuc, esuc, eerr
         {
-            let consumed = [false, true, false, false];
-            let success = [true, true, true, false];
-            let vals = ["nyan", undefined, "cat"];
-            let states = [
+            const consumed = [false, true, false, false];
+            const success = [true, true, true, false];
+            const vals = ["nyan", undefined, "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -2402,7 +2402,7 @@ describe(".endBy(parser, sep)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -2420,10 +2420,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -2447,10 +2447,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // esuc, csuc, eerr
         {
-            let consumed = [false, true, false];
-            let success = [true, true, false];
-            let vals = ["nyan", undefined];
-            let states = [
+            const consumed = [false, true, false];
+            const success = [true, true, false];
+            const vals = ["nyan", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -2464,7 +2464,7 @@ describe(".endBy(parser, sep)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -2478,10 +2478,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -2502,10 +2502,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // esuc, cerr
         {
-            let consumed = [false, true];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [false, true];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -2513,7 +2513,7 @@ describe(".endBy(parser, sep)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -2523,10 +2523,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -2554,10 +2554,10 @@ describe(".endBy(parser, sep)", () => {
         // esuc, esuc, eerr -> error
         // esuc, eerr
         {
-            let consumed = [false, false];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [false, false];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -2565,7 +2565,7 @@ describe(".endBy(parser, sep)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -2575,10 +2575,10 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -2597,20 +2597,20 @@ describe(".endBy(parser, sep)", () => {
         }
         // eerr
         {
-            let consumed = [false];
-            let success = [false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [false];
+            const success = [false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -2627,7 +2627,7 @@ describe(".endBy(parser, sep)", () => {
     });
 
     it("should throw an `Error' if both separator and parser succeed without consuming input", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
@@ -2639,21 +2639,21 @@ describe(".endBy(parser, sep)", () => {
             return [
                 new Parser(state => {
                     expect(State.equal(state, i === 0 ? initState : states[j - 2])).to.be.true;
-                    let _consumed = consumed[i];
-                    let _success  = success[i];
-                    let _val      = vals[i];
-                    let _state    = states[i];
-                    let _err      = errs[i];
+                    const _consumed = consumed[i];
+                    const _success  = success[i];
+                    const _val      = vals[i];
+                    const _state    = states[i];
+                    const _err      = errs[i];
                     i += 2;
                     return new Result(_consumed, _success, _err, _val, _state);
                 }),
                 new Parser(state => {
                     expect(State.equal(state, states[i - 2])).to.be.true;
-                    let _consumed = consumed[j];
-                    let _success  = success[j];
-                    let _val      = vals[j];
-                    let _state    = states[j];
-                    let _err      = errs[j];
+                    const _consumed = consumed[j];
+                    const _success  = success[j];
+                    const _val      = vals[j];
+                    const _state    = states[j];
+                    const _err      = errs[j];
                     j += 2;
                     return new Result(_consumed, _success, _err, _val, _state);
                 })
@@ -2661,10 +2661,10 @@ describe(".endBy(parser, sep)", () => {
         }
         // csuc, csuc, esuc, esuc, *
         {
-            let consumed = [true, true, false, false, true];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [true, true, false, false, true];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -2690,7 +2690,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -2712,17 +2712,17 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
             expect(() => { manyParser.run(initState); }).to.throw(Error, /many/);
         }
         // csuc, esuc, esuc, esuc, *
         {
-            let consumed = [true, false, false, false, true];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [true, false, false, false, true];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -2748,7 +2748,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -2770,17 +2770,17 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
             expect(() => { manyParser.run(initState); }).to.throw(Error, /many/);
         }
         // esuc, csuc, esuc, esuc, *
         {
-            let consumed = [false, true, false, false, true];
-            let success = [true, true, true, true, false];
-            let vals = ["nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [false, true, false, false, true];
+            const success = [true, true, true, true, false];
+            const vals = ["nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -2806,7 +2806,7 @@ describe(".endBy(parser, sep)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -2828,17 +2828,17 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
             expect(() => { manyParser.run(initState); }).to.throw(Error, /many/);
         }
         // esuc, esuc, *
         {
-            let consumed = [false, false, true];
-            let success = [true, true, false];
-            let vals = ["nyan", undefined];
-            let states = [
+            const consumed = [false, false, true];
+            const success = [true, true, false];
+            const vals = ["nyan", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -2852,7 +2852,7 @@ describe(".endBy(parser, sep)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -2866,8 +2866,8 @@ describe(".endBy(parser, sep)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = endBy(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = endBy(parsers[0], parsers[1]);
             assertParser(manyParser);
             expect(() => { manyParser.run(initState); }).to.throw(Error, /many/);
         }

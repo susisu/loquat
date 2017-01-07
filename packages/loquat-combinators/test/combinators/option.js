@@ -23,31 +23,31 @@ const option = _combinators.option;
 describe(".option(val, parser)", () => {
     it("should return a parser that attempts to parse by `parser',"
         + " and returns its result unless it empty fails, or returns `val'", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let finalState = new State(
+        const finalState = new State(
             new Config({ tabWidth: 4 }),
             "rest",
             new SourcePos("foobar", 496, 28),
             "some"
         );
-        let err = new ParseError(
+        const err = new ParseError(
             new SourcePos("foobar", 496, 28),
             [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
         );
         // csuc
         {
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(err, "nyan", finalState);
             });
-            let optParser = option("cat", parser);
+            const optParser = option("cat", parser);
             assertParser(optParser);
-            let res = optParser.run(initState);
+            const res = optParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(err, "nyan", finalState)
@@ -55,13 +55,13 @@ describe(".option(val, parser)", () => {
         }
         // cerr
         {
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.cerr(err);
             });
-            let optParser = option("cat", parser);
+            const optParser = option("cat", parser);
             assertParser(optParser);
-            let res = optParser.run(initState);
+            const res = optParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(err)
@@ -69,13 +69,13 @@ describe(".option(val, parser)", () => {
         }
         // esuc
         {
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(err, "nyan", finalState);
             });
-            let optParser = option("cat", parser);
+            const optParser = option("cat", parser);
             assertParser(optParser);
-            let res = optParser.run(initState);
+            const res = optParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(err, "nyan", finalState)
@@ -83,13 +83,13 @@ describe(".option(val, parser)", () => {
         }
         // eerr
         {
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.eerr(err);
             });
-            let optParser = option("cat", parser);
+            const optParser = option("cat", parser);
             assertParser(optParser);
-            let res = optParser.run(initState);
+            const res = optParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(err, "cat", initState)

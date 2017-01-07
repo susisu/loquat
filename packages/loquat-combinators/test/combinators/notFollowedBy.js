@@ -23,31 +23,31 @@ const notFollowedBy = _combinators.notFollowedBy;
 
 describe(".notFollowedBy(parser)", () => {
     it("should return a parser that succeeds without consuming input only when `parser' fails", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
             "none"
         );
-        let finalState = new State(
+        const finalState = new State(
             new Config({ tabWidth: 4 }),
             "rest",
             new SourcePos("foobar", 1, 1),
             "some"
         );
-        let err = new ParseError(
+        const err = new ParseError(
             new SourcePos("foobar", 1, 1),
             [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
         );
         // csuc
         {
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(err, "nyancat", finalState);
             });
-            let parser = notFollowedBy(p);
+            const parser = notFollowedBy(p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -63,13 +63,13 @@ describe(".notFollowedBy(parser)", () => {
         }
         // cerr
         {
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.cerr(err);
             });
-            let parser = notFollowedBy(p);
+            const parser = notFollowedBy(p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -84,13 +84,13 @@ describe(".notFollowedBy(parser)", () => {
         }
         // esuc
         {
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(err, "nyancat", finalState);
             });
-            let parser = notFollowedBy(p);
+            const parser = notFollowedBy(p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -106,13 +106,13 @@ describe(".notFollowedBy(parser)", () => {
         }
         // eerr
         {
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.eerr(err);
             });
-            let parser = notFollowedBy(p);
+            const parser = notFollowedBy(p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(

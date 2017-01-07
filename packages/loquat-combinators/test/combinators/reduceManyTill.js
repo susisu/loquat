@@ -23,7 +23,7 @@ const reduceManyTill = _combinators.reduceManyTill;
 describe(".reduceManyTill(parser, end, callback, initVal)", () => {
     it("should return a parser that parses zero or more tokens accepted by `parser' until `end' succeeds,"
         + " and reduces the resultant values by a function `callback'", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
@@ -35,21 +35,21 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
             return [
                 new Parser(state => {
                     expect(State.equal(state, i === 0 ? initState : states[j - 2])).to.be.true;
-                    let _consumed = consumed[i];
-                    let _success  = success[i];
-                    let _val      = vals[i];
-                    let _state    = states[i];
-                    let _err      = errs[i];
+                    const _consumed = consumed[i];
+                    const _success  = success[i];
+                    const _val      = vals[i];
+                    const _state    = states[i];
+                    const _err      = errs[i];
                     i += 2;
                     return new Result(_consumed, _success, _err, _val, _state);
                 }),
                 new Parser(state => {
                     expect(State.equal(state, i === 2 ? initState : states[j - 2])).to.be.true;
-                    let _consumed = consumed[j];
-                    let _success  = success[j];
-                    let _val      = vals[j];
-                    let _state    = states[j];
-                    let _err      = errs[j];
+                    const _consumed = consumed[j];
+                    const _success  = success[j];
+                    const _val      = vals[j];
+                    const _state    = states[j];
+                    const _err      = errs[j];
                     j += 2;
                     return new Result(_consumed, _success, _err, _val, _state);
                 })
@@ -57,10 +57,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
         }
         // empty csuc
         {
-            let consumed = [true];
-            let success = [true];
-            let vals = [undefined];
-            let states = [
+            const consumed = [true];
+            const success = [true];
+            const vals = [undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -68,16 +68,16 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -97,10 +97,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
         }
         // many csuc, ended by csuc
         {
-            let consumed = [false, true, false, true, true];
-            let success = [false, true, false, true, true];
-            let vals = [undefined, "nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [false, true, false, true, true];
+            const success = [false, true, false, true, true];
+            const vals = [undefined, "nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -132,7 +132,7 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     "someE"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -154,10 +154,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -177,10 +177,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
         }
         // many esuc, ended by csuc
         {
-            let consumed = [false, false, false, false, true];
-            let success = [false, true, false, true, true];
-            let vals = [undefined, "nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [false, false, false, false, true];
+            const success = [false, true, false, true, true];
+            const vals = [undefined, "nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -212,7 +212,7 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     "someE"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -234,10 +234,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -257,20 +257,20 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
         }
         // empty cerr
         {
-            let consumed = [true];
-            let success = [false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [true];
+            const success = [false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -283,10 +283,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
         }
         // many csuc, ended by cerr
         {
-            let consumed = [false, true, false, true, true];
-            let success = [false, true, false, true, false];
-            let vals = [undefined, "nyan", undefined, "cat"];
-            let states = [
+            const consumed = [false, true, false, true, true];
+            const success = [false, true, false, true, false];
+            const vals = [undefined, "nyan", undefined, "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -312,7 +312,7 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -334,10 +334,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -350,10 +350,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
         }
         // many esuc, ended by cerr
         {
-            let consumed = [false, false, false, false, true];
-            let success = [false, true, false, true, false];
-            let vals = [undefined, "nyan", undefined, "cat"];
-            let states = [
+            const consumed = [false, false, false, false, true];
+            const success = [false, true, false, true, false];
+            const vals = [undefined, "nyan", undefined, "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -379,7 +379,7 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     "someD"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -401,10 +401,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -417,10 +417,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
         }
         // empty esuc
         {
-            let consumed = [false];
-            let success = [true];
-            let vals = [undefined];
-            let states = [
+            const consumed = [false];
+            const success = [true];
+            const vals = [undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -428,16 +428,16 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -457,10 +457,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
         }
         // many csuc, ended by esuc
         {
-            let consumed = [false, true, false, true, false];
-            let success = [false, true, false, true, true];
-            let vals = [undefined, "nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [false, true, false, true, false];
+            const success = [false, true, false, true, true];
+            const vals = [undefined, "nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -492,7 +492,7 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     "someE"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -514,10 +514,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -540,10 +540,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
         }
         // many esuc, ended by esuc
         {
-            let consumed = [false, false, false, false, false];
-            let success = [false, true, false, true, true];
-            let vals = [undefined, "nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [false, false, false, false, false];
+            const success = [false, true, false, true, true];
+            const vals = [undefined, "nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -575,7 +575,7 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     "someE"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -597,10 +597,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testE")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -626,11 +626,11 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
         }
         // cerr
         {
-            let consumed = [false, true];
-            let success = [false, false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [false, true];
+            const success = [false, false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -640,10 +640,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -656,10 +656,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
         }
         // many csuc, cerr
         {
-            let consumed = [false, true, false, true, false, true];
-            let success = [false, true, false, true, false, false];
-            let vals = [undefined, "nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [false, true, false, true, false, true];
+            const success = [false, true, false, true, false, false];
+            const vals = [undefined, "nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -691,7 +691,7 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     "someE"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -717,10 +717,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testF")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -733,11 +733,11 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
         }
         // eerr
         {
-            let consumed = [false, false];
-            let success = [false, false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [false, false];
+            const success = [false, false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -747,10 +747,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -766,10 +766,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
         }
         // many csuc, eerr
         {
-            let consumed = [false, true, false, true, false, false];
-            let success = [false, true, false, true, false, false];
-            let vals = [undefined, "nyan", undefined, "cat", undefined];
-            let states = [
+            const consumed = [false, true, false, true, false, false];
+            const success = [false, true, false, true, false, false];
+            const vals = [undefined, "nyan", undefined, "cat", undefined];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -801,7 +801,7 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     "someE"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -827,10 +827,10 @@ describe(".reduceManyTill(parser, end, callback, initVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testF")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const parser = reduceManyTill(parsers[1], parsers[0], (x, y) => x + y, "");
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(

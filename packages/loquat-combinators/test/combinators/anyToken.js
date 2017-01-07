@@ -24,13 +24,13 @@ describe(".anyToken", () => {
         assertParser(anyToken);
         // empty input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = anyToken.run(initState);
+            const res = anyToken.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -43,13 +43,13 @@ describe(".anyToken", () => {
         }
         // some input
         {
-            let initState = new State(
+            const initState = new State(
                 new Config({ tabWidth: 8 }),
                 "ABC",
                 new SourcePos("foobar", 1, 1),
                 "none"
             );
-            let res = anyToken.run(initState);
+            const res = anyToken.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(

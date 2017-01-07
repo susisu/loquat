@@ -22,9 +22,9 @@ const count = _combinators.count;
 
 describe(".count(num, parsers)", () => {
     it("should return a parser that runs `parsers' `num' times sequentially and returns values as an array", () => {
-        let arrayEqual = (arrA, arrB) => arrA.length === arrB.length && arrA.every((elem, i) => elem === arrB[i]);
+        const arrayEqual = (arrA, arrB) => arrA.length === arrB.length && arrA.every((elem, i) => elem === arrB[i]);
 
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
@@ -34,11 +34,11 @@ describe(".count(num, parsers)", () => {
             let i = 0;
             return new Parser(state => {
                 expect(State.equal(state, i === 0 ? initState : states[i - 1])).to.be.true;
-                let _consumed = consumed[i];
-                let _success  = success[i];
-                let _val      = vals[i];
-                let _state    = states[i];
-                let _err      = errs[i];
+                const _consumed = consumed[i];
+                const _success  = success[i];
+                const _val      = vals[i];
+                const _state    = states[i];
+                const _err      = errs[i];
                 i += 1;
                 return new Result(_consumed, _success, _err, _val, _state);
             });
@@ -46,10 +46,10 @@ describe(".count(num, parsers)", () => {
 
         // empty
         {
-            let parser = new Parser(() => { throw new Error("unexpected call"); });
-            let repParser = count(0, parser);
+            const parser = new Parser(() => { throw new Error("unexpected call"); });
+            const repParser = count(0, parser);
             assertParser(repParser);
-            let res = repParser.run(initState);
+            const res = repParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(ParseError.unknown(initState.pos), [], initState),
@@ -58,10 +58,10 @@ describe(".count(num, parsers)", () => {
         }
         // csuc, csuc
         {
-            let consumed = [true, true];
-            let success = [true, true];
-            let vals = ["nyan", "cat"];
-            let states = [
+            const consumed = [true, true];
+            const success = [true, true];
+            const vals = ["nyan", "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -75,7 +75,7 @@ describe(".count(num, parsers)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -85,10 +85,10 @@ describe(".count(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let repParser = count(2, parser);
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const repParser = count(2, parser);
             assertParser(repParser);
-            let res = repParser.run(initState);
+            const res = repParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -109,10 +109,10 @@ describe(".count(num, parsers)", () => {
         }
         // csuc, cerr
         {
-            let consumed = [true, true];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [true, true];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -120,7 +120,7 @@ describe(".count(num, parsers)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -130,10 +130,10 @@ describe(".count(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let repParser = count(2, parser);
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const repParser = count(2, parser);
             assertParser(repParser);
-            let res = repParser.run(initState);
+            const res = repParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -147,10 +147,10 @@ describe(".count(num, parsers)", () => {
         }
         // csuc, esuc
         {
-            let consumed = [true, false];
-            let success = [true, true];
-            let vals = ["nyan", "cat"];
-            let states = [
+            const consumed = [true, false];
+            const success = [true, true];
+            const vals = ["nyan", "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -164,7 +164,7 @@ describe(".count(num, parsers)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -174,10 +174,10 @@ describe(".count(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let repParser = count(2, parser);
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const repParser = count(2, parser);
             assertParser(repParser);
-            let res = repParser.run(initState);
+            const res = repParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -201,10 +201,10 @@ describe(".count(num, parsers)", () => {
         }
         // csuc, eerr
         {
-            let consumed = [true, false];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [true, false];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -212,7 +212,7 @@ describe(".count(num, parsers)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -222,10 +222,10 @@ describe(".count(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let repParser = count(2, parser);
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const repParser = count(2, parser);
             assertParser(repParser);
-            let res = repParser.run(initState);
+            const res = repParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -242,20 +242,20 @@ describe(".count(num, parsers)", () => {
         }
         // cerr
         {
-            let consumed = [true];
-            let success = [false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [true];
+            const success = [false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let repParser = count(2, parser);
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const repParser = count(2, parser);
             assertParser(repParser);
-            let res = repParser.run(initState);
+            const res = repParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -269,10 +269,10 @@ describe(".count(num, parsers)", () => {
         }
         // esuc, csuc
         {
-            let consumed = [false, true];
-            let success = [true, true];
-            let vals = ["nyan", "cat"];
-            let states = [
+            const consumed = [false, true];
+            const success = [true, true];
+            const vals = ["nyan", "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -286,7 +286,7 @@ describe(".count(num, parsers)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -296,10 +296,10 @@ describe(".count(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let repParser = count(2, parser);
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const repParser = count(2, parser);
             assertParser(repParser);
-            let res = repParser.run(initState);
+            const res = repParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -320,10 +320,10 @@ describe(".count(num, parsers)", () => {
         }
         // esuc, cerr
         {
-            let consumed = [false, true];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [false, true];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -331,7 +331,7 @@ describe(".count(num, parsers)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -341,10 +341,10 @@ describe(".count(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let repParser = count(2, parser);
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const repParser = count(2, parser);
             assertParser(repParser);
-            let res = repParser.run(initState);
+            const res = repParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -358,10 +358,10 @@ describe(".count(num, parsers)", () => {
         }
         // esuc, esuc
         {
-            let consumed = [false, false];
-            let success = [true, true];
-            let vals = ["nyan", "cat"];
-            let states = [
+            const consumed = [false, false];
+            const success = [true, true];
+            const vals = ["nyan", "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -375,7 +375,7 @@ describe(".count(num, parsers)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -385,10 +385,10 @@ describe(".count(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let repParser = count(2, parser);
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const repParser = count(2, parser);
             assertParser(repParser);
-            let res = repParser.run(initState);
+            const res = repParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -412,10 +412,10 @@ describe(".count(num, parsers)", () => {
         }
         // esuc, eerr
         {
-            let consumed = [false, false];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [false, false];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -423,7 +423,7 @@ describe(".count(num, parsers)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -433,10 +433,10 @@ describe(".count(num, parsers)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let repParser = count(2, parser);
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const repParser = count(2, parser);
             assertParser(repParser);
-            let res = repParser.run(initState);
+            const res = repParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(
@@ -453,20 +453,20 @@ describe(".count(num, parsers)", () => {
         }
         // eerr
         {
-            let consumed = [false];
-            let success = [false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [false];
+            const success = [false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let parser = generateParser(consumed, success, vals, states, errs);
-            let repParser = count(2, parser);
+            const parser = generateParser(consumed, success, vals, states, errs);
+            const repParser = count(2, parser);
             assertParser(repParser);
-            let res = repParser.run(initState);
+            const res = repParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(

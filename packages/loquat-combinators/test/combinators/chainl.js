@@ -23,7 +23,7 @@ const chainl = _combinators.chainl;
 describe(".chainl(term, op, defaultVal)", () => {
     it("should return a parser that parses zero or more terms accepted by `term' and operators accepted by `op',"
         + " and reduces the values to a single value from left to right", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
@@ -35,21 +35,21 @@ describe(".chainl(term, op, defaultVal)", () => {
             return [
                 new Parser(state => {
                     expect(State.equal(state, i === 0 ? initState : states[j - 2])).to.be.true;
-                    let _consumed = consumed[i];
-                    let _success  = success[i];
-                    let _val      = vals[i];
-                    let _state    = states[i];
-                    let _err      = errs[i];
+                    const _consumed = consumed[i];
+                    const _success  = success[i];
+                    const _val      = vals[i];
+                    const _state    = states[i];
+                    const _err      = errs[i];
                     i += 2;
                     return new Result(_consumed, _success, _err, _val, _state);
                 }),
                 new Parser(state => {
                     expect(State.equal(state, states[i - 2])).to.be.true;
-                    let _consumed = consumed[j];
-                    let _success  = success[j];
-                    let _val      = vals[j];
-                    let _state    = states[j];
-                    let _err      = errs[j];
+                    const _consumed = consumed[j];
+                    const _success  = success[j];
+                    const _val      = vals[j];
+                    const _state    = states[j];
+                    const _err      = errs[j];
                     j += 2;
                     return new Result(_consumed, _success, _err, _val, _state);
                 })
@@ -57,10 +57,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // csuc, csuc, csuc, cerr
         {
-            let consumed = [true, true, true, true];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [true, true, true, true];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -80,7 +80,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -98,10 +98,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -114,10 +114,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // csuc, csuc, csuc, eerr
         {
-            let consumed = [true, true, true, false];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [true, true, true, false];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -137,7 +137,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -155,10 +155,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -181,10 +181,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // csuc, csuc, cerr
         {
-            let consumed = [true, true, true];
-            let success = [true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase()];
-            let states = [
+            const consumed = [true, true, true];
+            const success = [true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase()];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -198,7 +198,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -212,10 +212,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -228,10 +228,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // csuc, csuc, esuc, cerr
         {
-            let consumed = [true, true, false, true];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [true, true, false, true];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -251,7 +251,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -269,10 +269,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -285,10 +285,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // csuc, csuc, esuc, eerr
         {
-            let consumed = [true, true, false, false];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [true, true, false, false];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -308,7 +308,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -326,10 +326,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -353,10 +353,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // csuc, csuc, eerr
         {
-            let consumed = [true, true, false];
-            let success = [true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase()];
-            let states = [
+            const consumed = [true, true, false];
+            const success = [true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase()];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -370,7 +370,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -384,10 +384,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -403,10 +403,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // csuc, cerr
         {
-            let consumed = [true, true];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [true, true];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -414,7 +414,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -424,10 +424,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -440,10 +440,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // csuc, esuc, csuc, cerr
         {
-            let consumed = [true, false, true, true];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [true, false, true, true];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -463,7 +463,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -481,10 +481,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -497,10 +497,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // csuc, esuc, csuc, eerr
         {
-            let consumed = [true, false, true, false];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [true, false, true, false];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -520,7 +520,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -538,10 +538,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -564,10 +564,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // csuc, esuc, cerr
         {
-            let consumed = [true, false, true];
-            let success = [true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase()];
-            let states = [
+            const consumed = [true, false, true];
+            const success = [true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase()];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -581,7 +581,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -595,10 +595,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -611,10 +611,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // csuc, esuc, esuc, cerr
         {
-            let consumed = [true, false, false, true];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [true, false, false, true];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -634,7 +634,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -652,10 +652,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -668,10 +668,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // csuc, esuc, esuc, eerr
         {
-            let consumed = [true, false, false, false];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [true, false, false, false];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -691,7 +691,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -709,10 +709,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -737,10 +737,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // csuc, esuc, eerr
         {
-            let consumed = [true, false, false];
-            let success = [true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase()];
-            let states = [
+            const consumed = [true, false, false];
+            const success = [true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase()];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -754,7 +754,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -768,10 +768,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -795,10 +795,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // csuc, eerr
         {
-            let consumed = [true, false];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [true, false];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -806,7 +806,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -816,10 +816,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -842,20 +842,20 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // cerr
         {
-            let consumed = [true];
-            let success = [false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [true];
+            const success = [false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -868,10 +868,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // esuc, csuc, csuc, cerr
         {
-            let consumed = [false, true, true, true];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [false, true, true, true];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -891,7 +891,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -909,10 +909,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -925,10 +925,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // esuc, csuc, csuc, eerr
         {
-            let consumed = [false, true, true, false];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [false, true, true, false];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -948,7 +948,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -966,10 +966,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -992,10 +992,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // esuc, csuc, cerr
         {
-            let consumed = [false, true, true];
-            let success = [true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase()];
-            let states = [
+            const consumed = [false, true, true];
+            const success = [true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase()];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1009,7 +1009,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1023,10 +1023,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1039,10 +1039,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // esuc, csuc, esuc, cerr
         {
-            let consumed = [false, true, false, true];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [false, true, false, true];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1062,7 +1062,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1080,10 +1080,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1096,10 +1096,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // esuc, csuc, esuc, eerr
         {
-            let consumed = [false, true, false, false];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [false, true, false, false];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1119,7 +1119,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1137,10 +1137,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -1164,10 +1164,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // esuc, csuc, eerr
         {
-            let consumed = [false, true, false];
-            let success = [true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase()];
-            let states = [
+            const consumed = [false, true, false];
+            const success = [true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase()];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1181,7 +1181,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1195,10 +1195,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1214,10 +1214,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // esuc, cerr
         {
-            let consumed = [false, true];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [false, true];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1225,7 +1225,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1235,10 +1235,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1251,10 +1251,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // esuc, esuc, csuc, cerr
         {
-            let consumed = [false, false, true, true];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [false, false, true, true];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1274,7 +1274,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1292,10 +1292,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1308,10 +1308,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // esuc, esuc, csuc, eerr
         {
-            let consumed = [false, false, true, false];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [false, false, true, false];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1331,7 +1331,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1349,10 +1349,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -1375,10 +1375,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // esuc, esuc, cerr
         {
-            let consumed = [false, false, true];
-            let success = [true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase()];
-            let states = [
+            const consumed = [false, false, true];
+            const success = [true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase()];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1392,7 +1392,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1406,10 +1406,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1422,10 +1422,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // esuc, esuc, esuc, cerr
         {
-            let consumed = [false, false, false, true];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [false, false, false, true];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1445,7 +1445,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1463,10 +1463,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(
@@ -1479,10 +1479,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // esuc, esuc, esuc, eerr
         {
-            let consumed = [false, false, false, false];
-            let success = [true, true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
-            let states = [
+            const consumed = [false, false, false, false];
+            const success = [true, true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase(), "cat"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1502,7 +1502,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someC"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1520,10 +1520,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -1548,10 +1548,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // esuc, esuc, eerr
         {
-            let consumed = [false, false, false];
-            let success = [true, true, false];
-            let vals = ["nyan", (x, y) => x + y.toUpperCase()];
-            let states = [
+            const consumed = [false, false, false];
+            const success = [true, true, false];
+            const vals = ["nyan", (x, y) => x + y.toUpperCase()];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1565,7 +1565,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someB"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1579,10 +1579,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -1606,10 +1606,10 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // esuc, eerr
         {
-            let consumed = [false, false];
-            let success = [true, false];
-            let vals = ["nyan"];
-            let states = [
+            const consumed = [false, false];
+            const success = [true, false];
+            const vals = ["nyan"];
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1617,7 +1617,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someA"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1627,10 +1627,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -1653,20 +1653,20 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // eerr
         {
-            let consumed = [false];
-            let success = [false];
-            let vals = [];
-            let states = [];
-            let errs = [
+            const consumed = [false];
+            const success = [false];
+            const vals = [];
+            const states = [];
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 1),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(
@@ -1681,16 +1681,16 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // left to right: csuc, csuc, csuc, csuc, csuc, eerr
         {
-            let consumed = [true, true, true, true, true, false];
-            let success = [true, true, true, true, true, false];
-            let vals = [
+            const consumed = [true, true, true, true, true, false];
+            const success = [true, true, true, true, true, false];
+            const vals = [
                 "c",
                 (x, y) => x + y.toUpperCase(),
                 "a",
                 (x, y) => x + y.toLowerCase(),
                 "T"
             ];
-            let states = [
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1722,7 +1722,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someE"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1748,10 +1748,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testF")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1], "xyz");
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1], "xyz");
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(
@@ -1774,9 +1774,9 @@ describe(".chainl(term, op, defaultVal)", () => {
         }
         // left to right: csuc, csuc, csuc, csuc, csuc, esuc, eerr
         {
-            let consumed = [true, true, true, true, true, false, false];
-            let success = [true, true, true, true, true, true, false];
-            let vals = [
+            const consumed = [true, true, true, true, true, false, false];
+            const success = [true, true, true, true, true, true, false];
+            const vals = [
                 "c",
                 (x, y) => x + y.toUpperCase(),
                 "a",
@@ -1784,7 +1784,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                 "T",
                 (x, y) => x + y.toUpperCase()
             ];
-            let states = [
+            const states = [
                 new State(
                     new Config({ tabWidth: 8 }),
                     "restA",
@@ -1822,7 +1822,7 @@ describe(".chainl(term, op, defaultVal)", () => {
                     "someF"
                 )
             ];
-            let errs = [
+            const errs = [
                 new ParseError(
                     new SourcePos("foobar", 1, 2),
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
@@ -1852,10 +1852,10 @@ describe(".chainl(term, op, defaultVal)", () => {
                     [new ErrorMessage(ErrorMessageType.MESSAGE, "testG")]
                 )
             ];
-            let parsers = generateParsers(consumed, success, vals, states, errs);
-            let manyParser = chainl(parsers[0], parsers[1]);
+            const parsers = generateParsers(consumed, success, vals, states, errs);
+            const manyParser = chainl(parsers[0], parsers[1]);
             assertParser(manyParser);
-            let res = manyParser.run(initState);
+            const res = manyParser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(

@@ -22,7 +22,7 @@ const between = _combinators.between;
 
 describe(".between(open, close, parser)", () => {
     it("should return a parser that parses what `parser' accepts between `open' and `close'", () => {
-        let initState = new State(
+        const initState = new State(
             new Config({ tabWidth: 8 }),
             "input",
             new SourcePos("foobar", 1, 1),
@@ -30,54 +30,54 @@ describe(".between(open, close, parser)", () => {
         );
         // csuc, csuc, csuc
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 2),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 3),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.csuc(errP, "nyancat", stateP);
             });
 
-            let stateC = new State(
+            const stateC = new State(
                 new Config({ tabWidth: 8 }),
                 "restC",
                 new SourcePos("foobar", 1, 4),
                 "someC"
             );
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 4),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.csuc(errC, "close", stateC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(errC, "nyancat", stateC)
@@ -85,48 +85,48 @@ describe(".between(open, close, parser)", () => {
         }
         // csuc, csuc, cerr
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 2),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 3),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.csuc(errP, "nyancat", stateP);
             });
 
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 4),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.cerr(errC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(errC)
@@ -134,54 +134,54 @@ describe(".between(open, close, parser)", () => {
         }
         // csuc, csuc, esuc
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 2),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 3),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.csuc(errP, "nyancat", stateP);
             });
 
-            let stateC = new State(
+            const stateC = new State(
                 new Config({ tabWidth: 8 }),
                 "restC",
                 new SourcePos("foobar", 1, 3),
                 "someC"
             );
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.esuc(errC, "close", stateC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(ParseError.merge(errP, errC), "nyancat", stateC)
@@ -189,48 +189,48 @@ describe(".between(open, close, parser)", () => {
         }
         // csuc, csuc, eerr
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 2),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 3),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.csuc(errP, "nyancat", stateP);
             });
 
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.eerr(errC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(ParseError.merge(errP, errC))
@@ -238,35 +238,35 @@ describe(".between(open, close, parser)", () => {
         }
         // csuc, cerr, *
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 2),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errO, "open", stateO);
             });
 
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.cerr(errP);
             });
 
-            let close = new Parser(() => { throw new Error("unexpected call"); });
+            const close = new Parser(() => { throw new Error("unexpected call"); });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(errP)
@@ -274,54 +274,54 @@ describe(".between(open, close, parser)", () => {
         }
         // csuc, esuc, csuc
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 2),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 2),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.esuc(errP, "nyancat", stateP);
             });
 
-            let stateC = new State(
+            const stateC = new State(
                 new Config({ tabWidth: 8 }),
                 "restC",
                 new SourcePos("foobar", 1, 3),
                 "someC"
             );
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.csuc(errC, "close", stateC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(errC, "nyancat", stateC)
@@ -329,48 +329,48 @@ describe(".between(open, close, parser)", () => {
         }
         // csuc, esuc, cerr
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 2),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 2),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.esuc(errP, "nyancat", stateP);
             });
 
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.cerr(errC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(errC)
@@ -378,54 +378,54 @@ describe(".between(open, close, parser)", () => {
         }
         // csuc, esuc, esuc
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 2),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 2),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.esuc(errP, "nyancat", stateP);
             });
 
-            let stateC = new State(
+            const stateC = new State(
                 new Config({ tabWidth: 8 }),
                 "restC",
                 new SourcePos("foobar", 1, 2),
                 "someC"
             );
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.esuc(errC, "close", stateC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(ParseError.merge(ParseError.merge(errO, errP), errC), "nyancat", stateC)
@@ -433,48 +433,48 @@ describe(".between(open, close, parser)", () => {
         }
         // csuc, esuc, eerr
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 2),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 2),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.esuc(errP, "nyancat", stateP);
             });
 
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.eerr(errC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(ParseError.merge(ParseError.merge(errO, errP), errC))
@@ -482,35 +482,35 @@ describe(".between(open, close, parser)", () => {
         }
         // csuc, eerr, *
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 2),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.csuc(errO, "open", stateO);
             });
 
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.eerr(errP);
             });
 
-            let close = new Parser(() => { throw new Error("unexpected call"); });
+            const close = new Parser(() => { throw new Error("unexpected call"); });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(ParseError.merge(errO, errP))
@@ -518,22 +518,22 @@ describe(".between(open, close, parser)", () => {
         }
         // cerr, *, *
         {
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.cerr(errO);
             });
 
-            let p = new Parser(() => { throw new Error("unexpected call"); });
+            const p = new Parser(() => { throw new Error("unexpected call"); });
 
-            let close = new Parser(() => { throw new Error("unexpected call"); });
+            const close = new Parser(() => { throw new Error("unexpected call"); });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(errO)
@@ -541,54 +541,54 @@ describe(".between(open, close, parser)", () => {
         }
         // esuc, csuc, csuc
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 1),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 2),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.csuc(errP, "nyancat", stateP);
             });
 
-            let stateC = new State(
+            const stateC = new State(
                 new Config({ tabWidth: 8 }),
                 "restC",
                 new SourcePos("foobar", 1, 3),
                 "someC"
             );
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.csuc(errC, "close", stateC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(errC, "nyancat", stateC)
@@ -596,48 +596,48 @@ describe(".between(open, close, parser)", () => {
         }
         // esuc, csuc, cerr
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 1),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 2),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.csuc(errP, "nyancat", stateP);
             });
 
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 3),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.cerr(errC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(errC)
@@ -645,54 +645,54 @@ describe(".between(open, close, parser)", () => {
         }
         // esuc, csuc, esuc
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 1),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 2),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.csuc(errP, "nyancat", stateP);
             });
 
-            let stateC = new State(
+            const stateC = new State(
                 new Config({ tabWidth: 8 }),
                 "restC",
                 new SourcePos("foobar", 1, 2),
                 "someC"
             );
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.esuc(errC, "close", stateC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(ParseError.merge(errP, errC), "nyancat", stateC)
@@ -700,48 +700,48 @@ describe(".between(open, close, parser)", () => {
         }
         // esuc, csuc, eerr
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 1),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 2),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.csuc(errP, "nyancat", stateP);
             });
 
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.eerr(errC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(ParseError.merge(errP, errC))
@@ -749,35 +749,35 @@ describe(".between(open, close, parser)", () => {
         }
         // esuc, cerr, *
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 1),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errO, "open", stateO);
             });
 
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.cerr(errP);
             });
 
-            let close = new Parser(() => { throw new Error("unexpected call"); });
+            const close = new Parser(() => { throw new Error("unexpected call"); });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(errP)
@@ -785,54 +785,54 @@ describe(".between(open, close, parser)", () => {
         }
         // esuc, esuc, csuc
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 1),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 1),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.esuc(errP, "nyancat", stateP);
             });
 
-            let stateC = new State(
+            const stateC = new State(
                 new Config({ tabWidth: 8 }),
                 "restC",
                 new SourcePos("foobar", 1, 2),
                 "someC"
             );
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.csuc(errC, "close", stateC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.csuc(errC, "nyancat", stateC)
@@ -840,48 +840,48 @@ describe(".between(open, close, parser)", () => {
         }
         // esuc, esuc, cerr
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 1),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 1),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.esuc(errP, "nyancat", stateP);
             });
 
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 2),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.cerr(errC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.cerr(errC)
@@ -889,54 +889,54 @@ describe(".between(open, close, parser)", () => {
         }
         // esuc, esuc, esuc
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 1),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 1),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.esuc(errP, "nyancat", stateP);
             });
 
-            let stateC = new State(
+            const stateC = new State(
                 new Config({ tabWidth: 8 }),
                 "restC",
                 new SourcePos("foobar", 1, 1),
                 "someC"
             );
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.esuc(errC, "close", stateC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.esuc(ParseError.merge(ParseError.merge(errO, errP), errC), "nyancat", stateC)
@@ -944,48 +944,48 @@ describe(".between(open, close, parser)", () => {
         }
         // esuc, esuc, eerr
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 1),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errO, "open", stateO);
             });
 
-            let stateP = new State(
+            const stateP = new State(
                 new Config({ tabWidth: 8 }),
                 "restP",
                 new SourcePos("foobar", 1, 1),
                 "someP"
             );
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.esuc(errP, "nyancat", stateP);
             });
 
-            let errC = new ParseError(
+            const errC = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
             );
-            let close = new Parser(state => {
+            const close = new Parser(state => {
                 expect(State.equal(state, stateP)).to.be.true;
                 return Result.eerr(errC);
             });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(ParseError.merge(ParseError.merge(errO, errP), errC))
@@ -993,35 +993,35 @@ describe(".between(open, close, parser)", () => {
         }
         // esuc, eerr, *
         {
-            let stateO = new State(
+            const stateO = new State(
                 new Config({ tabWidth: 8 }),
                 "restO",
                 new SourcePos("foobar", 1, 1),
                 "someO"
             );
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.esuc(errO, "open", stateO);
             });
 
-            let errP = new ParseError(
+            const errP = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
             );
-            let p = new Parser(state => {
+            const p = new Parser(state => {
                 expect(State.equal(state, stateO)).to.be.true;
                 return Result.eerr(errP);
             });
 
-            let close = new Parser(() => { throw new Error("unexpected call"); });
+            const close = new Parser(() => { throw new Error("unexpected call"); });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(ParseError.merge(errO, errP))
@@ -1029,22 +1029,22 @@ describe(".between(open, close, parser)", () => {
         }
         // eerr, *, *
         {
-            let errO = new ParseError(
+            const errO = new ParseError(
                 new SourcePos("foobar", 1, 1),
                 [new ErrorMessage(ErrorMessageType.MESSAGE, "testO")]
             );
-            let open = new Parser(state => {
+            const open = new Parser(state => {
                 expect(State.equal(state, initState)).to.be.true;
                 return Result.eerr(errO);
             });
 
-            let p = new Parser(() => { throw new Error("unexpected call"); });
+            const p = new Parser(() => { throw new Error("unexpected call"); });
 
-            let close = new Parser(() => { throw new Error("unexpected call"); });
+            const close = new Parser(() => { throw new Error("unexpected call"); });
 
-            let parser = between(open, close, p);
+            const parser = between(open, close, p);
             assertParser(parser);
-            let res = parser.run(initState);
+            const res = parser.run(initState);
             expect(Result.equal(
                 res,
                 Result.eerr(errO)
