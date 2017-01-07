@@ -14,10 +14,10 @@ const lazy       = _parser.lazy;
 
 describe(".lazy(thunk)", () => {
     it("should create a new `LazyParser' instance", () => {
-        let p = new Parser(() => {});
-        let parser = lazy(() => p);
+        const p = new Parser(() => {});
+        const parser = lazy(() => p);
         expect(parser).to.be.an.instanceOf(LazyParser);
-        let res = parser.eval();
+        const res = parser.eval();
         expect(res).to.equal(p);
     });
 });

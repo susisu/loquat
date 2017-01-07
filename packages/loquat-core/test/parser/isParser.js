@@ -16,26 +16,26 @@ const isParser       = _parser.isParser;
 describe(".isParser(val)", () => {
     it("should return true if `val' is an instance of `AbstractParser'", () => {
         {
-            let parser = new Parser(() => {});
+            const parser = new Parser(() => {});
             expect(isParser(parser)).to.be.true;
         }
         {
-            let parser = new LazyParser(() => new Parser(() => {}));
+            const parser = new LazyParser(() => new Parser(() => {}));
             expect(isParser(parser)).to.be.true;
         }
         {
-            let TestParser = class extends AbstractParser {
+            const TestParser = class extends AbstractParser {
                 constructor() {
                     super();
                 }
             };
-            let parser = new TestParser();
+            const parser = new TestParser();
             expect(isParser(parser)).to.be.true;
         }
     });
 
     it("should return false if `val' is not an instance of `AbstractParser'", () => {
-        let values = [
+        const values = [
             null,
             undefined,
             "foobar",
@@ -44,7 +44,7 @@ describe(".isParser(val)", () => {
             {},
             () => {}
         ];
-        for (let val of values) {
+        for (const val of values) {
             expect(isParser(val)).to.be.false;
         }
     });

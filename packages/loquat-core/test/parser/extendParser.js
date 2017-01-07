@@ -15,7 +15,7 @@ const extendParser   = _parser.extendParser;
 
 describe(".extendParser(extensions)", () => {
     it("should extend `AbstractParser.prototype'", () => {
-        let extensions = {
+        const extensions = {
             exFoo: "x",
             exBar: "y",
             exBaz: "z"
@@ -46,13 +46,13 @@ describe(".extendParser(extensions)", () => {
         });
         // can be accessed from parser objects
         {
-            let parser = new Parser(() => {});
+            const parser = new Parser(() => {});
             expect(parser.exFoo).to.equal("x");
             expect(parser.exBar).to.equal("y");
             expect(parser.exBaz).to.equal("z");
         }
         {
-            let parser = new LazyParser(() => new Parser(() => {}));
+            const parser = new LazyParser(() => new Parser(() => {}));
             expect(parser.exFoo).to.equal("x");
             expect(parser.exBar).to.equal("y");
             expect(parser.exBaz).to.equal("z");

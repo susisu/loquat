@@ -24,7 +24,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
     it("should run `parser' and return result as a simple object", () => {
         // csuc
         {
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(
                     state,
                     new State(
@@ -53,7 +53,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
                     )
                 );
             });
-            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
+            const res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(res).to.deep.equal({
                 success: true,
                 value  : "nyancat"
@@ -61,7 +61,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
         }
         // cerr
         {
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(
                     state,
                     new State(
@@ -83,7 +83,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
                     )
                 );
             });
-            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
+            const res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(res).to.be.an("object");
             expect(res.success).to.be.false;
             expect(ParseError.equal(
@@ -101,7 +101,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
         }
         // esuc
         {
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(
                     state,
                     new State(
@@ -130,7 +130,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
                     )
                 );
             });
-            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
+            const res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(res).to.deep.equal({
                 success: true,
                 value  : "nyancat"
@@ -138,7 +138,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
         }
         // eerr
         {
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(
                     state,
                     new State(
@@ -160,7 +160,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
                     )
                 );
             });
-            let res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
+            const res = parse(parser, "foobar", "test", "none", { tabWidth: 4, unicode: true });
             expect(res).to.be.an("object");
             expect(res.success).to.be.false;
             expect(ParseError.equal(
@@ -178,7 +178,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
         }
         // use default parameters
         {
-            let parser = new Parser(state => {
+            const parser = new Parser(state => {
                 expect(State.equal(
                     state,
                     new State(
@@ -207,7 +207,7 @@ describe(".parse(parser, name, input, userState = undefined, opts = {})", () => 
                     )
                 );
             });
-            let res = parse(parser, "foobar", "test");
+            const res = parse(parser, "foobar", "test");
             expect(res).to.deep.equal({
                 success: true,
                 value  : "nyancat"
