@@ -21,7 +21,7 @@ module.exports = () => {
      */
     class LanguageDef {
         /**
-         * @param {(Object|undefined)} [obj = undefined]
+         * @param {Object} [obj = {}]
          */
         constructor(obj) {
             if (obj === undefined) {
