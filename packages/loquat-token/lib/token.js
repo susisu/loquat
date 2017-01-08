@@ -158,11 +158,12 @@ module.exports = (_core, _prim, _char, _combinators) => {
     );
 
     // float
+    const signChar = mplus(char("-"), mplus(char("+"), pure("")));
     const fraction = label(
         then(
             char("."),
             bind(label(manyChars1(digit), "fraction"), digits =>
-                pure(parseFloat("0." + digits))
+                pure("." + digits)
             )
         ),
         "fraction"
@@ -170,36 +171,36 @@ module.exports = (_core, _prim, _char, _combinators) => {
     const exponent = label(
         then(
             oneOf("Ee"),
-            bind(sign, f =>
+            bind(signChar, s =>
                 bind(label(decimal, "exponent"), e =>
-                    pure(Math.pow(10, f(e)))
+                    pure("e" + s + e)
                 )
             )
         ),
         "exponent"
     );
-    function fractExponent(n) {
+    function fractExponent(nat) {
         return mplus(
             bind(fraction, fract =>
-                bind(option(1, exponent), expo =>
-                    pure((n + fract) * expo)
+                bind(option("", exponent), expo =>
+                    pure(parseFloat(nat + fract + expo))
                 )
             ),
             bind(exponent, expo =>
-                pure(n * expo)
+                pure(parseFloat(nat + expo))
             )
         );
     }
-    const floating = bind(decimal, fractExponent);
+    const floating = bind(manyChars1(digit), fractExponent);
 
     // natural or float
-    function fractFloat(n) {
-        return bind(fractExponent(n), f =>
+    function fractFloat(nat) {
+        return bind(fractExponent(nat), f =>
             pure({ type: "float", value: f })
         );
     }
-    const decimalFloat = bind(decimal, n =>
-        option({ type: "natural", value: n }, fractFloat(n))
+    const decimalFloat = bind(manyChars1(digit), nat =>
+        option({ type: "natural", value: parseInt(nat, 10) }, fractFloat(nat))
     );
     const zeroNumFloat = mplus(
         bind(mplus(hexadecimal, octal), n =>
@@ -208,7 +209,7 @@ module.exports = (_core, _prim, _char, _combinators) => {
         mplus(
             decimalFloat,
             mplus(
-                fractFloat(0),
+                fractFloat("0"),
                 pure({ type: "natural", value: 0 })
             )
         )
