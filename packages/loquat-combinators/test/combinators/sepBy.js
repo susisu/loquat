@@ -1,6 +1,5 @@
 /*
  * loquat-combinators test / combinators.sepBy()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

@@ -1,6 +1,5 @@
 /*
  * loquat-combinators test / combinators.manyTill()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

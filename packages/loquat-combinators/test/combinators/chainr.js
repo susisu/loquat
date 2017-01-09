@@ -1,6 +1,5 @@
 /*
  * loquat-combinators test / combinators.chainr()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

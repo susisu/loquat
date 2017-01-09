@@ -1,6 +1,5 @@
 /*
  * loquat-combinators test / combinators.skipMany1()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

@@ -1,6 +1,5 @@
 /*
  * loquat-combinators / sugar.js
- * copyright (c) 2016 Susisu
  */
 
 /**
