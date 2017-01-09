@@ -1,6 +1,5 @@
 /*
  * loquat-char test
- * copyright (c) 2016 Susisu
  */
 
 "use strict";
