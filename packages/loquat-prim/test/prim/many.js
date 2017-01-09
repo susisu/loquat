@@ -1,6 +1,5 @@
 /*
  * loquat-prim test / prim.many()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

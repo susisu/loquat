@@ -1,6 +1,5 @@
 /*
  * loquat-prim test / sugar
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

@@ -1,6 +1,5 @@
 /*
  * loquat-prim test / prim.unexpected()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

@@ -1,6 +1,5 @@
 /*
  * loquat-prim test / prim.bind()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";
