@@ -1,6 +1,5 @@
 /*
  * loquat-qo / qo.js
- * copyright (c) 2016 Susisu
  */
 
 /**
