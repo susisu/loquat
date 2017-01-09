@@ -1,6 +1,5 @@
 /*
  * loquat-monad test / monad.forever()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

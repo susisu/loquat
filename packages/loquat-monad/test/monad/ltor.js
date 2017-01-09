@@ -1,6 +1,5 @@
 /*
  * loquat-monad test / monad.ltor()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

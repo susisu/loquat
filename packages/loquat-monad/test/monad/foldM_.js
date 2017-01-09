@@ -1,6 +1,5 @@
 /*
  * loquat-monad test / monad.foldM_()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

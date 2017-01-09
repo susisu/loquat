@@ -1,6 +1,5 @@
 /*
  * loquat-monad test / monad._internal.zipWith()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

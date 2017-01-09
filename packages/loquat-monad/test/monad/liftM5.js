@@ -1,6 +1,5 @@
 /*
  * loquat-monad test / monad.liftM5()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

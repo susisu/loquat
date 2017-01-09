@@ -1,6 +1,5 @@
 /*
  * loquat-monad / sugar.js
- * copyright (c) 2016 Susisu
  */
 
 /**

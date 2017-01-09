@@ -1,6 +1,5 @@
 /*
  * loquat-monad test / monad.msum()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";
