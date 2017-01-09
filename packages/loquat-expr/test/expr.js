@@ -1,6 +1,5 @@
 /*
  * loquat-expr test / expr
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

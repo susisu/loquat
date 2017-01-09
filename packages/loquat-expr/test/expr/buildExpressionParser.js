@@ -1,6 +1,5 @@
 /*
  * loquat-expr test / expr.buildExpressionParser()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

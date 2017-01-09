@@ -1,6 +1,5 @@
 /*
  * loquat-expr / expr.js
- * copyright (c) 2016 Susisu
  */
 
 /**

@@ -1,6 +1,5 @@
 /*
  * loquat-expr test / expr.Operator constructor()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";
