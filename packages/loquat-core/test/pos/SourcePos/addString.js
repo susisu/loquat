@@ -1,6 +1,5 @@
 /*
  * loquat-core test / pos.SourcePos#addString()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

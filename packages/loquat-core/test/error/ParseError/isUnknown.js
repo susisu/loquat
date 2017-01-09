@@ -1,6 +1,5 @@
 /*
  * loquat-core test / error.ParseError#isUnknown()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

@@ -1,6 +1,5 @@
 /*
  * loquat-core test / parser.assertParser()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

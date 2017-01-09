@@ -1,6 +1,5 @@
 /*
  * loquat-core test / parser.Parser#run()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

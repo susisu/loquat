@@ -1,6 +1,5 @@
 /*
  * loquat-core test / error.ErrorMessage.messagesEqual()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

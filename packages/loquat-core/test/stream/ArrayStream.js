@@ -1,6 +1,5 @@
 /*
  * loquat-core test / stream.ArrayStream
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

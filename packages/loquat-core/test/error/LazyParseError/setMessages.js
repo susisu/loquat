@@ -1,6 +1,5 @@
 /*
  * loquat-core test / error.LazyParseError#setMessages()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

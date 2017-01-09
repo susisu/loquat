@@ -1,6 +1,5 @@
 /*
  * loquat-core test / error.AbstractParseError#toString()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";
