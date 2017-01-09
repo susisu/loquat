@@ -1,6 +1,5 @@
 /*
  * loquat-token test / token.makeTokenParser().reserved()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

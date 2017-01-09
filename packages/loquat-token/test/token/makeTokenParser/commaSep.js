@@ -1,6 +1,5 @@
 /*
  * loquat-token test / token.makeTokenParser().commaSep()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

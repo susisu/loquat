@@ -1,6 +1,5 @@
 /*
  * loquat-token / token.js
- * copyright (c) 2016 Susisu
  */
 
 /**
