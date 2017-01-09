@@ -1,6 +1,5 @@
 /*
  * loquat-char test / char.noneOf()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

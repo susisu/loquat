@@ -1,6 +1,5 @@
 /*
  * loquat-char test / char.string()
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

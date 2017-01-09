@@ -1,6 +1,5 @@
 /*
  * loquat-char test / char.lower
- * copyright (c) 2016 Susisu
  */
 
 "use strict";

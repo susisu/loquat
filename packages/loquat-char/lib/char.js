@@ -1,6 +1,5 @@
 /*
  * loquat-char / char.js
- * copyright (c) 2016 Susisu
  */
 
 /**
