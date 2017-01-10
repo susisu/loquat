@@ -19,15 +19,16 @@ module.exports = () => {
         });
     }
 
-    const escapeMap = new Map();
-    escapeMap.set("\\", "\\\\");
-    escapeMap.set("\"", "\\\"");
-    escapeMap.set("\b", "\\b");
-    escapeMap.set("\f", "\\f");
-    escapeMap.set("\n", "\\n");
-    escapeMap.set("\r", "\\r");
-    escapeMap.set("\t", "\\t");
-    escapeMap.set("\v", "\\v");
+    const escapeMap = new Map([
+        ["\\", "\\\\"],
+        ["\"", "\\\""],
+        ["\b", "\\b"],
+        ["\f", "\\f"],
+        ["\n", "\\n"],
+        ["\r", "\\r"],
+        ["\t", "\\t"],
+        ["\v", "\\v"]
+    ]);
 
     /**
      * @function module:utils.escapeChar
