@@ -1,6 +1,6 @@
 {
   "name": "loquat-combinators",
-  "version": "2.0.0-1",
+  "version": "2.0.0",
   "description": "Combinators for loquat",
   "main": "index.js",
   "directories": {
@@ -33,13 +33,13 @@
     "eslint": "^3.10.0",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.4.0",
-    "loquat-core": "^2.0.0-0",
+    "loquat-core": "^2.0.0",
     "mocha": "^3.1.0"
   },
   "dependencies": {
-    "loquat-prim": "^2.0.0-0"
+    "loquat-prim": "^2.0.0"
   },
   "peerDependencies": {
-    "loquat-core": "^2.0.0-0"
+    "loquat-core": "^2.0.0"
   }
 }
