@@ -1,6 +1,6 @@
 {
   "name": "loquat",
-  "version": "2.0.0-3",
+  "version": "2.0.0",
   "description": "Monadic parser combinator",
   "main": "index.js",
   "scripts": {
