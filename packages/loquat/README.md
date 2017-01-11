@@ -5,13 +5,13 @@ Monadic parser combinator library for JavaScript, inspired by (and almost clone 
 * Construct complex parser from simple parsers and combinators
 * Friendly syntax using generators, like do-notation in Haskell
 * Expression parser builder
-* **Faster than the previous version**
-* **Regular expression parser**
-* **Extensions**
+* Regular expression parser
+* Unicode aware
+* Extensions
 
 ## Install
 ``` shell
-npm i --save loquat@2.0.0-3
+npm i --save loquat
 ```
 
 ## Examples
