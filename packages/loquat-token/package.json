@@ -1,7 +1,7 @@
 {
   "name": "loquat-token",
   "version": "2.0.0",
-  "description": "",
+  "description": "Token parsers for loquat",
   "main": "index.js",
   "directories": {
     "doc": "docs",
@@ -33,15 +33,15 @@
     "eslint": "^3.10.0",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.4.0",
-    "loquat-core": "^2.0.0-1",
+    "loquat-core": "^2.0.0",
     "mocha": "^3.1.0"
   },
   "dependencies": {
-    "loquat-char": "^2.0.0-0",
-    "loquat-combinators": "^2.0.0-0",
-    "loquat-prim": "^2.0.0-2"
+    "loquat-char": "^2.0.0",
+    "loquat-combinators": "^2.0.0",
+    "loquat-prim": "^2.0.0"
   },
   "peerDependencies": {
-    "loquat-core": "^2.0.0-1"
+    "loquat-core": "^2.0.0"
   }
 }
