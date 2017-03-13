@@ -48,7 +48,6 @@ module.exports = (_core, _prim) => {
     const label      = _prim.label;
     const reduceMany = _prim.reduceMany;
     const skipMany   = _prim.skipMany;
-    const tokenPrim  = _prim.tokenPrim;
 
     /**
      * @function module:char.string
@@ -141,11 +140,31 @@ module.exports = (_core, _prim) => {
      * @returns {AbstractParser}
      */
     function satisfy(test) {
-        return tokenPrim(
-            (char, config) => test(char, config) ? { empty: false, value: char } : { empty: true },
-            show,
-            (pos, char, rest, config) => pos.addChar(char, config.tabWidth)
-        );
+        function systemUnexpectError(pos, str) {
+            return new ParseError(
+                pos,
+                [new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, str)]
+            );
+        }
+        return new Parser(state => {
+            const unconsed = uncons(state.input, state.config.unicode);
+            if (unconsed.empty) {
+                return Result.eerr(systemUnexpectError(state.pos, ""));
+            }
+            else {
+                if (test(unconsed.head, state.config)) {
+                    const newPos = state.pos.addChar(unconsed.head, state.config.tabWidth);
+                    return Result.csuc(
+                        ParseError.unknown(newPos),
+                        unconsed.head,
+                        new State(state.config, unconsed.tail, newPos, state.userState)
+                    );
+                }
+                else {
+                    return Result.eerr(systemUnexpectError(state.pos, show(unconsed.head)));
+                }
+            }
+        });
     }
 
     /**
