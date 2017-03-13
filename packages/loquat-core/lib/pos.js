@@ -137,22 +137,18 @@ module.exports = () => {
          * @returns {module:pos.SourcePos}
          */
         addChar(char, tabWidth) {
-            let line   = this.line;
-            let column = this.column;
-            switch (char) {
-            case "":
-                break;
-            case "\n":
-                line  += 1;
-                column = 1;
-                break;
-            case "\t":
-                column += tabWidth - (column - 1) % tabWidth;
-                break;
-            default:
-                column += 1;
+            if (char === "") {
+                return new SourcePos(this.name, this.line, this.column);
             }
-            return new SourcePos(this.name, line, column);
+            else if (char === "\n") {
+                return new SourcePos(this.name, this.line + 1, 1);
+            }
+            else if (char === "\t") {
+                return new SourcePos(this.name, this.line, this.column + tabWidth - (this.column - 1) % tabWidth);
+            }
+            else {
+                return new SourcePos(this.name, this.line, this.column + 1);
+            }
         }
 
         /**
