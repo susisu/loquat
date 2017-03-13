@@ -103,15 +103,33 @@ module.exports = _core => {
      * @returns {AbstractParser}
      */
     function ap(parserA, parserB) {
-        return bind(parserA, valA =>
-            bind(parserB, valB =>
-                pure(valA(valB))
-            )
-        );
+        return new Parser(state => {
+            const resA = parserA.run(state);
+            if (resA.success) {
+                const func = resA.val;
+                const resB = parserB.run(resA.state);
+                if (resB.success) {
+                    return new Result(
+                        resA.consumed || resB.consumed,
+                        true,
+                        resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err),
+                        func(resB.val),
+                        resB.state
+                    );
+                }
+                else {
+                    return new Result(
+                        resA.consumed || resB.consumed,
+                        false,
+                        resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err)
+                    );
+                }
+            }
+            else {
+                return resA;
+            }
+        });
     }
-
-    const former = x => () => x;
-    const latter = () => y => y;
 
     /**
      * @function module:prim.left
@@ -121,7 +139,31 @@ module.exports = _core => {
      * @returns {AbstractParser}
      */
     function left(parserA, parserB) {
-        return ap(map(parserA, former), parserB);
+        return new Parser(state => {
+            const resA = parserA.run(state);
+            if (resA.success) {
+                const resB = parserB.run(resA.state);
+                if (resB.success) {
+                    return new Result(
+                        resA.consumed || resB.consumed,
+                        true,
+                        resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err),
+                        resA.val,
+                        resB.state
+                    );
+                }
+                else {
+                    return new Result(
+                        resA.consumed || resB.consumed,
+                        false,
+                        resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err)
+                    );
+                }
+            }
+            else {
+                return resA;
+            }
+        });
     }
 
     /**
@@ -132,7 +174,31 @@ module.exports = _core => {
      * @returns {AbstractParser}
      */
     function right(parserA, parserB) {
-        return ap(map(parserA, latter), parserB);
+        return new Parser(state => {
+            const resA = parserA.run(state);
+            if (resA.success) {
+                const resB = parserB.run(resA.state);
+                if (resB.success) {
+                    return new Result(
+                        resA.consumed || resB.consumed,
+                        true,
+                        resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err),
+                        resB.val,
+                        resB.state
+                    );
+                }
+                else {
+                    return new Result(
+                        resA.consumed || resB.consumed,
+                        false,
+                        resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err)
+                    );
+                }
+            }
+            else {
+                return resA;
+            }
+        });
     }
 
     /**
