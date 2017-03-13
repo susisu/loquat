@@ -162,12 +162,12 @@ module.exports = () => {
             let column = this.column;
             if (unicode) {
                 for (const char of str) {
-                    switch (char) {
-                    case "\n":
+                    switch (char.charCodeAt(0)) {
+                    case 10: // "\n"
                         line  += 1;
                         column = 1;
                         break;
-                    case "\t":
+                    case 9: // "\t"
                         column += tabWidth - (column - 1) % tabWidth;
                         break;
                     default:
@@ -178,12 +178,12 @@ module.exports = () => {
             else {
                 const len = str.length;
                 for (let i = 0; i < len; i++) {
-                    switch (str[i]) {
-                    case "\n":
+                    switch (str.charCodeAt(i)) {
+                    case 10: // "\n"
                         line  += 1;
                         column = 1;
                         break;
-                    case "\t":
+                    case 9: // "\t"
                         column += tabWidth - (column - 1) % tabWidth;
                         break;
                     default:
