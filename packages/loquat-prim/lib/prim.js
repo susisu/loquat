@@ -381,13 +381,12 @@ module.exports = _core => {
                 return res;
             }
             else {
-                const err = res.err;
                 return new Result(
                     false,
                     res.success,
                     res.success
-                        ? new LazyParseError(() => err.isUnknown() ? err : setExpects(err))
-                        : setExpects(err),
+                        ? new LazyParseError(() => res.err.isUnknown() ? res.err : setExpects(res.err))
+                        : setExpects(res.err),
                     res.val,
                     res.state
                 );
