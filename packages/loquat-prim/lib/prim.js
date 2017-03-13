@@ -151,7 +151,7 @@ module.exports = _core => {
                 return resB.consumed
                     ? resB
                     : new Result(
-                        resA.consumed || resB.consumed,
+                        resA.consumed,
                         resB.success,
                         ParseError.merge(resA.err, resB.err),
                         resB.val,
