@@ -238,7 +238,24 @@ module.exports = _core => {
      * @returns {AbstracParser}
      */
     function then(parserA, parserB) {
-        return bind(parserA, () => parserB);
+        return new Parser(state => {
+            const resA = parserA.run(state);
+            if (resA.success) {
+                const resB = parserB.run(resA.state);
+                return resB.consumed
+                    ? resB
+                    : new Result(
+                        resA.consumed,
+                        resB.success,
+                        ParseError.merge(resA.err, resB.err),
+                        resB.val,
+                        resB.state
+                    );
+            }
+            else {
+                return resA;
+            }
+        });
     }
 
     /**
