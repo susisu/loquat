@@ -137,6 +137,9 @@ module.exports = () => {
          * @returns {module:pos.SourcePos}
          */
         addChar(char, tabWidth) {
+            // For this case
+            // - `if` is faster than `switch`
+            // - comparing strings is faster than character codes
             if (char === "") {
                 return new SourcePos(this.name, this.line, this.column);
             }
@@ -158,6 +161,9 @@ module.exports = () => {
          * @returns {module:pos.SourcePos}
          */
         addString(str, tabWidth, unicode) {
+            // For this case
+            // - `switch` is faster than `if`
+            // - comparing character codes is faster than strings
             let line   = this.line;
             let column = this.column;
             if (unicode) {
