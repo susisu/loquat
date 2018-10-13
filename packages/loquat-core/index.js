@@ -23,7 +23,8 @@ module.exports = () => {
         ParseError        : _error.ParseError,
         LazyParseError    : _error.LazyParseError,
 
-        uncons: _stream.uncons,
+        uncons     : _stream.uncons,
+        ArrayStream: _stream.ArrayStream,
 
         Config        : _parser.Config,
         State         : _parser.State,
