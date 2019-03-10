@@ -5,6 +5,7 @@
     "packages/*"
   ],
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "test": "lerna exec --ignore loquat yarn test"
   },
   "devDependencies": {
