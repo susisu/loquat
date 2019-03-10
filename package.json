@@ -4,6 +4,9 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "test": "lerna exec --ignore loquat yarn test"
+  },
   "devDependencies": {
     "lerna": "^3.13.1"
   }
