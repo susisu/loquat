@@ -16,19 +16,19 @@
   "author": "Susisu <susisu2413@yahoo.co.jp> (https://github.com/susisu)",
   "license": "MIT",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "test": "mocha test.js",
-    "lint": "eslint lib --fix",
-    "lint-test": "eslint test --env mocha --global _utils,_pos,_error,_stream,_parser --fix",
-    "lint-all": "npm run lint && npm run lint-test",
+    "lint": "eslint *.js lib test",
+    "lint:fix": "eslint --fix *.js lib test",
     "cover": "istanbul cover _mocha -- test.js"
   },
   "devDependencies": {
+    "@susisu/eslint-config": "^0.0.1",
     "chai": "^3.5.0",
-    "eslint": "^3.10.0",
+    "eslint": "^5.15.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.1.0"
   }

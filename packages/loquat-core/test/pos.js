@@ -5,5 +5,5 @@
 "use strict";
 
 describe("pos", () => {
-    require("./pos/SourcePos.js");
+  require("./pos/SourcePos.js");
 });

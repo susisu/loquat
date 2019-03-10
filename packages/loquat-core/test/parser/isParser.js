@@ -13,38 +13,38 @@ const LazyParser     = _parser.LazyParser;
 const isParser       = _parser.isParser;
 
 describe(".isParser(val)", () => {
-    it("should return true if `val' is an instance of `AbstractParser'", () => {
-        {
-            const parser = new Parser(() => {});
-            expect(isParser(parser)).to.be.true;
+  it("should return true if `val' is an instance of `AbstractParser'", () => {
+    {
+      const parser = new Parser(() => {});
+      expect(isParser(parser)).to.be.true;
+    }
+    {
+      const parser = new LazyParser(() => new Parser(() => {}));
+      expect(isParser(parser)).to.be.true;
+    }
+    {
+      const TestParser = class extends AbstractParser {
+        constructor() {
+          super();
         }
-        {
-            const parser = new LazyParser(() => new Parser(() => {}));
-            expect(isParser(parser)).to.be.true;
-        }
-        {
-            const TestParser = class extends AbstractParser {
-                constructor() {
-                    super();
-                }
-            };
-            const parser = new TestParser();
-            expect(isParser(parser)).to.be.true;
-        }
-    });
+      };
+      const parser = new TestParser();
+      expect(isParser(parser)).to.be.true;
+    }
+  });
 
-    it("should return false if `val' is not an instance of `AbstractParser'", () => {
-        const values = [
-            null,
-            undefined,
-            "foobar",
-            496,
-            true,
-            {},
-            () => {}
-        ];
-        for (const val of values) {
-            expect(isParser(val)).to.be.false;
-        }
-    });
+  it("should return false if `val' is not an instance of `AbstractParser'", () => {
+    const values = [
+      null,
+      undefined,
+      "foobar",
+      496,
+      true,
+      {},
+      () => {},
+    ];
+    for (const val of values) {
+      expect(isParser(val)).to.be.false;
+    }
+  });
 });

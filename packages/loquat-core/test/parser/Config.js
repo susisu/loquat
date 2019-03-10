@@ -5,6 +5,6 @@
 "use strict";
 
 describe(".Config", () => {
-    require("./Config/constructor.js");
-    require("./Config/equal.js");
+  require("./Config/constructor.js");
+  require("./Config/equal.js");
 });

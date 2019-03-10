@@ -5,9 +5,9 @@
 "use strict";
 
 describe("error", () => {
-    require("./error/ErrorMessage.js");
-    require("./error/AbstractParseError.js");
-    require("./error/ParseError.js");
-    require("./error/LazyParseError.js");
-    require("./error/_internal.js");
+  require("./error/ErrorMessage.js");
+  require("./error/AbstractParseError.js");
+  require("./error/ParseError.js");
+  require("./error/LazyParseError.js");
+  require("./error/_internal.js");
 });

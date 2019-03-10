@@ -12,11 +12,11 @@ const LazyParser = _parser.LazyParser;
 const lazy       = _parser.lazy;
 
 describe(".lazy(thunk)", () => {
-    it("should create a new `LazyParser' instance", () => {
-        const p = new Parser(() => {});
-        const parser = lazy(() => p);
-        expect(parser).to.be.an.instanceOf(LazyParser);
-        const res = parser.eval();
-        expect(res).to.equal(p);
-    });
+  it("should create a new `LazyParser' instance", () => {
+    const p = new Parser(() => {});
+    const parser = lazy(() => p);
+    expect(parser).to.be.an.instanceOf(LazyParser);
+    const res = parser.eval();
+    expect(res).to.equal(p);
+  });
 });

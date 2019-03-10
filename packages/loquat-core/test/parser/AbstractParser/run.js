@@ -10,13 +10,13 @@ const expect = chai.expect;
 const AbstractParser = _parser.AbstractParser;
 
 describe("#run()", () => {
-    it("should throw an `Error'", () => {
-        const TestParser = class extends AbstractParser {
-            constructor() {
-                super();
-            }
-        };
-        const parser = new TestParser();
-        expect(() => { parser.run(); }).to.throw(Error);
-    });
+  it("should throw an `Error'", () => {
+    const TestParser = class extends AbstractParser {
+      constructor() {
+        super();
+      }
+    };
+    const parser = new TestParser();
+    expect(() => { parser.run(); }).to.throw(Error);
+  });
 });

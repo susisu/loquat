@@ -5,7 +5,7 @@
 "use strict";
 
 describe("._internal", () => {
-    require("./_internal/cleanMessageStrings.js");
-    require("./_internal/joinWithCommasOr.js");
-    require("./_internal/joinMessageStrings.js");
+  require("./_internal/cleanMessageStrings.js");
+  require("./_internal/joinWithCommasOr.js");
+  require("./_internal/joinMessageStrings.js");
 });
