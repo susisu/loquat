@@ -3281,6 +3281,11 @@ lodash@^4.0.0, lodash@^4.17.11, lodash@^4.17.5, lodash@^4.2.1, lodash@^4.3.0:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
 
+loquat-core@^2.0.0, loquat-core@~2.0.0:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/loquat-core/-/loquat-core-2.0.2.tgz#e6d71d25ab4ba60f2b468b2055d9cced9eed230c"
+  integrity sha512-Qiq1gdqmL0H14BkjgGX1hc9i9Hkksvp+Yhc57ZvddL2iT2n9ijFYvbdyTBwwUrH96i81wvtKPP/fxcwLgGaZuw==
+
 loud-rejection@^1.0.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/loud-rejection/-/loud-rejection-1.6.0.tgz#5b46f80147edee578870f086d04821cf998e551f"
