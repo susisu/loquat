@@ -1,14 +1,7 @@
-/*
- * loquat-core / utils.js
- */
-
-/**
- * @module utils
- */
-
 "use strict";
 
 module.exports = () => {
+  // TODO: add mappings for other control characters
   const escapeMap = new Map([
     ["\\", "\\\\"],
     ["\"", "\\\""],
@@ -21,66 +14,40 @@ module.exports = () => {
   ]);
 
   /**
-   * @function module:utils.escapeChar
-   * @description Escapes the given character `char`.
-   * @private
-   * @static
-   * @param {string} char A character.
-   * @returns {string} The escaped character.
+   * escapeChar: (char: string) => string
    */
   function escapeChar(char) {
     return escapeMap.has(char) ? escapeMap.get(char) : char;
   }
 
   /**
-   * @function module:utils.show
-   * @description Pretty-printer for error messages.
-   * Printing strategy is determined by the type of `value`.
-   * - If `value` is a string, the string is escaped and double-quoted.
-   * - If `value` is an string, each element is printed by `show()`
-   * then joined with commas `,` and wrapped by braces `[ ... ]`.
-   * - If `value` is an object but `value.toString` is not a function,
-   * it calls `Object.prototype.toString.call(value)`.
-   * - Otherwise, it calls `String(value)`
-   * @static
-   * @param {*} value Any value.
-   * @returns {string} The printed string.
+   * show: (val: any) => string
+   *
+   * Pretty-prints a val. This function is mainly used for printing error messages and debugging
+   * purposes.
    */
-  function show(value) {
-    if (typeof value === "string") {
-      if (value.length === 1) {
-        return `"${escapeChar(value)}"`;
-      } else {
-        return `"${value.replace(/[\u0000-\u001F\\"]/g, escapeChar)}"`;
-      }
-    } else if (Array.isArray(value)) {
-      return `[${value.map(show).join(", ")}]`;
-    } else if (
-      typeof value === "object" && value !== null && typeof value.toString !== "function"
-    ) {
-      return Object.prototype.toString.call(value);
+  function show(val) {
+    if (typeof val === "string") {
+      // optimize performance for singleton case
+      return val.length === 1 ? `"${escapeChar(val)}"`
+        : `"${val.replace(/[\u0000-\u001F\\"]/g, escapeChar)}"`;
+    } else if (Array.isArray(val)) {
+      return `[${val.map(show).join(", ")}]`;
+    } else if (typeof val === "object" && val !== null && typeof val.toString !== "function") {
+      // treatment for objects without `toString` method, such as `Object.create(null)`
+      return Object.prototype.toString.call(val);
     } else {
-      return String(value);
+      return String(val);
     }
   }
 
   /**
-   * @function module:utils.unconsString
-   * @description Reads string.
-   * This is a specialized version of {@module:stream.uncons} for string.
-   * A result object contains the following properties.
-   * <table>
-   * <tr><th>Property</th><th>Type</th><th>Description</th></tr>
-   * <tr><td>`empty`</td><td>boolean</td><td>Indicates the string is empty or not.
-   * If not empty, the object have `head` and `tail` properties.</td></tr>
-   * <tr><td>`head`</td><td></td><td>The head of the string.</td></tr>
-   * <tr><td>`tail`</td><td>string</td>
-   * <td>The tail (rest) of the string.</td></tr>
-   * </table>
-   * @static
-   * @param {string} str A string.
-   * @param {boolean} unicode If `true` specified characters are unconsed in code point unit.
-   * @returns {Object} An object that have properties describes above.
+   * unconsString: (str: string, unicode: boolean)
+   *   => { empty: true } \/ { empty: false, head: string, tail: string }
+   *
+   * Returns a pair of the first character (head) and the rest (tail) of the given string.
+   * If `unicode` is set to `true`, a character will be a Unicode code point; otherwise it will be a
+   * UTF-16 code unit. This is similar to the `unicode` flag of `RegExp`.
    */
   function unconsString(str, unicode) {
     const len = str.length;
@@ -90,6 +57,7 @@ module.exports = () => {
       } else if (len === 1) {
         return { empty: false, head: str[0], tail: str.substr(1) };
       } else {
+        // avoid using `String.fromCodePoint` and `String#codePointAt` because of poor performance
         const first = str.charCodeAt(0);
         if (first < 0xD800 || 0xDBFF < first) {
           return { empty: false, head: str[0], tail: str.substr(1) };
@@ -108,10 +76,10 @@ module.exports = () => {
   }
 
   return Object.freeze({
-    show,
-    unconsString,
     _internal: {
       escapeChar,
     },
+    show,
+    unconsString,
   });
 };

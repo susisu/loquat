@@ -1,16 +1,11 @@
-/*
- * loquat-core test / utils.show()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show = _utils.show;
+const { show } = _utils;
 
-describe(".show(value)", () => {
-  it("should return escaped and double-quoted (\"...\") string if `value' is a string", () => {
+describe("show", () => {
+  it("should return an escaped and double-quoted string if a string is given", () => {
     // empty
     expect(show("")).to.equal("\"\"");
     // single character
@@ -33,39 +28,38 @@ describe(".show(value)", () => {
     expect(show(str)).to.equal("\"0\\\\9\\\"A\\bZ\\ta\\nz\\r'\\f`\\v\u3042\u5b89\uD83C\uDF63\"");
   });
 
-  it("should stringify each element by `show()' and return joined string separated by commas (,)"
-        + " and wrapped by braces ([...]) if `value' is an array", () => {
+  it("should return the string representation of the given value", () => {
+    expect(show(null)).to.equal("null");
+    expect(show(undefined)).to.equal("undefined");
+    expect(show(3.14)).to.equal("3.14");
+    expect(show(true)).to.equal("true");
+    expect(show({ toString() { return "foobar"; } })).to.equal("foobar");
+  });
+
+  it("should return a string containing the printed elements if an array is given", () => {
     const arr = [
       null,
       undefined,
       "0\\9\"A\bZ\ta\nz\r'\f`\v\u3042\u5b89\uD83C\uDF63",
       3.14,
       true,
-      { toString: () => "foobar" },
+      { toString() { return "foobar"; } },
       Object.create(null),
       [1, "nyancat", false],
     ];
-    expect(show(arr)).to.equal(
-      "["
-            + "null, undefined, \"0\\\\9\\\"A\\bZ\\ta\\nz\\r'\\f`\\v\u3042\u5b89\uD83C\uDF63\", "
-            + "3.14, true, foobar, "
-            + Object.prototype.toString.call(Object.create(null)) + ", "
-            + "[1, \"nyancat\", false]"
-            + "]"
-    );
+    expect(show(arr)).to.equal("[" + [
+      "null",
+      "undefined",
+      "\"0\\\\9\\\"A\\bZ\\ta\\nz\\r'\\f`\\v\u3042\u5b89\uD83C\uDF63\"",
+      "3.14",
+      "true",
+      "foobar",
+      "[object Object]",
+      "[1, \"nyancat\", false]",
+    ].join(", ") + "]");
   });
 
-  it("should call `Object.prototype.toString()' with `value' as the `this' argument"
-        + " if `value' is an object and `value.toString' is not a function", () => {
-    const obj = Object.create(null);
-    expect(show(obj)).to.equal(Object.prototype.toString.call(obj));
-  });
-
-  it("should call `String(value)' otherwise", () => {
-    expect(show(null)).to.equal("null");
-    expect(show(undefined)).to.equal("undefined");
-    expect(show(3.14)).to.equal("3.14");
-    expect(show(true)).to.equal("true");
-    expect(show({ toString: () => "foobar" })).to.equal("foobar");
+  it("should be ok even if the given object's `toString` is not defined", () => {
+    expect(show(Object.create(null))).to.equal("[object Object]");
   });
 });

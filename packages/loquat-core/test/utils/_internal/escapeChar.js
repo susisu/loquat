@@ -1,16 +1,11 @@
-/*
- * loquat-core test / utils._internal.escapeChar()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const escapeChar = _utils._internal.escapeChar;
+const { escapeChar } = _utils._internal;
 
-describe(".escapeChar(char)", () => {
-  it("should escape the character `char' if it is a special character", () => {
+describe("escapeChar", () => {
+  it("should escape the given character if it is a special character", () => {
     expect(escapeChar("\\")).to.equal("\\\\");
     expect(escapeChar("\"")).to.equal("\\\"");
     expect(escapeChar("\b")).to.equal("\\b");
@@ -21,7 +16,7 @@ describe(".escapeChar(char)", () => {
     expect(escapeChar("\v")).to.equal("\\v");
   });
 
-  it("should return `char' itself if it is not a special character", () => {
+  it("should return the given character itself if it is not a special character", () => {
     const chars = "09AZaz'`\u3042\u5b89\uD83C\uDF63";
     for (const char of chars) {
       expect(escapeChar(char)).to.equal(char);

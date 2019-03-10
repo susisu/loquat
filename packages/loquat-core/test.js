@@ -1,7 +1,3 @@
-/*
- * loquat-core test
- */
-
 "use strict";
 
 global._utils  = require("./lib/utils.js")();

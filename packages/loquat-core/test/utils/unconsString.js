@@ -1,57 +1,63 @@
-/*
- * loquat-core test / utils.unconsString()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const unconsString = _utils.unconsString;
+const { unconsString } = _utils;
 
-describe(".unconsString(str, unicode)", () => {
-  context("when `unicode' is true", () => {
-    it("should return an object describing empty input if `str' is empty", () => {
+describe("unconsString", () => {
+  context("when `unicode` is true", () => {
+    it("should return an object representing empty if the input is empty", () => {
       expect(unconsString("", true)).to.deep.equal({ empty: true });
     });
 
-    it("should return an object containing head and tail if `str' is not non empty", () => {
+    it("should return an object containing head and tail if the input is not empty", () => {
       expect(unconsString("f", true)).to.deep.equal({ empty: false, head: "f", tail: "" });
-      expect(unconsString("foobar", true)).to.deep.equal({ empty: false, head: "f", tail: "oobar" });
+      expect(unconsString("foo", true)).to.deep.equal({ empty: false, head: "f", tail: "oo" });
 
+      // surrogate pairs
       expect(unconsString("\uD83C", true))
         .to.deep.equal({ empty: false, head: "\uD83C", tail: "" });
-      expect(unconsString("\uD83Ccat", true))
-        .to.deep.equal({ empty: false, head: "\uD83C", tail: "cat" });
+      expect(unconsString("\uD83Cfoo", true))
+        .to.deep.equal({ empty: false, head: "\uD83C", tail: "foo" });
       expect(unconsString("\uD83C\uDF63", true))
         .to.deep.equal({ empty: false, head: "\uD83C\uDF63", tail: "" });
-      expect(unconsString("\uD83C\uDF63cat", true))
-        .to.deep.equal({ empty: false, head: "\uD83C\uDF63", tail: "cat" });
+      expect(unconsString("\uD83C\uDF63foo", true))
+        .to.deep.equal({ empty: false, head: "\uD83C\uDF63", tail: "foo" });
 
       // boundary cases
-      expect(unconsString("\uD7FF\uDC00cat", true))
-        .to.deep.equal({ empty: false, head: "\uD7FF", tail: "\uDC00cat" });
-      expect(unconsString("\uDC00\uDC00cat", true))
-        .to.deep.equal({ empty: false, head: "\uDC00", tail: "\uDC00cat" });
-      expect(unconsString("\uD800\uDBFFcat", true))
-        .to.deep.equal({ empty: false, head: "\uD800", tail: "\uDBFFcat" });
-      expect(unconsString("\uD800\uE000cat", true))
-        .to.deep.equal({ empty: false, head: "\uD800", tail: "\uE000cat" });
-      expect(unconsString("\uD800\uDC00cat", true))
-        .to.deep.equal({ empty: false, head: "\uD800\uDC00", tail: "cat" });
-      expect(unconsString("\uDBFF\uDFFFcat", true))
-        .to.deep.equal({ empty: false, head: "\uDBFF\uDFFF", tail: "cat" });
+      expect(unconsString("\uD7FF\uDC00foo", true))
+        .to.deep.equal({ empty: false, head: "\uD7FF", tail: "\uDC00foo" });
+      expect(unconsString("\uDC00\uDC00foo", true))
+        .to.deep.equal({ empty: false, head: "\uDC00", tail: "\uDC00foo" });
+      expect(unconsString("\uD800\uDBFFfoo", true))
+        .to.deep.equal({ empty: false, head: "\uD800", tail: "\uDBFFfoo" });
+      expect(unconsString("\uD800\uE000foo", true))
+        .to.deep.equal({ empty: false, head: "\uD800", tail: "\uE000foo" });
+      expect(unconsString("\uD800\uDC00foo", true))
+        .to.deep.equal({ empty: false, head: "\uD800\uDC00", tail: "foo" });
+      expect(unconsString("\uDBFF\uDFFFfoo", true))
+        .to.deep.equal({ empty: false, head: "\uDBFF\uDFFF", tail: "foo" });
     });
   });
 
-  context("when `unicode' is false", () => {
-    it("should return an object describing empty input if `str' is empty", () => {
+  context("when `unicode` is false", () => {
+    it("should return an object representing empty if the input is empty", () => {
       expect(unconsString("", false)).to.deep.equal({ empty: true });
     });
 
-    it("should return an object containing head and tail if `str' is not non empty", () => {
+    it("should return an object containing head and tail if the input is not empty", () => {
       expect(unconsString("f", false)).to.deep.equal({ empty: false, head: "f", tail: "" });
-      expect(unconsString("foobar", false)).to.deep.equal({ empty: false, head: "f", tail: "oobar" });
+      expect(unconsString("foo", false)).to.deep.equal({ empty: false, head: "f", tail: "oo" });
+
+      // surrogate pairs
+      expect(unconsString("\uD83C", false))
+        .to.deep.equal({ empty: false, head: "\uD83C", tail: "" });
+      expect(unconsString("\uD83Cfoo", false))
+        .to.deep.equal({ empty: false, head: "\uD83C", tail: "foo" });
+      expect(unconsString("\uD83C\uDF63", false))
+        .to.deep.equal({ empty: false, head: "\uD83C", tail: "\uDF63" });
+      expect(unconsString("\uD83C\uDF63foo", false))
+        .to.deep.equal({ empty: false, head: "\uD83C", tail: "\uDF63foo" });
     });
   });
 });
