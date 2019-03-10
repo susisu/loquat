@@ -97,7 +97,7 @@ describe("constructor(consumed, success, err, val, state)", () => {
         )
       )).to.be.true;
       expect(res.val).to.be.undefined;
-      expect(res.state).to.be.undefiend;
+      expect(res.state).to.be.undefined;
     }
   });
 });
