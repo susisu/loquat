@@ -1,16 +1,11 @@
-/*
- * loquat-core test / stream.ArrayStream constructor
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const ArrayStream = _stream.ArrayStream;
+const { ArrayStream } = _stream;
 
-describe("constructor(arr, index)", () => {
-  it("should create a new `ArrayStream' instance", () => {
+describe(".constructor", () => {
+  it("should create a new instance", () => {
     // empty array
     {
       const stream = new ArrayStream([], 0);

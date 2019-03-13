@@ -45,7 +45,7 @@ module.exports = () => {
    * unconsString: (str: string, unicode: boolean)
    *   => { empty: true } \/ { empty: false, head: string, tail: string }
    *
-   * Returns a pair of the first character (head) and the rest (tail) of the given string.
+   * Returns a pair of the first character (head) and the rest (tail) of the input string.
    * If `unicode` is set to `true`, a character will be a Unicode code point; otherwise it will be a
    * UTF-16 code unit. This is similar to the `unicode` flag of `RegExp`.
    */

@@ -1,16 +1,11 @@
-/*
- * loquat-core test / stream.ArrayStream#uncons()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const ArrayStream = _stream.ArrayStream;
+const { ArrayStream } = _stream;
 
-describe("#uncons(unicode)", () => {
-  it("should return an object describing empty if the current index of the stream is out of the array length", () => {
+describe("#uncons", () => {
+  it("should return an empty result if the current index is greater than the array length", () => {
     // empty
     {
       const stream = new ArrayStream([], 0);
@@ -45,7 +40,7 @@ describe("#uncons(unicode)", () => {
     }
   });
 
-  it("should return a non-empty object with the element at the current index and rest of the stream", () => {
+  it("should return a result containing the element at the current index and the rest", () => {
     {
       const stream = new ArrayStream(["abc", "def", "ghi"], 0);
       const unconsed = stream.uncons(false);

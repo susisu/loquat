@@ -6,11 +6,11 @@ const { unconsString } = _utils;
 
 describe("unconsString", () => {
   context("when `unicode` is true", () => {
-    it("should return an object representing empty if the input is empty", () => {
+    it("should return an empty result if the input is empty", () => {
       expect(unconsString("", true)).to.deep.equal({ empty: true });
     });
 
-    it("should return an object containing head and tail if the input is not empty", () => {
+    it("should return a result containing the first character and the rest", () => {
       expect(unconsString("f", true)).to.deep.equal({ empty: false, head: "f", tail: "" });
       expect(unconsString("foo", true)).to.deep.equal({ empty: false, head: "f", tail: "oo" });
 
@@ -41,11 +41,11 @@ describe("unconsString", () => {
   });
 
   context("when `unicode` is false", () => {
-    it("should return an object representing empty if the input is empty", () => {
+    it("should return an empty result if the input is empty", () => {
       expect(unconsString("", false)).to.deep.equal({ empty: true });
     });
 
-    it("should return an object containing head and tail if the input is not empty", () => {
+    it("should return a result containing the first character and the rest", () => {
       expect(unconsString("f", false)).to.deep.equal({ empty: false, head: "f", tail: "" });
       expect(unconsString("foo", false)).to.deep.equal({ empty: false, head: "f", tail: "oo" });
 

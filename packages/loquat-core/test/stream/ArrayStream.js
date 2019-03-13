@@ -1,7 +1,3 @@
-/*
- * loquat-core test / stream.ArrayStream
- */
-
 "use strict";
 
 describe(".ArrayStream", () => {
