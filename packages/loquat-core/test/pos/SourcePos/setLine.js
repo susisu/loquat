@@ -1,23 +1,19 @@
-/*
- * loquat-core test / pos.SourcePos#setLine()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
 
-describe("#setLine(line)", () => {
-  it("should create a copy of the `SourcePos' object with the specified line", () => {
-    const pos  = new SourcePos("foobar", 496, 28);
-    const copy = pos.setLine(6);
+describe("#setLine", () => {
+  it("should create a copy of the position with `line` updated", () => {
+    const pos  = new SourcePos("foo", 6, 28);
+    const copy = pos.setLine(7);
+    expect(copy).to.be.an.instanceOf(SourcePos);
     // different objects
     expect(copy).not.to.equal(pos);
-    // with different lines
-    expect(copy.name).to.equal("foobar");
-    expect(copy.line).to.equal(6);
-    expect(copy.column).to.equal(28);
+    // only the lines differ
+    expect(copy.name).to.equal(pos.name);
+    expect(copy.line).to.equal(7);
+    expect(copy.column).to.equal(pos.column);
   });
 });

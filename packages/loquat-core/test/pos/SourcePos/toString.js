@@ -1,25 +1,20 @@
-/*
- * loquat-core test / pos.SourcePos#toString()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
 
-describe("#toString()", () => {
-  it("should return the string representation of the position", () => {
-    // if the position has a name, the string representation contains its name
+describe("#toString", () => {
+  it("should return a string representation of the position", () => {
+    // If `name` is not empty, the result contains it.
     {
-      const pos = new SourcePos("foobar", 496, 28);
-      expect(pos.toString()).to.equal("\"foobar\"(line 496, column 28)");
+      const pos = new SourcePos("foo", 6, 28);
+      expect(pos.toString()).to.equal("\"foo\"(line 6, column 28)");
     }
-    // if not, it does not contain name
+    // If `name` is empty, the result does not contain it.
     {
-      const pos = new SourcePos("", 496, 28);
-      expect(pos.toString()).to.equal("(line 496, column 28)");
+      const pos = new SourcePos("", 6, 28);
+      expect(pos.toString()).to.equal("(line 6, column 28)");
     }
   });
 });

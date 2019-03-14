@@ -1,23 +1,19 @@
-/*
- * loquat-core test / pos.SourcePos#setName()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
 
-describe("#setName(name)", () => {
-  it("should create a copy of the `SourcePos' object with the specified name", () => {
-    const pos  = new SourcePos("foobar", 496, 28);
-    const copy = pos.setName("nyancat");
+describe("#setName", () => {
+  it("should create a copy of the position with `name` updated", () => {
+    const pos = new SourcePos("foo", 6, 28);
+    const copy = pos.setName("bar");
+    expect(copy).to.be.an.instanceOf(SourcePos);
     // different objects
     expect(copy).not.to.equal(pos);
-    // with different names
-    expect(copy.name).to.equal("nyancat");
-    expect(copy.line).to.equal(496);
-    expect(copy.column).to.equal(28);
+    // only the names differ
+    expect(copy.name).to.equal("bar");
+    expect(copy.line).to.equal(pos.line);
+    expect(copy.column).to.equal(pos.column);
   });
 });

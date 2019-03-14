@@ -1,20 +1,15 @@
-/*
- * loquat-core test / pos.SourcePos constructor()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
 
-describe("constructor(name, line, column)", () => {
+describe(".constructor", () => {
   it("should create a new `SourcePos' instance", () => {
-    const pos = new SourcePos("foobar", 496, 28);
+    const pos = new SourcePos("foo", 6, 28);
     expect(pos).to.be.an.instanceOf(SourcePos);
-    expect(pos.name).to.equal("foobar");
-    expect(pos.line).to.equal(496);
+    expect(pos.name).to.equal("foo");
+    expect(pos.line).to.equal(6);
     expect(pos.column).to.equal(28);
   });
 });

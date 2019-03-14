@@ -1,7 +1,3 @@
-/*
- * loquat-core test / pos
- */
-
 "use strict";
 
 describe("pos", () => {

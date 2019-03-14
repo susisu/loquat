@@ -1,19 +1,14 @@
-/*
- * loquat-core test / pos.SourcePos.init()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
 
-describe(".init(name)", () => {
-  it("should create a new `SourcePos' instance with `line = 1' and `column = 1'", () => {
-    const pos = SourcePos.init("foobar");
+describe(".init", () => {
+  it("should create a new `SourcePos' instance with `(line, column) = (1, 1)`", () => {
+    const pos = SourcePos.init("foo");
     expect(pos).to.be.an.instanceOf(SourcePos);
-    expect(pos.name).to.equal("foobar");
+    expect(pos.name).to.equal("foo");
     expect(pos.line).to.equal(1);
     expect(pos.column).to.equal(1);
   });

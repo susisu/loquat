@@ -1,7 +1,3 @@
-/*
- * loquat-core test / pos.SourcePos
- */
-
 "use strict";
 
 describe(".SourcePos", () => {

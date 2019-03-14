@@ -1,23 +1,19 @@
-/*
- * loquat-core test / pos.SourcePos#setColumn()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
 
-describe("#setColumn(column)", () => {
-  it("should create a copy of the `SourcePos' object with the specified column", () => {
-    const pos  = new SourcePos("foobar", 496, 28);
-    const copy = pos.setColumn(6);
+describe("#setColumn", () => {
+  it("should create a copy of the position with `column` updated", () => {
+    const pos = new SourcePos("foo", 6, 28);
+    const copy = pos.setColumn(29);
+    expect(copy).to.be.an.instanceOf(SourcePos);
     // different objects
     expect(copy).not.to.equal(pos);
-    // with different columns
-    expect(copy.name).to.equal("foobar");
-    expect(copy.line).to.equal(496);
-    expect(copy.column).to.equal(6);
+    // only the columns differ
+    expect(copy.name).to.equal(pos.name);
+    expect(copy.line).to.equal(pos.line);
+    expect(copy.column).to.equal(29);
   });
 });

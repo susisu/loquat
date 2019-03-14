@@ -1,92 +1,87 @@
-/*
- * loquat-core test / pos.SourcePos.compare()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
 
-describe(".compare(posA, posB)", () => {
-  it("should return negative number if `posA' describes a position ahead of `posB'", () => {
+describe(".compare", () => {
+  it("should return negative number if the first position is ahead of the second", () => {
     // posA.name < posB.name
     {
-      const posA = new SourcePos("foobar", 496, 28);
-      const posB = new SourcePos("nyancat", 496, 28);
+      const posA = new SourcePos("foo1", 6, 28);
+      const posB = new SourcePos("foo2", 6, 28);
       expect(SourcePos.compare(posA, posB)).to.be.lessThan(0);
     }
     // posA.line < posB.line
     {
-      const posA = new SourcePos("foobar", 6, 28);
-      const posB = new SourcePos("foobar", 496, 28);
+      const posA = new SourcePos("foo", 6, 28);
+      const posB = new SourcePos("foo", 7, 28);
       expect(SourcePos.compare(posA, posB)).to.be.lessThan(0);
     }
     // posA.column < posB.column
     {
-      const posA = new SourcePos("foobar", 496, 6);
-      const posB = new SourcePos("foobar", 496, 28);
+      const posA = new SourcePos("foo", 6, 28);
+      const posB = new SourcePos("foo", 6, 29);
       expect(SourcePos.compare(posA, posB)).to.be.lessThan(0);
     }
     // priority: name > line > column
     {
-      const posA = new SourcePos("foobar", 496, 28);
-      const posB = new SourcePos("nyancat", 6, 28);
+      const posA = new SourcePos("foo1", 7, 28);
+      const posB = new SourcePos("foo2", 6, 28);
       expect(SourcePos.compare(posA, posB)).to.be.lessThan(0);
     }
     {
-      const posA = new SourcePos("foobar", 496, 28);
-      const posB = new SourcePos("nyancat", 496, 6);
+      const posA = new SourcePos("foo1", 6, 29);
+      const posB = new SourcePos("foo2", 6, 28);
       expect(SourcePos.compare(posA, posB)).to.be.lessThan(0);
     }
     {
-      const posA = new SourcePos("foobar", 6, 28);
-      const posB = new SourcePos("foobar", 496, 6);
+      const posA = new SourcePos("foo", 6, 29);
+      const posB = new SourcePos("foo", 7, 28);
       expect(SourcePos.compare(posA, posB)).to.be.lessThan(0);
     }
   });
 
-  it("should return positive number if `posA' describes a position behind `posB'", () => {
+  it("should return positive number if the first position is behind the second", () => {
     // posA.name < posB.name
     {
-      const posA = new SourcePos("nyancat", 496, 28);
-      const posB = new SourcePos("foobar", 496, 28);
+      const posA = new SourcePos("foo2", 6, 28);
+      const posB = new SourcePos("foo1", 6, 28);
       expect(SourcePos.compare(posA, posB)).to.be.greaterThan(0);
     }
     // posA.line < posB.line
     {
-      const posA = new SourcePos("foobar", 496, 28);
-      const posB = new SourcePos("foobar", 6, 28);
+      const posA = new SourcePos("foo", 7, 28);
+      const posB = new SourcePos("foo", 6, 28);
       expect(SourcePos.compare(posA, posB)).to.be.greaterThan(0);
     }
     // posA.column < posB.column
     {
-      const posA = new SourcePos("foobar", 496, 28);
-      const posB = new SourcePos("foobar", 496, 6);
+      const posA = new SourcePos("foo", 6, 29);
+      const posB = new SourcePos("foo", 6, 28);
       expect(SourcePos.compare(posA, posB)).to.be.greaterThan(0);
     }
     // priority: name > line > column
     {
-      const posA = new SourcePos("nyancat", 6, 28);
-      const posB = new SourcePos("foobar", 496, 28);
+      const posA = new SourcePos("foo2", 6, 28);
+      const posB = new SourcePos("foo1", 7, 28);
       expect(SourcePos.compare(posA, posB)).to.be.greaterThan(0);
     }
     {
-      const posA = new SourcePos("nyancat", 496, 6);
-      const posB = new SourcePos("foobar", 496, 28);
+      const posA = new SourcePos("foo2", 6, 28);
+      const posB = new SourcePos("foo1", 6, 29);
       expect(SourcePos.compare(posA, posB)).to.be.greaterThan(0);
     }
     {
-      const posA = new SourcePos("foobar", 496, 6);
-      const posB = new SourcePos("foobar", 6, 28);
+      const posA = new SourcePos("foo", 7, 28);
+      const posB = new SourcePos("foo", 6, 29);
       expect(SourcePos.compare(posA, posB)).to.be.greaterThan(0);
     }
   });
 
-  it("should return zero if `posA' and `posB' describe the same position", () => {
-    const posA = new SourcePos("foobar", 496, 28);
-    const posB = new SourcePos("foobar", 496, 28);
+  it("should return zero if two positions are equal", () => {
+    const posA = new SourcePos("foo", 6, 28);
+    const posB = new SourcePos("foo", 6, 28);
     expect(SourcePos.compare(posA, posB)).to.equal(0);
   });
 });

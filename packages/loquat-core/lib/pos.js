@@ -1,45 +1,42 @@
-/*
- * loquat-core / pos.js
- */
-
-/**
- * @module pos
- */
-
 "use strict";
 
 module.exports = () => {
+  const TAB = 0x9;
+  const LF = 0xA;
+
   /**
-   * An instance of the `SourcePos` class represents a specific position in the source.
-   * @static
+   * class SourcePos(name: string, line: int, column: int) {
+   *   static init(name: string): SourcePos
+   *   static equal(posA: SoucePos, posB: SoucePos): bool
+   *   static compare(posA: SoucePos, posB: SoucePos): int
+   *   toString(): string
+   *   setName(name: string): SourcePos
+   *   setLine(line: int): SoucePos
+   *   setColumn(column: int): SourcePos
+   *   addChar(char: string, tabWidth: int): SoucePos
+   *   addString(str: string, tabWidth: int, unicode: bool): SoucePos
+   * }
+   *
+   * `SourcePos` represents a position in input.
    */
   class SourcePos {
-    /**
-     * Creates a new `SourcePos` instance.
-     * @param {string} name Name of the source.
-     * @param {number} line Line in the source.
-     * @param {number} column Column in the source.
-     */
     constructor(name, line, column) {
-      this._name   = name;
-      this._line   = line;
+      this._name = name;
+      this._line = line;
       this._column = column;
     }
 
     /**
-     * Creates a new `SourcePos` instance initialized with `line = 1` and `column = 1`.
-     * @param {string} name Name of the source.
-     * @returns {module:pos.SourcePos} New `SourcePos` instance.
+     * SoucePos.init(name: string): SoucePos
+     *
+     * Creates a new `SoucePos` with the initial position `(line, column) = (1, 1)`.
      */
     static init(name) {
       return new SourcePos(name, 1, 1);
     }
 
     /**
-     * Checks if two `SourcePos` instances describe the same position.
-     * @param {module:pos.SourcePos} posA
-     * @param {module:pos.SourcePos} posB
-     * @returns {boolean} `true` if two `SoucePos` instances describe the same position.
+     * SoucePos.equal(posA: SoucePos, posB: SoucePos): boolean
      */
     static equal(posA, posB) {
       return posA.name === posB.name
@@ -48,12 +45,10 @@ module.exports = () => {
     }
 
     /**
-     * Compares two `SourcePos` instances.
-     * @param {module:pos.SourcePos} posA
-     * @param {module:pos.SourcePos} posB
-     * @returns {number} Negative if `posA` describes a position ahead of `posB`.
-     * Positive if `posA` describes a position behind `posB`.
-     * Zero if `posA` and `posB` describe the same.
+     * SoucePos.compare(posA: SoucePos, posB: SoucePos): int
+     *
+     * Compares two positions. Returns negative number if `posA` is ahead of `posB`, positive if
+     * `posA` is behind `posB`, and zero if two positions are equal.
      */
     static compare(posA, posB) {
       return posA.name   < posB.name   ? -1
@@ -65,33 +60,22 @@ module.exports = () => {
                                        : 0;
     }
 
-    /**
-     * @readonly
-     * @type {string}
-     */
     get name() {
       return this._name;
     }
 
-    /**
-     * @readonly
-     * @type {number}
-     */
     get line() {
       return this._line;
     }
 
-    /**
-     * @readonly
-     * @type {number}
-     */
     get column() {
       return this._column;
     }
 
     /**
-     * Returns the string representation of the position.
-     * @returns {string} The string representation of the position.
+     * SoucePos#toString(): string
+     *
+     * Returns a human readable string representation of the position.
      */
     toString() {
       return (this.name === "" ? "" : `"${this.name}"`)
@@ -99,39 +83,39 @@ module.exports = () => {
     }
 
     /**
-     * Creates a new copy of the instance with `name` set to the specified value.
-     * @param {string} name
-     * @returns {module:pos.SourcePos} Copy of the instance.
+     * SoucePos#setName(name: string): SoucePos
+     *
+     * Creates a copy of the position with `name` updated.
      */
     setName(name) {
       return new SourcePos(name, this.line, this.column);
     }
 
     /**
-     * Creates a new copy of the instance with `line` set to the specified value.
-     * @param {number} line
-     * @returns {module:pos.SourcePos} Copy of the instance.
+     * SoucePos#setLine(line: int): SoucePos
+     *
+     * Creates a copy of the position with `line` updated.
      */
     setLine(line) {
       return new SourcePos(this.name, line, this.column);
     }
 
     /**
-     * Creates a new copy of the instance with `column` set to the specified value.
-     * @param {number} column
-     * @returns {module:pos.SourcePos} Copy of the instance.
+     * SoucePos#setColumn(column: int): SoucePos
+     *
+     * Creates a copy of the position with `column` updated.
      */
     setColumn(column) {
       return new SourcePos(this.name, this.line, column);
     }
 
     /**
-     * @param {string} char
-     * @param {number} tabWidth
-     * @returns {module:pos.SourcePos}
+     * SoucePos#addChar(char: string, tabWidth: int): SoucePos
+     *
+     * Returns a new position that is offset from the original position by the given character.
      */
     addChar(char, tabWidth) {
-      // For this case
+      // For this case,
       // - `if` is faster than `switch`
       // - comparing strings is faster than character codes
       if (char === "") {
@@ -150,25 +134,24 @@ module.exports = () => {
     }
 
     /**
-     * @param {string} str
-     * @param {number} tabWidth
-     * @param {boolean} unicode If `true` specified, the characters are counted in units of code points.
-     * @returns {module:pos.SourcePos}
+     * SoucePos#addString(str: string, tabWidth: int, unicode: boolean): SoucePos
+     *
+     * Returns a new position that is offset from the original position by the given string.
      */
     addString(str, tabWidth, unicode) {
-      // For this case
+      // For this case,
       // - `switch` is faster than `if`
       // - comparing character codes is faster than strings
-      let line   = this.line;
+      let line = this.line;
       let column = this.column;
       if (unicode) {
         for (const char of str) {
           switch (char.charCodeAt(0)) {
-          case 10: // "\n"
-            line  += 1;
+          case LF:
+            line += 1;
             column = 1;
             break;
-          case 9: // "\t"
+          case TAB:
             column += tabWidth - (column - 1) % tabWidth;
             break;
           default:
@@ -179,11 +162,11 @@ module.exports = () => {
         const len = str.length;
         for (let i = 0; i < len; i++) {
           switch (str.charCodeAt(i)) {
-          case 10: // "\n"
-            line  += 1;
+          case LF:
+            line += 1;
             column = 1;
             break;
-          case 9: // "\t"
+          case TAB:
             column += tabWidth - (column - 1) % tabWidth;
             break;
           default:

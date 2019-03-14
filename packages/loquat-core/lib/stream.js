@@ -71,7 +71,7 @@ module.exports = _utils => {
    */
   class ArrayStream {
     constructor(arr, index) {
-      this._arr   = arr;
+      this._arr = arr;
       this._index = index;
     }
 
@@ -83,6 +83,9 @@ module.exports = _utils => {
       return this._index;
     }
 
+    /**
+     * ArrayStream[T]#uncons(unicode: boolean): UnconsResult[T, ArrayStream[T]]
+     */
     uncons(unicode) {
       return this._index >= this._arr.length
         ? { empty: true }
