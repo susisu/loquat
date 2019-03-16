@@ -1,22 +1,17 @@
-/*
- * loquat-core test / error.AbstractParseError#isUnknown()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const AbstractParseError = _error.AbstractParseError;
+const { AbstractParseError } = _error;
 
-describe("#isUnknown()", () => {
-  it("should throw an `Error'", () => {
+describe("#isUnknown", () => {
+  it("should throw `Error` because not implemented", () => {
     const TestParseError = class extends AbstractParseError {
       constructor() {
         super();
       }
     };
     const err = new TestParseError();
-    expect(() => { err.isUnknown(); }).to.throw(Error);
+    expect(() => { err.isUnknown(); }).to.throw(Error, /not implemented/i);
   });
 });

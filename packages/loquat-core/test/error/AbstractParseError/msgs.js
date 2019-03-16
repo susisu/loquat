@@ -1,22 +1,17 @@
-/*
- * loquat-core test / error.AbstractParseError#msgs
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const AbstractParseError = _error.AbstractParseError;
+const { AbstractParseError } = _error;
 
 describe("#msgs", () => {
-  it("should throw an `Error'", () => {
+  it("should throw `Error` because not implemented", () => {
     const TestParseError = class extends AbstractParseError {
       constructor() {
         super();
       }
     };
     const err = new TestParseError();
-    expect(() => { err.msgs; }).to.throw(Error);
+    expect(() => { err.msgs; }).to.throw(Error, /not implemented/i);
   });
 });

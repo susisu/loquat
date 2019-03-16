@@ -1,25 +1,17 @@
-/*
- * loquat-core test / error._internal.joinMessageStrings()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const joinMessageStrings = _error._internal.joinMessageStrings;
+const { joinMessageStrings } = _error._internal;
 
-describe(".joinMessageStrings(msgStrs, desc = \"\")", () => {
-  it("should return joined string of `msgStrs' with commas and \"or\" if `desc' is empty string", () => {
-    const msgStrs = ["foo", "bar", "baz", "nyan", "cat"];
-    // use default argument
-    expect(joinMessageStrings(msgStrs)).to.equal("foo, bar, baz, nyan or cat");
-    // specify desc explicityly
-    expect(joinMessageStrings(msgStrs, "")).to.equal("foo, bar, baz, nyan or cat");
+describe("joinMessageStrings", () => {
+  it("should return just a joined message if the given description is empty", () => {
+    const msgStrs = ["foo", "bar", "baz", "qux"];
+    expect(joinMessageStrings(msgStrs, "")).to.equal("foo, bar, baz or qux");
   });
 
-  it("should return joined string of `msgStrs' with `desc' added to the head if `desc' is not empty", () => {
-    const msgStrs = ["foo", "bar", "baz", "nyan", "cat"];
-    expect(joinMessageStrings(msgStrs, "expected")).to.equal("expected foo, bar, baz, nyan or cat");
+  it("should return a joined message with short description", () => {
+    const msgStrs = ["foo", "bar", "baz", "qux"];
+    expect(joinMessageStrings(msgStrs, "expected")).to.equal("expected foo, bar, baz or qux");
   });
 });

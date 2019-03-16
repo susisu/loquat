@@ -1,20 +1,13 @@
-/*
- * loquat-core test / error.ParseError.unknown()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
+const { ErrorMessage, ParseError } = _error;
 
-const ErrorMessage = _error.ErrorMessage;
-const ParseError   = _error.ParseError;
-
-describe(".unknown(pos)", () => {
-  it("should create a new `ParseError' object describing unknown error (with empty error messages)", () => {
-    const pos = new SourcePos("foobar", 496, 28);
+describe(".unknown", () => {
+  it("should create a new parse error describing with empty error messages", () => {
+    const pos = new SourcePos("main", 6, 28);
     const err = ParseError.unknown(pos);
     expect(err).to.be.an.instanceOf(ParseError);
     expect(SourcePos.equal(err.pos, pos)).to.be.true;

@@ -1,46 +1,40 @@
-/*
- * loquat-core test / error.ErrorMessage.messagesEqual()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const ErrorMessageType = _error.ErrorMessageType;
-const ErrorMessage     = _error.ErrorMessage;
+const { ErrorMessageType, ErrorMessage } = _error;
 
-describe(".messagesEqual(msgsA, msgsB)", () => {
-  it("should return `true' if two messages have the same error messages with the same order", () => {
+describe(".messagesEqual", () => {
+  it("should return `true` if two arrays of error messages are equal", () => {
     const msgsA = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
       new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     const msgsB = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
       new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     expect(ErrorMessage.messagesEqual(msgsA, msgsB)).to.be.true;
   });
 
-  it("should return `false' if two messages have different errors or are differently ordered", () => {
+  it("should return `false` if two arrays of error messages are different", () => {
     // different messages
     {
       const msgsA = [
         new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
         new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
         new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+        new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
       ];
       const msgsB = [
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-        new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+        new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+        new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+        new ErrorMessage(ErrorMessageType.MESSAGE, "ABC"),
       ];
       expect(ErrorMessage.messagesEqual(msgsA, msgsB)).to.be.false;
     }
@@ -50,7 +44,7 @@ describe(".messagesEqual(msgsA, msgsB)", () => {
         new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
         new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
         new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+        new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
       ];
       const msgsB = [
         new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -65,10 +59,10 @@ describe(".messagesEqual(msgsA, msgsB)", () => {
         new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
         new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
         new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+        new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
       ];
       const msgsB = [
-        new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+        new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
         new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
         new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
         new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),

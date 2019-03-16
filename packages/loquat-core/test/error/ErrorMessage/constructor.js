@@ -1,17 +1,11 @@
-/*
- * loquat-core test / error.ErrorMessage constructor()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const ErrorMessageType = _error.ErrorMessageType;
-const ErrorMessage     = _error.ErrorMessage;
+const { ErrorMessageType, ErrorMessage } = _error;
 
-describe("constructor(type, msgStr)", () => {
-  it("should create a new `ErrorMessage' instance", () => {
+describe(".constructor", () => {
+  it("should create a new `ErrorMessage` instance", () => {
     const types = [
       ErrorMessageType.SYSTEM_UNEXPECT,
       ErrorMessageType.UNEXPECT,
@@ -19,12 +13,11 @@ describe("constructor(type, msgStr)", () => {
       ErrorMessageType.MESSAGE,
     ];
     for (const type of types) {
-      // assert type exists
-      expect(type).to.be.a("string");
-      const msg = new ErrorMessage(type, "foobar");
+      expect(type).to.be.a("string"); // assert type exists
+      const msg = new ErrorMessage(type, "foo");
       expect(msg).to.be.an.instanceOf(ErrorMessage);
       expect(msg.type).to.equal(type);
-      expect(msg.msgStr).to.equal("foobar");
+      expect(msg.msgStr).to.equal("foo");
     }
   });
 });

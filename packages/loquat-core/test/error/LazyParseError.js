@@ -1,10 +1,6 @@
-/*
- * loquat-core test / error.LazyParseError
- */
-
 "use strict";
 
-describe(".LazyParseError", () => {
+describe("LazyParseError", () => {
   require("./LazyParseError/constructor.js");
   require("./LazyParseError/eval.js");
   require("./LazyParseError/pos.js");

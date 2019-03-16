@@ -1,25 +1,19 @@
-/*
- * loquat-core test / error.AbstractParseError#setPosition()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
+const { AbstractParseError } = _error;
 
-const AbstractParseError = _error.AbstractParseError;
-
-describe("#setPosition(pos)", () => {
-  it("should throw an `Error'", () => {
+describe("#setPosition", () => {
+  it("should throw `Error` because not implemented", () => {
     const TestParseError = class extends AbstractParseError {
       constructor() {
         super();
       }
     };
     const err = new TestParseError();
-    const pos = new SourcePos("foobar", 496, 28);
-    expect(() => { err.setPosition(pos); }).to.throw(Error);
+    const pos = new SourcePos("foobar", 6, 28);
+    expect(() => { err.setPosition(pos); }).to.throw(Error, /not implemented/i);
   });
 });

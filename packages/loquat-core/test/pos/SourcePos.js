@@ -1,6 +1,6 @@
 "use strict";
 
-describe(".SourcePos", () => {
+describe("SourcePos", () => {
   require("./SourcePos/constructor.js");
 
   require("./SourcePos/init.js");

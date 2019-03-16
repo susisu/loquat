@@ -1,22 +1,16 @@
-/*
- * loquat-core test / error.ErrorMessage.messagesToString()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const ErrorMessageType = _error.ErrorMessageType;
-const ErrorMessage     = _error.ErrorMessage;
+const { ErrorMessageType, ErrorMessage } = _error;
 
-describe(".messagesToString(msgs)", () => {
-  it("should return \"unknown parse error\" if `msgs' is empty", () => {
+describe("messagesToString", () => {
+  it("should return \"unknown parse error\" if the argument is empty", () => {
     expect(ErrorMessage.messagesToString([])).to.equal("unknown parse error");
   });
 
-  it("should pretty-print error messages", () => {
-    // only system unexpects
+  it("should pretty-print the given error messages", () => {
+    // only SYSTEM_UNEXPECT
     {
       const msgs = [
         new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
@@ -35,7 +29,7 @@ describe(".messagesToString(msgs)", () => {
       const text = "unexpected sysA";
       expect(ErrorMessage.messagesToString(msgs)).to.equal(text);
     }
-    // only unexpects
+    // only UNEXPECT
     {
       const msgs = [
         new ErrorMessage(ErrorMessageType.UNEXPECT, "unexpA"),
@@ -45,7 +39,7 @@ describe(".messagesToString(msgs)", () => {
       const text = "unexpected unexpA, unexpB or unexpC";
       expect(ErrorMessage.messagesToString(msgs)).to.equal(text);
     }
-    // only expects
+    // only EXPECT
     {
       const msgs = [
         new ErrorMessage(ErrorMessageType.EXPECT, "expA"),
@@ -55,7 +49,7 @@ describe(".messagesToString(msgs)", () => {
       const text = "expecting expA, expB or expC";
       expect(ErrorMessage.messagesToString(msgs)).to.equal(text);
     }
-    // only messages
+    // only MESSAGE
     {
       const msgs = [
         new ErrorMessage(ErrorMessageType.MESSAGE, "msgA"),
@@ -65,7 +59,7 @@ describe(".messagesToString(msgs)", () => {
       const text = "msgA, msgB or msgC";
       expect(ErrorMessage.messagesToString(msgs)).to.equal(text);
     }
-    // compound
+    // mixed
     {
       const msgs = [
         new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
@@ -122,10 +116,10 @@ describe(".messagesToString(msgs)", () => {
     }
   });
 
-  it("should throw an `Error' if `msgs' contains any message with unknown type", () => {
+  it("should throw `Error` if the argument contains any message with unknown type", () => {
     const msgs = [
       new ErrorMessage("unknown", "foo"),
     ];
-    expect(() => { ErrorMessage.messagesToString(msgs); }).to.throw(Error);
+    expect(() => { ErrorMessage.messagesToString(msgs); }).to.throw(Error, /unknown message type/i);
   });
 });

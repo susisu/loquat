@@ -1,10 +1,6 @@
-/*
- * loquat-core test / error.ErrorMessage
- */
-
 "use strict";
 
-describe(".ErrorMessage", () => {
+describe("ErrorMessage", () => {
   require("./ErrorMessage/constructor.js");
   require("./ErrorMessage/equal.js");
   require("./ErrorMessage/messagesToString.js");

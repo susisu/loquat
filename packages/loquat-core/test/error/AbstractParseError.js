@@ -1,10 +1,6 @@
-/*
- * loquat-core test / error.AbstractParseError
- */
-
 "use strict";
 
-describe(".AbstractParseError", () => {
+describe("AbstractParseError", () => {
   require("./AbstractParseError/constructor.js");
   require("./AbstractParseError/pos.js");
   require("./AbstractParseError/msgs.js");

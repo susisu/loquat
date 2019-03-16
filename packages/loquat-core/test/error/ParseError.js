@@ -1,10 +1,6 @@
-/*
- * loquat-core test / error.ParseError
- */
-
 "use strict";
 
-describe(".ParseError", () => {
+describe("ParseError", () => {
   require("./ParseError/constructor.js");
   require("./ParseError/unknown.js");
   require("./ParseError/equal.js");

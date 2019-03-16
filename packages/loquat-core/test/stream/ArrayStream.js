@@ -1,6 +1,6 @@
 "use strict";
 
-describe(".ArrayStream", () => {
+describe("ArrayStream", () => {
   require("./ArrayStream/constructor.js");
   require("./ArrayStream/uncons.js");
 });

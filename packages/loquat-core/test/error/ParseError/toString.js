@@ -1,33 +1,25 @@
-/*
- * loquat-core test / error.ParseError#toString()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
+const { ErrorMessageType, ErrorMessage, ParseError } = _error;
 
-const ErrorMessageType   = _error.ErrorMessageType;
-const ErrorMessage       = _error.ErrorMessage;
-const ParseError         = _error.ParseError;
-
-describe("#toString()", () => {
-  it("should return the string representation of the error", () => {
-    const pos = new SourcePos("foobar", 496, 28);
+describe("#toString", () => {
+  it("should return a string representation of the error", () => {
+    const pos = new SourcePos("main", 6, 28);
     const msgs = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
       new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     const err = new ParseError(pos, msgs);
     expect(err.toString()).to.equal(
-      "\"foobar\"(line 496, column 28):\n"
+      "\"main\"(line 6, column 28):\n"
             + "unexpected bar\n"
             + "expecting baz\n"
-            + "nyancat"
+            + "qux"
     );
   });
 });

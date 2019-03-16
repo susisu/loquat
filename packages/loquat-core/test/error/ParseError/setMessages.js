@@ -1,35 +1,29 @@
-/*
- * loquat-core test / error.ParseError#setMessages()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
+const { ErrorMessageType, ErrorMessage, AbstractParseError, ParseError } = _error;
 
-const ErrorMessageType   = _error.ErrorMessageType;
-const ErrorMessage       = _error.ErrorMessage;
-const ParseError         = _error.ParseError;
-
-describe("#setMessages(msgs)", () => {
-  it("should return an `AbstractParseError' object with the specified messages `msgs'", () => {
-    const pos = new SourcePos("foobar", 496, 28);
+describe("#setMessages", () => {
+  it("should create a new parse error with `msgs` updated", () => {
+    const pos = new SourcePos("main", 6, 28);
     const msgs = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
       new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     const err = new ParseError(pos, msgs);
     const newMsgs = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "A"),
+      new ErrorMessage(ErrorMessageType.UNEXPECT, "B"),
+      new ErrorMessage(ErrorMessageType.EXPECT, "C"),
+      new ErrorMessage(ErrorMessageType.MESSAGE, "D"),
     ];
     const newErr = err.setMessages(newMsgs);
+    expect(newErr).to.be.an.instanceOf(AbstractParseError);
+    expect(newErr).not.to.equal(err);
     expect(SourcePos.equal(newErr.pos, pos)).to.be.true;
     expect(ErrorMessage.messagesEqual(newErr.msgs, newMsgs)).to.be.true;
   });

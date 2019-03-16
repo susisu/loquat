@@ -1,30 +1,24 @@
-/*
- * loquat-core test / error._internal.joinWithCommasOr()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const joinWithCommasOr = _error._internal.joinWithCommasOr;
+const { joinWithCommasOr } = _error._internal;
 
-describe(".joinWithCommasOr(msgStrs)", () => {
-  it("should return empty string if `msgStrs' is empty", () => {
+describe("joinWithCommasOr", () => {
+  it("should return an empty string if the argument is empty", () => {
     expect(joinWithCommasOr([])).to.equal("");
   });
 
-  it("should return the first element if `msgStrs' has only one element", () => {
-    expect(joinWithCommasOr(["foobar"])).to.equal("foobar");
+  it("should return the first element if the argument is singleton", () => {
+    expect(joinWithCommasOr(["foo"])).to.equal("foo");
   });
 
-  it("should return string like \"A or B\" if `msgStrs' has two elements", () => {
-    expect(joinWithCommasOr(["foobar", "nyancat"])).to.equal("foobar or nyancat");
+  it("should return a string like \"A or B\" if the argument has only two elements", () => {
+    expect(joinWithCommasOr(["foo", "bar"])).to.equal("foo or bar");
   });
 
-  it("should joined string of the initial elements separated by commas (,),"
-        + " with the last element joined with \"or\"", () => {
-    const msgStrs = ["foo", "bar", "baz", "nyan", "cat"];
-    expect(joinWithCommasOr(msgStrs)).to.equal("foo, bar, baz, nyan or cat");
+  it("should return a joined commas and \"or\" if the argument has three or more elements", () => {
+    const msgStrs = ["foo", "bar", "baz", "qux"];
+    expect(joinWithCommasOr(msgStrs)).to.equal("foo, bar, baz or qux");
   });
 });

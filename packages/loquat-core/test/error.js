@@ -1,7 +1,3 @@
-/*
- * loquat-core test / error
- */
-
 "use strict";
 
 describe("error", () => {

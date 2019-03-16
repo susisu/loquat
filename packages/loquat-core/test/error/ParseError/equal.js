@@ -1,34 +1,25 @@
-/*
- * loquat-core test / error.ParseError.equal()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
+const { ErrorMessageType, ErrorMessage, ParseError, LazyParseError } = _error;
 
-const ErrorMessageType   = _error.ErrorMessageType;
-const ErrorMessage       = _error.ErrorMessage;
-const ParseError         = _error.ParseError;
-const LazyParseError     = _error.LazyParseError;
-
-describe(".equal(errA, errB)", () => {
-  it("should return `true' if two errors describe the same error", () => {
-    const posA = new SourcePos("foobar", 496, 28);
+describe(".equal", () => {
+  it("should return `true` if two errors describe equal", () => {
+    const posA = new SourcePos("main", 6, 28);
     const msgsA = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
       new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
-    const posB = new SourcePos("foobar", 496, 28);
+    const posB = new SourcePos("main", 6, 28);
     const msgsB = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
       new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     // strict
     {
@@ -51,24 +42,24 @@ describe(".equal(errA, errB)", () => {
     }
   });
 
-  it("should return `false' if two errors describe different error", () => {
+  it("should return `false` if two errors describe different", () => {
     // different position
     {
-      const posA = new SourcePos("foobar", 496, 28);
+      const posA = new SourcePos("main", 6, 28);
       const msgsA = [
         new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
         new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
         new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+        new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
       ];
-      const posB = new SourcePos("foobar", 6, 28);
+      const posB = new SourcePos("main", 7, 28);
       const msgsB = [
         new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
         new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
         new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+        new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
       ];
-            // strict
+      // strict
       {
         const errA = new ParseError(posA, msgsA);
         const errB = new ParseError(posB, msgsB);
@@ -90,21 +81,21 @@ describe(".equal(errA, errB)", () => {
     }
     // different error messages
     {
-      const posA = new SourcePos("foobar", 496, 28);
+      const posA = new SourcePos("main", 6, 28);
       const msgsA = [
         new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
         new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
         new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+        new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
       ];
-      const posB = new SourcePos("foobar", 496, 28);
+      const posB = new SourcePos("main", 6, 28);
       const msgsB = [
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-        new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+        new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+        new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+        new ErrorMessage(ErrorMessageType.MESSAGE, "ABC"),
       ];
-            // strict
+      // strict
       {
         const errA = new ParseError(posA, msgsA);
         const errB = new ParseError(posB, msgsB);
@@ -126,21 +117,21 @@ describe(".equal(errA, errB)", () => {
     }
     // both
     {
-      const posA = new SourcePos("foobar", 496, 28);
+      const posA = new SourcePos("main", 6, 28);
       const msgsA = [
         new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
         new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
         new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+        new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
       ];
-      const posB = new SourcePos("foobar", 6, 28);
+      const posB = new SourcePos("main", 7, 28);
       const msgsB = [
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-        new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+        new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+        new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+        new ErrorMessage(ErrorMessageType.MESSAGE, "ABC"),
       ];
-            // strict
+      // strict
       {
         const errA = new ParseError(posA, msgsA);
         const errB = new ParseError(posB, msgsB);

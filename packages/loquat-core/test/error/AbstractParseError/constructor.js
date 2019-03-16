@@ -1,20 +1,17 @@
-/*
- * loquat-core test / error.AbstractParseError constructor()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const AbstractParseError = _error.AbstractParseError;
+const { AbstractParseError } = _error;
 
-describe("constructor()", () => {
-  it("should throw an `Error' if it is called as `new AbstractParseError'", () => {
-    expect(() => { new AbstractParseError(); }).to.throw(Error);
+describe(".constructor", () => {
+  it("should throw `Error` if `new AbstractParseError` is called", () => {
+    expect(() => {
+      new AbstractParseError();
+    }).to.throw(Error, /cannot create AbstractParseError object/i);
   });
 
-  it("should not throw an `Error' if it is called as `super' from child constructor", () => {
+  it("should not throw `Error` if it is called via `super` from child constructor", () => {
     const TestParseError = class extends AbstractParseError {
       constructor() {
         super();

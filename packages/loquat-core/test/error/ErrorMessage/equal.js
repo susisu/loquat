@@ -1,39 +1,33 @@
-/*
- * loquat-core test / error.ErrorMessage.equal()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const ErrorMessageType = _error.ErrorMessageType;
-const ErrorMessage     = _error.ErrorMessage;
+const { ErrorMessageType, ErrorMessage } = _error;
 
-describe(".equal(msgA, msgB)", () => {
-  it("should return `true' if `msgA' and `msgB' describe the same error message", () => {
-    const msgA = new ErrorMessage(ErrorMessageType.UNEXPECT, "foobar");
-    const msgB = new ErrorMessage(ErrorMessageType.UNEXPECT, "foobar");
+describe(".equal", () => {
+  it("should return `true` if two error messages are equal", () => {
+    const msgA = new ErrorMessage(ErrorMessageType.UNEXPECT, "foo");
+    const msgB = new ErrorMessage(ErrorMessageType.UNEXPECT, "foo");
     expect(ErrorMessage.equal(msgA, msgB)).to.be.true;
   });
 
-  it("should return `false' if `msgA' and `msgB' describe different error messages", () => {
+  it("should return `false` if two error messagesa are different", () => {
     // different types
     {
-      const msgA = new ErrorMessage(ErrorMessageType.UNEXPECT, "foobar");
-      const msgB = new ErrorMessage(ErrorMessageType.EXPECT, "foobar");
+      const msgA = new ErrorMessage(ErrorMessageType.UNEXPECT, "foo");
+      const msgB = new ErrorMessage(ErrorMessageType.EXPECT, "foo");
       expect(ErrorMessage.equal(msgA, msgB)).to.be.false;
     }
     // different message strings
     {
-      const msgA = new ErrorMessage(ErrorMessageType.UNEXPECT, "foobar");
-      const msgB = new ErrorMessage(ErrorMessageType.UNEXPECT, "nyancat");
+      const msgA = new ErrorMessage(ErrorMessageType.UNEXPECT, "foo");
+      const msgB = new ErrorMessage(ErrorMessageType.UNEXPECT, "bar");
       expect(ErrorMessage.equal(msgA, msgB)).to.be.false;
     }
     // both
     {
-      const msgA = new ErrorMessage(ErrorMessageType.UNEXPECT, "foobar");
-      const msgB = new ErrorMessage(ErrorMessageType.EXPECT, "nyancat");
+      const msgA = new ErrorMessage(ErrorMessageType.UNEXPECT, "foo");
+      const msgB = new ErrorMessage(ErrorMessageType.EXPECT, "bar");
       expect(ErrorMessage.equal(msgA, msgB)).to.be.false;
     }
   });

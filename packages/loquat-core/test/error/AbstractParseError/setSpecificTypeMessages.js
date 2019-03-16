@@ -1,17 +1,11 @@
-/*
- * loquat-core test / error.AbstractParseError#setSpecificTypeMessages()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const ErrorMessageType   = _error.ErrorMessageType;
-const AbstractParseError = _error.AbstractParseError;
+const { ErrorMessageType, AbstractParseError } = _error;
 
-describe("#setSpecificTypeMessages(type, msgStrs)", () => {
-  it("should throw an `Error'", () => {
+describe("#setSpecificTypeMessages", () => {
+  it("should throw `Error` because not implemented", () => {
     const TestParseError = class extends AbstractParseError {
       constructor() {
         super();
@@ -20,6 +14,6 @@ describe("#setSpecificTypeMessages(type, msgStrs)", () => {
     const err = new TestParseError();
     expect(() => {
       err.setSpecificTypeMessages(ErrorMessageType.MESSAGE, ["foo", "bar", "baz"]);
-    }).to.throw(Error);
+    }).to.throw(Error, /not implemented/i);
   });
 });
