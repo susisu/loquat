@@ -7,11 +7,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/susisu/loquat-core.git"
+    "url": "git+https://github.com/susisu/loquat2.git"
   },
-  "homepage": "https://github.com/susisu/loquat-core#readme",
+  "homepage": "https://github.com/susisu/loquat2#readme",
   "bugs": {
-    "url": "https://github.com/susisu/loquat-core/issues"
+    "url": "https://github.com/susisu/loquat2/issues"
   },
   "author": "Susisu <susisu2413@yahoo.co.jp> (https://github.com/susisu)",
   "license": "MIT",
