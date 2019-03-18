@@ -1,16 +1,11 @@
-/*
- * loquat-core test / parser.Parser constructor()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const Parser = _parser.Parser;
+const { Parser } = _parser;
 
-describe("constructor(func)", () => {
-  it("should create a new `Parser' instance", () => {
+describe(".constructor", () => {
+  it("should create a new `Parser` instance", () => {
     const parser = new Parser(() => {});
     expect(parser).to.be.an.instanceOf(Parser);
   });

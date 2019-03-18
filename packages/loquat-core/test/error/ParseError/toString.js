@@ -15,11 +15,11 @@ describe("#toString", () => {
       new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     const err = new ParseError(pos, msgs);
-    expect(err.toString()).to.equal(
-      "\"main\"(line 6, column 28):\n"
-            + "unexpected bar\n"
-            + "expecting baz\n"
-            + "qux"
-    );
+    expect(err.toString()).to.equal([
+      "\"main\"(line 6, column 28):",
+      "unexpected bar",
+      "expecting baz",
+      "qux",
+    ].join("\n"));
   });
 });

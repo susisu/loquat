@@ -1,18 +1,11 @@
-/*
- * loquat-core test / parser.lazy()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const Parser     = _parser.Parser;
-const LazyParser = _parser.LazyParser;
-const lazy       = _parser.lazy;
+const { Parser, LazyParser, lazy } = _parser;
 
-describe(".lazy(thunk)", () => {
-  it("should create a new `LazyParser' instance", () => {
+describe("lazy", () => {
+  it("should create a new `LazyParser` instance", () => {
     const p = new Parser(() => {});
     const parser = lazy(() => p);
     expect(parser).to.be.an.instanceOf(LazyParser);

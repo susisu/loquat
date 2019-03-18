@@ -4,7 +4,7 @@ const { expect } = require("chai");
 
 const { ErrorMessageType, ErrorMessage } = _error;
 
-describe("messagesToString", () => {
+describe(".messagesToString", () => {
   it("should return \"unknown parse error\" if the argument is empty", () => {
     expect(ErrorMessage.messagesToString([])).to.equal("unknown parse error");
   });
@@ -72,9 +72,11 @@ describe("messagesToString", () => {
         new ErrorMessage(ErrorMessageType.EXPECT, "expC"),
         new ErrorMessage(ErrorMessageType.MESSAGE, "msgC"),
       ];
-      const text = "unexpected end of input\n"
-                + "expecting expA, expB or expC\n"
-                + "msgA, msgB or msgC";
+      const text = [
+        "unexpected end of input",
+        "expecting expA, expB or expC",
+        "msgA, msgB or msgC",
+      ].join("\n");
       expect(ErrorMessage.messagesToString(msgs)).to.equal(text);
     }
     {
@@ -89,9 +91,11 @@ describe("messagesToString", () => {
         new ErrorMessage(ErrorMessageType.EXPECT, "expC"),
         new ErrorMessage(ErrorMessageType.MESSAGE, "msgC"),
       ];
-      const text = "unexpected sysA\n"
-                + "expecting expA, expB or expC\n"
-                + "msgA, msgB or msgC";
+      const text = [
+        "unexpected sysA",
+        "expecting expA, expB or expC",
+        "msgA, msgB or msgC",
+      ].join("\n");
       expect(ErrorMessage.messagesToString(msgs)).to.equal(text);
     }
     {
@@ -109,9 +113,11 @@ describe("messagesToString", () => {
         new ErrorMessage(ErrorMessageType.EXPECT, "expC"),
         new ErrorMessage(ErrorMessageType.MESSAGE, "msgC"),
       ];
-      const text = "unexpected unexpA, unexpB or unexpC\n"
-                + "expecting expA, expB or expC\n"
-                + "msgA, msgB or msgC";
+      const text = [
+        "unexpected unexpA, unexpB or unexpC",
+        "expecting expA, expB or expC",
+        "msgA, msgB or msgC",
+      ].join("\n");
       expect(ErrorMessage.messagesToString(msgs)).to.equal(text);
     }
   });

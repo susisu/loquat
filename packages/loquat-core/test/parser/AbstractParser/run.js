@@ -1,22 +1,17 @@
-/*
- * loquat-core test / parser.AbstractParser#run()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const AbstractParser = _parser.AbstractParser;
+const { AbstractParser } = _parser;
 
-describe("#run()", () => {
-  it("should throw an `Error'", () => {
+describe("#run", () => {
+  it("should throw `Error` because not implemented", () => {
     const TestParser = class extends AbstractParser {
       constructor() {
         super();
       }
     };
     const parser = new TestParser();
-    expect(() => { parser.run(); }).to.throw(Error);
+    expect(() => { parser.run(); }).to.throw(Error, /not implemented/i);
   });
 });

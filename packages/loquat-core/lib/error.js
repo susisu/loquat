@@ -35,11 +35,19 @@ module.exports = _pos => {
       this._msgStr = msgStr;
     }
 
+    /**
+     * ErrorMessage.equal(msgA: ErrorMessage, msgB: ErrorMessage): boolean
+     */
     static equal(msgA, msgB) {
       return msgA.type === msgB.type
         && msgA.msgStr === msgB.msgStr;
     }
 
+    /**
+     * ErrorMessage.messagesToString(msgs: Array[ErrorMessage]): string
+     *
+     * Prints error messages in human readable format.
+     */
     static messagesToString(msgs) {
       if (msgs.length === 0) {
         return "unknown parse error";
@@ -79,6 +87,9 @@ module.exports = _pos => {
       return cleanMessageStrings(msgStrs).join("\n");
     }
 
+    /**
+     * ErrorMessage.messagesEqual(msgsA: Array[ErrorMessage], msgsB: Array[ErrorMessage]): bool
+     */
     static messagesEqual(msgsA, msgsB) {
       if (msgsA.length !== msgsB.length) {
         return false;
@@ -189,12 +200,6 @@ module.exports = _pos => {
    *   static unknown(pos: SourcePos): ParseError
    *   static equal(errA: ParseError, errB: ParseError): bool
    *   static merge(errA: ParseError, errB: ParseError): AbstractParseError
-   *   toString(): string
-   *   isUnknown(): boolean
-   *   setPosition(pos: SourcePos): AbstractParseError
-   *   setMessages(msgs: Array[ErrorMessage]): AbstractParseError
-   *   addMessages(msgs: Array[ErrorMessage]): AbstractParseError
-   *   setSpecificTypeMessages(type: ErrorMessageType, msgStrs: Array[string]): AbstractParseError
    * }
    */
   class ParseError extends AbstractParseError {
@@ -204,15 +209,24 @@ module.exports = _pos => {
       this._msgs = msgs;
     }
 
+    /**
+     * ParseError.unknown(pos: SourcePos): ParseError
+     */
     static unknown(pos) {
       return new ParseError(pos, []);
     }
 
+    /**
+     * ParseError.equal(errA: ParseError, errB: ParseError): bool
+     */
     static equal(errA, errB) {
       return SourcePos.equal(errA.pos, errB.pos)
         && ErrorMessage.messagesEqual(errA.msgs, errB.msgs);
     }
 
+    /**
+     * ParseError.merge(errA: ParseError, errB: ParseError): AbstractParseError
+     */
     static merge(errA, errB) {
       return new LazyParseError(() => {
         const cmp = SourcePos.compare(errA.pos, errB.pos);
@@ -299,12 +313,6 @@ module.exports = _pos => {
    *   pos: SourcePos,
    *   msgs: Array[ErrorMessage]
    *   eval(): ParseError
-   *   toString(): string
-   *   isUnknown(): boolean
-   *   setPosition(pos: SourcePos): AbstractParseError
-   *   setMessages(msgs: Array[ErrorMessage]): AbstractParseError
-   *   addMessages(msgs: Array[ErrorMessage]): AbstractParseError
-   *   setSpecificTypeMessages(type: ErrorMessageType, msgStrs: Array[string]): AbstractParseError
    * }
    */
   class LazyParseError extends AbstractParseError {
@@ -317,7 +325,7 @@ module.exports = _pos => {
     /**
      * LazyParseError#eval(): ParseError
      *
-     * Force evaluation of the thunk and returns a fully-evaluated parse error.
+     * Evalutates the thunk and returns a fully-evaluated parse error.
      */
     eval() {
       if (this._cache) {

@@ -1,27 +1,18 @@
-/*
- * loquat-core test / error.LazyParseError#msgs
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
-
-const ErrorMessageType   = _error.ErrorMessageType;
-const ErrorMessage       = _error.ErrorMessage;
-const ParseError         = _error.ParseError;
-const LazyParseError     = _error.LazyParseError;
+const { SourcePos } = _pos;
+const { ErrorMessageType, ErrorMessage, ParseError, LazyParseError } = _error;
 
 describe("#msgs", () => {
-  it("should first evaluate the thunk and return `msgs' of the result", () => {
-    const pos = new SourcePos("foobar", 496, 28);
+  it("should evaluate the thunk and return `msgs` of the result", () => {
+    const pos = new SourcePos("main", 6, 28);
     const msgs = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
       new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     let evaluated = false;
     const err = new LazyParseError(() => {

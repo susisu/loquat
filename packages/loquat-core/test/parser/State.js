@@ -1,10 +1,6 @@
-/*
- * loquat-core test / parser.State
- */
-
 "use strict";
 
-describe(".State", () => {
+describe("State", () => {
   require("./State/constructor.js");
   require("./State/equal.js");
   require("./State/setConfig.js");

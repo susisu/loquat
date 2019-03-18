@@ -1,28 +1,18 @@
-/*
- * loquat-core test / error.LazyParseError#eval()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
+const { ErrorMessageType, ErrorMessage, ParseError, LazyParseError } = _error;
 
-const ErrorMessageType   = _error.ErrorMessageType;
-const ErrorMessage       = _error.ErrorMessage;
-const ParseError         = _error.ParseError;
-const LazyParseError     = _error.LazyParseError;
-
-describe("#eval()", () => {
-  it("should evaluate the thunk then return a `ParseError` object obtained as a result and cahce it"
-        + " if there is no cache", () => {
-    const pos = new SourcePos("foobar", 496, 28);
+describe("#eval", () => {
+  it("should evaluate the thunk then return a fully evaluated `ParseError`", () => {
+    const pos = new SourcePos("main", 6, 28);
     const msgs = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
       new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     {
       const err = new LazyParseError(() => new ParseError(pos, msgs));
@@ -45,13 +35,13 @@ describe("#eval()", () => {
     }
   });
 
-  it("should return the cached result if it exists", () => {
-    const pos = new SourcePos("foobar", 496, 28);
+  it("should cache the evaluated result and return it if called next time", () => {
+    const pos = new SourcePos("main", 6, 28);
     const msgs = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
       new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     {
       let evalCount = 0;
@@ -93,7 +83,7 @@ describe("#eval()", () => {
         evalCount += 1;
         return intermediateErr;
       });
-            // evaluate intermediate one first
+      // evaluate intermediate one first
       const intermediateRes = intermediateErr.eval();
       const resA = err.eval();
       const resB = err.eval();
@@ -104,12 +94,12 @@ describe("#eval()", () => {
     }
   });
 
-  it("should throw a `TypeError' if invalid thunk (not a function) found in the evaluation", () => {
+  it("should throw `TypeError` if invalid thunk found in the evaluation", () => {
     const invalidThunks = [
       null,
       undefined,
-      "foobar",
-      496,
+      "foo",
+      42,
       true,
       {},
     ];
@@ -120,17 +110,17 @@ describe("#eval()", () => {
       }
       {
         const err = new LazyParseError(() => new LazyParseError(thunk));
-        expect(() => { err.eval(); }).to.throw(TypeError);
+        expect(() => { err.eval(); }).to.throw(TypeError, /thunk is not a function/i);
       }
     }
   });
 
-  it("should throw a `TypeError' if the final evaluation result is not a `ParseError' object", () => {
+  it("should throw a `TypeError` if the final result is not a `ParseError` object", () => {
     const invalidResults = [
       null,
       undefined,
-      "foobar",
-      496,
+      "foo",
+      42,
       true,
       {},
       () => {},
@@ -138,11 +128,15 @@ describe("#eval()", () => {
     for (const res of invalidResults) {
       {
         const err = new LazyParseError(() => res);
-        expect(() => { err.eval(); }).to.throw(TypeError);
+        expect(() => {
+          err.eval();
+        }).to.throw(TypeError, /evaluation result is not a ParseError obejct/i);
       }
       {
         const err = new LazyParseError(() => new LazyParseError(() => res));
-        expect(() => { err.eval(); }).to.throw(TypeError);
+        expect(() => {
+          err.eval();
+        }).to.throw(TypeError, /evaluation result is not a ParseError obejct/i);
       }
     }
   });

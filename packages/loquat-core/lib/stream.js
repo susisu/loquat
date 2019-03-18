@@ -64,7 +64,6 @@ module.exports = _utils => {
   /**
    * class ArrayStream[T](arr: Array[T], index: int) extends Stream[ArrayStream[T]] {
    *   type Token = T
-   *   uncons(unicode: boolean): UnconsResult[Token, ArrayStream[T]]
    * }
    *
    * `ArrayStream[T]` provides an efficient `Stream[S]` implementation for arrays.

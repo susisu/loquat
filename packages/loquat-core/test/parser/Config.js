@@ -1,10 +1,6 @@
-/*
- * loquat-core test / parser.Config
- */
-
 "use strict";
 
-describe(".Config", () => {
+describe("Config", () => {
   require("./Config/constructor.js");
   require("./Config/equal.js");
 });

@@ -1,19 +1,11 @@
-/*
- * loquat-core test / parser.assertParser()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const AbstractParser = _parser.AbstractParser;
-const Parser         = _parser.Parser;
-const LazyParser     = _parser.LazyParser;
-const assertParser   = _parser.assertParser;
+const { AbstractParser, Parser, LazyParser, assertParser } = _parser;
 
-describe(".assertParser(val)", () => {
-  it("should do nothing and return `undefined' if `val' is an instance of `AbstractParser'", () => {
+describe("assertParser", () => {
+  it("should just return `undefined` if the argument is an instance of `AbstractParser`", () => {
     {
       const parser = new Parser(() => {});
       expect(assertParser(parser)).to.be.undefined;
@@ -33,18 +25,18 @@ describe(".assertParser(val)", () => {
     }
   });
 
-  it("should throw an `Error' if `val' is not an instance of `AbstractParser'", () => {
+  it("should throw Error if the argument is not an instance of `AbstractParser`", () => {
     const values = [
       null,
       undefined,
-      "foobar",
-      496,
+      "foo",
+      42,
       true,
       {},
       () => {},
     ];
     for (const val of values) {
-      expect(() => { assertParser(val); }).to.throw(Error);
+      expect(() => { assertParser(val); }).to.throw(Error, /not a parser/i);
     }
   });
 });

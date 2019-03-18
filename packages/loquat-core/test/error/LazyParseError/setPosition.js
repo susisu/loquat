@@ -1,37 +1,27 @@
-/*
- * loquat-core test / error.LazyParseError#setPosition()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
+const { ErrorMessageType, ErrorMessage, ParseError, LazyParseError } = _error;
 
-const ErrorMessageType   = _error.ErrorMessageType;
-const ErrorMessage       = _error.ErrorMessage;
-const ParseError         = _error.ParseError;
-const LazyParseError     = _error.LazyParseError;
-
-describe("#setPosition(pos)", () => {
-  it("should return an `AbstractParseError' object with the specified position `pos'", () => {
-    const pos = new SourcePos("foobar", 496, 28);
+describe("#setPosition", () => {
+  it("should create a new parse error with `pos` updated", () => {
+    const pos = new SourcePos("main", 6, 28);
     const msgs = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+      new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     let evaluated = false;
     const err = new LazyParseError(() => {
       evaluated = true;
       return new ParseError(pos, msgs);
     });
-    const newPos = new SourcePos("nyancat", 128, 256);
+    const newPos = new SourcePos("lib", 7, 29);
     const newErr = err.setPosition(newPos);
-    // not evaluated yet
-    expect(evaluated).to.be.false;
+    expect(evaluated).to.be.false; // not evaluated yet
     expect(SourcePos.equal(newErr.pos, newPos)).to.be.true;
     expect(ErrorMessage.messagesEqual(newErr.msgs, msgs)).to.be.true;
     expect(evaluated).to.be.true;

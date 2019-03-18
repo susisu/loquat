@@ -1,18 +1,11 @@
-/*
- * loquat-core test / parser.LazyParser#eval()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const Parser     = _parser.Parser;
-const LazyParser = _parser.LazyParser;
+const { Parser, LazyParser } = _parser;
 
-describe("#eval()", () => {
-  it("should evaluate the thunk then return a `Parser' object obtained as a result and cahce it"
-        + " if there is no cache", () => {
+describe("#eval", () => {
+  it("should evaluate the thunk then return a fully evaluated `Parser`", () => {
     const p = new Parser(() => {});
     {
       const parser = new LazyParser(() => p);
@@ -29,7 +22,7 @@ describe("#eval()", () => {
     }
   });
 
-  it("should return the cached result if it exists", () => {
+  it("should cache the evaluated result and return it if called next time", () => {
     {
       let evalCount = 0;
       const parser = new LazyParser(() => {
@@ -70,7 +63,7 @@ describe("#eval()", () => {
         evalCount += 1;
         return intermediateParser;
       });
-            // evaluate intermediate one first
+      // evaluate intermediate one first
       const intermediateRes = intermediateParser.eval();
       const resA = parser.eval();
       const resB = parser.eval();
@@ -81,12 +74,12 @@ describe("#eval()", () => {
     }
   });
 
-  it("should throw a `TypeError' if invalid thunk (not a function) found in the evaluation", () => {
+  it("should throw `TypeError` if invalid thunk found in the evaluation", () => {
     const invalidThunks = [
       null,
       undefined,
-      "foobar",
-      496,
+      "foo",
+      6,
       true,
       {},
     ];
@@ -102,12 +95,12 @@ describe("#eval()", () => {
     }
   });
 
-  it("should throw a `TypeError' if the final evaluation result is not a `Parser' object", () => {
+  it("should throw a `TypeError` if the final result is not a `Parser` object", () => {
     const invalidResults = [
       null,
       undefined,
-      "foobar",
-      496,
+      "foo",
+      6,
       true,
       {},
       () => {},

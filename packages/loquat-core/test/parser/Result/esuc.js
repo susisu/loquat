@@ -1,61 +1,51 @@
-/*
- * loquat-core test / parser.Result.esuc()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
+const { ErrorMessageType, ErrorMessage, ParseError } = _error;
+const { Config, State, Result } = _parser;
 
-const ErrorMessageType = _error.ErrorMessageType;
-const ErrorMessage     = _error.ErrorMessage;
-const ParseError       = _error.ParseError;
-
-const Config = _parser.Config;
-const State  = _parser.State;
-const Result = _parser.Result;
-
-describe(".esuc(err, val, state)", () => {
+describe(".esuc", () => {
   it("should create an empty success result object", () => {
     const res = Result.esuc(
       new ParseError(
-        new SourcePos("foobar", 6, 6),
+        new SourcePos("main", 6, 28),
         [
-          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-          new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-          new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-          new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+          new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+          new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+          new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
         ]
       ),
-      "result",
+      "val",
       new State(
         new Config({ tabWidth: 4, unicode: true }),
         "rest",
-        new SourcePos("foobar", 496, 28),
+        new SourcePos("main", 6, 29),
         "none"
       )
     );
+    expect(res).to.be.an.instanceOf(Result);
     expect(Result.equal(
       res,
       new Result(
         false,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "result",
+        "val",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "none"
         )
       )

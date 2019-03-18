@@ -1,39 +1,30 @@
-/*
- * loquat-core test / error.LazyParseError#toString()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
+const { ErrorMessageType, ErrorMessage, ParseError, LazyParseError } = _error;
 
-const ErrorMessageType   = _error.ErrorMessageType;
-const ErrorMessage       = _error.ErrorMessage;
-const ParseError         = _error.ParseError;
-const LazyParseError     = _error.LazyParseError;
-
-describe("#toString()", () => {
-  it("should first evaluate the thunk and return the string representation of the error", () => {
-    const pos = new SourcePos("foobar", 496, 28);
+describe("#toString", () => {
+  it("should return a string representation of the error", () => {
+    const pos = new SourcePos("main", 6, 28);
     const msgs = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
       new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat"),
+      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     let evaluated = false;
     const err = new LazyParseError(() => {
       evaluated = true;
       return new ParseError(pos, msgs);
     });
-    expect(err.toString()).to.equal(
-      "\"foobar\"(line 496, column 28):\n"
-            + "unexpected bar\n"
-            + "expecting baz\n"
-            + "nyancat"
-    );
+    expect(err.toString()).to.equal([
+      "\"main\"(line 6, column 28):",
+      "unexpected bar",
+      "expecting baz",
+      "qux",
+    ].join("\n"));
     expect(evaluated).to.be.true;
   });
 });

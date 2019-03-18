@@ -1,60 +1,43 @@
-/*
- * loquat-core test / parser.extendParser()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const AbstractParser = _parser.AbstractParser;
-const Parser         = _parser.Parser;
-const LazyParser     = _parser.LazyParser;
-const extendParser   = _parser.extendParser;
+const { AbstractParser, Parser, LazyParser, extendParser } = _parser;
 
-describe(".extendParser(extensions)", () => {
-  it("should extend `AbstractParser.prototype'", () => {
+describe("extendParser", () => {
+  it("should extend `AbstractParser.prototype`", () => {
     const extensions = {
-      exFoo: "x",
-      exBar: "y",
-      exBaz: "z",
+      __test__foo: "foo",
+      __test__bar: "bar",
+      __test__baz: "baz",
     };
-    expect(Object.getOwnPropertyDescriptor(AbstractParser.prototype, "exFoo")).to.be.undefined;
-    expect(Object.getOwnPropertyDescriptor(AbstractParser.prototype, "exBar")).to.be.undefined;
-    expect(Object.getOwnPropertyDescriptor(AbstractParser.prototype, "exBaz")).to.be.undefined;
+    for (const key of Object.keys(extensions)) {
+      expect(Object.getOwnPropertyDescriptor(AbstractParser.prototype, key)).to.be.undefined;
+    }
 
     extendParser(extensions);
 
-    expect(Object.getOwnPropertyDescriptor(AbstractParser.prototype, "exFoo")).to.deep.equal({
-      value       : "x",
-      writable    : true,
-      configurable: true,
-      enumerable  : false,
-    });
-    expect(Object.getOwnPropertyDescriptor(AbstractParser.prototype, "exBar")).to.deep.equal({
-      value       : "y",
-      writable    : true,
-      configurable: true,
-      enumerable  : false,
-    });
-    expect(Object.getOwnPropertyDescriptor(AbstractParser.prototype, "exBaz")).to.deep.equal({
-      value       : "z",
-      writable    : true,
-      configurable: true,
-      enumerable  : false,
-    });
+    for (const key of Object.keys(extensions)) {
+      expect(Object.getOwnPropertyDescriptor(AbstractParser.prototype, key)).to.deep.equal({
+        value       : extensions[key],
+        writable    : true,
+        configurable: true,
+        enumerable  : false,
+      });
+    }
+
     // can be accessed from parser objects
     {
       const parser = new Parser(() => {});
-      expect(parser.exFoo).to.equal("x");
-      expect(parser.exBar).to.equal("y");
-      expect(parser.exBaz).to.equal("z");
+      for (const key of Object.keys(extensions)) {
+        expect(parser[key]).to.equal(extensions[key]);
+      }
     }
     {
       const parser = new LazyParser(() => new Parser(() => {}));
-      expect(parser.exFoo).to.equal("x");
-      expect(parser.exBar).to.equal("y");
-      expect(parser.exBaz).to.equal("z");
+      for (const key of Object.keys(extensions)) {
+        expect(parser[key]).to.equal(extensions[key]);
+      }
     }
   });
 });

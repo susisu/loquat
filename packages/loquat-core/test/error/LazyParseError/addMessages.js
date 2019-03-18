@@ -1,26 +1,16 @@
-/*
- * loquat-core test / error.LazyParseError#addMessages()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
+const { ErrorMessageType, ErrorMessage, ParseError, LazyParseError } = _error;
 
-const ErrorMessageType   = _error.ErrorMessageType;
-const ErrorMessage       = _error.ErrorMessage;
-const ParseError         = _error.ParseError;
-const LazyParseError     = _error.LazyParseError;
-
-describe("#addMessages(msgs)", () => {
-  it("should return an `AbstractParseError' object with the specified messages `msgs'"
-        + " concatenated to the original messages", () => {
-    const pos = new SourcePos("foobar", 496, 28);
+describe("#addMessages", () => {
+  it("should return a new parse error with the given messages added", () => {
+    const pos = new SourcePos("main", 6, 28);
     const msgs = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
+      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+      new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
     ];
     let evaluated = false;
     const err = new LazyParseError(() => {
@@ -28,12 +18,11 @@ describe("#addMessages(msgs)", () => {
       return new ParseError(pos, msgs);
     });
     const additionalMsgs = [
-      new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     const newErr = err.addMessages(additionalMsgs);
-    // not evaluated yet
-    expect(evaluated).to.be.false;
+    expect(evaluated).to.be.false; // not evaluated yet
     expect(SourcePos.equal(newErr.pos, pos)).to.be.true;
     expect(ErrorMessage.messagesEqual(newErr.msgs, msgs.concat(additionalMsgs))).to.be.true;
     expect(evaluated).to.be.true;

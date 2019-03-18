@@ -1,45 +1,37 @@
-/*
- * loquat-core test / parser.Result.cerr()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
+const { ErrorMessageType, ErrorMessage, ParseError } = _error;
+const { Result } = _parser;
 
-const ErrorMessageType = _error.ErrorMessageType;
-const ErrorMessage     = _error.ErrorMessage;
-const ParseError       = _error.ParseError;
-
-const Result = _parser.Result;
-
-describe(".cerr(err)", () => {
+describe(".cerr", () => {
   it("should create a consumed failure result object", () => {
     const res = Result.cerr(
       new ParseError(
-        new SourcePos("foobar", 6, 6),
+        new SourcePos("main", 6, 28),
         [
-          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-          new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-          new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-          new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+          new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+          new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+          new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
         ]
       )
     );
+    expect(res).to.be.an.instanceOf(Result);
     expect(Result.equal(
       res,
       new Result(
         true,
         false,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         )
       )

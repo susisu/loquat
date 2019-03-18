@@ -1,26 +1,13 @@
-/*
- * loquat-core test / parser.LazyParser#run()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
-
-const ErrorMessageType = _error.ErrorMessageType;
-const ErrorMessage     = _error.ErrorMessage;
-const ParseError       = _error.ParseError;
-
-const Config     = _parser.Config;
-const State      = _parser.State;
-const Result     = _parser.Result;
-const Parser     = _parser.Parser;
-const LazyParser = _parser.LazyParser;
+const { SourcePos } = _pos;
+const { ErrorMessageType, ErrorMessage, ParseError } = _error;
+const { Config, State, Result, Parser, LazyParser } = _parser;
 
 describe("#run(state)", () => {
-  it("should evluate the thunk and call `#run()' method of the resultant parser object with `state'", () => {
+  it("should evaluate the thunk and run the resultant parser with the given state", () => {
     let flag = false;
     let evaluated = false;
     const parser = new LazyParser(() => {
@@ -31,8 +18,8 @@ describe("#run(state)", () => {
           state,
           new State(
             new Config({ tabWidth: 4, unicode: true }),
-            "init",
-            new SourcePos("foobar", 496, 28),
+            "test",
+            new SourcePos("main", 6, 28),
             "none"
           )
         )).to.be.true;
@@ -40,19 +27,19 @@ describe("#run(state)", () => {
           true,
           true,
           new ParseError(
-            new SourcePos("foobar", 6, 6),
+            new SourcePos("main", 7, 28),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-              new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-              new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+              new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+              new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+              new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
             ]
           ),
-          "result",
+          "val",
           new State(
             new Config({ tabWidth: 4, unicode: true }),
             "rest",
-            new SourcePos("foobar", 496, 28),
+            new SourcePos("main", 7, 29),
             "some"
           )
         );
@@ -60,8 +47,8 @@ describe("#run(state)", () => {
     });
     const res = parser.run(new State(
       new Config({ tabWidth: 4, unicode: true }),
-      "init",
-      new SourcePos("foobar", 496, 28),
+      "test",
+      new SourcePos("main", 6, 28),
       "none"
     ));
     expect(evaluated).to.be.true;
@@ -72,19 +59,19 @@ describe("#run(state)", () => {
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 7, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "result",
+        "val",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 7, 29),
           "some"
         )
       )

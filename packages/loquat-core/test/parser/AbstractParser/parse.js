@@ -1,16 +1,11 @@
-/*
- * loquat-core test / parser.AbstractParser#parse()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const AbstractParser = _parser.AbstractParser;
+const { AbstractParser } = _parser;
 
-describe("#parse()", () => {
-  it("should throw an `Error'", () => {
+describe("#parse", () => {
+  it("should throw `Error` because not implemented", () => {
     const TestParser = class extends AbstractParser {
       constructor() {
         super();
@@ -18,8 +13,10 @@ describe("#parse()", () => {
     };
     const parser = new TestParser();
     expect(() => {
-      parser.parse("foobar", "input", "none", { tabWidth: 4, unicode: true });
-    }).to.throw(Error);
-    expect(() => { parser.parse("foobar", "input"); }).to.throw(Error);
+      parser.parse("main", "input", "none", { tabWidth: 4, unicode: true });
+    }).to.throw(Error, /not implemented/i);
+    expect(() => {
+      parser.parse("main", "input", undefined);
+    }).to.throw(Error, /not implemented/i);
   });
 });

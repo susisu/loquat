@@ -1,43 +1,32 @@
-/*
- * loquat-core test / parser.Result.equal()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
+const { ErrorMessageType, ErrorMessage, ParseError } = _error;
+const { Config, State, Result } = _parser;
 
-const ErrorMessageType = _error.ErrorMessageType;
-const ErrorMessage     = _error.ErrorMessage;
-const ParseError       = _error.ParseError;
-
-const Config = _parser.Config;
-const State  = _parser.State;
-const Result = _parser.Result;
-
-describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userStateEqual = undefined)", () => {
-  it("should return `true' if two results are the same", () => {
+describe(".equal", () => {
+  it("should return `true` if two results are equal", () => {
     // use default arguments
     {
       const resA = new Result(
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "result",
+        "val",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "none"
         )
       );
@@ -45,19 +34,19 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "result",
+        "val",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "none"
         )
       );
@@ -69,19 +58,19 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "result",
+        "val",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "none"
         )
       );
@@ -89,19 +78,19 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "RESULT",
+        "VAL",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "REST",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "NONE"
         )
       );
@@ -110,26 +99,26 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
     }
   });
 
-  it("should return `false' if two results are different", () => {
-    // different `consumed'
+  it("should return `false` if two results are different", () => {
+    // different `consumed`
     {
       const resA = new Result(
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "result",
+        "val",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "none"
         )
       );
@@ -137,64 +126,57 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         false,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "result",
+        "val",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "none"
         )
       );
       expect(Result.equal(resA, resB)).to.be.false;
     }
-    // different `success'
+    // different `success`
     {
       const resA = new Result(
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "result",
+        "val",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "none"
         )
       );
       const resB = new Result(
-        false,
         true,
+        false,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
-        ),
-        "result",
-        new State(
-          new Config({ tabWidth: 4, unicode: true }),
-          "rest",
-          new SourcePos("foobar", 496, 28),
-          "none"
         )
       );
       expect(Result.equal(resA, resB)).to.be.false;
@@ -205,19 +187,19 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "result",
+        "val",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "none"
         )
       );
@@ -225,19 +207,19 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "a"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "b"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "c"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "d"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "A"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "B"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "C"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "D"),
           ]
         ),
-        "result",
+        "val",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "none"
         )
       );
@@ -249,19 +231,19 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "result",
+        "A",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "none"
         )
       );
@@ -269,19 +251,19 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "ok",
+        "B",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "none"
         )
       );
@@ -293,19 +275,19 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "result",
+        "val",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "none"
         )
       );
@@ -313,19 +295,19 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "result",
+        "val",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 6, 28),
+          new SourcePos("main", 7, 28),
           "none"
         )
       );
@@ -337,19 +319,19 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "result",
+        "val",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "none"
         )
       );
@@ -357,12 +339,12 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         false,
         false,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "a"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "b"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "c"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "d"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "A"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "B"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "C"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "D"),
           ]
         )
       );
@@ -370,7 +352,7 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
     }
   });
 
-  it("should compare `val' and `state' properties only when both results are success", () => {
+  it("should compare `val` and `state` properties only if both results are success", () => {
     const ieq = () => {
       throw new Error("unexpected call");
     };
@@ -380,12 +362,12 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         true,
         false,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         )
       );
@@ -393,12 +375,12 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         true,
         false,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         )
       );
@@ -410,19 +392,19 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         true,
         true,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-        "result",
+        "val",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 29),
           "none"
         )
       );
@@ -430,12 +412,12 @@ describe(".equal(resA, resB, valEqual = undefined, inputEqual = undefined, userS
         true,
         false,
         new ParseError(
-          new SourcePos("foobar", 6, 6),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         )
       );

@@ -1,7 +1,3 @@
-/*
- * loquat-core test / parser
- */
-
 "use strict";
 
 describe("parser", () => {

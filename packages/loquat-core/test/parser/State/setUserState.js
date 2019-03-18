@@ -1,33 +1,27 @@
-/*
- * loquat-core test / parser.State#setUserState()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
+const { Config, State } = _parser;
 
-const Config = _parser.Config;
-const State  = _parser.State;
-
-describe("#setUserState(pos)", () => {
-  it("should a copy of the state, with specified `pos'", () => {
+describe("#setUserState", () => {
+  it("should create a new state with `userState` updated", () => {
     const state = new State(
       new Config({ tabWidth: 4, unicode: true }),
-      "foobar",
-      new SourcePos("nyancat", 496, 28),
+      "foo",
+      new SourcePos("main", 6, 28),
       "none"
     );
     const copy = state.setUserState("some");
+    expect(copy).to.be.an.instanceOf(State);
     expect(copy).not.to.equal(state);
     expect(State.equal(
       copy,
       new State(
         new Config({ tabWidth: 4, unicode: true }),
-        "foobar",
-        new SourcePos("nyancat", 496, 28),
+        "foo",
+        new SourcePos("main", 6, 28),
         "some"
       )
     )).to.be.true;

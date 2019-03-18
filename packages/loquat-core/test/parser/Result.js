@@ -1,10 +1,6 @@
-/*
- * loquat-core test / parser.Result
- */
-
 "use strict";
 
-describe(".Result", () => {
+describe("Result", () => {
   require("./Result/constructor.js");
   require("./Result/equal.js");
   require("./Result/csuc.js");

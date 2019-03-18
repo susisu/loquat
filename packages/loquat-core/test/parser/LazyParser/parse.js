@@ -1,26 +1,13 @@
-/*
- * loquat-core test / parser.LazyParser#parse()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos = _pos.SourcePos;
+const { SourcePos } = _pos;
+const { ErrorMessageType, ErrorMessage, ParseError } = _error;
+const { Config, State, Result, Parser, LazyParser } = _parser;
 
-const ErrorMessageType = _error.ErrorMessageType;
-const ErrorMessage     = _error.ErrorMessage;
-const ParseError       = _error.ParseError;
-
-const Config     = _parser.Config;
-const State      = _parser.State;
-const Result     = _parser.Result;
-const Parser     = _parser.Parser;
-const LazyParser = _parser.LazyParser;
-
-describe("#parse(name, input, userState = undefined, opts = {})", () => {
-  it("should run the parser with a state created from arguments and return result as a simple object", () => {
+describe("#parse", () => {
+  it("should run the parser with a new state and return result as a simple object", () => {
     // csuc
     {
       let evaluated = false;
@@ -32,35 +19,35 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
             new State(
               new Config({ tabWidth: 4, unicode: true }),
               "test",
-              new SourcePos("foobar", 1, 1),
+              new SourcePos("main", 1, 1),
               "none"
             )
           )).to.be.true;
           return Result.csuc(
             new ParseError(
-              new SourcePos("foobar", 496, 28),
+              new SourcePos("main", 6, 28),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-                new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-                new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+                new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+                new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+                new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
               ]
             ),
-            "nyancat",
+            "val",
             new State(
               new Config({ tabWidth: 4, unicode: true }),
               "rest",
-              new SourcePos("foobar", 496, 28),
+              new SourcePos("main", 6, 28),
               "some"
             )
           );
         });
       });
-      const res = parser.parse("foobar", "test", "none", { tabWidth: 4, unicode: true });
+      const res = parser.parse("main", "test", "none", { tabWidth: 4, unicode: true });
       expect(evaluated).to.be.true;
       expect(res).to.deep.equal({
         success: true,
-        value  : "nyancat",
+        value  : "val",
       });
     }
     // cerr
@@ -74,36 +61,36 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
             new State(
               new Config({ tabWidth: 4, unicode: true }),
               "test",
-              new SourcePos("foobar", 1, 1),
+              new SourcePos("main", 1, 1),
               "none"
             )
           )).to.be.true;
           return Result.cerr(
             new ParseError(
-              new SourcePos("foobar", 496, 28),
+              new SourcePos("main", 6, 28),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-                new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-                new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+                new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+                new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+                new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
               ]
             )
           );
         });
       });
-      const res = parser.parse("foobar", "test", "none", { tabWidth: 4, unicode: true });
+      const res = parser.parse("main", "test", "none", { tabWidth: 4, unicode: true });
       expect(evaluated).to.be.true;
       expect(res).to.be.an("object");
       expect(res.success).to.be.false;
       expect(ParseError.equal(
         res.error,
         new ParseError(
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         )
       )).to.be.true;
@@ -119,35 +106,35 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
             new State(
               new Config({ tabWidth: 4, unicode: true }),
               "test",
-              new SourcePos("foobar", 1, 1),
+              new SourcePos("main", 1, 1),
               "none"
             )
           )).to.be.true;
           return Result.esuc(
             new ParseError(
-              new SourcePos("foobar", 496, 28),
+              new SourcePos("main", 6, 28),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-                new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-                new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+                new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+                new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+                new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
               ]
             ),
-            "nyancat",
+            "val",
             new State(
               new Config({ tabWidth: 4, unicode: true }),
               "rest",
-              new SourcePos("foobar", 496, 28),
+              new SourcePos("main", 6, 28),
               "some"
             )
           );
         });
       });
-      const res = parser.parse("foobar", "test", "none", { tabWidth: 4, unicode: true });
+      const res = parser.parse("main", "test", "none", { tabWidth: 4, unicode: true });
       expect(evaluated).to.be.true;
       expect(res).to.deep.equal({
         success: true,
-        value  : "nyancat",
+        value  : "val",
       });
     }
     // eerr
@@ -161,36 +148,36 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
             new State(
               new Config({ tabWidth: 4, unicode: true }),
               "test",
-              new SourcePos("foobar", 1, 1),
+              new SourcePos("main", 1, 1),
               "none"
             )
           )).to.be.true;
           return Result.eerr(
             new ParseError(
-              new SourcePos("foobar", 496, 28),
+              new SourcePos("main", 6, 28),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-                new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-                new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+                new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+                new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+                new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
               ]
             )
           );
         });
       });
-      const res = parser.parse("foobar", "test", "none", { tabWidth: 4, unicode: true });
+      const res = parser.parse("main", "test", "none", { tabWidth: 4, unicode: true });
       expect(evaluated).to.be.true;
       expect(res).to.be.an("object");
       expect(res.success).to.be.false;
       expect(ParseError.equal(
         res.error,
         new ParseError(
-          new SourcePos("foobar", 496, 28),
+          new SourcePos("main", 6, 28),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         )
       )).to.be.true;
@@ -206,35 +193,35 @@ describe("#parse(name, input, userState = undefined, opts = {})", () => {
             new State(
               new Config(),
               "test",
-              new SourcePos("foobar", 1, 1),
-              undefined
+              new SourcePos("main", 1, 1),
+              "none"
             )
           )).to.be.true;
           return Result.csuc(
             new ParseError(
-              new SourcePos("foobar", 496, 28),
+              new SourcePos("main", 6, 28),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
-                new ErrorMessage(ErrorMessageType.UNEXPECT, "y"),
-                new ErrorMessage(ErrorMessageType.EXPECT, "z"),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "w"),
+                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+                new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+                new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+                new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
               ]
             ),
-            "nyancat",
+            "val",
             new State(
               new Config({ tabWidth: 4, unicode: true }),
               "rest",
-              new SourcePos("foobar", 496, 28),
+              new SourcePos("main", 6, 28),
               "some"
             )
           );
         });
       });
-      const res = parser.parse("foobar", "test");
+      const res = parser.parse("main", "test", "none");
       expect(evaluated).to.be.true;
       expect(res).to.deep.equal({
         success: true,
-        value  : "nyancat",
+        value  : "val",
       });
     }
   });

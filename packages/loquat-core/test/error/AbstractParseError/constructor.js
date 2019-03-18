@@ -5,7 +5,7 @@ const { expect } = require("chai");
 const { AbstractParseError } = _error;
 
 describe(".constructor", () => {
-  it("should throw `Error` if `new AbstractParseError` is called", () => {
+  it("should throw `Error` if it is called as `new AbstractParseError`", () => {
     expect(() => {
       new AbstractParseError();
     }).to.throw(Error, /cannot create AbstractParseError object/i);
