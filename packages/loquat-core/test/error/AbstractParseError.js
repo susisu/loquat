@@ -1,13 +1,13 @@
 "use strict";
 
 describe("AbstractParseError", () => {
-  require("./AbstractParseError/constructor.js");
-  require("./AbstractParseError/pos.js");
-  require("./AbstractParseError/msgs.js");
-  require("./AbstractParseError/toString.js");
-  require("./AbstractParseError/isUnknown.js");
-  require("./AbstractParseError/setPosition.js");
-  require("./AbstractParseError/setMessages.js");
-  require("./AbstractParseError/addMessages.js");
-  require("./AbstractParseError/setSpecificTypeMessages.js");
+  require("./AbstractParseError/constructor");
+  require("./AbstractParseError/pos");
+  require("./AbstractParseError/msgs");
+  require("./AbstractParseError/toString");
+  require("./AbstractParseError/isUnknown");
+  require("./AbstractParseError/setPosition");
+  require("./AbstractParseError/setMessages");
+  require("./AbstractParseError/addMessages");
+  require("./AbstractParseError/setSpecificTypeMessages");
 });

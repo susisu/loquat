@@ -1,16 +1,16 @@
 "use strict";
 
 describe("ParseError", () => {
-  require("./ParseError/constructor.js");
-  require("./ParseError/unknown.js");
-  require("./ParseError/equal.js");
-  require("./ParseError/merge.js");
-  require("./ParseError/pos.js");
-  require("./ParseError/msgs.js");
-  require("./ParseError/toString.js");
-  require("./ParseError/isUnknown.js");
-  require("./ParseError/setPosition.js");
-  require("./ParseError/setMessages.js");
-  require("./ParseError/addMessages.js");
-  require("./ParseError/setSpecificTypeMessages.js");
+  require("./ParseError/constructor");
+  require("./ParseError/unknown");
+  require("./ParseError/equal");
+  require("./ParseError/merge");
+  require("./ParseError/pos");
+  require("./ParseError/msgs");
+  require("./ParseError/toString");
+  require("./ParseError/isUnknown");
+  require("./ParseError/setPosition");
+  require("./ParseError/setMessages");
+  require("./ParseError/addMessages");
+  require("./ParseError/setSpecificTypeMessages");
 });

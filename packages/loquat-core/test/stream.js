@@ -1,6 +1,6 @@
 "use strict";
 
 describe("stream", () => {
-  require("./stream/uncons.js");
-  require("./stream/ArrayStream.js");
+  require("./stream/uncons");
+  require("./stream/ArrayStream");
 });

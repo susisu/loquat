@@ -1,15 +1,15 @@
 "use strict";
 
 describe("parser", () => {
-  require("./parser/Config.js");
-  require("./parser/State.js");
-  require("./parser/Result.js");
-  require("./parser/AbstractParser.js");
-  require("./parser/Parser.js");
-  require("./parser/LazyParser.js");
-  require("./parser/lazy.js");
-  require("./parser/parse.js");
-  require("./parser/isParser.js");
-  require("./parser/assertParser.js");
-  require("./parser/extendParser.js");
+  require("./parser/Config");
+  require("./parser/State");
+  require("./parser/Result");
+  require("./parser/AbstractParser");
+  require("./parser/Parser");
+  require("./parser/LazyParser");
+  require("./parser/lazy");
+  require("./parser/parse");
+  require("./parser/isParser");
+  require("./parser/assertParser");
+  require("./parser/extendParser");
 });

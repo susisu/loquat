@@ -1,16 +1,16 @@
 "use strict";
 
 describe("SourcePos", () => {
-  require("./SourcePos/constructor.js");
+  require("./SourcePos/constructor");
 
-  require("./SourcePos/init.js");
-  require("./SourcePos/equal.js");
-  require("./SourcePos/compare.js");
+  require("./SourcePos/init");
+  require("./SourcePos/equal");
+  require("./SourcePos/compare");
 
-  require("./SourcePos/toString.js");
-  require("./SourcePos/setName.js");
-  require("./SourcePos/setLine.js");
-  require("./SourcePos/setColumn.js");
-  require("./SourcePos/addChar.js");
-  require("./SourcePos/addString.js");
+  require("./SourcePos/toString");
+  require("./SourcePos/setName");
+  require("./SourcePos/setLine");
+  require("./SourcePos/setColumn");
+  require("./SourcePos/addChar");
+  require("./SourcePos/addString");
 });
