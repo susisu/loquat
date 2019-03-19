@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = (_pos, _error) => {
+module.exports = ({ _pos, _error }) => {
   const { SourcePos } = _pos;
 
   const { ParseError } = _error;

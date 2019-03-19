@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = _utils => {
+module.exports = ({ _utils }) => {
   const { unconsString } = _utils;
 
   /**

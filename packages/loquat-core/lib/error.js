@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = _pos => {
+module.exports = ({ _pos }) => {
   const { SourcePos } = _pos;
 
   /**
