@@ -1,0 +1,22 @@
+{
+  "extends": "@susisu",
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "overrides": [
+    {
+      "files": ["test.js", "test/**/*.js"],
+      "env": {
+        "mocha": true
+      },
+      "globals": {
+         "_core": "readonly"
+      },
+      "rules": {
+        "no-new": "off",
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
+}

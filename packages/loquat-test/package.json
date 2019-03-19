@@ -1,0 +1,37 @@
+{
+  "name": "loquat-test",
+  "private": true,
+  "version": "3.0.0-alpha.0",
+  "description": "Test utilities for loquat",
+  "keywords": [
+    "loquat",
+    "testing"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/susisu/loquat2.git"
+  },
+  "homepage": "https://github.com/susisu/loquat2#readme",
+  "bugs": {
+    "url": "https://github.com/susisu/loquat2/issues"
+  },
+  "author": "Susisu <susisu2413@yahoo.co.jp> (https://github.com/susisu)",
+  "license": "MIT",
+  "main": "index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "lint": "eslint *.js lib test",
+    "lint:fix": "eslint --fix *.js lib test",
+    "test": "nyc -r html -r text mocha test.js"
+  },
+  "devDependencies": {
+    "@susisu/eslint-config": "^0.0.1",
+    "chai": "^4.2.0",
+    "eslint": "^5.15.3",
+    "loquat-core": "3.0.0-alpha.0",
+    "mocha": "^6.0.2",
+    "nyc": "^13.3.0"
+  }
+}
