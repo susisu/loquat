@@ -15,7 +15,7 @@ describe("#setConfig", () => {
     );
     const copy = state.setConfig(new Config({ tabWidth: 8, unicode: false }));
     expect(copy).to.be.an.instanceOf(State);
-    expect(copy).not.to.equal(state);
+    expect(copy).to.not.equal(state);
     expect(State.equal(
       copy,
       new State(

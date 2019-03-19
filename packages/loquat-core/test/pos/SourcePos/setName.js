@@ -10,7 +10,7 @@ describe("#setName", () => {
     const copy = pos.setName("bar");
     expect(copy).to.be.an.instanceOf(SourcePos);
     // different objects
-    expect(copy).not.to.equal(pos);
+    expect(copy).to.not.equal(pos);
     // only the names differ
     expect(copy.name).to.equal("bar");
     expect(copy.line).to.equal(pos.line);

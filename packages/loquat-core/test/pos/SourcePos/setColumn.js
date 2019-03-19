@@ -10,7 +10,7 @@ describe("#setColumn", () => {
     const copy = pos.setColumn(29);
     expect(copy).to.be.an.instanceOf(SourcePos);
     // different objects
-    expect(copy).not.to.equal(pos);
+    expect(copy).to.not.equal(pos);
     // only the columns differ
     expect(copy.name).to.equal(pos.name);
     expect(copy.line).to.equal(pos.line);

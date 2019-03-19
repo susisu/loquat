@@ -384,7 +384,7 @@ describe(".equal", () => {
           ]
         )
       );
-      expect(() => { Result.equal(resA, resB, ieq, ieq, ieq); }).not.to.throw(Error);
+      expect(() => { Result.equal(resA, resB, ieq, ieq, ieq); }).to.not.throw(Error);
     }
     // one of resA or resB is failure
     {
@@ -421,8 +421,8 @@ describe(".equal", () => {
           ]
         )
       );
-      expect(() => { Result.equal(resA, resB, ieq, ieq, ieq); }).not.to.throw(Error);
-      expect(() => { Result.equal(resB, resA, ieq, ieq, ieq); }).not.to.throw(Error);
+      expect(() => { Result.equal(resA, resB, ieq, ieq, ieq); }).to.not.throw(Error);
+      expect(() => { Result.equal(resB, resA, ieq, ieq, ieq); }).to.not.throw(Error);
     }
   });
 });

@@ -15,7 +15,7 @@ describe("#setInput", () => {
     );
     const copy = state.setInput("bar");
     expect(copy).to.be.an.instanceOf(State);
-    expect(copy).not.to.equal(state);
+    expect(copy).to.not.equal(state);
     expect(State.equal(
       copy,
       new State(

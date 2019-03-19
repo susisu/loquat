@@ -10,7 +10,7 @@ describe("#addString", () => {
       const pos = new SourcePos("foo", 6, 1);
       const copy = pos.addString("nyan\n\tcat\n\u3042\t\uD83C\uDF63", 8, false);
       expect(copy).to.be.an.instanceOf(SourcePos);
-      expect(copy).not.to.equal(pos);
+      expect(copy).to.not.equal(pos);
       expect(copy.name).to.equal("foo");
       expect(copy.line).to.equal(8);
       expect(copy.column).to.equal(11);
@@ -19,7 +19,7 @@ describe("#addString", () => {
       const pos = new SourcePos("foo", 6, 1);
       const copy = pos.addString("nyan\n\tcat\n\u3042\t\uD83C\uDF63", 4, false);
       expect(copy).to.be.an.instanceOf(SourcePos);
-      expect(copy).not.to.equal(pos);
+      expect(copy).to.not.equal(pos);
       expect(copy.name).to.equal("foo");
       expect(copy.line).to.equal(8);
       expect(copy.column).to.equal(7);
@@ -30,7 +30,7 @@ describe("#addString", () => {
     const pos = new SourcePos("foo", 6, 1);
     const copy = pos.addString("nyan\n\tcat\n\u3042\t\uD83C\uDF63", 8, true);
     expect(copy).to.be.an.instanceOf(SourcePos);
-    expect(copy).not.to.equal(pos);
+    expect(copy).to.not.equal(pos);
     expect(copy.name).to.equal("foo");
     expect(copy.line).to.equal(8);
     expect(copy.column).to.equal(10);

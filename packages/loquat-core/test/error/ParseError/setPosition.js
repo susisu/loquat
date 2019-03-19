@@ -18,7 +18,7 @@ describe("#setPosition", () => {
     const newPos = new SourcePos("main", 6, 29);
     const newErr = err.setPosition(newPos);
     expect(newErr).to.be.an.instanceOf(AbstractParseError);
-    expect(newErr).not.to.equal(err);
+    expect(newErr).to.not.equal(err);
     expect(SourcePos.equal(newErr.pos, newPos)).to.be.true;
     expect(ErrorMessage.messagesEqual(newErr.msgs, msgs)).to.be.true;
   });

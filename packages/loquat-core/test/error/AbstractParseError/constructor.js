@@ -17,6 +17,6 @@ describe(".constructor", () => {
         super();
       }
     };
-    expect(() => { new TestParseError(); }).not.to.throw(Error);
+    expect(() => { new TestParseError(); }).to.not.throw(Error);
   });
 });
