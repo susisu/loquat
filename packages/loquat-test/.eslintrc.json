@@ -4,6 +4,9 @@
     "es6": true,
     "node": true
   },
+  "rules": {
+    "no-invalid-this": "off"
+  },
   "overrides": [
     {
       "files": ["test.js", "test/**/*.js"],
@@ -14,6 +17,7 @@
          "_core": "readonly"
       },
       "rules": {
+        "no-invalid-this": "warn",
         "no-new": "off",
         "no-unused-expressions": "off"
       }
