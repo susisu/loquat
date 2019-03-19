@@ -4,9 +4,6 @@
     "es6": true,
     "node": true
   },
-  "rules": {
-    "max-len": ["error", 100, { "ignoreComments": true }]
-  },
   "overrides": [
     {
       "files": ["test.js", "test/**/*.js"],
@@ -21,7 +18,6 @@
          "_parser": "readonly"
       },
       "rules": {
-        "max-len": "off",
         "no-new": "off",
         "no-unused-expressions": "off"
       }
