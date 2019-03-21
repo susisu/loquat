@@ -10,23 +10,31 @@ module.exports = ({ _core }) => {
     };
   }
 
+  function eqeqeq(x, y) {
+    return x === y;
+  }
+
   function mkEqual(props) {
+    const fullProps = props.map(prop =>
+      typeof prop === "object"
+        ? Object.assign({ eq: eqeqeq, allowEqOverriding: false }, prop)
+        : { name: prop, eq: eqeqeq, allowEqOverriding: false }
+    );
     return (objA, objB, ...eqs) => {
-      for (const prop of props) {
-        const name = Array.isArray(prop) ? prop[0] : prop;
-        const allowEqualityOverriding = Array.isArray(prop) ? !!prop[1] : false;
+      for (const prop of fullProps) {
+        const { name, eq, allowEqOverriding } = prop;
         const valA = objA[name];
         const valB = objB[name];
         let ok;
-        if (allowEqualityOverriding) {
-          const eq = eqs.shift();
-          if (eq !== undefined) {
-            ok = eq(valA, valB);
+        if (allowEqOverriding) {
+          const overridingEq = eqs.shift();
+          if (overridingEq !== undefined) {
+            ok = overridingEq(valA, valB);
           } else {
-            ok = valA === valB;
+            ok = eq(valA, valB);
           }
         } else {
-          ok = valA === valB;
+          ok = eq(valA, valB);
         }
         if (!ok) {
           return false;
