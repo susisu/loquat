@@ -4,8 +4,16 @@ module.exports = ({ _core }) => {
   const { show } = _core;
 
   function mkInspect(name, props) {
+    const fullProps = props.map(prop =>
+      typeof prop === "object"
+        ? Object.assign({ inspector: show }, prop)
+        : { name: prop, inspector: show }
+    );
     return obj => {
-      const propsStr = props.map(name => `${name} = ${show(obj[name])}`).join(", ");
+      const propsStr = fullProps.map(({ name, inspector }) => {
+        const val = obj[name];
+        return `${name} = ${inspector(val)}`;
+      }).join(", ");
       return `${name}(${propsStr})`;
     };
   }
