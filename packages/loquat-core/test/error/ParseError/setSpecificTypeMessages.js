@@ -19,7 +19,7 @@ describe("#setSpecificTypeMessages", () => {
     const newErr = err.setSpecificTypeMessages(ErrorMessageType.UNEXPECT, ["A", "B"]);
     expect(newErr).to.be.an.instanceOf(AbstractParseError);
     expect(newErr).to.not.equal(err);
-    expect(SourcePos.equal(newErr.pos, pos)).to.be.true;
+    expect(newErr.pos).to.be.an.equalPositionTo(pos);
     expect(ErrorMessage.messagesEqual(newErr.msgs, [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.EXPECT, "baz"),

@@ -23,7 +23,7 @@ describe(".merge", () => {
       const errB = new ParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posA)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posA);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsA)).to.be.true;
     }
     // lazy
@@ -32,7 +32,7 @@ describe(".merge", () => {
       const errB = new LazyParseError(() => new ParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posA)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posA);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsA)).to.be.true;
     }
     // mixed
@@ -41,7 +41,7 @@ describe(".merge", () => {
       const errB = new ParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posA)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posA);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsA)).to.be.true;
     }
     {
@@ -49,7 +49,7 @@ describe(".merge", () => {
       const errB = new LazyParseError(() => new ParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posA)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posA);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsA)).to.be.true;
     }
   });
@@ -71,7 +71,7 @@ describe(".merge", () => {
       const errB = new ParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posB)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posB);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsB)).to.be.true;
     }
     // lazy
@@ -80,7 +80,7 @@ describe(".merge", () => {
       const errB = new LazyParseError(() => new ParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posB)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posB);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsB)).to.be.true;
     }
     // mixed
@@ -89,7 +89,7 @@ describe(".merge", () => {
       const errB = new ParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posB)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posB);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsB)).to.be.true;
     }
     {
@@ -97,7 +97,7 @@ describe(".merge", () => {
       const errB = new LazyParseError(() => new ParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posB)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posB);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsB)).to.be.true;
     }
   });
@@ -124,7 +124,7 @@ describe(".merge", () => {
       const errB = new ParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posA)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posA);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsA)).to.be.true;
     }
     // lazy
@@ -133,7 +133,7 @@ describe(".merge", () => {
       const errB = new LazyParseError(() => new ParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posA)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posA);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsA)).to.be.true;
     }
     // mixed
@@ -142,7 +142,7 @@ describe(".merge", () => {
       const errB = new ParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posA)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posA);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsA)).to.be.true;
     }
     {
@@ -150,7 +150,7 @@ describe(".merge", () => {
       const errB = new LazyParseError(() => new ParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posA)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posA);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsA)).to.be.true;
     }
   });
@@ -177,7 +177,7 @@ describe(".merge", () => {
       const errB = new ParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posB)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posB);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsB)).to.be.true;
     }
     // lazy
@@ -186,7 +186,7 @@ describe(".merge", () => {
       const errB = new LazyParseError(() => new ParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posB)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posB);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsB)).to.be.true;
     }
     // mixed
@@ -195,7 +195,7 @@ describe(".merge", () => {
       const errB = new ParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posB)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posB);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsB)).to.be.true;
     }
     {
@@ -203,7 +203,7 @@ describe(".merge", () => {
       const errB = new LazyParseError(() => new ParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, posB)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(posB);
       expect(ErrorMessage.messagesEqual(err.msgs, msgsB)).to.be.true;
     }
   });
@@ -230,7 +230,7 @@ describe(".merge", () => {
       const errB = new ParseError(pos, msgsB);
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, pos)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(pos);
       expect(ErrorMessage.messagesEqual(err.msgs, msgs)).to.be.true;
     }
     // lazy
@@ -239,7 +239,7 @@ describe(".merge", () => {
       const errB = new LazyParseError(() => new ParseError(pos, msgsB));
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, pos)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(pos);
       expect(ErrorMessage.messagesEqual(err.msgs, msgs)).to.be.true;
     }
     // mixed
@@ -248,7 +248,7 @@ describe(".merge", () => {
       const errB = new ParseError(pos, msgsB);
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, pos)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(pos);
       expect(ErrorMessage.messagesEqual(err.msgs, msgs)).to.be.true;
     }
     {
@@ -256,7 +256,7 @@ describe(".merge", () => {
       const errB = new LazyParseError(() => new ParseError(pos, msgsB));
       const err = ParseError.merge(errA, errB);
       expect(err).to.be.an.instanceOf(AbstractParseError);
-      expect(SourcePos.equal(err.pos, pos)).to.be.true;
+      expect(err.pos).to.be.an.equalPositionTo(pos);
       expect(ErrorMessage.messagesEqual(err.msgs, msgs)).to.be.true;
     }
   });

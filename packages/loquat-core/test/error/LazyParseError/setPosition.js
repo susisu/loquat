@@ -22,7 +22,7 @@ describe("#setPosition", () => {
     const newPos = new SourcePos("lib", 7, 29);
     const newErr = err.setPosition(newPos);
     expect(evaluated).to.be.false; // not evaluated yet
-    expect(SourcePos.equal(newErr.pos, newPos)).to.be.true;
+    expect(newErr.pos).to.be.an.equalPositionTo(newPos);
     expect(ErrorMessage.messagesEqual(newErr.msgs, msgs)).to.be.true;
     expect(evaluated).to.be.true;
   });

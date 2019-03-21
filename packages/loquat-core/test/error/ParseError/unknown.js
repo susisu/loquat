@@ -10,7 +10,7 @@ describe(".unknown", () => {
     const pos = new SourcePos("main", 6, 28);
     const err = ParseError.unknown(pos);
     expect(err).to.be.an.instanceOf(ParseError);
-    expect(SourcePos.equal(err.pos, pos)).to.be.true;
+    expect(err.pos).to.be.an.equalPositionTo(pos);
     expect(ErrorMessage.messagesEqual(err.msgs, [])).to.be.true;
   });
 });

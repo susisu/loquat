@@ -19,10 +19,7 @@ describe(".constructor", () => {
       new Config({ tabWidth: 4, unicode: true })
     )).to.be.true;
     expect(state.input).to.equal("input");
-    expect(SourcePos.equal(
-      state.pos,
-      new SourcePos("main", 6, 28)
-    )).to.be.true;
+    expect(state.pos).to.be.an.equalPositionTo(new SourcePos("main", 6, 28));
     expect(state.userState).to.equal("none");
   });
 });
