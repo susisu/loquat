@@ -49,8 +49,14 @@ module.exports = ({ _core }) => {
     equal  : mkEqual(["name", "line", "column"]),
   };
 
+  const ErrorMessage = {
+    inspect: mkInspect("ErrorMessage", ["type", "msgStr"]),
+    equal  : mkEqual(["type", "msgStr"]),
+  };
+
   return Object.freeze({
     SourcePos,
+    ErrorMessage,
     _internal: {
       mkInspect,
       mkEqual,
