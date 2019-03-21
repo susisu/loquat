@@ -76,10 +76,10 @@ module.exports = () => {
   }
 
   return Object.freeze({
+    show,
+    unconsString,
     _internal: {
       escapeChar,
     },
-    show,
-    unconsString,
   });
 };
