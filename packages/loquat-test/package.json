@@ -26,6 +26,9 @@
     "lint:fix": "eslint --fix *.js lib test",
     "test": "nyc -r html -r text mocha test.js"
   },
+  "peerDependencies": {
+    "chai": "^4.2.0"
+  },
   "devDependencies": {
     "@susisu/eslint-config": "^0.0.1",
     "chai": "^4.2.0",
