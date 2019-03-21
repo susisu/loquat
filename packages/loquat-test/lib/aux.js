@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = _core => {
+module.exports = ({ _core }) => {
   const { show } = _core;
 
   function mkInspect(name, props) {
@@ -41,7 +41,11 @@ module.exports = _core => {
     equal  : mkEqual(["name", "line", "column"]),
   };
 
-  return {
+  return Object.freeze({
     SourcePos,
-  };
+    _internal: {
+      mkInspect,
+      mkEqual,
+    },
+  });
 };

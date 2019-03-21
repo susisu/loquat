@@ -1,12 +1,12 @@
 "use strict";
 
-module.exports = (_core, { chai, utils }, aux) => {
+module.exports = ({ _core, _aux }) => (chai, utils) => {
   const { SourcePos } = _core;
 
   const { Assertion } = chai;
 
   Assertion.addMethod("equalPositionTo", function (exp) {
-    const { equal, inspect } = aux.SourcePos;
+    const { equal, inspect } = _aux.SourcePos;
     const act = this._obj;
 
     new Assertion(act).to.be.an.instanceOf(SourcePos);

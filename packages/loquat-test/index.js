@@ -1,7 +1,8 @@
 "use strict";
 
 module.exports = _core => (chai, utils) => {
-  const aux = require("./lib/aux")(_core);
+  const _aux = require("./lib/aux")({ _core });
+  const _assert = require("./lib/assert")({ _core, _aux });
 
-  require("./lib/assert")(_core, { chai, utils }, aux);
+  _assert(chai, utils);
 };
