@@ -10,8 +10,7 @@ const _parser = require("./lib/parser")({ _pos, _error });
 const _core   = require("./lib/core")({ _utils, _pos, _error, _stream, _parser });
 
 Object.assign(global, { _utils, _pos, _error, _stream, _parser });
-// assuming loquat-test is updated in sync with loquat-core
-chai.use(require("../loquat-test")(_core));
+chai.use(require("loquat-test")(_core));
 
 require("./test/utils");
 require("./test/pos");
