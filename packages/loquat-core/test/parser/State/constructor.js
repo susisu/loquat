@@ -14,10 +14,7 @@ describe(".constructor", () => {
       "none"
     );
     expect(state).to.be.an.instanceOf(State);
-    expect(Config.equal(
-      state.config,
-      new Config({ tabWidth: 4, unicode: true })
-    )).to.be.true;
+    expect(state.config).to.be.an.equalConfigTo(new Config({ tabWidth: 4, unicode: true }));
     expect(state.input).to.equal("input");
     expect(state.pos).to.be.an.equalPositionTo(new SourcePos("main", 6, 28));
     expect(state.userState).to.equal("none");
