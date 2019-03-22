@@ -25,6 +25,6 @@ describe("#setMessages", () => {
     expect(newErr).to.be.an.instanceOf(AbstractParseError);
     expect(newErr).to.not.equal(err);
     expect(newErr.pos).to.be.an.equalPositionTo(pos);
-    expect(ErrorMessage.messagesEqual(newErr.msgs, newMsgs)).to.be.true;
+    expect(newErr.msgs).to.be.equalErrorMessagesTo(newMsgs);
   });
 });

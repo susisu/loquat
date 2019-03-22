@@ -15,6 +15,6 @@ describe("#msgs", () => {
       new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     const err = new ParseError(pos, msgs);
-    expect(ErrorMessage.messagesEqual(err.msgs, msgs)).to.be.true;
+    expect(err.msgs).to.be.equalErrorMessagesTo(msgs);
   });
 });

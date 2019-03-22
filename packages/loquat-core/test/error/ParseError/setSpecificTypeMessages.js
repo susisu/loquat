@@ -20,12 +20,12 @@ describe("#setSpecificTypeMessages", () => {
     expect(newErr).to.be.an.instanceOf(AbstractParseError);
     expect(newErr).to.not.equal(err);
     expect(newErr.pos).to.be.an.equalPositionTo(pos);
-    expect(ErrorMessage.messagesEqual(newErr.msgs, [
+    expect(newErr.msgs).to.be.equalErrorMessagesTo([
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
       new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "A"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "B"),
-    ])).to.be.true;
+    ]);
   });
 });

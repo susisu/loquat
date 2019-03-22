@@ -20,6 +20,6 @@ describe("#setPosition", () => {
     expect(newErr).to.be.an.instanceOf(AbstractParseError);
     expect(newErr).to.not.equal(err);
     expect(newErr.pos).to.be.an.equalPositionTo(newPos);
-    expect(ErrorMessage.messagesEqual(newErr.msgs, msgs)).to.be.true;
+    expect(newErr.msgs).to.be.equalErrorMessagesTo(msgs);
   });
 });

@@ -23,7 +23,7 @@ describe("#setPosition", () => {
     const newErr = err.setPosition(newPos);
     expect(evaluated).to.be.false; // not evaluated yet
     expect(newErr.pos).to.be.an.equalPositionTo(newPos);
-    expect(ErrorMessage.messagesEqual(newErr.msgs, msgs)).to.be.true;
+    expect(newErr.msgs).to.be.equalErrorMessagesTo(msgs);
     expect(evaluated).to.be.true;
   });
 });

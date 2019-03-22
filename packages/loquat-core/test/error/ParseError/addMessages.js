@@ -20,6 +20,6 @@ describe("#addMessages", () => {
     const newErr = err.addMessages(additionalMsgs);
     expect(newErr).to.be.an.instanceOf(AbstractParseError);
     expect(newErr.pos).to.be.an.equalPositionTo(pos);
-    expect(ErrorMessage.messagesEqual(newErr.msgs, msgs.concat(additionalMsgs))).to.be.true;
+    expect(newErr.msgs).to.be.equalErrorMessagesTo(msgs.concat(additionalMsgs));
   });
 });
