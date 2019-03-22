@@ -86,10 +86,16 @@ module.exports = ({ _core }) => {
     ]),
   };
 
+  const Config = {
+    inspect: mkInspect("Config", ["tabWidth", "unicode"]),
+    equal  : mkEqual(["tabWidth", "unicode"]),
+  };
+
   return Object.freeze({
     SourcePos,
     ErrorMessage,
     ParseError,
+    Config,
     _internal: {
       mkInspect,
       mkEqual,

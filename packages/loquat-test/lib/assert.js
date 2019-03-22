@@ -66,4 +66,19 @@ module.exports = ({ _core, _aux }) => (chai, utils) => {
       `expected ${inspect(act)} to not equal ${inspect(exp)}`
     );
   });
+
+  Assertion.addMethod("equalConfigTo", function (exp) {
+    const { Config } = _core;
+    const { equal, inspect } = _aux.Config;
+
+    const act = this._obj;
+
+    new Assertion(act).to.be.an.instanceOf(Config);
+
+    this.assert(
+      equal(act, exp),
+      `expected ${inspect(act)} to equal ${inspect(exp)}`,
+      `expected ${inspect(act)} to not equal ${inspect(exp)}`
+    );
+  });
 };

@@ -5,4 +5,5 @@ describe("assert", () => {
   require("./assert/equalErrorMessageTo");
   require("./assert/equalErrorMessagesTo");
   require("./assert/equalErrorTo");
+  require("./assert/equalConfigTo");
 });
