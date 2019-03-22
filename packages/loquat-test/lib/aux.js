@@ -106,12 +106,48 @@ module.exports = ({ _core }) => {
     ]),
   };
 
+  const Success = {
+    inspect: mkInspect("Result", [
+      { name: "consumed" },
+      { name: "success" },
+      { name: "err", inspector: ParseError.inspect },
+      { name: "val" },
+      { name: "state", inspector: State.inspect },
+    ]),
+    equal: (resA, resB, valEqual, inputEqual, userStateEqual) =>
+      resA.success === resB.success
+        && resA.consumed === resB.consumed
+        && ParseError.equal(resA.err, resB.err)
+        && (valEqual !== undefined ? valEqual(resA.val, resB.val) : resA.val === resB.val)
+        && State.equal(resA.state, resB.state, inputEqual, userStateEqual),
+  };
+
+  const Failure = {
+    inspect: mkInspect("Result", [
+      { name: "consumed" },
+      { name: "success" },
+      { name: "err", inspector: ParseError.inspect },
+    ]),
+    equal: (resA, resB) =>
+      resA.success === resB.success
+        && resA.consumed === resB.consumed
+        && ParseError.equal(resA.err, resB.err),
+  };
+
+  const Result = {
+    inspect: res => res.success ? Success.inspect(res) : Failure.inspect(res),
+    equal  : (resA, resB, ...eqs) => resA.success && resB.success
+      ? Success.equal(resA, resB, ...eqs)
+      : Failure.equal(resA, resB, ...eqs),
+  };
+
   return Object.freeze({
     SourcePos,
     ErrorMessage,
     ParseError,
     Config,
     State,
+    Result,
     _internal: {
       mkInspect,
       mkEqual,

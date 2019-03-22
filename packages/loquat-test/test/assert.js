@@ -7,4 +7,5 @@ describe("assert", () => {
   require("./assert/equalErrorTo");
   require("./assert/equalConfigTo");
   require("./assert/equalStateTo");
+  require("./assert/equalResultTo");
 });

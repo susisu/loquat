@@ -2,7 +2,7 @@
 
 const { expect, AssertionError } = require("chai");
 
-const { Config, SourcePos, State } = _core;
+const { SourcePos, Config, State } = _core;
 
 describe("equalStateTo", () => {
   it("should throw AssertionError if the actual state is not equal to the expected one", () => {
