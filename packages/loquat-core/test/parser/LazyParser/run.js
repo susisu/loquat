@@ -14,15 +14,14 @@ describe("#run(state)", () => {
       evaluated = true;
       return new Parser(state => {
         flag = true;
-        expect(State.equal(
-          state,
+        expect(state).to.be.an.equalStateTo(
           new State(
             new Config({ tabWidth: 4, unicode: true }),
             "test",
             new SourcePos("main", 6, 28),
             "none"
           )
-        )).to.be.true;
+        );
         return new Result(
           true,
           true,

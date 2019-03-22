@@ -43,14 +43,13 @@ describe(".constructor", () => {
       )
     );
     expect(res.val).to.equal("val");
-    expect(State.equal(
-      res.state,
+    expect(res.state).to.be.an.equalStateTo(
       new State(
         new Config({ tabWidth: 4, unicode: true }),
         "rest",
         new SourcePos("main", 6, 29),
         "none"
       )
-    )).to.be.true;
+    );
   });
 });

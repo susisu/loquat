@@ -11,15 +11,14 @@ describe("parse", () => {
     // csuc
     {
       const parser = new Parser(state => {
-        expect(State.equal(
-          state,
+        expect(state).to.be.an.equalStateTo(
           new State(
             new Config({ tabWidth: 4, unicode: true }),
             "test",
             new SourcePos("main", 1, 1),
             "none"
           )
-        )).to.be.true;
+        );
         return Result.csuc(
           new ParseError(
             new SourcePos("main", 6, 28),
@@ -48,15 +47,14 @@ describe("parse", () => {
     // cerr
     {
       const parser = new Parser(state => {
-        expect(State.equal(
-          state,
+        expect(state).to.be.an.equalStateTo(
           new State(
             new Config({ tabWidth: 4, unicode: true }),
             "test",
             new SourcePos("main", 1, 1),
             "none"
           )
-        )).to.be.true;
+        );
         return Result.cerr(
           new ParseError(
             new SourcePos("main", 6, 28),
@@ -87,15 +85,14 @@ describe("parse", () => {
     // esuc
     {
       const parser = new Parser(state => {
-        expect(State.equal(
-          state,
+        expect(state).to.be.an.equalStateTo(
           new State(
             new Config({ tabWidth: 4, unicode: true }),
             "test",
             new SourcePos("main", 1, 1),
             "none"
           )
-        )).to.be.true;
+        );
         return Result.esuc(
           new ParseError(
             new SourcePos("main", 6, 28),
@@ -124,15 +121,14 @@ describe("parse", () => {
     // eerr
     {
       const parser = new Parser(state => {
-        expect(State.equal(
-          state,
+        expect(state).to.be.an.equalStateTo(
           new State(
             new Config({ tabWidth: 4, unicode: true }),
             "test",
             new SourcePos("main", 1, 1),
             "none"
           )
-        )).to.be.true;
+        );
         return Result.eerr(
           new ParseError(
             new SourcePos("main", 6, 28),
@@ -163,15 +159,14 @@ describe("parse", () => {
     // use default parameters
     {
       const parser = new Parser(state => {
-        expect(State.equal(
-          state,
+        expect(state).to.be.an.equalStateTo(
           new State(
             new Config(),
             "test",
             new SourcePos("main", 1, 1),
             undefined
           )
-        )).to.be.true;
+        );
         return Result.csuc(
           new ParseError(
             new SourcePos("main", 6, 28),
