@@ -52,8 +52,7 @@ describe("#run(state)", () => {
     ));
     expect(evaluated).to.be.true;
     expect(flag).to.be.true;
-    expect(Result.equal(
-      res,
+    expect(res).to.be.an.equalResultTo(
       new Result(
         true,
         true,
@@ -74,6 +73,6 @@ describe("#run(state)", () => {
           "some"
         )
       )
-    )).to.be.true;
+    );
   });
 });

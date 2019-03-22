@@ -20,8 +20,7 @@ describe(".eerr", () => {
       )
     );
     expect(res).to.be.an.instanceOf(Result);
-    expect(Result.equal(
-      res,
+    expect(res).to.be.an.equalResultTo(
       new Result(
         false,
         false,
@@ -35,6 +34,6 @@ describe(".eerr", () => {
           ]
         )
       )
-    )).to.be.true;
+    );
   });
 });

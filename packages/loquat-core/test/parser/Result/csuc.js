@@ -27,8 +27,7 @@ describe(".csuc", () => {
       )
     );
     expect(res).to.be.an.instanceOf(Result);
-    expect(Result.equal(
-      res,
+    expect(res).to.be.an.equalResultTo(
       new Result(
         true,
         true,
@@ -49,6 +48,6 @@ describe(".csuc", () => {
           "none"
         )
       )
-    )).to.be.true;
+    );
   });
 });
