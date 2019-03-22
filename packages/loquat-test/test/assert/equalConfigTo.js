@@ -30,7 +30,7 @@ describe("equalConfigTo", () => {
     }).to.not.throw(AssertionError);
   });
 
-  it("should throw AssertionError if the object is not an `Config` instance", () => {
+  it("should throw AssertionError if the object is not a `Config` instance", () => {
     expect(() => {
       expect({})
         .to.be.an.equalConfigTo(new Config({ tabWidth: 4, unicode: true }));

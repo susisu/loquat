@@ -91,11 +91,27 @@ module.exports = ({ _core }) => {
     equal  : mkEqual(["tabWidth", "unicode"]),
   };
 
+  const State = {
+    inspect: mkInspect("State", [
+      { name: "config", inspector: Config.inspect },
+      { name: "input" },
+      { name: "pos", inspector: SourcePos.inspect },
+      { name: "userState" },
+    ]),
+    equal: mkEqual([
+      { name: "config", eq: Config.equal },
+      { name: "input", allowEqOverriding: true },
+      { name: "pos", eq: SourcePos.equal },
+      { name: "userState", allowEqOverriding: true },
+    ]),
+  };
+
   return Object.freeze({
     SourcePos,
     ErrorMessage,
     ParseError,
     Config,
+    State,
     _internal: {
       mkInspect,
       mkEqual,

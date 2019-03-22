@@ -81,4 +81,19 @@ module.exports = ({ _core, _aux }) => (chai, utils) => {
       `expected ${inspect(act)} to not equal ${inspect(exp)}`
     );
   });
+
+  Assertion.addMethod("equalStateTo", function (exp, inputEqual, userStateEqual) {
+    const { State } = _core;
+    const { equal, inspect } = _aux.State;
+
+    const act = this._obj;
+
+    new Assertion(act).to.be.an.instanceOf(State);
+
+    this.assert(
+      equal(act, exp, inputEqual, userStateEqual),
+      `expected ${inspect(act)} to equal ${inspect(exp)}`,
+      `expected ${inspect(act)} to not equal ${inspect(exp)}`
+    );
+  });
 };
