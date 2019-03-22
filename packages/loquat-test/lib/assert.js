@@ -51,4 +51,19 @@ module.exports = ({ _core, _aux }) => (chai, utils) => {
       `expected ${inspectArray(act)} to not equal ${inspectArray(exp)}`
     );
   });
+
+  Assertion.addMethod("equalErrorTo", function (exp) {
+    const { AbstractParseError } = _core;
+    const { equal, inspect } = _aux.ParseError;
+
+    const act = this._obj;
+
+    new Assertion(act).to.be.an.instanceOf(AbstractParseError);
+
+    this.assert(
+      equal(act, exp),
+      `expected ${inspect(act)} to equal ${inspect(exp)}`,
+      `expected ${inspect(act)} to not equal ${inspect(exp)}`
+    );
+  });
 };

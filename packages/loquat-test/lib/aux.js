@@ -3,7 +3,7 @@
 module.exports = ({ _core }) => {
   const { show } = _core;
 
-  function mkInspect(name, props) {
+  function mkInspect(className, props) {
     const fullProps = props.map(prop =>
       typeof prop === "object"
         ? Object.assign({ inspector: show }, prop)
@@ -14,7 +14,7 @@ module.exports = ({ _core }) => {
         const val = obj[name];
         return `${name} = ${inspector(val)}`;
       }).join(", ");
-      return `${name}(${propsStr})`;
+      return `${className}(${propsStr})`;
     };
   }
 
@@ -75,9 +75,21 @@ module.exports = ({ _core }) => {
     },
   };
 
+  const ParseError = {
+    inspect: mkInspect("ParseError", [
+      { name: "pos", inspector: SourcePos.inspect },
+      { name: "msgs", inspector: ErrorMessage.inspectArray },
+    ]),
+    equal: mkEqual([
+      { name: "pos", eq: SourcePos.equal },
+      { name: "msgs", eq: ErrorMessage.equalArray },
+    ]),
+  };
+
   return Object.freeze({
     SourcePos,
     ErrorMessage,
+    ParseError,
     _internal: {
       mkInspect,
       mkEqual,
