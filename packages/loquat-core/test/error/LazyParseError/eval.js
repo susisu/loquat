@@ -53,7 +53,7 @@ describe("#eval", () => {
       const resB = err.eval();
       // the cached result is returned
       expect(evalCount).to.equal(1);
-      expect(ParseError.equal(resA, resB)).to.be.true;
+      expect(resA).to.be.an.equalErrorTo(resB);
     }
     // all LazyParseError objects are evaluated only once
     {
@@ -70,7 +70,7 @@ describe("#eval", () => {
       const resB = err.eval();
       expect(intermediateEvalCount).to.equal(1);
       expect(evalCount).to.equal(1);
-      expect(ParseError.equal(resA, resB)).to.be.true;
+      expect(resA).to.be.an.equalErrorTo(resB);
     }
     {
       let intermediateEvalCount = 0;
@@ -89,8 +89,8 @@ describe("#eval", () => {
       const resB = err.eval();
       expect(intermediateEvalCount).to.equal(1);
       expect(evalCount).to.equal(1);
-      expect(ParseError.equal(resA, resB)).to.be.true;
-      expect(ParseError.equal(resA, intermediateRes)).to.be.true;
+      expect(resA).to.be.an.equalErrorTo(resB);
+      expect(resA).to.be.an.equalErrorTo(intermediateRes);
     }
   });
 

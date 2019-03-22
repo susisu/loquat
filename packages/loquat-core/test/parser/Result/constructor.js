@@ -31,8 +31,7 @@ describe(".constructor", () => {
     expect(res).to.be.an.instanceOf(Result);
     expect(res.consumed).to.be.true;
     expect(res.success).to.be.true;
-    expect(ParseError.equal(
-      res.err,
+    expect(res.err).to.be.an.equalErrorTo(
       new ParseError(
         new SourcePos("main", 6, 28),
         [
@@ -42,7 +41,7 @@ describe(".constructor", () => {
           new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
         ]
       )
-    )).to.be.true;
+    );
     expect(res.val).to.equal("val");
     expect(State.equal(
       res.state,

@@ -82,8 +82,7 @@ describe("#parse", () => {
       expect(evaluated).to.be.true;
       expect(res).to.be.an("object");
       expect(res.success).to.be.false;
-      expect(ParseError.equal(
-        res.error,
+      expect(res.error).to.be.an.equalErrorTo(
         new ParseError(
           new SourcePos("main", 6, 28),
           [
@@ -93,7 +92,7 @@ describe("#parse", () => {
             new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         )
-      )).to.be.true;
+      );
     }
     // esuc
     {
@@ -169,8 +168,7 @@ describe("#parse", () => {
       expect(evaluated).to.be.true;
       expect(res).to.be.an("object");
       expect(res.success).to.be.false;
-      expect(ParseError.equal(
-        res.error,
+      expect(res.error).to.be.an.equalErrorTo(
         new ParseError(
           new SourcePos("main", 6, 28),
           [
@@ -180,7 +178,7 @@ describe("#parse", () => {
             new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
           ]
         )
-      )).to.be.true;
+      );
     }
     // use default parameters
     {
