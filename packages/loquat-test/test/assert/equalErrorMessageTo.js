@@ -30,7 +30,7 @@ describe("equalErrorMessageTo", () => {
     }).to.not.throw(AssertionError);
   });
 
-  it("should throw AssertionError if the object is not a `ErrorMessage` instance", () => {
+  it("should throw AssertionError if the object is not an `ErrorMessage` instance", () => {
     expect(() => {
       expect({})
         .to.be.an.equalErrorMessageTo(new ErrorMessage(ErrorMessageType.UNEXPECT, "foo"));

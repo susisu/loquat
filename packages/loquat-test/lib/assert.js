@@ -32,4 +32,23 @@ module.exports = ({ _core, _aux }) => (chai, utils) => {
       `expected ${inspect(act)} to not equal ${inspect(exp)}`
     );
   });
+
+  Assertion.addMethod("equalErrorMessagesTo", function (exp) {
+    const { ErrorMessage, show } = _core;
+    const { equalArray, inspectArray } = _aux.ErrorMessage;
+
+    const act = this._obj;
+
+    new Assertion(act).assert(
+      act.every(msg => msg instanceof ErrorMessage),
+      `expected ${show(act)} to be an ErrorMessage array`,
+      `expected ${show(act)} to not be an ErrorMessage array`
+    );
+
+    this.assert(
+      equalArray(act, exp),
+      `expected ${inspectArray(act)} to equal ${inspectArray(exp)}`,
+      `expected ${inspectArray(act)} to not equal ${inspectArray(exp)}`
+    );
+  });
 };

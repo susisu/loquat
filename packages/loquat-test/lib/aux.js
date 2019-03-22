@@ -58,8 +58,21 @@ module.exports = ({ _core }) => {
   };
 
   const ErrorMessage = {
-    inspect: mkInspect("ErrorMessage", ["type", "msgStr"]),
-    equal  : mkEqual(["type", "msgStr"]),
+    inspect     : mkInspect("ErrorMessage", ["type", "msgStr"]),
+    equal       : mkEqual(["type", "msgStr"]),
+    inspectArray: msgs => "[" + msgs.map(ErrorMessage.inspect).join(", ") + "]",
+    equalArray  : (msgsA, msgsB) => {
+      if (msgsA.length !== msgsB.length) {
+        return false;
+      }
+      const len = msgsA.length;
+      for (let i = 0; i < len; i++) {
+        if (!ErrorMessage.equal(msgsA[i], msgsB[i])) {
+          return false;
+        }
+      }
+      return true;
+    },
   };
 
   return Object.freeze({
