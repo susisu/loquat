@@ -31,13 +31,13 @@ describe("equalConfigTo", () => {
   });
 
   it("should throw AssertionError if the object is not a `Config` instance", () => {
+    const act = {};
+    const exp = new Config({ tabWidth: 4, unicode: true });
     expect(() => {
-      expect({})
-        .to.be.an.equalConfigTo(new Config({ tabWidth: 4, unicode: true }));
+      expect(act).to.be.an.equalConfigTo(exp);
     }).to.throw(AssertionError);
     expect(() => {
-      expect({})
-        .to.not.be.an.equalConfigTo(new Config({ tabWidth: 4, unicode: true }));
+      expect(act).to.not.be.an.equalConfigTo(exp);
     }).to.throw(AssertionError);
   });
 });

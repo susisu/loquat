@@ -79,14 +79,12 @@ describe("equalErrorMessagesTo", () => {
 
   it("should throw AssertionError if any of the array elements is not an `ErrorMessage`"
     + " instance", () => {
+    const act = [{}];
+    const exp = [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")];
     expect(() => {
-      const act = [{}];
-      const exp = [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")];
       expect(act).to.be.an.equalErrorMessagesTo(exp);
     }).to.throw(AssertionError);
     expect(() => {
-      const act = [{}];
-      const exp = [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")];
       expect(act).to.not.be.an.equalErrorMessagesTo(exp);
     }).to.throw(AssertionError);
   });

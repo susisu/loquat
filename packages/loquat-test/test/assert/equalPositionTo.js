@@ -31,11 +31,13 @@ describe("equalPositionTo", () => {
   });
 
   it("should throw AssertionError if the object is not a `SourcePos` instance", () => {
+    const act = {};
+    const exp = new SourcePos("main", 6, 28);
     expect(() => {
-      expect({}).to.be.an.equalPositionTo(new SourcePos("main", 6, 28));
+      expect(act).to.be.an.equalPositionTo(exp);
     }).to.throw(AssertionError);
     expect(() => {
-      expect({}).to.not.be.an.equalPositionTo(new SourcePos("main", 6, 28));
+      expect(act).to.not.be.an.equalPositionTo(exp);
     }).to.throw(AssertionError);
   });
 });

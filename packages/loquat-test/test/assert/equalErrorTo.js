@@ -113,15 +113,16 @@ describe("equalErrorTo", () => {
   });
 
   it("should throw AssertionError if the object is not a `ParseError` instance", () => {
+    const act = {};
     const exp = new StrictParseError(
       new SourcePos("main", 6, 28),
       [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
     );
     expect(() => {
-      expect({}).to.be.an.equalPositionTo(exp);
+      expect(act).to.be.an.equalErrorTo(exp);
     }).to.throw(AssertionError);
     expect(() => {
-      expect({}).to.not.be.an.equalPositionTo(exp);
+      expect(act).to.not.be.an.equalErrorTo(exp);
     }).to.throw(AssertionError);
   });
 });

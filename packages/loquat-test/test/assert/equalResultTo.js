@@ -510,6 +510,7 @@ describe("equalResultTo", () => {
   });
 
   it("should throw AssertionError if the object is not a `Result` instance", () => {
+    const act = {};
     const exp = new Result(
       true,
       true,
@@ -526,10 +527,10 @@ describe("equalResultTo", () => {
       )
     );
     expect(() => {
-      expect({}).to.be.an.equalResultTo(exp);
+      expect(act).to.be.an.equalResultTo(exp);
     }).to.throw(AssertionError);
     expect(() => {
-      expect({}).to.not.be.an.equalResultTo(exp);
+      expect(act).to.not.be.an.equalResultTo(exp);
     }).to.throw(AssertionError);
   });
 });

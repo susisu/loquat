@@ -31,13 +31,13 @@ describe("equalErrorMessageTo", () => {
   });
 
   it("should throw AssertionError if the object is not an `ErrorMessage` instance", () => {
+    const act = {};
+    const exp = new ErrorMessage(ErrorMessageType.UNEXPECT, "foo");
     expect(() => {
-      expect({})
-        .to.be.an.equalErrorMessageTo(new ErrorMessage(ErrorMessageType.UNEXPECT, "foo"));
+      expect(act).to.be.an.equalErrorMessageTo(exp);
     }).to.throw(AssertionError);
     expect(() => {
-      expect({})
-        .to.not.be.an.equalErrorMessageTo(new ErrorMessage(ErrorMessageType.UNEXPECT, "foo"));
+      expect(act).to.not.be.an.equalErrorMessageTo(exp);
     }).to.throw(AssertionError);
   });
 });

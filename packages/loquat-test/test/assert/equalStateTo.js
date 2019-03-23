@@ -186,6 +186,7 @@ describe("equalStateTo", () => {
   });
 
   it("should throw AssertionError if the object is not a `State` instance", () => {
+    const act = {};
     const exp = new State(
       new Config({ tabWidth: 4, unicode: true }),
       "foo",
@@ -193,10 +194,10 @@ describe("equalStateTo", () => {
       "none"
     );
     expect(() => {
-      expect({}).to.be.an.equalConfigTo(exp);
+      expect(act).to.be.an.equalStateTo(exp);
     }).to.throw(AssertionError);
     expect(() => {
-      expect({}).to.not.be.an.equalConfigTo(exp);
+      expect(act).to.not.be.an.equalStateTo(exp);
     }).to.throw(AssertionError);
   });
 });
