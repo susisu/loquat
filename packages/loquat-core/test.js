@@ -9,8 +9,10 @@ const _stream = require("./lib/stream")({ _utils });
 const _parser = require("./lib/parser")({ _pos, _error });
 const _core   = require("./lib/core")({ _utils, _pos, _error, _stream, _parser });
 
+const _test = require("loquat-test")(_core);
+
 Object.assign(global, { _utils, _pos, _error, _stream, _parser });
-chai.use(require("loquat-test")(_core));
+chai.use(_test.plugin);
 
 require("./test/utils");
 require("./test/pos");

@@ -1,8 +1,12 @@
 "use strict";
 
-module.exports = _core => (chai, utils) => {
+module.exports = _core => {
   const _aux = require("./lib/aux")({ _core });
   const _assert = require("./lib/assert")({ _core, _aux });
 
-  _assert(chai, utils);
+  return {
+    plugin: (chai, utils) => {
+      _assert(chai, utils);
+    },
+  };
 };
