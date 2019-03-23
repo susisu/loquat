@@ -2,11 +2,13 @@
 
 const { expect } = require("chai");
 
-const { Parser, LazyParser, lazy } = _parser;
+const { LazyParser, lazy } = _parser;
+
+const { createNoopParser } = _test.helper;
 
 describe("lazy", () => {
   it("should create a new `LazyParser` instance", () => {
-    const p = new Parser(() => {});
+    const p = createNoopParser();
     const parser = lazy(() => p);
     expect(parser).to.be.an.instanceOf(LazyParser);
     const res = parser.eval();

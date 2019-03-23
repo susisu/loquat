@@ -2,11 +2,13 @@
 
 const { expect } = require("chai");
 
-const { Parser, LazyParser } = _parser;
+const { LazyParser } = _parser;
+
+const { createNoopParser } = _test.helper;
 
 describe("#eval", () => {
   it("should evaluate the thunk then return a fully evaluated `Parser`", () => {
-    const p = new Parser(() => {});
+    const p = createNoopParser();
     {
       const parser = new LazyParser(() => p);
       const res = parser.eval();
@@ -27,7 +29,7 @@ describe("#eval", () => {
       let evalCount = 0;
       const parser = new LazyParser(() => {
         evalCount += 1;
-        return new Parser(() => {});
+        return createNoopParser();
       });
       const resA = parser.eval();
       const resB = parser.eval();
@@ -43,7 +45,7 @@ describe("#eval", () => {
         evalCount += 1;
         return new LazyParser(() => {
           intermediateEvalCount += 1;
-          return new Parser(() => {});
+          return createNoopParser();
         });
       });
       const resA = parser.eval();
@@ -56,7 +58,7 @@ describe("#eval", () => {
       let intermediateEvalCount = 0;
       const intermediateParser = new LazyParser(() => {
         intermediateEvalCount += 1;
-        return new Parser(() => {});
+        return createNoopParser();
       });
       let evalCount = 0;
       const parser = new LazyParser(() => {

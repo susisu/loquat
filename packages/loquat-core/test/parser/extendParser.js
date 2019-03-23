@@ -2,7 +2,9 @@
 
 const { expect } = require("chai");
 
-const { AbstractParser, Parser, LazyParser, extendParser } = _parser;
+const { AbstractParser, LazyParser, extendParser } = _parser;
+
+const { createNoopParser } = _test.helper;
 
 describe("extendParser", () => {
   it("should extend `AbstractParser.prototype`", () => {
@@ -28,13 +30,13 @@ describe("extendParser", () => {
 
     // can be accessed from parser objects
     {
-      const parser = new Parser(() => {});
+      const parser = createNoopParser();
       for (const key of Object.keys(extensions)) {
         expect(parser[key]).to.equal(extensions[key]);
       }
     }
     {
-      const parser = new LazyParser(() => new Parser(() => {}));
+      const parser = new LazyParser(() => createNoopParser());
       for (const key of Object.keys(extensions)) {
         expect(parser[key]).to.equal(extensions[key]);
       }
