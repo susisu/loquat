@@ -323,7 +323,7 @@ module.exports = ({ _pos }) => {
    * isParser: (val: any) => boolean
    */
   function isParser(val) {
-    return val instanceof Parser;
+    return !!(val && val[parserTypeKey]);
   }
 
   /**
