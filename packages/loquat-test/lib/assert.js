@@ -98,4 +98,16 @@ module.exports = ({ _core, _aux }) => (chai, utils) => {
       `expected ${inspect(act)} to not equal ${inspect(exp)}`
     );
   });
+
+  Assertion.addProperty("parser", function () {
+    const { isParser } = _core;
+
+    const obj = this._obj;
+
+    this.assert(
+      isParser(obj),
+      "expected #{this} to be a parser",
+      "expected #{this} to not be a parser"
+    );
+  });
 };

@@ -8,4 +8,5 @@ describe("assert", () => {
   require("./assert/equalConfigTo");
   require("./assert/equalStateTo");
   require("./assert/equalResultTo");
+  require("./assert/parser");
 });
