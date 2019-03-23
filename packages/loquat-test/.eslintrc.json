@@ -15,7 +15,8 @@
       },
       "globals": {
          "_core": "readonly",
-         "_aux": "readonly"
+         "_aux": "readonly",
+         "_helper": "readonly"
       },
       "rules": {
         "no-invalid-this": "warn",
