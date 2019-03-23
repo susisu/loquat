@@ -4,7 +4,7 @@ module.exports = ({ _pos }) => {
   const { SourcePos } = _pos;
 
   /**
-   * type ErrorMessageType = "systemUnexpect" | "unexpect" | "expect" | "message"
+   * type ErrorMessageType = "systemUnexpect" \/ "unexpect" \/ "expect" \/ "message"
    */
 
   /**
@@ -24,9 +24,7 @@ module.exports = ({ _pos }) => {
 
   /**
    * class ErrorMessage(type: ErrorMessageType, msgStr: string) {
-   *   static equal(msgA: ErrorMessage, msgB: ErrorMessage): boolean
    *   static messagesToString(msgs: Array[ErrorMessage]): string
-   *   static messagesEqual(msgsA: Array[ErrorMessage], msgsB: Array[ErrorMessage]): bool
    * }
    */
   class ErrorMessage {
@@ -120,7 +118,7 @@ module.exports = ({ _pos }) => {
   }
 
   /**
-   * type ParseErrorType = "strict" | "lazy"
+   * type ParseErrorType = "strict" \/ "lazy"
    */
 
   /**
@@ -142,7 +140,6 @@ module.exports = ({ _pos }) => {
   /**
    * object ParseError {
    *   unknown(pos: SourcePos): StrictParseError
-   *   equal(errA: StrictParseError, errB: StrictParseError): bool
    *   merge(errA: StrictParseError, errB: StrictParseError): ParseError
    * }
    */

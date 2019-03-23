@@ -12,7 +12,6 @@ module.exports = ({ _pos }) => {
 
   /**
    * class Config(opts?: ConfigOptions) {
-   *  static equal(configA: Config, configB: Config): boolean
    *  tabWidth: int
    *  unicode: boolean
    * }
@@ -34,12 +33,6 @@ module.exports = ({ _pos }) => {
 
   /**
    * class State[S, U](config: Config, input: S, pos: SourcePos, userState: U) {
-   *   static equal[S, U](
-   *     stateA: State[S, U],
-   *     stateB: State[S, U],
-   *     inputEqual: undefined \/ (inputA: S, inputB: S) => boolean,
-   *     userStateEqual: undefined \/ (userStateA: U, userStateB: U) => boolean
-   *   ): boolean
    *   setConfig(config: Config): State[S, U]
    *   setInput(input: S): State[S, U]
    *   setPosition(pos: SourcePos): State[S, U]
@@ -115,13 +108,6 @@ module.exports = ({ _pos }) => {
    *   val: undefined \/ A,
    *   state: undefined \/ State[S, U]
    * ) {
-   *   static equal[S, U, A](
-   *     resA: Result[S, U, A],
-   *     resB: Result[S, U, A],
-   *     valEqual: undefined \/ (valA: A, valB: A) => boolean,
-   *     inputEqual: undefined \/ (inputA: S, inputB: S) => boolean,
-   *     userStateEqual: undefined \/ (userStateA: U, userStateB: U) => boolean
-   *   ): boolean
    *   static csuc[S, U, A](err: AbstractParser, val: A, state: State[S, U]): Result[S, U, A]
    *   static cerr[S, U, A](err: AbstractParser): Result[S, U, A]
    *   static esuc[S, U, A](err: AbstractParser, val: A, state: State[S, U]): Result[S, U, A]

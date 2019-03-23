@@ -7,7 +7,6 @@ module.exports = () => {
   /**
    * class SourcePos(name: string, line: int, column: int) {
    *   static init(name: string): SourcePos
-   *   static equal(posA: SoucePos, posB: SoucePos): bool
    *   static compare(posA: SoucePos, posB: SoucePos): int
    *   toString(): string
    *   setName(name: string): SourcePos
