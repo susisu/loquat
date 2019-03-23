@@ -2,12 +2,12 @@
 
 const { expect } = require("chai");
 
-const { AbstractParser, LazyParser, isParser } = _parser;
+const { Parser, LazyParser, isParser } = _parser;
 
 const { createNoopParser } = _test.helper;
 
 describe("isParser", () => {
-  it("should return true if the argument is an instance of `AbstractParser`", () => {
+  it("should return true if the argument is an instance of `Parser`", () => {
     {
       const parser = createNoopParser();
       expect(isParser(parser)).to.be.true;
@@ -17,7 +17,7 @@ describe("isParser", () => {
       expect(isParser(parser)).to.be.true;
     }
     {
-      const TestParser = class extends AbstractParser {
+      const TestParser = class extends Parser {
         constructor() {
           super();
         }
@@ -27,7 +27,7 @@ describe("isParser", () => {
     }
   });
 
-  it("should return false if the argument is not an instance of `AbstractParser`", () => {
+  it("should return false if the argument is not an instance of `Parser`", () => {
     const values = [
       null,
       undefined,

@@ -108,36 +108,36 @@ module.exports = ({ _pos }) => {
    *   val: undefined \/ A,
    *   state: undefined \/ State[S, U]
    * ) {
-   *   static csuc[S, U, A](err: AbstractParser, val: A, state: State[S, U]): Result[S, U, A]
-   *   static cerr[S, U, A](err: AbstractParser): Result[S, U, A]
-   *   static esuc[S, U, A](err: AbstractParser, val: A, state: State[S, U]): Result[S, U, A]
-   *   static eerr[S, U, A](err: AbstractParser): Result[S, U, A]
+   *   static csuc[S, U, A](err: Parser, val: A, state: State[S, U]): Result[S, U, A]
+   *   static cerr[S, U, A](err: Parser): Result[S, U, A]
+   *   static esuc[S, U, A](err: Parser, val: A, state: State[S, U]): Result[S, U, A]
+   *   static eerr[S, U, A](err: Parser): Result[S, U, A]
    * }
    */
   class Result {
     /**
-     * Result.csuc[S, U, A](err: AbstractParser, val: A, state: State[S, U]): Result[S, U, A]
+     * Result.csuc[S, U, A](err: Parser, val: A, state: State[S, U]): Result[S, U, A]
      */
     static csuc(err, val, state) {
       return new Result(true, true, err, val, state);
     }
 
     /**
-     * Result.cerr[S, U, A](err: AbstractParser): Result[S, U, A]
+     * Result.cerr[S, U, A](err: Parser): Result[S, U, A]
      */
     static cerr(err) {
       return new Result(true, false, err);
     }
 
     /**
-     * Result.esuc[S, U, A](err: AbstractParser, val: A, state: State[S, U]): Result[S, U, A]
+     * Result.esuc[S, U, A](err: Parser, val: A, state: State[S, U]): Result[S, U, A]
      */
     static esuc(err, val, state) {
       return new Result(false, true, err, val, state);
     }
 
     /**
-     * Result.eerr[S, U, A](err: AbstractParser): Result[S, U, A]
+     * Result.eerr[S, U, A](err: Parser): Result[S, U, A]
      */
     static eerr(err) {
       return new Result(false, false, err);
@@ -173,15 +173,15 @@ module.exports = ({ _pos }) => {
   }
 
   /**
-   * trait AbstractParser[S, U, A] {
+   * trait Parser[S, U, A] {
    *   run(state: State[S, U, A]): Result[S, U, A]
    *   parse(name: string, input: S, userState: U, opts: ConfigOptions): ParseResult[A]
    * }
    */
-  class AbstractParser {
+  class Parser {
     constructor() {
-      if (this.constructor === AbstractParser) {
-        throw new Error("cannot create AbstractParser object");
+      if (this.constructor === Parser) {
+        throw new Error("cannot create Parser object");
       }
     }
 
@@ -197,10 +197,10 @@ module.exports = ({ _pos }) => {
   /**
    * class StrictParser[S, U, A](
    *   func: (input: State[S, U]) => Result[S, U, A]
-   * ) extends AbstractParser[S, U, A] {
+   * ) extends Parser[S, U, A] {
    * }
    */
-  class StrictParser extends AbstractParser {
+  class StrictParser extends Parser {
     constructor(func) {
       super();
       this._func = func;
@@ -213,12 +213,12 @@ module.exports = ({ _pos }) => {
 
   /**
    * class LazyParser[S, U, A](
-   *   thunk: () => AbstractParser[S, U, A]
-   * ) extends AbstractParser[S, U, A] {
+   *   thunk: () => Parser[S, U, A]
+   * ) extends Parser[S, U, A] {
    *   eval(): StrictParser[S, U, A]
    * }
    */
-  class LazyParser extends AbstractParser {
+  class LazyParser extends Parser {
     constructor(thunk) {
       super();
       this._thunk = thunk;
@@ -262,7 +262,7 @@ module.exports = ({ _pos }) => {
   }
 
   /**
-   * lazy: [S, U, A](thunk: () => AbstractParser[S, U, A]): LazyParser[S, U, A]
+   * lazy: [S, U, A](thunk: () => Parser[S, U, A]): LazyParser[S, U, A]
    */
   function lazy(thunk) {
     return new LazyParser(thunk);
@@ -294,7 +294,7 @@ module.exports = ({ _pos }) => {
    * isParser: (val: any) => boolean
    */
   function isParser(val) {
-    return val instanceof AbstractParser;
+    return val instanceof Parser;
   }
 
   /**
@@ -319,14 +319,14 @@ module.exports = ({ _pos }) => {
         enumerable  : false,
       };
     }
-    Object.defineProperties(AbstractParser.prototype, descs);
+    Object.defineProperties(Parser.prototype, descs);
   }
 
   return Object.freeze({
     Config,
     State,
     Result,
-    AbstractParser,
+    Parser,
     StrictParser,
     LazyParser,
     lazy,

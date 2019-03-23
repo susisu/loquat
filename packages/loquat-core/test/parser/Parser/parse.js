@@ -2,11 +2,11 @@
 
 const { expect } = require("chai");
 
-const { AbstractParser } = _parser;
+const { Parser } = _parser;
 
 describe("#parse", () => {
   it("should throw `Error` because not implemented", () => {
-    const TestParser = class extends AbstractParser {
+    const TestParser = class extends Parser {
       constructor() {
         super();
       }

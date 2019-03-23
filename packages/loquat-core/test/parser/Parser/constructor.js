@@ -2,17 +2,17 @@
 
 const { expect } = require("chai");
 
-const { AbstractParser } = _parser;
+const { Parser } = _parser;
 
 describe(".constructor", () => {
-  it("should throw `Error` if it is called as `new AbstractParser`", () => {
+  it("should throw `Error` if it is called as `new Parser`", () => {
     expect(() => {
-      new AbstractParser();
-    }).to.throw(Error, /cannot create AbstractParser object/i);
+      new Parser();
+    }).to.throw(Error, /cannot create Parser object/i);
   });
 
   it("should not throw `Error` if it is called via `super` from child constructor", () => {
-    const TestParser = class extends AbstractParser {
+    const TestParser = class extends Parser {
       constructor() {
         super();
       }

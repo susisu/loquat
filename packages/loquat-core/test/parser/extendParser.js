@@ -2,25 +2,25 @@
 
 const { expect } = require("chai");
 
-const { AbstractParser, LazyParser, extendParser } = _parser;
+const { Parser, LazyParser, extendParser } = _parser;
 
 const { createNoopParser } = _test.helper;
 
 describe("extendParser", () => {
-  it("should extend `AbstractParser.prototype`", () => {
+  it("should extend `Parser.prototype`", () => {
     const extensions = {
       __test__foo: "foo",
       __test__bar: "bar",
       __test__baz: "baz",
     };
     for (const key of Object.keys(extensions)) {
-      expect(Object.getOwnPropertyDescriptor(AbstractParser.prototype, key)).to.be.undefined;
+      expect(Object.getOwnPropertyDescriptor(Parser.prototype, key)).to.be.undefined;
     }
 
     extendParser(extensions);
 
     for (const key of Object.keys(extensions)) {
-      expect(Object.getOwnPropertyDescriptor(AbstractParser.prototype, key)).to.deep.equal({
+      expect(Object.getOwnPropertyDescriptor(Parser.prototype, key)).to.deep.equal({
         value       : extensions[key],
         writable    : true,
         configurable: true,
