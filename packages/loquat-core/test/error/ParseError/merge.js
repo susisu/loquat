@@ -3,7 +3,7 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError, LazyParseError } = _error;
+const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError, LazyParseError } = _error;
 
 describe(".merge", () => {
   it("should return a parse error equal to the first argument if the second is unknown but the"
@@ -19,30 +19,30 @@ describe(".merge", () => {
     const msgsB = [];
     // strict
     {
-      const errA = new ParseError(posA, msgsA);
-      const errB = new ParseError(posB, msgsB);
+      const errA = new StrictParseError(posA, msgsA);
+      const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posA, msgsA));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
     }
     // lazy
     {
-      const errA = new LazyParseError(() => new ParseError(posA, msgsA));
-      const errB = new LazyParseError(() => new ParseError(posB, msgsB));
+      const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
+      const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posA, msgsA));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
     }
     // mixed
     {
-      const errA = new LazyParseError(() => new ParseError(posA, msgsA));
-      const errB = new ParseError(posB, msgsB);
+      const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
+      const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posA, msgsA));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
     }
     {
-      const errA = new ParseError(posA, msgsA);
-      const errB = new LazyParseError(() => new ParseError(posB, msgsB));
+      const errA = new StrictParseError(posA, msgsA);
+      const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posA, msgsA));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
     }
   });
 
@@ -59,30 +59,30 @@ describe(".merge", () => {
     ];
     // strict
     {
-      const errA = new ParseError(posA, msgsA);
-      const errB = new ParseError(posB, msgsB);
+      const errA = new StrictParseError(posA, msgsA);
+      const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posB, msgsB));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
     }
     // lazy
     {
-      const errA = new LazyParseError(() => new ParseError(posA, msgsA));
-      const errB = new LazyParseError(() => new ParseError(posB, msgsB));
+      const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
+      const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posB, msgsB));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
     }
     // mixed
     {
-      const errA = new LazyParseError(() => new ParseError(posA, msgsA));
-      const errB = new ParseError(posB, msgsB);
+      const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
+      const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posB, msgsB));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
     }
     {
-      const errA = new ParseError(posA, msgsA);
-      const errB = new LazyParseError(() => new ParseError(posB, msgsB));
+      const errA = new StrictParseError(posA, msgsA);
+      const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posB, msgsB));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
     }
   });
 
@@ -104,30 +104,30 @@ describe(".merge", () => {
     ];
     // strict
     {
-      const errA = new ParseError(posA, msgsA);
-      const errB = new ParseError(posB, msgsB);
+      const errA = new StrictParseError(posA, msgsA);
+      const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posA, msgsA));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
     }
     // lazy
     {
-      const errA = new LazyParseError(() => new ParseError(posA, msgsA));
-      const errB = new LazyParseError(() => new ParseError(posB, msgsB));
+      const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
+      const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posA, msgsA));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
     }
     // mixed
     {
-      const errA = new LazyParseError(() => new ParseError(posA, msgsA));
-      const errB = new ParseError(posB, msgsB);
+      const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
+      const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posA, msgsA));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
     }
     {
-      const errA = new ParseError(posA, msgsA);
-      const errB = new LazyParseError(() => new ParseError(posB, msgsB));
+      const errA = new StrictParseError(posA, msgsA);
+      const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posA, msgsA));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
     }
   });
 
@@ -149,30 +149,30 @@ describe(".merge", () => {
     ];
     // strict
     {
-      const errA = new ParseError(posA, msgsA);
-      const errB = new ParseError(posB, msgsB);
+      const errA = new StrictParseError(posA, msgsA);
+      const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posB, msgsB));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
     }
     // lazy
     {
-      const errA = new LazyParseError(() => new ParseError(posA, msgsA));
-      const errB = new LazyParseError(() => new ParseError(posB, msgsB));
+      const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
+      const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posB, msgsB));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
     }
     // mixed
     {
-      const errA = new LazyParseError(() => new ParseError(posA, msgsA));
-      const errB = new ParseError(posB, msgsB);
+      const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
+      const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posB, msgsB));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
     }
     {
-      const errA = new ParseError(posA, msgsA);
-      const errB = new LazyParseError(() => new ParseError(posB, msgsB));
+      const errA = new StrictParseError(posA, msgsA);
+      const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(posB, msgsB));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
     }
   });
 
@@ -194,30 +194,30 @@ describe(".merge", () => {
     const msgs = msgsA.concat(msgsB);
     // strict
     {
-      const errA = new ParseError(pos, msgsA);
-      const errB = new ParseError(pos, msgsB);
+      const errA = new StrictParseError(pos, msgsA);
+      const errB = new StrictParseError(pos, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(pos, msgs));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(pos, msgs));
     }
     // lazy
     {
-      const errA = new LazyParseError(() => new ParseError(pos, msgsA));
-      const errB = new LazyParseError(() => new ParseError(pos, msgsB));
+      const errA = new LazyParseError(() => new StrictParseError(pos, msgsA));
+      const errB = new LazyParseError(() => new StrictParseError(pos, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(pos, msgs));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(pos, msgs));
     }
     // mixed
     {
-      const errA = new LazyParseError(() => new ParseError(pos, msgsA));
-      const errB = new ParseError(pos, msgsB);
+      const errA = new LazyParseError(() => new StrictParseError(pos, msgsA));
+      const errB = new StrictParseError(pos, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(pos, msgs));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(pos, msgs));
     }
     {
-      const errA = new ParseError(pos, msgsA);
-      const errB = new LazyParseError(() => new ParseError(pos, msgsB));
+      const errA = new StrictParseError(pos, msgsA);
+      const errB = new LazyParseError(() => new StrictParseError(pos, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new ParseError(pos, msgs));
+      expect(err).to.be.an.equalErrorTo(new StrictParseError(pos, msgs));
     }
   });
 });

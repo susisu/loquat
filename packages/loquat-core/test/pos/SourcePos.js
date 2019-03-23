@@ -1,9 +1,10 @@
 "use strict";
 
 describe("SourcePos", () => {
-  require("./SourcePos/constructor");
   require("./SourcePos/init");
   require("./SourcePos/compare");
+
+  require("./SourcePos/constructor");
   require("./SourcePos/toString");
   require("./SourcePos/setName");
   require("./SourcePos/setLine");

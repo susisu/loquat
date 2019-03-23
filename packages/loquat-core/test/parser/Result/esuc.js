@@ -3,13 +3,13 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError } = _error;
+const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
 const { Config, State, Result } = _parser;
 
 describe(".esuc", () => {
   it("should create an empty success result object", () => {
     const res = Result.esuc(
-      new ParseError(
+      new StrictParseError(
         new SourcePos("main", 6, 28),
         [
           new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -29,7 +29,7 @@ describe(".esuc", () => {
     expect(res).to.be.an.equalResultTo(new Result(
       false,
       true,
-      new ParseError(
+      new StrictParseError(
         new SourcePos("main", 6, 28),
         [
           new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),

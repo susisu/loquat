@@ -3,10 +3,10 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, StrictParseError, LazyParseError } = _error;
+const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
 
-describe(".constructor", () => {
-  it("should create a new `LazyParseError` instance", () => {
+describe("#msgs", () => {
+  it("should get messages of the error", () => {
     const pos = new SourcePos("main", 6, 28);
     const msgs = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -14,7 +14,7 @@ describe(".constructor", () => {
       new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
       new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
-    const err = new LazyParseError(() => new StrictParseError(pos, msgs));
-    expect(err).to.be.an.instanceOf(LazyParseError);
+    const err = new StrictParseError(pos, msgs);
+    expect(err.msgs).to.be.equalErrorMessagesTo(msgs);
   });
 });

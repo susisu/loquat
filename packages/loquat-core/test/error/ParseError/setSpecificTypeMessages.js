@@ -2,31 +2,18 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError } = _error;
+const { ErrorMessageType, ParseError } = _error;
 
 describe("#setSpecificTypeMessages", () => {
-  it("should create a new parse error with all of the specified type of messages removed and the"
-    + " new messages added", () => {
-    const pos = new SourcePos("main", 6, 28);
-    const msgs = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
-    ];
-    const err = new ParseError(pos, msgs);
-    const newErr = err.setSpecificTypeMessages(ErrorMessageType.UNEXPECT, ["A", "B"]);
-    expect(newErr).to.not.equal(err);
-    expect(newErr).to.be.an.equalErrorTo(new ParseError(
-      pos,
-      [
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
-        new ErrorMessage(ErrorMessageType.UNEXPECT, "A"),
-        new ErrorMessage(ErrorMessageType.UNEXPECT, "B"),
-      ]
-    ));
+  it("should throw `Error` because not implemented", () => {
+    const TestParseError = class extends ParseError {
+      constructor() {
+        super();
+      }
+    };
+    const err = new TestParseError();
+    expect(() => {
+      err.setSpecificTypeMessages(ErrorMessageType.MESSAGE, ["foo", "bar", "baz"]);
+    }).to.throw(Error, /not implemented/i);
   });
 });

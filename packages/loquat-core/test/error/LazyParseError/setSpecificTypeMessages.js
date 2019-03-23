@@ -3,7 +3,7 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError, LazyParseError } = _error;
+const { ErrorMessageType, ErrorMessage, StrictParseError, LazyParseError } = _error;
 
 describe("#setSpecificTypeMessages(type, msgStrs)", () => {
   it("should create a new parse error with all of the specified type of messages removed and the"
@@ -18,7 +18,7 @@ describe("#setSpecificTypeMessages(type, msgStrs)", () => {
     let evaluated = false;
     const err = new LazyParseError(() => {
       evaluated = true;
-      return new ParseError(pos, msgs);
+      return new StrictParseError(pos, msgs);
     });
     const newErr = err.setSpecificTypeMessages(ErrorMessageType.UNEXPECT, ["A", "B"]);
     expect(evaluated).to.be.false; // not evaluated yet

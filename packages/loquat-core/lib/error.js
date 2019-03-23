@@ -120,21 +120,50 @@ module.exports = ({ _pos }) => {
   }
 
   /**
-   * trait AbstractParseError {
+   * object ParseError {
+   *   unknown(pos: SourcePos): StrictParseError
+   *   equal(errA: StrictParseError, errB: StrictParseError): bool
+   *   merge(errA: StrictParseError, errB: StrictParseError): ParseError
+   * }
+   */
+
+  /**
+   * trait ParseError {
    *   pos: SourcePos
    *   msgs: Array[ErrorMessage]
    *   toString(): string
    *   isUnknown(): boolean
-   *   setPosition(pos: SourcePos): AbstractParseError
-   *   setMessages(msgs: Array[ErrorMessage]): AbstractParseError
-   *   addMessages(msgs: Array[ErrorMessage]): AbstractParseError
-   *   setSpecificTypeMessages(type: ErrorMessageType, msgStrs: Array[string]): AbstractParseError
+   *   setPosition(pos: SourcePos): ParseError
+   *   setMessages(msgs: Array[ErrorMessage]): ParseError
+   *   addMessages(msgs: Array[ErrorMessage]): ParseError
+   *   setSpecificTypeMessages(type: ErrorMessageType, msgStrs: Array[string]): ParseError
    * }
    */
-  class AbstractParseError {
+  class ParseError {
+    /**
+     * ParseError.unknown(pos: SourcePos): ParseError
+     */
+    static unknown(pos) {
+      return new StrictParseError(pos, []);
+    }
+
+    /**
+     * ParseError.merge(errA: ParseError, errB: ParseError): ParseError
+     */
+    static merge(errA, errB) {
+      return new LazyParseError(() => {
+        const cmp = SourcePos.compare(errA.pos, errB.pos);
+        return errB.isUnknown() && !errA.isUnknown() ? errA
+             : errA.isUnknown() && !errB.isUnknown() ? errB
+             : cmp > 0                               ? errA
+             : cmp < 0                               ? errB
+                                                     : errA.addMessages(errB.msgs);
+      });
+    }
+
     constructor() {
-      if (this.constructor === AbstractParseError) {
-        throw new Error("cannot create AbstractParseError object");
+      if (this.constructor === ParseError) {
+        throw new Error("cannot create ParseError object directly");
       }
     }
 
@@ -172,38 +201,13 @@ module.exports = ({ _pos }) => {
   }
 
   /**
-   * class ParseError(pos: SourcePos, msgs: Array[ErrorMessage]) extends AbstractParseError {
-   *   static unknown(pos: SourcePos): ParseError
-   *   static equal(errA: ParseError, errB: ParseError): bool
-   *   static merge(errA: ParseError, errB: ParseError): AbstractParseError
-   * }
+   * class StrictParseError(pos: SourcePos, msgs: Array[ErrorMessage]) extends ParseError
    */
-  class ParseError extends AbstractParseError {
+  class StrictParseError extends ParseError {
     constructor(pos, msgs) {
       super();
       this._pos  = pos;
       this._msgs = msgs;
-    }
-
-    /**
-     * ParseError.unknown(pos: SourcePos): ParseError
-     */
-    static unknown(pos) {
-      return new ParseError(pos, []);
-    }
-
-    /**
-     * ParseError.merge(errA: ParseError, errB: ParseError): AbstractParseError
-     */
-    static merge(errA, errB) {
-      return new LazyParseError(() => {
-        const cmp = SourcePos.compare(errA.pos, errB.pos);
-        return errB.isUnknown() && !errA.isUnknown() ? errA
-             : errA.isUnknown() && !errB.isUnknown() ? errB
-             : cmp > 0                               ? errA
-             : cmp < 0                               ? errB
-                                                     : errA.addMessages(errB.msgs);
-      });
     }
 
     get pos() {
@@ -215,7 +219,7 @@ module.exports = ({ _pos }) => {
     }
 
     /**
-     * ParseError#toString(): string
+     * StrictParseError#toString(): string
      *
      * Returns a human readable error message.
      */
@@ -224,7 +228,7 @@ module.exports = ({ _pos }) => {
     }
 
     /**
-     * ParseError#isUnknown(): boolean
+     * StrictParseError#isUnknown(): boolean
      *
      * Checks if the parse error is unknonw i.e. has no messages.
      */
@@ -233,42 +237,42 @@ module.exports = ({ _pos }) => {
     }
 
     /**
-     * ParseError#setPosition(pos: SourcePos): AbstractParseError
+     * StrictParseError#setPosition(pos: SourcePos): ParseError
      *
      * Creates a new parse error with `pos` updated.
      */
     setPosition(pos) {
-      return new ParseError(pos, this.msgs);
+      return new StrictParseError(pos, this.msgs);
     }
 
     /**
-     * ParseError#setMessages(msgs: Array[ErrorMessage]): AbstractParseError
+     * StrictParseError#setMessages(msgs: Array[ErrorMessage]): ParseError
      *
      * Creates a new parse error with `msgs` updated.
      */
     setMessages(msgs) {
-      return new ParseError(this.pos, msgs);
+      return new StrictParseError(this.pos, msgs);
     }
 
     /**
-     * ParseError#addMessages(msgs: Array[ErrorMessage]): AbstractParseError
+     * StrictParseError#addMessages(msgs: Array[ErrorMessage]): ParseError
      *
      * Creates a new parse error with the given messages added.
      */
     addMessages(msgs) {
-      return new LazyParseError(() => new ParseError(this.pos, this.msgs.concat(msgs)));
+      return new LazyParseError(() => new StrictParseError(this.pos, this.msgs.concat(msgs)));
     }
 
     /**
-     * ParseError#setSpecificTypeMessages(
+     * StrictParseError#setSpecificTypeMessages(
      *   type: ErrorMessageType,
      *   msgStrs: Array[string]
-     * ): AbstractParseError
+     * ): ParseError
      *
      * Creates a new parse error with all of the specific type of messages overwritten.
      */
     setSpecificTypeMessages(type, msgStrs) {
-      return new LazyParseError(() => new ParseError(
+      return new LazyParseError(() => new StrictParseError(
         this.pos,
         this.msgs.filter(msg => msg.type !== type)
           .concat(msgStrs.map(msgStr => new ErrorMessage(type, msgStr)))
@@ -277,13 +281,13 @@ module.exports = ({ _pos }) => {
   }
 
   /**
-   * class LazyParseError(thunk: () => AbstractParseError) extends AbstractParseError {
+   * class LazyParseError(thunk: () => ParseError) extends ParseError {
    *   pos: SourcePos,
    *   msgs: Array[ErrorMessage]
-   *   eval(): ParseError
+   *   eval(): StrictParseError
    * }
    */
-  class LazyParseError extends AbstractParseError {
+  class LazyParseError extends ParseError {
     constructor(thunk) {
       super();
       this._thunk = thunk;
@@ -291,7 +295,7 @@ module.exports = ({ _pos }) => {
     }
 
     /**
-     * LazyParseError#eval(): ParseError
+     * LazyParseError#eval(): StrictParseError
      *
      * Evalutates the thunk and returns a fully-evaluated parse error.
      */
@@ -312,8 +316,8 @@ module.exports = ({ _pos }) => {
           err = err._thunk.call(undefined);
         }
       }
-      if (!(err instanceof ParseError)) {
-        throw new TypeError("evaluation result is not a ParseError obejct");
+      if (!(err instanceof StrictParseError)) {
+        throw new TypeError("evaluation result is not a StrictParseError obejct");
       }
       for (const lazyErr of lazyErrs) {
         lazyErr._cache = err;
@@ -348,7 +352,7 @@ module.exports = ({ _pos }) => {
     }
 
     /**
-     * LazyParseError#setPosition(pos: SourcePos): AbstractParseError
+     * LazyParseError#setPosition(pos: SourcePos): ParseError
      *
      * Creates a new parse error with `pos` updated.
      */
@@ -357,7 +361,7 @@ module.exports = ({ _pos }) => {
     }
 
     /**
-     * LazyParseError#setMessages(msgs: Array[ErrorMessage]): AbstractParseError
+     * LazyParseError#setMessages(msgs: Array[ErrorMessage]): ParseError
      *
      * Creates a new parse error with `msgs` updated.
      */
@@ -366,7 +370,7 @@ module.exports = ({ _pos }) => {
     }
 
     /**
-     * LazyParseError#addMessages(msgs: Array[ErrorMessage]): AbstractParseError
+     * LazyParseError#addMessages(msgs: Array[ErrorMessage]): ParseError
      *
      * Creates a new parse error with the given messages added.
      */
@@ -378,7 +382,7 @@ module.exports = ({ _pos }) => {
      * LazyParseError#setSpecificTypeMessages(
      *   type: ErrorMessageType,
      *   msgStrs: Array[string]
-     * ): AbstractParseError
+     * ): ParseError
      *
      * Creates a new parse error with all of the specific type of messages overwritten.
      */
@@ -390,8 +394,8 @@ module.exports = ({ _pos }) => {
   return Object.freeze({
     ErrorMessageType,
     ErrorMessage,
-    AbstractParseError,
     ParseError,
+    StrictParseError,
     LazyParseError,
     _internal: {
       cleanMessageStrings,

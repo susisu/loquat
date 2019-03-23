@@ -53,12 +53,12 @@ module.exports = ({ _core, _aux }) => (chai, utils) => {
   });
 
   Assertion.addMethod("equalErrorTo", function (exp) {
-    const { AbstractParseError } = _core;
+    const { ParseError } = _core;
     const { equal, inspect } = _aux.ParseError;
 
     const act = this._obj;
 
-    new Assertion(act).to.be.an.instanceOf(AbstractParseError);
+    new Assertion(act).to.be.an.instanceOf(ParseError);
 
     this.assert(
       equal(act, exp),

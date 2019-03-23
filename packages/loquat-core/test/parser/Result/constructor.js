@@ -3,7 +3,7 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError } = _error;
+const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
 const { Config, State, Result } = _parser;
 
 describe(".constructor", () => {
@@ -11,7 +11,7 @@ describe(".constructor", () => {
     const res = new Result(
       true,
       true,
-      new ParseError(
+      new StrictParseError(
         new SourcePos("main", 6, 28),
         [
           new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -31,7 +31,7 @@ describe(".constructor", () => {
     expect(res).to.be.an.instanceOf(Result);
     expect(res.consumed).to.be.true;
     expect(res.success).to.be.true;
-    expect(res.err).to.be.an.equalErrorTo(new ParseError(
+    expect(res.err).to.be.an.equalErrorTo(new StrictParseError(
       new SourcePos("main", 6, 28),
       [
         new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),

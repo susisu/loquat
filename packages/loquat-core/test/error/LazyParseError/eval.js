@@ -3,10 +3,10 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError, LazyParseError } = _error;
+const { ErrorMessageType, ErrorMessage, StrictParseError, LazyParseError } = _error;
 
 describe("#eval", () => {
-  it("should evaluate the thunk then return a fully evaluated `ParseError`", () => {
+  it("should evaluate the thunk then return a fully evaluated `StrictParseError`", () => {
     const pos = new SourcePos("main", 6, 28);
     const msgs = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -15,21 +15,21 @@ describe("#eval", () => {
       new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     {
-      const err = new LazyParseError(() => new ParseError(pos, msgs));
+      const err = new LazyParseError(() => new StrictParseError(pos, msgs));
       const res = err.eval();
-      expect(res).to.be.an.instanceOf(ParseError);
+      expect(res).to.be.an.instanceOf(StrictParseError);
       expect(res.pos).to.be.an.equalPositionTo(pos);
       expect(res.msgs).to.be.equalErrorMessagesTo(msgs);
     }
-    // a multiply-nested LazyParseError object is also evaluated to a ParseError object
+    // a multiply-nested LazyParseError object is also evaluated to a StrictParseError object
     {
       const err = new LazyParseError(() =>
         new LazyParseError(() =>
-          new ParseError(pos, msgs)
+          new StrictParseError(pos, msgs)
         )
       );
       const res = err.eval();
-      expect(res).to.be.an.instanceOf(ParseError);
+      expect(res).to.be.an.instanceOf(StrictParseError);
       expect(res.pos).to.be.an.equalPositionTo(pos);
       expect(res.msgs).to.be.equalErrorMessagesTo(msgs);
     }
@@ -47,7 +47,7 @@ describe("#eval", () => {
       let evalCount = 0;
       const err = new LazyParseError(() => {
         evalCount += 1;
-        return new ParseError(pos, msgs);
+        return new StrictParseError(pos, msgs);
       });
       const resA = err.eval();
       const resB = err.eval();
@@ -63,7 +63,7 @@ describe("#eval", () => {
         evalCount += 1;
         return new LazyParseError(() => {
           intermediateEvalCount += 1;
-          return new ParseError(pos, msgs);
+          return new StrictParseError(pos, msgs);
         });
       });
       const resA = err.eval();
@@ -76,7 +76,7 @@ describe("#eval", () => {
       let intermediateEvalCount = 0;
       const intermediateErr = new LazyParseError(() => {
         intermediateEvalCount += 1;
-        return new ParseError(pos, msgs);
+        return new StrictParseError(pos, msgs);
       });
       let evalCount = 0;
       const err = new LazyParseError(() => {
@@ -115,7 +115,7 @@ describe("#eval", () => {
     }
   });
 
-  it("should throw a `TypeError` if the final result is not a `ParseError` object", () => {
+  it("should throw a `TypeError` if the final result is not a `StrictParseError` object", () => {
     const invalidResults = [
       null,
       undefined,
@@ -130,13 +130,13 @@ describe("#eval", () => {
         const err = new LazyParseError(() => res);
         expect(() => {
           err.eval();
-        }).to.throw(TypeError, /evaluation result is not a ParseError obejct/i);
+        }).to.throw(TypeError, /evaluation result is not a StrictParseError obejct/i);
       }
       {
         const err = new LazyParseError(() => new LazyParseError(() => res));
         expect(() => {
           err.eval();
-        }).to.throw(TypeError, /evaluation result is not a ParseError obejct/i);
+        }).to.throw(TypeError, /evaluation result is not a StrictParseError obejct/i);
       }
     }
   });

@@ -3,7 +3,7 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError } = _error;
+const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
 const { Config, State, Result, Parser, LazyParser } = _parser;
 
 describe("#parse", () => {
@@ -21,7 +21,7 @@ describe("#parse", () => {
             "none"
           ));
           return Result.csuc(
-            new ParseError(
+            new StrictParseError(
               new SourcePos("main", 6, 28),
               [
                 new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -60,7 +60,7 @@ describe("#parse", () => {
             "none"
           ));
           return Result.cerr(
-            new ParseError(
+            new StrictParseError(
               new SourcePos("main", 6, 28),
               [
                 new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -76,7 +76,7 @@ describe("#parse", () => {
       expect(evaluated).to.be.true;
       expect(res).to.be.an("object");
       expect(res.success).to.be.false;
-      expect(res.error).to.be.an.equalErrorTo(new ParseError(
+      expect(res.error).to.be.an.equalErrorTo(new StrictParseError(
         new SourcePos("main", 6, 28),
         [
           new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -99,7 +99,7 @@ describe("#parse", () => {
             "none"
           ));
           return Result.esuc(
-            new ParseError(
+            new StrictParseError(
               new SourcePos("main", 6, 28),
               [
                 new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -138,7 +138,7 @@ describe("#parse", () => {
             "none"
           ));
           return Result.eerr(
-            new ParseError(
+            new StrictParseError(
               new SourcePos("main", 6, 28),
               [
                 new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -154,7 +154,7 @@ describe("#parse", () => {
       expect(evaluated).to.be.true;
       expect(res).to.be.an("object");
       expect(res.success).to.be.false;
-      expect(res.error).to.be.an.equalErrorTo(new ParseError(
+      expect(res.error).to.be.an.equalErrorTo(new StrictParseError(
         new SourcePos("main", 6, 28),
         [
           new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -177,7 +177,7 @@ describe("#parse", () => {
             "none"
           ));
           return Result.csuc(
-            new ParseError(
+            new StrictParseError(
               new SourcePos("main", 6, 28),
               [
                 new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),

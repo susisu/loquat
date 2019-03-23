@@ -3,7 +3,7 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, StrictParseError, LazyParseError } = _error;
+const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
 
 describe("#setPosition", () => {
   it("should create a new parse error with `pos` updated", () => {
@@ -14,16 +14,10 @@ describe("#setPosition", () => {
       new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
       new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
-    let evaluated = false;
-    const err = new LazyParseError(() => {
-      evaluated = true;
-      return new StrictParseError(pos, msgs);
-    });
-    const newPos = new SourcePos("lib", 7, 29);
+    const err = new StrictParseError(pos, msgs);
+    const newPos = new SourcePos("main", 6, 29);
     const newErr = err.setPosition(newPos);
-    expect(evaluated).to.be.false; // not evaluated yet
-    expect(newErr.pos).to.be.an.equalPositionTo(newPos);
-    expect(newErr.msgs).to.be.equalErrorMessagesTo(msgs);
-    expect(evaluated).to.be.true;
+    expect(newErr).to.not.equal(err);
+    expect(newErr).to.be.an.equalErrorTo(new StrictParseError(newPos, msgs));
   });
 });

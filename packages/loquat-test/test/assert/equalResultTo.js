@@ -2,7 +2,15 @@
 
 const { expect, AssertionError } = require("chai");
 
-const { SourcePos, ErrorMessageType, ErrorMessage, ParseError, Config, State, Result } = _core;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
 describe("equalResultTo", () => {
   it("should throw AssertionError if the actual result is not equal to the expected one", () => {
@@ -11,7 +19,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -26,7 +34,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         false,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -44,7 +52,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         false,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         )
@@ -52,7 +60,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         false,
         false,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         )
@@ -64,7 +72,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -79,7 +87,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         true,
         false,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         )
@@ -91,7 +99,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -106,7 +114,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.EXPECT, "bar")]
         ),
@@ -124,7 +132,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         false,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         )
@@ -132,7 +140,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         true,
         false,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.EXPECT, "bar")]
         )
@@ -144,7 +152,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -159,7 +167,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         false,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -178,7 +186,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -193,7 +201,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         false,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -213,7 +221,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -228,7 +236,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         false,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -246,7 +254,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -261,7 +269,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         false,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -279,7 +287,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -294,7 +302,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         false,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -315,7 +323,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -330,7 +338,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -348,7 +356,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         false,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         )
@@ -356,7 +364,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         true,
         false,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         )
@@ -369,7 +377,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -384,7 +392,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -402,7 +410,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -417,7 +425,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -435,7 +443,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -450,7 +458,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -468,7 +476,7 @@ describe("equalResultTo", () => {
       const act = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -483,7 +491,7 @@ describe("equalResultTo", () => {
       const exp = new Result(
         true,
         true,
-        new ParseError(
+        new StrictParseError(
           new SourcePos("main", 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
@@ -505,7 +513,7 @@ describe("equalResultTo", () => {
     const exp = new Result(
       true,
       true,
-      new ParseError(
+      new StrictParseError(
         new SourcePos("main", 6, 28),
         [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
       ),

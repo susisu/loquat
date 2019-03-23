@@ -3,7 +3,7 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError } = _error;
+const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
 const { Config, State, Result, Parser, LazyParser } = _parser;
 
 describe("#run(state)", () => {
@@ -23,7 +23,7 @@ describe("#run(state)", () => {
         return new Result(
           true,
           true,
-          new ParseError(
+          new StrictParseError(
             new SourcePos("main", 7, 28),
             [
               new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -53,7 +53,7 @@ describe("#run(state)", () => {
     expect(res).to.be.an.equalResultTo(new Result(
       true,
       true,
-      new ParseError(
+      new StrictParseError(
         new SourcePos("main", 7, 28),
         [
           new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),

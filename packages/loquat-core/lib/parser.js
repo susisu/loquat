@@ -111,7 +111,7 @@ module.exports = ({ _pos }) => {
    * class Result[S, U, A](
    *   consumed: boolean,
    *   success: boolean,
-   *   err: AbstractParseError,
+   *   err: ParseError,
    *   val: undefined \/ A,
    *   state: undefined \/ State[S, U]
    * ) {
@@ -284,7 +284,7 @@ module.exports = ({ _pos }) => {
 
   /**
    * type ParseResult[A] = { success: true, value: A }
-   *   \/ { success: false, error: AbstractParseError }
+   *   \/ { success: false, error: ParseError }
    */
 
   /**

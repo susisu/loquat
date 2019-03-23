@@ -3,7 +3,7 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError, LazyParseError } = _error;
+const { ErrorMessageType, ErrorMessage, StrictParseError, LazyParseError } = _error;
 
 describe("#msgs", () => {
   it("should evaluate the thunk and return `msgs` of the result", () => {
@@ -17,7 +17,7 @@ describe("#msgs", () => {
     let evaluated = false;
     const err = new LazyParseError(() => {
       evaluated = true;
-      return new ParseError(pos, msgs);
+      return new StrictParseError(pos, msgs);
     });
     expect(err.msgs).to.be.equalErrorMessagesTo(msgs);
     expect(evaluated).to.be.true;

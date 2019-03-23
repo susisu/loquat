@@ -2,19 +2,21 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError } = _error;
+const { ParseError } = _error;
 
 describe(".constructor", () => {
-  it("should create a new `ParseError` instance", () => {
-    const pos = new SourcePos("main", 6, 28);
-    const msgs = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
-    ];
-    const err = new ParseError(pos, msgs);
-    expect(err).to.be.an.instanceOf(ParseError);
+  it("should throw `Error` if it is called as `new ParseError`", () => {
+    expect(() => {
+      new ParseError();
+    }).to.throw(Error, /cannot create ParseError object directly/i);
+  });
+
+  it("should not throw `Error` if it is called via `super` from child constructor", () => {
+    const TestParseError = class extends ParseError {
+      constructor() {
+        super();
+      }
+    };
+    expect(() => { new TestParseError(); }).to.not.throw(Error);
   });
 });

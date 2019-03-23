@@ -7,11 +7,11 @@ module.exports = ({ _utils, _pos, _error, _stream, _parser }) =>
 
     SourcePos: _pos.SourcePos,
 
-    ErrorMessageType  : _error.ErrorMessageType,
-    ErrorMessage      : _error.ErrorMessage,
-    AbstractParseError: _error.AbstractParseError,
-    ParseError        : _error.ParseError,
-    LazyParseError    : _error.LazyParseError,
+    ErrorMessageType: _error.ErrorMessageType,
+    ErrorMessage    : _error.ErrorMessage,
+    ParseError      : _error.ParseError,
+    StrictParseError: _error.StrictParseError,
+    LazyParseError  : _error.LazyParseError,
 
     uncons     : _stream.uncons,
     ArrayStream: _stream.ArrayStream,
