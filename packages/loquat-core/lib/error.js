@@ -36,14 +36,6 @@ module.exports = ({ _pos }) => {
     }
 
     /**
-     * ErrorMessage.equal(msgA: ErrorMessage, msgB: ErrorMessage): boolean
-     */
-    static equal(msgA, msgB) {
-      return msgA.type === msgB.type
-        && msgA.msgStr === msgB.msgStr;
-    }
-
-    /**
      * ErrorMessage.messagesToString(msgs: Array[ErrorMessage]): string
      *
      * Prints error messages in human readable format.
@@ -85,22 +77,6 @@ module.exports = ({ _pos }) => {
                 joinMessageStrings(cleanMessageStrings(defaultMessages), ""),
       ];
       return cleanMessageStrings(msgStrs).join("\n");
-    }
-
-    /**
-     * ErrorMessage.messagesEqual(msgsA: Array[ErrorMessage], msgsB: Array[ErrorMessage]): bool
-     */
-    static messagesEqual(msgsA, msgsB) {
-      if (msgsA.length !== msgsB.length) {
-        return false;
-      }
-      const len = msgsA.length;
-      for (let i = 0; i < len; i++) {
-        if (!ErrorMessage.equal(msgsA[i], msgsB[i])) {
-          return false;
-        }
-      }
-      return true;
     }
 
     get type() {
@@ -214,14 +190,6 @@ module.exports = ({ _pos }) => {
      */
     static unknown(pos) {
       return new ParseError(pos, []);
-    }
-
-    /**
-     * ParseError.equal(errA: ParseError, errB: ParseError): bool
-     */
-    static equal(errA, errB) {
-      return SourcePos.equal(errA.pos, errB.pos)
-        && ErrorMessage.messagesEqual(errA.msgs, errB.msgs);
     }
 
     /**

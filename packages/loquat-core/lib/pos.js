@@ -36,15 +36,6 @@ module.exports = () => {
     }
 
     /**
-     * SoucePos.equal(posA: SoucePos, posB: SoucePos): boolean
-     */
-    static equal(posA, posB) {
-      return posA.name === posB.name
-        && posA.line === posB.line
-        && posA.column === posB.column;
-    }
-
-    /**
      * SoucePos.compare(posA: SoucePos, posB: SoucePos): int
      *
      * Compares two positions. Returns negative number if `posA` is ahead of `posB`, positive if

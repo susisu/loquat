@@ -1,9 +1,7 @@
 "use strict";
 
-module.exports = ({ _pos, _error }) => {
+module.exports = ({ _pos }) => {
   const { SourcePos } = _pos;
-
-  const { ParseError } = _error;
 
   /**
    * type ConfigOptions = {
@@ -23,14 +21,6 @@ module.exports = ({ _pos, _error }) => {
     constructor(opts = {}) {
       this._tabWidth = opts.tabWidth === undefined ? 8 : opts.tabWidth;
       this._unicode  = opts.unicode === undefined ? false : opts.unicode;
-    }
-
-    /**
-     * Config.equal(configA: Config, configB: Config): boolean
-     */
-    static equal(configA, configB) {
-      return configA.tabWidth === configB.tabWidth
-        && configA.unicode === configB.unicode;
     }
 
     get tabWidth() {
@@ -62,25 +52,6 @@ module.exports = ({ _pos, _error }) => {
       this._input     = input;
       this._pos       = pos;
       this._userState = userState;
-    }
-
-    /**
-     * State.equal[S, U](
-     *   stateA: State[S, U],
-     *   stateB: State[S, U],
-     *   inputEqual: undefined \/ (inputA: S, inputB: S) => boolean,
-     *   userStateEqual: undefined \/ (userStateA: U, userStateB: U) => boolean
-     * ): boolean
-     */
-    static equal(stateA, stateB, inputEqual, userStateEqual) {
-      return Config.equal(stateA.config, stateB.config)
-        && (inputEqual === undefined
-          ? stateA.input === stateB.input
-          : inputEqual(stateA.input, stateB.input))
-        && SourcePos.equal(stateA.pos, stateB.pos)
-        && (userStateEqual === undefined
-          ? stateA.userState === stateB.userState
-          : userStateEqual(stateA.userState, stateB.userState));
     }
 
     get config() {
@@ -164,30 +135,6 @@ module.exports = ({ _pos, _error }) => {
       this._err      = err;
       this._val      = val;
       this._state    = state;
-    }
-
-    /**
-     * Result.equal[S, U, A](
-     *   resA: Result[S, U, A],
-     *   resB: Result[S, U, A],
-     *   valEqual: undefined \/ (valA: A, valB: A) => boolean,
-     *   inputEqual: undefined \/ (inputA: S, inputB: S) => boolean,
-     *   userStateEqual: undefined \/ (userStateA: U, userStateB: U) => boolean
-     * ): boolean
-     */
-    static equal(resA, resB, valEqual, inputEqual, userStateEqual) {
-      if (resA.success && resB.success) {
-        return resA.consumed === resB.consumed
-          && (valEqual === undefined
-            ? resA.val === resB.val
-            : valEqual(resA.val, resB.val))
-          && State.equal(resA.state, resB.state, inputEqual, userStateEqual)
-          && ParseError.equal(resA.err, resB.err);
-      } else {
-        return resA.success === resB.success
-          && resA.consumed === resB.consumed
-          && ParseError.equal(resA.err, resB.err);
-      }
     }
 
     /**
