@@ -19,12 +19,6 @@ module.exports = () => {
    * `SourcePos` represents a position in input.
    */
   class SourcePos {
-    constructor(name, line, column) {
-      this._name = name;
-      this._line = line;
-      this._column = column;
-    }
-
     /**
      * SoucePos.init(name: string): SoucePos
      *
@@ -48,6 +42,12 @@ module.exports = () => {
            : posA.column < posB.column ? -1
            : posA.column > posB.column ? 1
                                        : 0;
+    }
+
+    constructor(name, line, column) {
+      this._name = name;
+      this._line = line;
+      this._column = column;
     }
 
     get name() {

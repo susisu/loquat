@@ -28,11 +28,6 @@ module.exports = ({ _pos }) => {
    * }
    */
   class ErrorMessage {
-    constructor(type, msgStr) {
-      this._type   = type;
-      this._msgStr = msgStr;
-    }
-
     /**
      * ErrorMessage.messagesToString(msgs: Array[ErrorMessage]): string
      *
@@ -73,6 +68,11 @@ module.exports = ({ _pos }) => {
         joinMessageStrings(cleanMessageStrings(defaultMessages), ""),
       ];
       return cleanMessageStrings(msgStrs).join("\n");
+    }
+
+    constructor(type, msgStr) {
+      this._type   = type;
+      this._msgStr = msgStr;
     }
 
     get type() {

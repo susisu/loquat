@@ -115,14 +115,6 @@ module.exports = ({ _pos }) => {
    * }
    */
   class Result {
-    constructor(consumed, success, err, val, state) {
-      this._consumed = consumed;
-      this._success  = success;
-      this._err      = err;
-      this._val      = val;
-      this._state    = state;
-    }
-
     /**
      * Result.csuc[S, U, A](err: AbstractParser, val: A, state: State[S, U]): Result[S, U, A]
      */
@@ -149,6 +141,14 @@ module.exports = ({ _pos }) => {
      */
     static eerr(err) {
       return new Result(false, false, err);
+    }
+
+    constructor(consumed, success, err, val, state) {
+      this._consumed = consumed;
+      this._success  = success;
+      this._err      = err;
+      this._val      = val;
+      this._state    = state;
     }
 
     get consumed() {
