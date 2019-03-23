@@ -7,7 +7,7 @@ const { ErrorMessageType, ErrorMessage, StrictParseError, LazyParseError } = _er
 
 describe("#pos", () => {
   it("should evaluate the thunk and return `pos` of the result", () => {
-    const pos = new SourcePos("main", 6, 28);
+    const pos = new SourcePos("main", 496, 6, 28);
     const msgs = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),

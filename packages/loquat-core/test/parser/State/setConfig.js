@@ -10,7 +10,7 @@ describe("#setConfig", () => {
     const state = new State(
       new Config({ tabWidth: 4, unicode: true }),
       "foo",
-      new SourcePos("main", 6, 28),
+      new SourcePos("main", 496, 6, 28),
       "none"
     );
     const copy = state.setConfig(new Config({ tabWidth: 8, unicode: false }));
@@ -18,7 +18,7 @@ describe("#setConfig", () => {
     expect(copy).to.be.an.equalStateTo(new State(
       new Config({ tabWidth: 8, unicode: false }),
       "foo",
-      new SourcePos("main", 6, 28),
+      new SourcePos("main", 496, 6, 28),
       "none"
     ));
   });

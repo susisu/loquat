@@ -7,7 +7,7 @@ const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
 
 describe("#setPosition", () => {
   it("should create a new parse error with `pos` updated", () => {
-    const pos = new SourcePos("main", 6, 28);
+    const pos = new SourcePos("main", 496, 6, 28);
     const msgs = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
@@ -15,7 +15,7 @@ describe("#setPosition", () => {
       new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     const err = new StrictParseError(pos, msgs);
-    const newPos = new SourcePos("main", 6, 29);
+    const newPos = new SourcePos("main", 506, 7, 29);
     const newErr = err.setPosition(newPos);
     expect(newErr).to.not.equal(err);
     expect(newErr).to.be.an.equalErrorTo(new StrictParseError(newPos, msgs));

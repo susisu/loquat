@@ -7,7 +7,7 @@ const { ErrorMessageType, ErrorMessage, StrictParseError, LazyParseError } = _er
 
 describe("#eval", () => {
   it("should evaluate the thunk then return a fully evaluated `StrictParseError`", () => {
-    const pos = new SourcePos("main", 6, 28);
+    const pos = new SourcePos("main", 496, 6, 28);
     const msgs = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
@@ -36,7 +36,7 @@ describe("#eval", () => {
   });
 
   it("should cache the evaluated result and return it if called next time", () => {
-    const pos = new SourcePos("main", 6, 28);
+    const pos = new SourcePos("main", 496, 6, 28);
     const msgs = [
       new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),

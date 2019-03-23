@@ -12,7 +12,7 @@ describe(".constructor", () => {
       true,
       true,
       new StrictParseError(
-        new SourcePos("main", 6, 28),
+        new SourcePos("main", 496, 6, 28),
         [
           new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
           new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
@@ -24,7 +24,7 @@ describe(".constructor", () => {
       new State(
         new Config({ tabWidth: 4, unicode: true }),
         "rest",
-        new SourcePos("main", 6, 29),
+        new SourcePos("main", 506, 7, 29),
         "none"
       )
     );
@@ -32,7 +32,7 @@ describe(".constructor", () => {
     expect(res.consumed).to.be.true;
     expect(res.success).to.be.true;
     expect(res.err).to.be.an.equalErrorTo(new StrictParseError(
-      new SourcePos("main", 6, 28),
+      new SourcePos("main", 496, 6, 28),
       [
         new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
         new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
@@ -44,7 +44,7 @@ describe(".constructor", () => {
     expect(res.state).to.be.an.equalStateTo(new State(
       new Config({ tabWidth: 4, unicode: true }),
       "rest",
-      new SourcePos("main", 6, 29),
+      new SourcePos("main", 506, 7, 29),
       "none"
     ));
   });

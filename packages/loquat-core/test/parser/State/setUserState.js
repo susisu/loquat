@@ -10,7 +10,7 @@ describe("#setUserState", () => {
     const state = new State(
       new Config({ tabWidth: 4, unicode: true }),
       "foo",
-      new SourcePos("main", 6, 28),
+      new SourcePos("main", 496, 6, 28),
       "none"
     );
     const copy = state.setUserState("some");
@@ -18,7 +18,7 @@ describe("#setUserState", () => {
     expect(copy).to.be.an.equalStateTo(new State(
       new Config({ tabWidth: 4, unicode: true }),
       "foo",
-      new SourcePos("main", 6, 28),
+      new SourcePos("main", 496, 6, 28),
       "some"
     ));
   });

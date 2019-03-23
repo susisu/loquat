@@ -53,8 +53,8 @@ module.exports = ({ _core }) => {
   }
 
   const SourcePos = {
-    inspect: mkInspect("SourcePos", ["name", "line", "column"]),
-    equal  : mkEqual(["name", "line", "column"]),
+    inspect: mkInspect("SourcePos", ["name", "index", "line", "column"]),
+    equal  : mkEqual(["name", "index", "line", "column"]),
   };
 
   const ErrorMessage = {

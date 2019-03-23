@@ -20,14 +20,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -35,14 +35,14 @@ describe("equalResultTo", () => {
         false,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -53,7 +53,7 @@ describe("equalResultTo", () => {
         true,
         false,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
@@ -61,7 +61,7 @@ describe("equalResultTo", () => {
         false,
         false,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
@@ -73,14 +73,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -88,7 +88,7 @@ describe("equalResultTo", () => {
         true,
         false,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
@@ -100,14 +100,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -115,14 +115,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.EXPECT, "bar")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -133,7 +133,7 @@ describe("equalResultTo", () => {
         true,
         false,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
@@ -141,7 +141,7 @@ describe("equalResultTo", () => {
         true,
         false,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.EXPECT, "bar")]
         )
       );
@@ -153,14 +153,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -168,14 +168,14 @@ describe("equalResultTo", () => {
         false,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         43,
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -187,14 +187,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -202,14 +202,14 @@ describe("equalResultTo", () => {
         false,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 8, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "some"
         )
       );
@@ -222,14 +222,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -237,14 +237,14 @@ describe("equalResultTo", () => {
         false,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "INPUT",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "NONE"
         )
       );
@@ -255,14 +255,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -270,14 +270,14 @@ describe("equalResultTo", () => {
         false,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "NYANCAT",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "NONE"
         )
       );
@@ -288,14 +288,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -303,14 +303,14 @@ describe("equalResultTo", () => {
         false,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "NYANCAT",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "INPUT",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -324,14 +324,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "bar",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -339,14 +339,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "bar",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -357,7 +357,7 @@ describe("equalResultTo", () => {
         true,
         false,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
@@ -365,7 +365,7 @@ describe("equalResultTo", () => {
         true,
         false,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
@@ -378,14 +378,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -393,14 +393,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "NYANCAT",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -411,14 +411,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -426,14 +426,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "INPUT",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -444,14 +444,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -459,14 +459,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "NONE"
         )
       );
@@ -477,14 +477,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "none"
         )
       );
@@ -492,14 +492,14 @@ describe("equalResultTo", () => {
         true,
         true,
         new StrictParseError(
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "NYANCAT",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "INPUT",
-          new SourcePos("main", 6, 29),
+          new SourcePos("main", 497, 7, 29),
           "NONE"
         )
       );
@@ -515,14 +515,14 @@ describe("equalResultTo", () => {
       true,
       true,
       new StrictParseError(
-        new SourcePos("main", 6, 28),
+        new SourcePos("main", 496, 6, 28),
         [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
       ),
       "nyancat",
       new State(
         new Config({ tabWidth: 4, unicode: true }),
         "bar",
-        new SourcePos("main", 6, 29),
+        new SourcePos("main", 497, 7, 29),
         "none"
       )
     );

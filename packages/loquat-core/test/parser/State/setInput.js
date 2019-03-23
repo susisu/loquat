@@ -10,7 +10,7 @@ describe("#setInput", () => {
     const state = new State(
       new Config({ tabWidth: 4, unicode: true }),
       "foo",
-      new SourcePos("nyancat", 6, 28),
+      new SourcePos("main", 496, 6, 28),
       "none"
     );
     const copy = state.setInput("bar");
@@ -18,7 +18,7 @@ describe("#setInput", () => {
     expect(copy).to.be.an.equalStateTo(new State(
       new Config({ tabWidth: 4, unicode: true }),
       "bar",
-      new SourcePos("nyancat", 6, 28),
+      new SourcePos("main", 496, 6, 28),
       "none"
     ));
   });

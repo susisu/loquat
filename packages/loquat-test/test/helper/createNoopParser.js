@@ -12,12 +12,12 @@ describe("createNoopParser", () => {
     const state = new State(
       new Config({ tabWidth: 4, unicode: true }),
       "input",
-      new SourcePos("main", 6, 28),
+      new SourcePos("main", 496, 6, 28),
       "none"
     );
     const res = parser.run(state);
     expect(res).to.be.an.equalResultTo(Result.esuc(
-      ParseError.unknown(new SourcePos("main", 6, 28)),
+      ParseError.unknown(new SourcePos("main", 496, 6, 28)),
       undefined,
       state
     ));

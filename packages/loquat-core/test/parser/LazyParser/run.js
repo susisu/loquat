@@ -17,14 +17,14 @@ describe("#run(state)", () => {
         expect(state).to.be.an.equalStateTo(new State(
           new Config({ tabWidth: 4, unicode: true }),
           "test",
-          new SourcePos("main", 6, 28),
+          new SourcePos("main", 496, 6, 28),
           "none"
         ));
         return new Result(
           true,
           true,
           new StrictParseError(
-            new SourcePos("main", 7, 28),
+            new SourcePos("main", 506, 7, 29),
             [
               new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
               new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
@@ -36,7 +36,7 @@ describe("#run(state)", () => {
           new State(
             new Config({ tabWidth: 4, unicode: true }),
             "rest",
-            new SourcePos("main", 7, 29),
+            new SourcePos("main", 516, 8, 30),
             "some"
           )
         );
@@ -45,7 +45,7 @@ describe("#run(state)", () => {
     const res = parser.run(new State(
       new Config({ tabWidth: 4, unicode: true }),
       "test",
-      new SourcePos("main", 6, 28),
+      new SourcePos("main", 496, 6, 28),
       "none"
     ));
     expect(evaluated).to.be.true;
@@ -54,7 +54,7 @@ describe("#run(state)", () => {
       true,
       true,
       new StrictParseError(
-        new SourcePos("main", 7, 28),
+        new SourcePos("main", 506, 7, 29),
         [
           new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
           new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
@@ -66,7 +66,7 @@ describe("#run(state)", () => {
       new State(
         new Config({ tabWidth: 4, unicode: true }),
         "rest",
-        new SourcePos("main", 7, 29),
+        new SourcePos("main", 516, 8, 30),
         "some"
       )
     ));
