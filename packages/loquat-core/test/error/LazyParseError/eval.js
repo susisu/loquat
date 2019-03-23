@@ -9,10 +9,10 @@ describe("#eval", () => {
   it("should evaluate the thunk then return a fully evaluated `StrictParseError`", () => {
     const pos = new SourcePos("main", 496, 6, 28);
     const msgs = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+      ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+      ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+      ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+      ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
     ];
     {
       const err = new LazyParseError(() => new StrictParseError(pos, msgs));
@@ -38,10 +38,10 @@ describe("#eval", () => {
   it("should cache the evaluated result and return it if called next time", () => {
     const pos = new SourcePos("main", 496, 6, 28);
     const msgs = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+      ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+      ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+      ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+      ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
     ];
     {
       let evalCount = 0;

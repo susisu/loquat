@@ -10,10 +10,10 @@ describe(".merge", () => {
     + " first is not", () => {
     const posA = new SourcePos("main", 496, 6, 28);
     const msgsA = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+      ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+      ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+      ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+      ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
     ];
     const posB = new SourcePos("main", 506, 7, 29);
     const msgsB = [];
@@ -52,10 +52,10 @@ describe(".merge", () => {
     const msgsA = [];
     const posB = new SourcePos("main", 496, 6, 28);
     const msgsB = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+      ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+      ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+      ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+      ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
     ];
     // strict
     {
@@ -90,17 +90,17 @@ describe(".merge", () => {
     + " second", () => {
     const posA = new SourcePos("main", 506, 7, 29);
     const msgsA = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+      ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+      ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+      ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+      ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
     ];
     const posB = new SourcePos("main", 496, 6, 28);
     const msgsB = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "A"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "B"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "C"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "D"),
+      ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "A"),
+      ErrorMessage.create(ErrorMessageType.UNEXPECT, "B"),
+      ErrorMessage.create(ErrorMessageType.EXPECT, "C"),
+      ErrorMessage.create(ErrorMessageType.MESSAGE, "D"),
     ];
     // strict
     {
@@ -135,17 +135,17 @@ describe(".merge", () => {
         + " first", () => {
     const posA = new SourcePos("main", 496, 6, 28);
     const msgsA = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+      ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+      ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+      ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+      ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
     ];
     const posB = new SourcePos("main", 506, 7, 29);
     const msgsB = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "A"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "B"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "C"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "D"),
+      ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "A"),
+      ErrorMessage.create(ErrorMessageType.UNEXPECT, "B"),
+      ErrorMessage.create(ErrorMessageType.EXPECT, "C"),
+      ErrorMessage.create(ErrorMessageType.MESSAGE, "D"),
     ];
     // strict
     {
@@ -180,16 +180,16 @@ describe(".merge", () => {
     + " positions are equal", () => {
     const pos = new SourcePos("foobar", 496, 6, 28);
     const msgsA = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+      ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+      ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+      ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+      ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
     ];
     const msgsB = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "A"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "B"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "C"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "D"),
+      ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "A"),
+      ErrorMessage.create(ErrorMessageType.UNEXPECT, "B"),
+      ErrorMessage.create(ErrorMessageType.EXPECT, "C"),
+      ErrorMessage.create(ErrorMessageType.MESSAGE, "D"),
     ];
     const msgs = msgsA.concat(msgsB);
     // strict

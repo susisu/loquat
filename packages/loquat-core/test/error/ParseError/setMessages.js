@@ -13,10 +13,10 @@ describe("#setMessages", () => {
     };
     const err = new TestParseError();
     const msgs = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+      ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+      ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+      ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+      ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
     ];
     expect(() => { err.setMessages(msgs); }).to.throw(Error, /not implemented/i);
   });

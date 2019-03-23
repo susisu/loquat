@@ -21,10 +21,10 @@ describe("#parse", () => {
           new StrictParseError(
             new SourcePos("main", 496, 6, 28),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-              new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-              new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+              ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
             ]
           ),
           "val",
@@ -55,10 +55,10 @@ describe("#parse", () => {
           new StrictParseError(
             new SourcePos("main", 496, 6, 28),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-              new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-              new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+              ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
             ]
           )
         );
@@ -69,10 +69,10 @@ describe("#parse", () => {
       expect(res.error).to.be.an.equalErrorTo(new StrictParseError(
         new SourcePos("main", 496, 6, 28),
         [
-          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-          new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-          new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-          new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+          ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+          ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+          ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+          ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
         ]
       ));
     }
@@ -89,10 +89,10 @@ describe("#parse", () => {
           new StrictParseError(
             new SourcePos("main", 496, 6, 28),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-              new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-              new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+              ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
             ]
           ),
           "val",
@@ -123,10 +123,10 @@ describe("#parse", () => {
           new StrictParseError(
             new SourcePos("main", 496, 6, 28),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-              new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-              new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+              ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
             ]
           )
         );
@@ -137,10 +137,10 @@ describe("#parse", () => {
       expect(res.error).to.be.an.equalErrorTo(new StrictParseError(
         new SourcePos("main", 496, 6, 28),
         [
-          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-          new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-          new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-          new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+          ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+          ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+          ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+          ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
         ]
       ));
     }
@@ -157,10 +157,10 @@ describe("#parse", () => {
           new StrictParseError(
             new SourcePos("main", 496, 6, 28),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-              new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-              new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+              ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
             ]
           ),
           "val",

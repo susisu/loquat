@@ -10,10 +10,10 @@ describe("#setSpecificTypeMessages", () => {
     + " new messages added", () => {
     const pos = new SourcePos("main", 496, 6, 28);
     const msgs = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+      ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+      ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+      ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+      ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
     ];
     const err = new StrictParseError(pos, msgs);
     const newErr = err.setSpecificTypeMessages(ErrorMessageType.UNEXPECT, ["A", "B"]);
@@ -21,11 +21,11 @@ describe("#setSpecificTypeMessages", () => {
     expect(newErr).to.be.an.equalErrorTo(new StrictParseError(
       pos,
       [
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
-        new ErrorMessage(ErrorMessageType.UNEXPECT, "A"),
-        new ErrorMessage(ErrorMessageType.UNEXPECT, "B"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+        ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
+        ErrorMessage.create(ErrorMessageType.UNEXPECT, "A"),
+        ErrorMessage.create(ErrorMessageType.UNEXPECT, "B"),
       ]
     ));
   });

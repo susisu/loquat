@@ -21,7 +21,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -36,7 +36,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -54,7 +54,7 @@ describe("equalResultTo", () => {
         false,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
       const exp = new Result(
@@ -62,7 +62,7 @@ describe("equalResultTo", () => {
         false,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
       expect(act).to.be.an.equalResultTo(exp);
@@ -74,7 +74,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -89,7 +89,7 @@ describe("equalResultTo", () => {
         false,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
       expect(act).to.be.an.equalResultTo(exp);
@@ -101,7 +101,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -116,7 +116,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.EXPECT, "bar")]
+          [ErrorMessage.create(ErrorMessageType.EXPECT, "bar")]
         ),
         "nyancat",
         new State(
@@ -134,7 +134,7 @@ describe("equalResultTo", () => {
         false,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
       const exp = new Result(
@@ -142,7 +142,7 @@ describe("equalResultTo", () => {
         false,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.EXPECT, "bar")]
+          [ErrorMessage.create(ErrorMessageType.EXPECT, "bar")]
         )
       );
       expect(act).to.be.an.equalResultTo(exp);
@@ -154,7 +154,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -169,7 +169,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         43,
         new State(
@@ -188,7 +188,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -203,7 +203,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -223,7 +223,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -238,7 +238,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -256,7 +256,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -271,7 +271,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "NYANCAT",
         new State(
@@ -289,7 +289,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -304,7 +304,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "NYANCAT",
         new State(
@@ -325,7 +325,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -340,7 +340,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -358,7 +358,7 @@ describe("equalResultTo", () => {
         false,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
       const exp = new Result(
@@ -366,7 +366,7 @@ describe("equalResultTo", () => {
         false,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
       expect(act).to.be.an.equalResultTo(exp);
@@ -379,7 +379,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -394,7 +394,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "NYANCAT",
         new State(
@@ -412,7 +412,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -427,7 +427,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -445,7 +445,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -460,7 +460,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -478,7 +478,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
@@ -493,7 +493,7 @@ describe("equalResultTo", () => {
         true,
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "NYANCAT",
         new State(
@@ -516,7 +516,7 @@ describe("equalResultTo", () => {
       true,
       new StrictParseError(
         new SourcePos("main", 496, 6, 28),
-        [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+        [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       ),
       "nyancat",
       new State(

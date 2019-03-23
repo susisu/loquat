@@ -10,11 +10,11 @@ describe("equalErrorTo", () => {
     expect(() => {
       const act = new StrictParseError(
         new SourcePos("main", 496, 6, 28),
-        [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+        [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       const exp = new StrictParseError(
         new SourcePos("lib", 497, 7, 29),
-        [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+        [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       expect(act).to.be.an.equalErrorTo(exp);
     }).to.throw(AssertionError);
@@ -22,11 +22,11 @@ describe("equalErrorTo", () => {
     expect(() => {
       const act = new StrictParseError(
         new SourcePos("main", 496, 6, 28),
-        [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+        [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       const exp = new StrictParseError(
         new SourcePos("main", 496, 6, 28),
-        [new ErrorMessage(ErrorMessageType.EXPECT, "bar")]
+        [ErrorMessage.create(ErrorMessageType.EXPECT, "bar")]
       );
       expect(act).to.be.an.equalErrorTo(exp);
     }).to.throw(AssertionError);
@@ -34,11 +34,11 @@ describe("equalErrorTo", () => {
     expect(() => {
       const act = new StrictParseError(
         new SourcePos("main", 496, 6, 28),
-        [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+        [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       const exp = new StrictParseError(
         new SourcePos("lib", 497, 7, 29),
-        [new ErrorMessage(ErrorMessageType.EXPECT, "bar")]
+        [ErrorMessage.create(ErrorMessageType.EXPECT, "bar")]
       );
       expect(act).to.be.an.equalErrorTo(exp);
     }).to.throw(AssertionError);
@@ -46,12 +46,12 @@ describe("equalErrorTo", () => {
     expect(() => {
       const act = new StrictParseError(
         new SourcePos("main", 496, 6, 28),
-        [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+        [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       const exp = new LazyParseError(() =>
         new StrictParseError(
           new SourcePos("lib", 497, 7, 29),
-          [new ErrorMessage(ErrorMessageType.EXPECT, "bar")]
+          [ErrorMessage.create(ErrorMessageType.EXPECT, "bar")]
         )
       );
       expect(act).to.be.an.equalErrorTo(exp);
@@ -60,12 +60,12 @@ describe("equalErrorTo", () => {
       const act = new LazyParseError(() =>
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
       const exp = new StrictParseError(
         new SourcePos("lib", 497, 7, 29),
-        [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+        [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       expect(act).to.be.an.equalErrorTo(exp);
     }).to.throw(AssertionError);
@@ -75,11 +75,11 @@ describe("equalErrorTo", () => {
     expect(() => {
       const act = new StrictParseError(
         new SourcePos("main", 496, 6, 28),
-        [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+        [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       const exp = new StrictParseError(
         new SourcePos("main", 496, 6, 28),
-        [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+        [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       expect(act).to.be.an.equalErrorTo(exp);
     }).to.not.throw(AssertionError);
@@ -87,12 +87,12 @@ describe("equalErrorTo", () => {
     expect(() => {
       const act = new StrictParseError(
         new SourcePos("main", 496, 6, 28),
-        [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+        [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       const exp = new LazyParseError(() =>
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
       expect(act).to.be.an.equalErrorTo(exp);
@@ -101,12 +101,12 @@ describe("equalErrorTo", () => {
       const act = new LazyParseError(() =>
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
       const exp = new StrictParseError(
         new SourcePos("main", 496, 6, 28),
-        [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+        [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       expect(act).to.be.an.equalErrorTo(exp);
     }).to.not.throw(AssertionError);
@@ -116,7 +116,7 @@ describe("equalErrorTo", () => {
     const act = {};
     const exp = new StrictParseError(
       new SourcePos("main", 496, 6, 28),
-      [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]
+      [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
     );
     expect(() => {
       expect(act).to.be.an.equalErrorTo(exp);

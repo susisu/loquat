@@ -18,7 +18,7 @@ describe("joinWithCommasOr", () => {
   });
 
   it("should return a joined commas and \"or\" if the argument has three or more elements", () => {
-    const msgStrs = ["foo", "bar", "baz", "qux"];
-    expect(joinWithCommasOr(msgStrs)).to.equal("foo, bar, baz or qux");
+    const strs = ["foo", "bar", "baz", "qux"];
+    expect(joinWithCommasOr(strs)).to.equal("foo, bar, baz or qux");
   });
 });

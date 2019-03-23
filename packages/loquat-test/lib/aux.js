@@ -58,8 +58,8 @@ module.exports = ({ _core }) => {
   };
 
   const ErrorMessage = {
-    inspect     : mkInspect("ErrorMessage", ["type", "msgStr"]),
-    equal       : mkEqual(["type", "msgStr"]),
+    inspect     : mkInspect("ErrorMessage", ["type", "str"]),
+    equal       : mkEqual(["type", "str"]),
     inspectArray: msgs => "[" + msgs.map(ErrorMessage.inspect).join(", ") + "]",
     equalArray  : (msgsA, msgsB) => {
       if (msgsA.length !== msgsB.length) {

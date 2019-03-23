@@ -23,17 +23,31 @@ module.exports = ({ _pos }) => {
   });
 
   /**
-   * class ErrorMessage(type: ErrorMessageType, msgStr: string) {
-   *   static messagesToString(msgs: Array[ErrorMessage]): string
+   * type ErrorMessage = { type: ErrorMessageType, str: string }
+   */
+
+  /**
+   * object ErrorMessage {
+   *   create: (type: ErrorMessageType, str: string) => ErrorMessage
+   *   messagesToString: (msgs: Array[ErrorMessage]) => string
    * }
    */
-  class ErrorMessage {
+  const ErrorMessage = Object.freeze({
     /**
-     * ErrorMessage.messagesToString(msgs: Array[ErrorMessage]): string
+     * ErrorMessage.create: (type: ErrorMessageType, str: string) => ErrorMessage
+     *
+     * Creates an ErrorMessage object.
+     */
+    create(type, str) {
+      return { type, str };
+    },
+
+    /**
+     * ErrorMessage.messagesToString: (msgs: Array[ErrorMessage]) => string
      *
      * Prints error messages in a human readable format.
      */
-    static messagesToString(msgs) {
+    messagesToString(msgs) {
       if (msgs.length === 0) {
         return "unknown parse error";
       }
@@ -44,75 +58,62 @@ module.exports = ({ _pos }) => {
       for (const msg of msgs) {
         switch (msg.type) {
         case ErrorMessageType.SYSTEM_UNEXPECT:
-          systemUnexpects.push(msg.msgStr);
+          systemUnexpects.push(msg.str);
           break;
         case ErrorMessageType.UNEXPECT:
-          unexpects.push(msg.msgStr);
+          unexpects.push(msg.str);
           break;
         case ErrorMessageType.EXPECT:
-          expects.push(msg.msgStr);
+          expects.push(msg.str);
           break;
         case ErrorMessageType.MESSAGE:
-          defaultMessages.push(msg.msgStr);
+          defaultMessages.push(msg.str);
           break;
         default:
           throw new Error("unknown message type: " + msg.type);
         }
       }
-      const msgStrs = [
+      const strs = [
         unexpects.length === 0 && systemUnexpects.length !== 0
-            ? "unexpected " + (systemUnexpects[0] === "" ? "end of input" : systemUnexpects[0])
-            : "",
+          ? "unexpected " + (systemUnexpects[0] === "" ? "end of input" : systemUnexpects[0])
+          : "",
         joinMessageStrings(cleanMessageStrings(unexpects), "unexpected"),
         joinMessageStrings(cleanMessageStrings(expects), "expecting"),
         joinMessageStrings(cleanMessageStrings(defaultMessages), ""),
       ];
-      return cleanMessageStrings(msgStrs).join("\n");
-    }
-
-    constructor(type, msgStr) {
-      this._type   = type;
-      this._msgStr = msgStr;
-    }
-
-    get type() {
-      return this._type;
-    }
-
-    get msgStr() {
-      return this._msgStr;
-    }
-  }
+      return cleanMessageStrings(strs).join("\n");
+    },
+  });
 
   /**
-   * cleanMessageStrings: (msgStrs: Array[string]): Array[string]
+   * cleanMessageStrings: (strs: Array[string]): Array[string]
    *
    * Removes empty or duplicate ones from messages.
    */
-  function cleanMessageStrings(msgStrs) {
-    return msgStrs.filter((msgStr, i) => msgStr !== "" && msgStrs.indexOf(msgStr) === i);
+  function cleanMessageStrings(strs) {
+    return strs.filter((str, i) => str !== "" && strs.indexOf(str) === i);
   }
 
   /**
-   * joinWithCommasOr: (msgStrs: Array[string]): string
+   * joinWithCommasOr: (strs: Array[string]): string
    *
    * Returns a single message joined with commas "," and "or".
    */
-  function joinWithCommasOr(msgStrs) {
-    return msgStrs.length <= 2
-      ? msgStrs.join(" or ")
-      : msgStrs.slice(0, msgStrs.length - 1).join(", ") + " or " + msgStrs[msgStrs.length - 1];
+  function joinWithCommasOr(strs) {
+    return strs.length <= 2
+      ? strs.join(" or ")
+      : strs.slice(0, strs.length - 1).join(", ") + " or " + strs[strs.length - 1];
   }
 
   /**
-   * joinMessageStrings: (msgStrs: Array[string], desc: string): string
+   * joinMessageStrings: (strs: Array[string], desc: string): string
    *
    * Returns a joined message with a short description.
    */
-  function joinMessageStrings(msgStrs, desc) {
-    return msgStrs.length === 0
+  function joinMessageStrings(strs, desc) {
+    return strs.length === 0
       ? ""
-      : (desc === "" ? "" : desc + " ") + joinWithCommasOr(msgStrs);
+      : (desc === "" ? "" : desc + " ") + joinWithCommasOr(strs);
   }
 
   /**
@@ -152,7 +153,7 @@ module.exports = ({ _pos }) => {
    *   setPosition(pos: SourcePos): ParseError
    *   setMessages(msgs: Array[ErrorMessage]): ParseError
    *   addMessages(msgs: Array[ErrorMessage]): ParseError
-   *   setSpecificTypeMessages(type: ErrorMessageType, msgStrs: Array[string]): ParseError
+   *   setSpecificTypeMessages(type: ErrorMessageType, strs: Array[string]): ParseError
    * }
    */
   class ParseError {
@@ -286,17 +287,17 @@ module.exports = ({ _pos }) => {
     /**
      * StrictParseError#setSpecificTypeMessages(
      *   type: ErrorMessageType,
-     *   msgStrs: Array[string]
+     *   strs: Array[string]
      * ): ParseError
      *
      * Creates a new parse error with all of the specific type of messages overwritten.
      */
-    setSpecificTypeMessages(type, msgStrs) {
+    setSpecificTypeMessages(type, strs) {
       return new LazyParseError(() =>
         new StrictParseError(
           this.pos,
           this.msgs.filter(msg => msg.type !== type)
-            .concat(msgStrs.map(msgStr => new ErrorMessage(type, msgStr)))
+            .concat(strs.map(str => ErrorMessage.create(type, str)))
         )
       );
     }
@@ -406,13 +407,13 @@ module.exports = ({ _pos }) => {
     /**
      * LazyParseError#setSpecificTypeMessages(
      *   type: ErrorMessageType,
-     *   msgStrs: Array[string]
+     *   strs: Array[string]
      * ): ParseError
      *
      * Creates a new parse error with all of the specific type of messages overwritten.
      */
-    setSpecificTypeMessages(type, msgStrs) {
-      return new LazyParseError(() => this.eval().setSpecificTypeMessages(type, msgStrs));
+    setSpecificTypeMessages(type, strs) {
+      return new LazyParseError(() => this.eval().setSpecificTypeMessages(type, strs));
     }
   }
 

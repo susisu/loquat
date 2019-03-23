@@ -8,11 +8,11 @@ describe("cleanMessageStrings", () => {
   it("should remove empty or duplicate messages", () => {
     expect(cleanMessageStrings([])).to.deep.equal([]);
     {
-      const msgStrs = ["", ""];
-      expect(cleanMessageStrings(msgStrs)).to.deep.equal([]);
+      const strs = ["", ""];
+      expect(cleanMessageStrings(strs)).to.deep.equal([]);
     }
     {
-      const msgStrs = [
+      const strs = [
         "",
         "foo",
         "bar",
@@ -22,7 +22,7 @@ describe("cleanMessageStrings", () => {
         "foo",
         "bar",
       ];
-      expect(cleanMessageStrings(msgStrs)).to.deep.equal([
+      expect(cleanMessageStrings(strs)).to.deep.equal([
         "foo",
         "bar",
         "baz",

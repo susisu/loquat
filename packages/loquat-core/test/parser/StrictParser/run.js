@@ -23,10 +23,10 @@ describe("#run", () => {
         new StrictParseError(
           new SourcePos("main", 506, 7, 29),
           [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+            ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+            ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+            ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
         "val",
@@ -51,10 +51,10 @@ describe("#run", () => {
       new StrictParseError(
         new SourcePos("main", 506, 7, 29),
         [
-          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-          new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-          new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-          new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+          ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+          ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
+          ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+          ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
         ]
       ),
       "val",

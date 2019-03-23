@@ -9,8 +9,8 @@ describe("#addMessages", () => {
   it("should return a new parse error with the given messages added", () => {
     const pos = new SourcePos("main", 496, 6, 28);
     const msgs = [
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+      ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+      ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
     ];
     let evaluated = false;
     const err = new LazyParseError(() => {
@@ -18,8 +18,8 @@ describe("#addMessages", () => {
       return new StrictParseError(pos, msgs);
     });
     const additionalMsgs = [
-      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+      ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
+      ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
     ];
     const newErr = err.addMessages(additionalMsgs);
     expect(evaluated).to.be.false; // not evaluated yet

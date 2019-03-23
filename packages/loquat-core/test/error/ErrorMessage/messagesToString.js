@@ -13,18 +13,18 @@ describe(".messagesToString", () => {
     // only SYSTEM_UNEXPECT
     {
       const msgs = [
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "sysA"),
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "sysB"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "sysA"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "sysB"),
       ];
       const text = "unexpected end of input";
       expect(ErrorMessage.messagesToString(msgs)).to.equal(text);
     }
     {
       const msgs = [
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "sysA"),
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "sysB"),
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "sysC"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "sysA"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "sysB"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "sysC"),
       ];
       const text = "unexpected sysA";
       expect(ErrorMessage.messagesToString(msgs)).to.equal(text);
@@ -32,9 +32,9 @@ describe(".messagesToString", () => {
     // only UNEXPECT
     {
       const msgs = [
-        new ErrorMessage(ErrorMessageType.UNEXPECT, "unexpA"),
-        new ErrorMessage(ErrorMessageType.UNEXPECT, "unexpB"),
-        new ErrorMessage(ErrorMessageType.UNEXPECT, "unexpC"),
+        ErrorMessage.create(ErrorMessageType.UNEXPECT, "unexpA"),
+        ErrorMessage.create(ErrorMessageType.UNEXPECT, "unexpB"),
+        ErrorMessage.create(ErrorMessageType.UNEXPECT, "unexpC"),
       ];
       const text = "unexpected unexpA, unexpB or unexpC";
       expect(ErrorMessage.messagesToString(msgs)).to.equal(text);
@@ -42,9 +42,9 @@ describe(".messagesToString", () => {
     // only EXPECT
     {
       const msgs = [
-        new ErrorMessage(ErrorMessageType.EXPECT, "expA"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "expB"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "expC"),
+        ErrorMessage.create(ErrorMessageType.EXPECT, "expA"),
+        ErrorMessage.create(ErrorMessageType.EXPECT, "expB"),
+        ErrorMessage.create(ErrorMessageType.EXPECT, "expC"),
       ];
       const text = "expecting expA, expB or expC";
       expect(ErrorMessage.messagesToString(msgs)).to.equal(text);
@@ -52,9 +52,9 @@ describe(".messagesToString", () => {
     // only MESSAGE
     {
       const msgs = [
-        new ErrorMessage(ErrorMessageType.MESSAGE, "msgA"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "msgB"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "msgC"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "msgA"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "msgB"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "msgC"),
       ];
       const text = "msgA, msgB or msgC";
       expect(ErrorMessage.messagesToString(msgs)).to.equal(text);
@@ -62,15 +62,15 @@ describe(".messagesToString", () => {
     // mixed
     {
       const msgs = [
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-        new ErrorMessage(ErrorMessageType.EXPECT, "expA"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "msgA"),
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "sysA"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "expB"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "msgB"),
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "sysB"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "expC"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "msgC"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+        ErrorMessage.create(ErrorMessageType.EXPECT, "expA"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "msgA"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "sysA"),
+        ErrorMessage.create(ErrorMessageType.EXPECT, "expB"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "msgB"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "sysB"),
+        ErrorMessage.create(ErrorMessageType.EXPECT, "expC"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "msgC"),
       ];
       const text = [
         "unexpected end of input",
@@ -81,15 +81,15 @@ describe(".messagesToString", () => {
     }
     {
       const msgs = [
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "sysA"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "expA"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "msgA"),
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "sysB"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "expB"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "msgB"),
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "sysC"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "expC"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "msgC"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "sysA"),
+        ErrorMessage.create(ErrorMessageType.EXPECT, "expA"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "msgA"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "sysB"),
+        ErrorMessage.create(ErrorMessageType.EXPECT, "expB"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "msgB"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "sysC"),
+        ErrorMessage.create(ErrorMessageType.EXPECT, "expC"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "msgC"),
       ];
       const text = [
         "unexpected sysA",
@@ -100,18 +100,18 @@ describe(".messagesToString", () => {
     }
     {
       const msgs = [
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "sysA"),
-        new ErrorMessage(ErrorMessageType.UNEXPECT, "unexpA"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "expA"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "msgA"),
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "sysB"),
-        new ErrorMessage(ErrorMessageType.UNEXPECT, "unexpB"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "expB"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "msgB"),
-        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "sysC"),
-        new ErrorMessage(ErrorMessageType.UNEXPECT, "unexpC"),
-        new ErrorMessage(ErrorMessageType.EXPECT, "expC"),
-        new ErrorMessage(ErrorMessageType.MESSAGE, "msgC"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "sysA"),
+        ErrorMessage.create(ErrorMessageType.UNEXPECT, "unexpA"),
+        ErrorMessage.create(ErrorMessageType.EXPECT, "expA"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "msgA"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "sysB"),
+        ErrorMessage.create(ErrorMessageType.UNEXPECT, "unexpB"),
+        ErrorMessage.create(ErrorMessageType.EXPECT, "expB"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "msgB"),
+        ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "sysC"),
+        ErrorMessage.create(ErrorMessageType.UNEXPECT, "unexpC"),
+        ErrorMessage.create(ErrorMessageType.EXPECT, "expC"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "msgC"),
       ];
       const text = [
         "unexpected unexpA, unexpB or unexpC",
@@ -124,7 +124,7 @@ describe(".messagesToString", () => {
 
   it("should throw `Error` if the argument contains any message with unknown type", () => {
     const msgs = [
-      new ErrorMessage("unknown", "foo"),
+      ErrorMessage.create("unknown", "foo"),
     ];
     expect(() => { ErrorMessage.messagesToString(msgs); }).to.throw(Error, /unknown message type/i);
   });

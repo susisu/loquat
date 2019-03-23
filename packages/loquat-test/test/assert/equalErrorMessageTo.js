@@ -8,36 +8,25 @@ describe("equalErrorMessageTo", () => {
   it("should throw AssertionError if the actual message is not equal to the expected one", () => {
     // type
     expect(() => {
-      expect(new ErrorMessage(ErrorMessageType.UNEXPECT, "foo"))
-        .to.be.an.equalErrorMessageTo(new ErrorMessage(ErrorMessageType.EXPECT, "foo"));
+      expect(ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo"))
+        .to.be.an.equalErrorMessageTo(ErrorMessage.create(ErrorMessageType.EXPECT, "foo"));
     }).to.throw(AssertionError);
-    // msgStr
+    // str
     expect(() => {
-      expect(new ErrorMessage(ErrorMessageType.UNEXPECT, "foo"))
-        .to.be.an.equalErrorMessageTo(new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"));
+      expect(ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo"))
+        .to.be.an.equalErrorMessageTo(ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"));
     }).to.throw(AssertionError);
     // both
     expect(() => {
-      expect(new ErrorMessage(ErrorMessageType.UNEXPECT, "foo"))
-        .to.be.an.equalErrorMessageTo(new ErrorMessage(ErrorMessageType.EXPECT, "bar"));
+      expect(ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo"))
+        .to.be.an.equalErrorMessageTo(ErrorMessage.create(ErrorMessageType.EXPECT, "bar"));
     }).to.throw(AssertionError);
   });
 
   it("should not throw AssertionError if the actual message is equal to the expected one", () => {
     expect(() => {
-      expect(new ErrorMessage(ErrorMessageType.UNEXPECT, "foo"))
-        .to.be.an.equalErrorMessageTo(new ErrorMessage(ErrorMessageType.UNEXPECT, "foo"));
+      expect(ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo"))
+        .to.be.an.equalErrorMessageTo(ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo"));
     }).to.not.throw(AssertionError);
-  });
-
-  it("should throw AssertionError if the object is not an `ErrorMessage` instance", () => {
-    const act = {};
-    const exp = new ErrorMessage(ErrorMessageType.UNEXPECT, "foo");
-    expect(() => {
-      expect(act).to.be.an.equalErrorMessageTo(exp);
-    }).to.throw(AssertionError);
-    expect(() => {
-      expect(act).to.not.be.an.equalErrorMessageTo(exp);
-    }).to.throw(AssertionError);
   });
 });
