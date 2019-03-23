@@ -20,8 +20,8 @@ module.exports = ({ _pos }) => {
    */
   class Config {
     constructor(opts = {}) {
-      this._tabWidth = opts.tabWidth === undefined ? 8 : opts.tabWidth;
-      this._unicode  = opts.unicode === undefined ? false : opts.unicode;
+      this._tabWidth = opts.tabWidth === undefined ? 1 : opts.tabWidth;
+      this._unicode  = opts.unicode === undefined ? true : opts.unicode;
     }
 
     get tabWidth() {

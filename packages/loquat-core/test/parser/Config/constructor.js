@@ -10,15 +10,15 @@ describe(".constructor", () => {
     {
       const config = new Config();
       expect(config).to.be.an.instanceOf(Config);
-      expect(config.tabWidth).to.equal(8);
-      expect(config.unicode).to.equal(false);
+      expect(config.tabWidth).to.equal(1);
+      expect(config.unicode).to.equal(true);
     }
     // use default parameters
     {
       const config = new Config({});
       expect(config).to.be.an.instanceOf(Config);
-      expect(config.tabWidth).to.equal(8);
-      expect(config.unicode).to.equal(false);
+      expect(config.tabWidth).to.equal(1);
+      expect(config.unicode).to.equal(true);
     }
     // use specified parameters
     {
