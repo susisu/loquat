@@ -143,7 +143,7 @@ module.exports = ({ _pos }) => {
    */
 
   /**
-   * sealed trait ParseError {
+   * trait ParseError {
    *   [parseErrorTypeKey]: ParseErrorType
    *   pos: SourcePos
    *   msgs: Array[ErrorMessage]
@@ -215,6 +215,8 @@ module.exports = ({ _pos }) => {
       throw new Error("not implemented");
     }
   }
+
+  ParseError.prototype[parseErrorTypeKey] = ParseErrorType.STRICT;
 
   /**
    * class StrictParseError(pos: SourcePos, msgs: Array[ErrorMessage]) extends ParseError {

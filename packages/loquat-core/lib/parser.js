@@ -193,7 +193,7 @@ module.exports = ({ _pos }) => {
   const parserTypeKey = Symbol("loquatParserType");
 
   /**
-   * sealed trait Parser[S, U, A] {
+   * trait Parser[S, U, A] {
    *   [parserTypeKey]: ParserType
    *   run(state: State[S, U, A]): Result[S, U, A]
    *   parse(name: string, input: S, userState: U, opts: ConfigOptions): ParseResult[A]
@@ -214,6 +214,8 @@ module.exports = ({ _pos }) => {
       return parse(this, name, input, userState, opts);
     }
   }
+
+  Parser.prototype[parserTypeKey] = ParserType.STRICT;
 
   /**
    * type ParserFunc[S, U, A] = (input: State[S, U]) => Result[S, U, A]
