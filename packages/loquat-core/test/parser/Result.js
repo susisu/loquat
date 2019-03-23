@@ -2,7 +2,7 @@
 
 describe("Result", () => {
   require("./Result/csuc");
-  require("./Result/cerr");
+  require("./Result/cfail");
   require("./Result/esuc");
-  require("./Result/eerr");
+  require("./Result/efail");
 });

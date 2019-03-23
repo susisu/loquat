@@ -29,7 +29,7 @@ describe("equalResultTo", () => {
           "none"
         )
       );
-      const exp = Result.cerr(
+      const exp = Result.cfail(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -68,13 +68,13 @@ describe("equalResultTo", () => {
       expect(act).to.be.an.equalResultTo(exp);
     }).to.throw(AssertionError);
     expect(() => {
-      const act = Result.cerr(
+      const act = Result.cfail(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
-      const exp = Result.eerr(
+      const exp = Result.efail(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -113,13 +113,13 @@ describe("equalResultTo", () => {
       expect(act).to.be.an.equalResultTo(exp);
     }).to.throw(AssertionError);
     expect(() => {
-      const act = Result.cerr(
+      const act = Result.cfail(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
-      const exp = Result.cerr(
+      const exp = Result.cfail(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.EXPECT, "bar")]
@@ -309,13 +309,13 @@ describe("equalResultTo", () => {
       expect(act).to.be.an.equalResultTo(exp);
     }).to.not.throw(AssertionError);
     expect(() => {
-      const act = Result.cerr(
+      const act = Result.cfail(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
-      const exp = Result.cerr(
+      const exp = Result.cfail(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]

@@ -6,9 +6,9 @@ const { SourcePos } = _pos;
 const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
 const { Result } = _parser;
 
-describe(".cerr", () => {
+describe(".cfail", () => {
   it("should create a consumed failure result object", () => {
-    const res = Result.cerr(
+    const res = Result.cfail(
       new StrictParseError(
         new SourcePos("main", 496, 6, 28),
         [

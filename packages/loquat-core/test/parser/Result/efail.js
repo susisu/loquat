@@ -6,9 +6,9 @@ const { SourcePos } = _pos;
 const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
 const { Result } = _parser;
 
-describe(".eerr", () => {
+describe(".efail", () => {
   it("should create an empty failure result object", () => {
-    const res = Result.eerr(
+    const res = Result.efail(
       new StrictParseError(
         new SourcePos("main", 496, 6, 28),
         [

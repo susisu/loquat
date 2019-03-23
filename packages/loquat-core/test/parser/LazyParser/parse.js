@@ -47,7 +47,7 @@ describe("#parse", () => {
         value  : "val",
       });
     }
-    // cerr
+    // cfail
     {
       let evaluated = false;
       const parser = new LazyParser(() => {
@@ -59,7 +59,7 @@ describe("#parse", () => {
             new SourcePos("main", 0, 1, 1),
             "none"
           ));
-          return Result.cerr(
+          return Result.cfail(
             new StrictParseError(
               new SourcePos("main", 496, 6, 28),
               [
@@ -125,7 +125,7 @@ describe("#parse", () => {
         value  : "val",
       });
     }
-    // eerr
+    // efail
     {
       let evaluated = false;
       const parser = new LazyParser(() => {
@@ -137,7 +137,7 @@ describe("#parse", () => {
             new SourcePos("main", 0, 1, 1),
             "none"
           ));
-          return Result.eerr(
+          return Result.efail(
             new StrictParseError(
               new SourcePos("main", 496, 6, 28),
               [
