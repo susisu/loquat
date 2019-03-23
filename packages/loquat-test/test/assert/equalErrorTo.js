@@ -112,7 +112,7 @@ describe("equalErrorTo", () => {
     }).to.not.throw(AssertionError);
   });
 
-  it("should throw AssertionError if the object is not an `ParseError` instance", () => {
+  it("should throw AssertionError if the object is not a `ParseError` instance", () => {
     const exp = new StrictParseError(
       new SourcePos("main", 6, 28),
       [new ErrorMessage(ErrorMessageType.UNEXPECT, "foo")]

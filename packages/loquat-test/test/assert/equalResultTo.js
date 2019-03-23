@@ -509,7 +509,7 @@ describe("equalResultTo", () => {
     }).to.not.throw(AssertionError);
   });
 
-  it("should throw AssertionError if the object is not an `Result` instance", () => {
+  it("should throw AssertionError if the object is not a `Result` instance", () => {
     const exp = new Result(
       true,
       true,
