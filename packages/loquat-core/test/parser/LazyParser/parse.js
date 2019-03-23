@@ -4,7 +4,7 @@ const { expect } = require("chai");
 
 const { SourcePos } = _pos;
 const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
-const { Config, State, Result, Parser, LazyParser } = _parser;
+const { Config, State, Result, StrictParser, LazyParser } = _parser;
 
 describe("#parse", () => {
   it("should run the parser with a new state and return result as a simple object", () => {
@@ -13,7 +13,7 @@ describe("#parse", () => {
       let evaluated = false;
       const parser = new LazyParser(() => {
         evaluated = true;
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(state).to.be.an.equalStateTo(new State(
             new Config({ tabWidth: 4, unicode: true }),
             "test",
@@ -52,7 +52,7 @@ describe("#parse", () => {
       let evaluated = false;
       const parser = new LazyParser(() => {
         evaluated = true;
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(state).to.be.an.equalStateTo(new State(
             new Config({ tabWidth: 4, unicode: true }),
             "test",
@@ -91,7 +91,7 @@ describe("#parse", () => {
       let evaluated = false;
       const parser = new LazyParser(() => {
         evaluated = true;
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(state).to.be.an.equalStateTo(new State(
             new Config({ tabWidth: 4, unicode: true }),
             "test",
@@ -130,7 +130,7 @@ describe("#parse", () => {
       let evaluated = false;
       const parser = new LazyParser(() => {
         evaluated = true;
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(state).to.be.an.equalStateTo(new State(
             new Config({ tabWidth: 4, unicode: true }),
             "test",
@@ -169,7 +169,7 @@ describe("#parse", () => {
       let evaluated = false;
       const parser = new LazyParser(() => {
         evaluated = true;
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(state).to.be.an.equalStateTo(new State(
             new Config(),
             "test",

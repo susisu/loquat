@@ -4,13 +4,13 @@ const { expect } = require("chai");
 
 const { SourcePos } = _pos;
 const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
-const { Config, State, Result, Parser, parse } = _parser;
+const { Config, State, Result, StrictParser, parse } = _parser;
 
 describe("parse", () => {
   it("should run `parser' and return result as a simple object", () => {
     // csuc
     {
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(new State(
           new Config({ tabWidth: 4, unicode: true }),
           "test",
@@ -44,7 +44,7 @@ describe("parse", () => {
     }
     // cerr
     {
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(new State(
           new Config({ tabWidth: 4, unicode: true }),
           "test",
@@ -78,7 +78,7 @@ describe("parse", () => {
     }
     // esuc
     {
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(new State(
           new Config({ tabWidth: 4, unicode: true }),
           "test",
@@ -112,7 +112,7 @@ describe("parse", () => {
     }
     // eerr
     {
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(new State(
           new Config({ tabWidth: 4, unicode: true }),
           "test",
@@ -146,7 +146,7 @@ describe("parse", () => {
     }
     // use default parameters
     {
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(new State(
           new Config(),
           "test",

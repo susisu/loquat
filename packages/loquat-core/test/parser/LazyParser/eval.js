@@ -7,14 +7,14 @@ const { LazyParser } = _parser;
 const { createNoopParser } = _test.helper;
 
 describe("#eval", () => {
-  it("should evaluate the thunk then return a fully evaluated `Parser`", () => {
+  it("should evaluate the thunk then return a fully evaluated `StrictParser`", () => {
     const p = createNoopParser();
     {
       const parser = new LazyParser(() => p);
       const res = parser.eval();
       expect(res).to.equal(p);
     }
-    // a multiply-nested LazyParser object is also evaluated to a Parser object
+    // a multiply-nested LazyParser object is also evaluated to a StrictParser object
     {
       const parser = new LazyParser(() =>
         new LazyParser(() => p)
@@ -97,7 +97,7 @@ describe("#eval", () => {
     }
   });
 
-  it("should throw a `TypeError` if the final result is not a `Parser` object", () => {
+  it("should throw a `TypeError` if the final result is not a `StrictParser` object", () => {
     const invalidResults = [
       null,
       undefined,

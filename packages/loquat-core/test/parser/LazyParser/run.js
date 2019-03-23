@@ -4,7 +4,7 @@ const { expect } = require("chai");
 
 const { SourcePos } = _pos;
 const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
-const { Config, State, Result, Parser, LazyParser } = _parser;
+const { Config, State, Result, StrictParser, LazyParser } = _parser;
 
 describe("#run(state)", () => {
   it("should evaluate the thunk and run the resultant parser with the given state", () => {
@@ -12,7 +12,7 @@ describe("#run(state)", () => {
     let evaluated = false;
     const parser = new LazyParser(() => {
       evaluated = true;
-      return new Parser(state => {
+      return new StrictParser(state => {
         flag = true;
         expect(state).to.be.an.equalStateTo(new State(
           new Config({ tabWidth: 4, unicode: true }),

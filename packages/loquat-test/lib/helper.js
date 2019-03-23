@@ -1,10 +1,10 @@
 "use strict";
 
 module.exports = ({ _core }) => {
-  const { ParseError, Result, Parser } = _core;
+  const { ParseError, Result, StrictParser } = _core;
 
   function createNoopParser() {
-    return new Parser(state =>
+    return new StrictParser(state =>
       Result.esuc(
         ParseError.unknown(state.pos),
         undefined,

@@ -4,12 +4,12 @@ const { expect } = require("chai");
 
 const { SourcePos } = _pos;
 const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
-const { Config, State, Result, Parser } = _parser;
+const { Config, State, Result, StrictParser } = _parser;
 
 describe("#run", () => {
   it("should call the parser function with the given state and return the result", () => {
     let flag = false;
-    const parser = new Parser(state => {
+    const parser = new StrictParser(state => {
       flag = true;
       expect(state).to.be.an.equalStateTo(new State(
         new Config({ tabWidth: 4, unicode: true }),

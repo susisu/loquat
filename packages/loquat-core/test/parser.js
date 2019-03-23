@@ -5,7 +5,7 @@ describe("parser", () => {
   require("./parser/State");
   require("./parser/Result");
   require("./parser/AbstractParser");
-  require("./parser/Parser");
+  require("./parser/StrictParser");
   require("./parser/LazyParser");
   require("./parser/lazy");
   require("./parser/parse");

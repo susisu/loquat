@@ -195,12 +195,12 @@ module.exports = ({ _pos }) => {
   }
 
   /**
-   * class Parser[S, U, A](
+   * class StrictParser[S, U, A](
    *   func: (input: State[S, U]) => Result[S, U, A]
    * ) extends AbstractParser[S, U, A] {
    * }
    */
-  class Parser extends AbstractParser {
+  class StrictParser extends AbstractParser {
     constructor(func) {
       super();
       this._func = func;
@@ -215,7 +215,7 @@ module.exports = ({ _pos }) => {
    * class LazyParser[S, U, A](
    *   thunk: () => AbstractParser[S, U, A]
    * ) extends AbstractParser[S, U, A] {
-   *   eval(): Parser[S, U, A]
+   *   eval(): StrictParser[S, U, A]
    * }
    */
   class LazyParser extends AbstractParser {
@@ -247,8 +247,8 @@ module.exports = ({ _pos }) => {
           parser = parser._thunk.call(undefined);
         }
       }
-      if (!(parser instanceof Parser)) {
-        throw new TypeError("evaluation result is not a Parser object");
+      if (!(parser instanceof StrictParser)) {
+        throw new TypeError("evaluation result is not a StrictParser object");
       }
       for (const lazyParser of lazyParsers) {
         lazyParser._cache = parser;
@@ -275,7 +275,7 @@ module.exports = ({ _pos }) => {
 
   /**
    * parse: [S, U, A](
-   *   parser: Parser[S, U, A],
+   *   parser: StrictParser[S, U, A],
    *   name: string,
    *   input: S,
    *   userState: U,
@@ -327,7 +327,7 @@ module.exports = ({ _pos }) => {
     State,
     Result,
     AbstractParser,
-    Parser,
+    StrictParser,
     LazyParser,
     lazy,
     parse,

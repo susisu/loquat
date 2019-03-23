@@ -20,7 +20,7 @@ module.exports = ({ _utils, _pos, _error, _stream, _parser }) =>
     State         : _parser.State,
     Result        : _parser.Result,
     AbstractParser: _parser.AbstractParser,
-    Parser        : _parser.Parser,
+    StrictParser  : _parser.StrictParser,
     LazyParser    : _parser.LazyParser,
     lazy          : _parser.lazy,
     parse         : _parser.parse,
