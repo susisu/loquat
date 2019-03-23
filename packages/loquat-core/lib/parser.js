@@ -190,7 +190,7 @@ module.exports = ({ _pos }) => {
   /**
    * parserTypeKey: symbol
    */
-  const parserTypeKey = Symbol.for("loquatParserType");
+  const parserTypeKey = Symbol("loquatParserType");
 
   /**
    * sealed trait Parser[S, U, A] {

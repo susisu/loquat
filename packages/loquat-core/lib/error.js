@@ -133,7 +133,7 @@ module.exports = ({ _pos }) => {
   /**
    * parseErrorTypeKey: symbol
    */
-  const parseErrorTypeKey = Symbol.for("loquatParseErrorType");
+  const parseErrorTypeKey = Symbol("loquatParseErrorType");
 
   /**
    * object ParseError {
