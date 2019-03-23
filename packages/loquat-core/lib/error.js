@@ -292,11 +292,13 @@ module.exports = ({ _pos }) => {
      * Creates a new parse error with all of the specific type of messages overwritten.
      */
     setSpecificTypeMessages(type, msgStrs) {
-      return new LazyParseError(() => new StrictParseError(
-        this.pos,
-        this.msgs.filter(msg => msg.type !== type)
-          .concat(msgStrs.map(msgStr => new ErrorMessage(type, msgStr)))
-      ));
+      return new LazyParseError(() =>
+        new StrictParseError(
+          this.pos,
+          this.msgs.filter(msg => msg.type !== type)
+            .concat(msgStrs.map(msgStr => new ErrorMessage(type, msgStr)))
+        )
+      );
     }
   }
 

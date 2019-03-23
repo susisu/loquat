@@ -70,7 +70,7 @@ module.exports = ({ _utils }) => {
    */
   class ArrayStream {
     constructor(arr, index) {
-      this._arr = arr;
+      this._arr   = arr;
       this._index = index;
     }
 
