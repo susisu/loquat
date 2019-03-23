@@ -20,12 +20,17 @@ describe("show", () => {
     expect(show("\r")).to.equal("\"\\r\"");
     expect(show("\f")).to.equal("\"\\f\"");
     expect(show("\v")).to.equal("\"\\v\"");
+    expect(show("\x00")).to.equal("\"\\x00\"");
+    expect(show("\x1F")).to.equal("\"\\x1F\"");
     expect(show("\u3042")).to.equal("\"\u3042\"");
     expect(show("\u5b89")).to.equal("\"\u5b89\"");
     expect(show("\uD83C\uDF63")).to.equal("\"\uD83C\uDF63\"");
     // multiple characters
-    const str = "0\\9\"A\bZ\ta\nz\r'\f`\v\u3042\u5b89\uD83C\uDF63";
-    expect(show(str)).to.equal("\"0\\\\9\\\"A\\bZ\\ta\\nz\\r'\\f`\\v\u3042\u5b89\uD83C\uDF63\"");
+    {
+      const str = "0\\9\"A\bZ\ta\nz\r'\f`\v\x00\x1F\u3042\u5b89\uD83C\uDF63";
+      const exp = "\"0\\\\9\\\"A\\bZ\\ta\\nz\\r'\\f`\\v\\x00\\x1F\u3042\u5b89\uD83C\uDF63\"";
+      expect(show(str)).to.equal(exp);
+    }
   });
 
   it("should return the string representation of the given value", () => {
@@ -40,7 +45,7 @@ describe("show", () => {
     const arr = [
       null,
       undefined,
-      "0\\9\"A\bZ\ta\nz\r'\f`\v\u3042\u5b89\uD83C\uDF63",
+      "0\\9\"A\bZ\ta\nz\r'\f`\v\x00\x1F\u3042\u5b89\uD83C\uDF63",
       3.14,
       true,
       { toString() { return "foobar"; } },
@@ -50,7 +55,7 @@ describe("show", () => {
     expect(show(arr)).to.equal("[" + [
       "null",
       "undefined",
-      "\"0\\\\9\\\"A\\bZ\\ta\\nz\\r'\\f`\\v\u3042\u5b89\uD83C\uDF63\"",
+      "\"0\\\\9\\\"A\\bZ\\ta\\nz\\r'\\f`\\v\\x00\\x1F\u3042\u5b89\uD83C\uDF63\"",
       "3.14",
       "true",
       "foobar",

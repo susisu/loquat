@@ -14,6 +14,8 @@ describe("escapeChar", () => {
     expect(escapeChar("\r")).to.equal("\\r");
     expect(escapeChar("\f")).to.equal("\\f");
     expect(escapeChar("\v")).to.equal("\\v");
+    expect(escapeChar("\x00")).to.equal("\\x00");
+    expect(escapeChar("\x1F")).to.equal("\\x1F");
   });
 
   it("should return the given character itself if it is not a special character", () => {

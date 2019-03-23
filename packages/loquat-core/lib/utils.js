@@ -1,17 +1,25 @@
 "use strict";
 
 module.exports = () => {
-  // TODO: add mappings for other control characters
-  const escapeMap = new Map([
-    ["\\", "\\\\"],
-    ["\"", "\\\""],
-    ["\b", "\\b"],
-    ["\f", "\\f"],
-    ["\n", "\\n"],
-    ["\r", "\\r"],
-    ["\t", "\\t"],
-    ["\v", "\\v"],
-  ]);
+  const controlChars = [];
+  for (let c = 0x00; c <= 0x1F; c++) {
+    controlChars.push([
+      String.fromCharCode(c),
+      "\\x" + ("0" + c.toString(16).toUpperCase()).slice(-2),
+    ]);
+  }
+  const escapeMap = new Map(
+    controlChars.concat([
+      ["\\", "\\\\"],
+      ["\"", "\\\""],
+      ["\b", "\\b"],
+      ["\f", "\\f"],
+      ["\n", "\\n"],
+      ["\r", "\\r"],
+      ["\t", "\\t"],
+      ["\v", "\\v"],
+    ])
+  );
 
   /**
    * escapeChar: (char: string) => string
