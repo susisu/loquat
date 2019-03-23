@@ -14,15 +14,12 @@ describe("#setInput", () => {
       "none"
     );
     const copy = state.setInput("bar");
-    expect(copy).to.be.an.instanceOf(State);
     expect(copy).to.not.equal(state);
-    expect(copy).to.be.an.equalStateTo(
-      new State(
-        new Config({ tabWidth: 4, unicode: true }),
-        "bar",
-        new SourcePos("nyancat", 6, 28),
-        "none"
-      )
-    );
+    expect(copy).to.be.an.equalStateTo(new State(
+      new Config({ tabWidth: 4, unicode: true }),
+      "bar",
+      new SourcePos("nyancat", 6, 28),
+      "none"
+    ));
   });
 });

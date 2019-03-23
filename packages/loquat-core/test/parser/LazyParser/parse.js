@@ -14,14 +14,12 @@ describe("#parse", () => {
       const parser = new LazyParser(() => {
         evaluated = true;
         return new Parser(state => {
-          expect(state).to.be.an.equalStateTo(
-            new State(
-              new Config({ tabWidth: 4, unicode: true }),
-              "test",
-              new SourcePos("main", 1, 1),
-              "none"
-            )
-          );
+          expect(state).to.be.an.equalStateTo(new State(
+            new Config({ tabWidth: 4, unicode: true }),
+            "test",
+            new SourcePos("main", 1, 1),
+            "none"
+          ));
           return Result.csuc(
             new ParseError(
               new SourcePos("main", 6, 28),
@@ -55,14 +53,12 @@ describe("#parse", () => {
       const parser = new LazyParser(() => {
         evaluated = true;
         return new Parser(state => {
-          expect(state).to.be.an.equalStateTo(
-            new State(
-              new Config({ tabWidth: 4, unicode: true }),
-              "test",
-              new SourcePos("main", 1, 1),
-              "none"
-            )
-          );
+          expect(state).to.be.an.equalStateTo(new State(
+            new Config({ tabWidth: 4, unicode: true }),
+            "test",
+            new SourcePos("main", 1, 1),
+            "none"
+          ));
           return Result.cerr(
             new ParseError(
               new SourcePos("main", 6, 28),
@@ -80,17 +76,15 @@ describe("#parse", () => {
       expect(evaluated).to.be.true;
       expect(res).to.be.an("object");
       expect(res.success).to.be.false;
-      expect(res.error).to.be.an.equalErrorTo(
-        new ParseError(
-          new SourcePos("main", 6, 28),
-          [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
-          ]
-        )
-      );
+      expect(res.error).to.be.an.equalErrorTo(new ParseError(
+        new SourcePos("main", 6, 28),
+        [
+          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+          new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+          new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+          new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+        ]
+      ));
     }
     // esuc
     {
@@ -98,14 +92,12 @@ describe("#parse", () => {
       const parser = new LazyParser(() => {
         evaluated = true;
         return new Parser(state => {
-          expect(state).to.be.an.equalStateTo(
-            new State(
-              new Config({ tabWidth: 4, unicode: true }),
-              "test",
-              new SourcePos("main", 1, 1),
-              "none"
-            )
-          );
+          expect(state).to.be.an.equalStateTo(new State(
+            new Config({ tabWidth: 4, unicode: true }),
+            "test",
+            new SourcePos("main", 1, 1),
+            "none"
+          ));
           return Result.esuc(
             new ParseError(
               new SourcePos("main", 6, 28),
@@ -139,14 +131,12 @@ describe("#parse", () => {
       const parser = new LazyParser(() => {
         evaluated = true;
         return new Parser(state => {
-          expect(state).to.be.an.equalStateTo(
-            new State(
-              new Config({ tabWidth: 4, unicode: true }),
-              "test",
-              new SourcePos("main", 1, 1),
-              "none"
-            )
-          );
+          expect(state).to.be.an.equalStateTo(new State(
+            new Config({ tabWidth: 4, unicode: true }),
+            "test",
+            new SourcePos("main", 1, 1),
+            "none"
+          ));
           return Result.eerr(
             new ParseError(
               new SourcePos("main", 6, 28),
@@ -164,17 +154,15 @@ describe("#parse", () => {
       expect(evaluated).to.be.true;
       expect(res).to.be.an("object");
       expect(res.success).to.be.false;
-      expect(res.error).to.be.an.equalErrorTo(
-        new ParseError(
-          new SourcePos("main", 6, 28),
-          [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
-          ]
-        )
-      );
+      expect(res.error).to.be.an.equalErrorTo(new ParseError(
+        new SourcePos("main", 6, 28),
+        [
+          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+          new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+          new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+          new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+        ]
+      ));
     }
     // use default parameters
     {
@@ -182,14 +170,12 @@ describe("#parse", () => {
       const parser = new LazyParser(() => {
         evaluated = true;
         return new Parser(state => {
-          expect(state).to.be.an.equalStateTo(
-            new State(
-              new Config(),
-              "test",
-              new SourcePos("main", 1, 1),
-              "none"
-            )
-          );
+          expect(state).to.be.an.equalStateTo(new State(
+            new Config(),
+            "test",
+            new SourcePos("main", 1, 1),
+            "none"
+          ));
           return Result.csuc(
             new ParseError(
               new SourcePos("main", 6, 28),

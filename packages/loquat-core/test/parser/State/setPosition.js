@@ -14,15 +14,12 @@ describe("#setPosition", () => {
       "none"
     );
     const copy = state.setPosition(new SourcePos("lib", 7, 29));
-    expect(copy).to.be.an.instanceOf(State);
     expect(copy).to.not.equal(state);
-    expect(copy).to.be.an.equalStateTo(
-      new State(
-        new Config({ tabWidth: 4, unicode: true }),
-        "foo",
-        new SourcePos("lib", 7, 29),
-        "none"
-      )
-    );
+    expect(copy).to.be.an.equalStateTo(new State(
+      new Config({ tabWidth: 4, unicode: true }),
+      "foo",
+      new SourcePos("lib", 7, 29),
+      "none"
+    ));
   });
 });

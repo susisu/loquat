@@ -5,7 +5,7 @@ const { expect } = require("chai");
 const { SourcePos } = _pos;
 const { ErrorMessageType, ErrorMessage, ParseError } = _error;
 
-describe("constructor(pos)", () => {
+describe(".constructor", () => {
   it("should create a new `ParseError` instance", () => {
     const pos = new SourcePos("main", 6, 28);
     const msgs = [

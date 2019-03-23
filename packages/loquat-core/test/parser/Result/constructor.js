@@ -31,25 +31,21 @@ describe(".constructor", () => {
     expect(res).to.be.an.instanceOf(Result);
     expect(res.consumed).to.be.true;
     expect(res.success).to.be.true;
-    expect(res.err).to.be.an.equalErrorTo(
-      new ParseError(
-        new SourcePos("main", 6, 28),
-        [
-          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-          new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-          new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-          new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
-        ]
-      )
-    );
+    expect(res.err).to.be.an.equalErrorTo(new ParseError(
+      new SourcePos("main", 6, 28),
+      [
+        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+        new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+        new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+        new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+      ]
+    ));
     expect(res.val).to.equal("val");
-    expect(res.state).to.be.an.equalStateTo(
-      new State(
-        new Config({ tabWidth: 4, unicode: true }),
-        "rest",
-        new SourcePos("main", 6, 29),
-        "none"
-      )
-    );
+    expect(res.state).to.be.an.equalStateTo(new State(
+      new Config({ tabWidth: 4, unicode: true }),
+      "rest",
+      new SourcePos("main", 6, 29),
+      "none"
+    ));
   });
 });

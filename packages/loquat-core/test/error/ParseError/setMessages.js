@@ -3,7 +3,7 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, AbstractParseError, ParseError } = _error;
+const { ErrorMessageType, ErrorMessage, ParseError } = _error;
 
 describe("#setMessages", () => {
   it("should create a new parse error with `msgs` updated", () => {
@@ -22,9 +22,7 @@ describe("#setMessages", () => {
       new ErrorMessage(ErrorMessageType.MESSAGE, "D"),
     ];
     const newErr = err.setMessages(newMsgs);
-    expect(newErr).to.be.an.instanceOf(AbstractParseError);
     expect(newErr).to.not.equal(err);
-    expect(newErr.pos).to.be.an.equalPositionTo(pos);
-    expect(newErr.msgs).to.be.equalErrorMessagesTo(newMsgs);
+    expect(newErr).to.be.an.equalErrorTo(new ParseError(pos, newMsgs));
   });
 });

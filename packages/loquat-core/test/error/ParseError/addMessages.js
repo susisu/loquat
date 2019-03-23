@@ -3,7 +3,7 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, AbstractParseError, ParseError } = _error;
+const { ErrorMessageType, ErrorMessage, ParseError } = _error;
 
 describe("#addMessages", () => {
   it("should return a new parse error with the given messages added", () => {
@@ -18,8 +18,6 @@ describe("#addMessages", () => {
       new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
     ];
     const newErr = err.addMessages(additionalMsgs);
-    expect(newErr).to.be.an.instanceOf(AbstractParseError);
-    expect(newErr.pos).to.be.an.equalPositionTo(pos);
-    expect(newErr.msgs).to.be.equalErrorMessagesTo(msgs.concat(additionalMsgs));
+    expect(newErr).to.be.an.equalErrorTo(new ParseError(pos, msgs.concat(additionalMsgs)));
   });
 });

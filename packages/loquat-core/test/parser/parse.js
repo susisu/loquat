@@ -11,14 +11,12 @@ describe("parse", () => {
     // csuc
     {
       const parser = new Parser(state => {
-        expect(state).to.be.an.equalStateTo(
-          new State(
-            new Config({ tabWidth: 4, unicode: true }),
-            "test",
-            new SourcePos("main", 1, 1),
-            "none"
-          )
-        );
+        expect(state).to.be.an.equalStateTo(new State(
+          new Config({ tabWidth: 4, unicode: true }),
+          "test",
+          new SourcePos("main", 1, 1),
+          "none"
+        ));
         return Result.csuc(
           new ParseError(
             new SourcePos("main", 6, 28),
@@ -47,14 +45,12 @@ describe("parse", () => {
     // cerr
     {
       const parser = new Parser(state => {
-        expect(state).to.be.an.equalStateTo(
-          new State(
-            new Config({ tabWidth: 4, unicode: true }),
-            "test",
-            new SourcePos("main", 1, 1),
-            "none"
-          )
-        );
+        expect(state).to.be.an.equalStateTo(new State(
+          new Config({ tabWidth: 4, unicode: true }),
+          "test",
+          new SourcePos("main", 1, 1),
+          "none"
+        ));
         return Result.cerr(
           new ParseError(
             new SourcePos("main", 6, 28),
@@ -70,29 +66,25 @@ describe("parse", () => {
       const res = parse(parser, "main", "test", "none", { tabWidth: 4, unicode: true });
       expect(res).to.be.an("object");
       expect(res.success).to.be.false;
-      expect(res.error).to.be.an.equalErrorTo(
-        new ParseError(
-          new SourcePos("main", 6, 28),
-          [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
-          ]
-        )
-      );
+      expect(res.error).to.be.an.equalErrorTo(new ParseError(
+        new SourcePos("main", 6, 28),
+        [
+          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+          new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+          new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+          new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+        ]
+      ));
     }
     // esuc
     {
       const parser = new Parser(state => {
-        expect(state).to.be.an.equalStateTo(
-          new State(
-            new Config({ tabWidth: 4, unicode: true }),
-            "test",
-            new SourcePos("main", 1, 1),
-            "none"
-          )
-        );
+        expect(state).to.be.an.equalStateTo(new State(
+          new Config({ tabWidth: 4, unicode: true }),
+          "test",
+          new SourcePos("main", 1, 1),
+          "none"
+        ));
         return Result.esuc(
           new ParseError(
             new SourcePos("main", 6, 28),
@@ -121,14 +113,12 @@ describe("parse", () => {
     // eerr
     {
       const parser = new Parser(state => {
-        expect(state).to.be.an.equalStateTo(
-          new State(
-            new Config({ tabWidth: 4, unicode: true }),
-            "test",
-            new SourcePos("main", 1, 1),
-            "none"
-          )
-        );
+        expect(state).to.be.an.equalStateTo(new State(
+          new Config({ tabWidth: 4, unicode: true }),
+          "test",
+          new SourcePos("main", 1, 1),
+          "none"
+        ));
         return Result.eerr(
           new ParseError(
             new SourcePos("main", 6, 28),
@@ -144,29 +134,25 @@ describe("parse", () => {
       const res = parse(parser, "main", "test", "none", { tabWidth: 4, unicode: true });
       expect(res).to.be.an("object");
       expect(res.success).to.be.false;
-      expect(res.error).to.be.an.equalErrorTo(
-        new ParseError(
-          new SourcePos("main", 6, 28),
-          [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
-          ]
-        )
-      );
+      expect(res.error).to.be.an.equalErrorTo(new ParseError(
+        new SourcePos("main", 6, 28),
+        [
+          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+          new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+          new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+          new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+        ]
+      ));
     }
     // use default parameters
     {
       const parser = new Parser(state => {
-        expect(state).to.be.an.equalStateTo(
-          new State(
-            new Config(),
-            "test",
-            new SourcePos("main", 1, 1),
-            undefined
-          )
-        );
+        expect(state).to.be.an.equalStateTo(new State(
+          new Config(),
+          "test",
+          new SourcePos("main", 1, 1),
+          undefined
+        ));
         return Result.csuc(
           new ParseError(
             new SourcePos("main", 6, 28),

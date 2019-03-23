@@ -3,7 +3,7 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, AbstractParseError, ParseError } = _error;
+const { ErrorMessageType, ErrorMessage, ParseError } = _error;
 
 describe("#setSpecificTypeMessages", () => {
   it("should create a new parse error with all of the specified type of messages removed and the"
@@ -17,15 +17,16 @@ describe("#setSpecificTypeMessages", () => {
     ];
     const err = new ParseError(pos, msgs);
     const newErr = err.setSpecificTypeMessages(ErrorMessageType.UNEXPECT, ["A", "B"]);
-    expect(newErr).to.be.an.instanceOf(AbstractParseError);
     expect(newErr).to.not.equal(err);
-    expect(newErr.pos).to.be.an.equalPositionTo(pos);
-    expect(newErr.msgs).to.be.equalErrorMessagesTo([
-      new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-      new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-      new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "A"),
-      new ErrorMessage(ErrorMessageType.UNEXPECT, "B"),
-    ]);
+    expect(newErr).to.be.an.equalErrorTo(new ParseError(
+      pos,
+      [
+        new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+        new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+        new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+        new ErrorMessage(ErrorMessageType.UNEXPECT, "A"),
+        new ErrorMessage(ErrorMessageType.UNEXPECT, "B"),
+      ]
+    ));
   });
 });

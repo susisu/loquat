@@ -11,14 +11,12 @@ describe("#run", () => {
     let flag = false;
     const parser = new Parser(state => {
       flag = true;
-      expect(state).to.be.an.equalStateTo(
-        new State(
-          new Config({ tabWidth: 4, unicode: true }),
-          "test",
-          new SourcePos("main", 6, 28),
-          "none"
-        )
-      );
+      expect(state).to.be.an.equalStateTo(new State(
+        new Config({ tabWidth: 4, unicode: true }),
+        "test",
+        new SourcePos("main", 6, 28),
+        "none"
+      ));
       return new Result(
         true,
         true,
@@ -47,27 +45,25 @@ describe("#run", () => {
       "none"
     ));
     expect(flag).to.be.true;
-    expect(res).to.be.an.equalResultTo(
-      new Result(
-        true,
-        true,
-        new ParseError(
-          new SourcePos("main", 7, 28),
-          [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
-          ]
-        ),
-        "val",
-        new State(
-          new Config({ tabWidth: 4, unicode: true }),
-          "rest",
-          new SourcePos("main", 7, 29),
-          "some"
-        )
+    expect(res).to.be.an.equalResultTo(new Result(
+      true,
+      true,
+      new ParseError(
+        new SourcePos("main", 7, 28),
+        [
+          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+          new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+          new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+          new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+        ]
+      ),
+      "val",
+      new State(
+        new Config({ tabWidth: 4, unicode: true }),
+        "rest",
+        new SourcePos("main", 7, 29),
+        "some"
       )
-    );
+    ));
   });
 });

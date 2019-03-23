@@ -19,21 +19,18 @@ describe(".cerr", () => {
         ]
       )
     );
-    expect(res).to.be.an.instanceOf(Result);
-    expect(res).to.be.an.equalResultTo(
-      new Result(
-        true,
-        false,
-        new ParseError(
-          new SourcePos("main", 6, 28),
-          [
-            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
-            new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
-            new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
-            new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
-          ]
-        )
+    expect(res).to.be.an.equalResultTo(new Result(
+      true,
+      false,
+      new ParseError(
+        new SourcePos("main", 6, 28),
+        [
+          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
+          new ErrorMessage(ErrorMessageType.UNEXPECT, "bar"),
+          new ErrorMessage(ErrorMessageType.EXPECT, "baz"),
+          new ErrorMessage(ErrorMessageType.MESSAGE, "qux"),
+        ]
       )
-    );
+    ));
   });
 });

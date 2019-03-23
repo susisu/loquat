@@ -8,12 +8,7 @@ describe("#setLine", () => {
   it("should create a copy of the position with `line` updated", () => {
     const pos  = new SourcePos("foo", 6, 28);
     const copy = pos.setLine(7);
-    expect(copy).to.be.an.instanceOf(SourcePos);
-    // different objects
     expect(copy).to.not.equal(pos);
-    // only the lines differ
-    expect(copy.name).to.equal(pos.name);
-    expect(copy.line).to.equal(7);
-    expect(copy.column).to.equal(pos.column);
+    expect(copy).to.be.an.equalPositionTo(new SourcePos("foo", 7, 28));
   });
 });
