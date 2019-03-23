@@ -13,9 +13,6 @@ module.exports = ({ _utils, _pos, _error, _stream, _parser }) =>
     StrictParseError: _error.StrictParseError,
     LazyParseError  : _error.LazyParseError,
 
-    uncons     : _stream.uncons,
-    ArrayStream: _stream.ArrayStream,
-
     Config      : _parser.Config,
     State       : _parser.State,
     Result      : _parser.Result,
@@ -26,4 +23,7 @@ module.exports = ({ _utils, _pos, _error, _stream, _parser }) =>
     parse       : _parser.parse,
     isParser    : _parser.isParser,
     extendParser: _parser.extendParser,
+
+    uncons     : _stream.uncons,
+    ArrayStream: _stream.ArrayStream,
   });
