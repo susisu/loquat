@@ -25,6 +25,5 @@ module.exports = ({ _utils, _pos, _error, _stream, _parser }) =>
     lazy        : _parser.lazy,
     parse       : _parser.parse,
     isParser    : _parser.isParser,
-    assertParser: _parser.assertParser,
     extendParser: _parser.extendParser,
   });

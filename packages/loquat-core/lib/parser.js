@@ -335,15 +335,6 @@ module.exports = ({ _pos }) => {
   }
 
   /**
-   * assertParser: (val: any) => undefined
-   */
-  function assertParser(val) {
-    if (!isParser(val)) {
-      throw new Error("not a parser");
-    }
-  }
-
-  /**
    * extendParser: (extensions: {}) => undefined
    */
   function extendParser(extensions) {
@@ -369,7 +360,6 @@ module.exports = ({ _pos }) => {
     lazy,
     parse,
     isParser,
-    assertParser,
     extendParser,
   });
 };

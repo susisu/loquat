@@ -10,6 +10,5 @@ describe("parser", () => {
   require("./parser/lazy");
   require("./parser/parse");
   require("./parser/isParser");
-  require("./parser/assertParser");
   require("./parser/extendParser");
 });
