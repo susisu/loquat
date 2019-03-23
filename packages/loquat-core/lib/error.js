@@ -120,6 +120,26 @@ module.exports = ({ _pos }) => {
   }
 
   /**
+   * type ParseErrorType = "strict" | "lazy"
+   */
+
+  /**
+   * object ParseErrorType {
+   *   STRICT: "strict"
+   *   LAZY: "lazy"
+   * }
+   */
+  const ParseErrorType = Object.freeze({
+    STRICT: "strict",
+    LAZY  : "lazy",
+  });
+
+  /**
+   * parseErrorTypeKey: symbol
+   */
+  const parseErrorTypeKey = Symbol.for("loquatParseErrorType");
+
+  /**
    * object ParseError {
    *   unknown(pos: SourcePos): StrictParseError
    *   equal(errA: StrictParseError, errB: StrictParseError): bool
@@ -128,7 +148,8 @@ module.exports = ({ _pos }) => {
    */
 
   /**
-   * trait ParseError {
+   * sealed trait ParseError {
+   *   [parseErrorTypeKey]: ParseErrorType
    *   pos: SourcePos
    *   msgs: Array[ErrorMessage]
    *   toString(): string
@@ -201,7 +222,9 @@ module.exports = ({ _pos }) => {
   }
 
   /**
-   * class StrictParseError(pos: SourcePos, msgs: Array[ErrorMessage]) extends ParseError
+   * class StrictParseError(pos: SourcePos, msgs: Array[ErrorMessage]) extends ParseError {
+   *   [parseErrorTypeKey]: "strict"
+   *}
    */
   class StrictParseError extends ParseError {
     constructor(pos, msgs) {
@@ -280,8 +303,11 @@ module.exports = ({ _pos }) => {
     }
   }
 
+  StrictParseError.prototype[parseErrorTypeKey] = ParseErrorType.STRICT;
+
   /**
    * class LazyParseError(thunk: () => ParseError) extends ParseError {
+   *   [parseErrorTypeKey]: "lazy"
    *   pos: SourcePos,
    *   msgs: Array[ErrorMessage]
    *   eval(): StrictParseError
@@ -304,25 +330,25 @@ module.exports = ({ _pos }) => {
         return this._cache;
       }
       const lazyErrs = [];
-      let err = this;
-      while (err instanceof LazyParseError) {
-        if (err._cache) {
-          err = err._cache;
+      let curr = this;
+      while (curr && curr[parseErrorTypeKey] === ParseErrorType.LAZY) {
+        if (curr._cache) {
+          curr = curr._cache;
         } else {
-          lazyErrs.push(err);
-          if (typeof err._thunk !== "function") {
+          lazyErrs.push(curr);
+          if (typeof curr._thunk !== "function") {
             throw new TypeError("thunk is not a function");
           }
-          err = err._thunk.call(undefined);
+          curr = curr._thunk.call(undefined);
         }
       }
-      if (!(err instanceof StrictParseError)) {
+      if (!(curr && curr[parseErrorTypeKey] === ParseErrorType.STRICT)) {
         throw new TypeError("evaluation result is not a StrictParseError obejct");
       }
-      for (const lazyErr of lazyErrs) {
-        lazyErr._cache = err;
+      for (const err of lazyErrs) {
+        err._cache = curr;
       }
-      return err;
+      return curr;
     }
 
     get pos() {
@@ -390,6 +416,8 @@ module.exports = ({ _pos }) => {
       return new LazyParseError(() => this.eval().setSpecificTypeMessages(type, msgStrs));
     }
   }
+
+  LazyParseError.prototype[parseErrorTypeKey] = ParseErrorType.LAZY;
 
   return Object.freeze({
     ErrorMessageType,
