@@ -8,7 +8,7 @@ describe(".constructor", () => {
   it("should throw `Error` if it is called as `new Parser`", () => {
     expect(() => {
       new Parser();
-    }).to.throw(Error, /cannot create Parser object/i);
+    }).to.throw(Error, /cannot create Parser object directly/i);
   });
 
   it("should not throw `Error` if it is called via `super` from child constructor", () => {

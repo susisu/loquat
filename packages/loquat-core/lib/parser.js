@@ -173,7 +173,28 @@ module.exports = ({ _pos }) => {
   }
 
   /**
-   * trait Parser[S, U, A] {
+   * type ParserType = "strict" \/ "lazy"
+   */
+
+  /**
+   * object ParserType {
+   *   STRICT: "strict"
+   *   LAZY: "lazy"
+   * }
+   */
+  const ParserType = Object.freeze({
+    STRICT: "strict",
+    LAZY  : "lazy",
+  });
+
+  /**
+   * parserTypeKey: symbol
+   */
+  const parserTypeKey = Symbol.for("loquatParserType");
+
+  /**
+   * sealed trait Parser[S, U, A] {
+   *   [parserTypeKey]: ParserType
    *   run(state: State[S, U, A]): Result[S, U, A]
    *   parse(name: string, input: S, userState: U, opts: ConfigOptions): ParseResult[A]
    * }
@@ -181,7 +202,7 @@ module.exports = ({ _pos }) => {
   class Parser {
     constructor() {
       if (this.constructor === Parser) {
-        throw new Error("cannot create Parser object");
+        throw new Error("cannot create Parser object directly");
       }
     }
 
@@ -195,9 +216,12 @@ module.exports = ({ _pos }) => {
   }
 
   /**
-   * class StrictParser[S, U, A](
-   *   func: (input: State[S, U]) => Result[S, U, A]
-   * ) extends Parser[S, U, A] {
+   * type ParserFunc[S, U, A] = (input: State[S, U]) => Result[S, U, A]
+   */
+
+  /**
+   * class StrictParser[S, U, A](func: ParserFunc[S, U, A]) extends Parser[S, U, A] {
+   *   [parserTypeKey]: "strict"
    * }
    */
   class StrictParser extends Parser {
@@ -211,10 +235,11 @@ module.exports = ({ _pos }) => {
     }
   }
 
+  StrictParser.prototype[parserTypeKey] = ParserType.STRICT;
+
   /**
-   * class LazyParser[S, U, A](
-   *   thunk: () => Parser[S, U, A]
-   * ) extends Parser[S, U, A] {
+   * class LazyParser[S, U, A](thunk: () => Parser[S, U, A]) extends Parser[S, U, A] {
+   *   [parserTypeKey]: "lazy"
    *   eval(): StrictParser[S, U, A]
    * }
    */
@@ -235,31 +260,33 @@ module.exports = ({ _pos }) => {
         return this._cache;
       }
       const lazyParsers = [];
-      let parser = this;
-      while (parser instanceof LazyParser) {
-        if (parser._cache) {
-          parser = parser._cache;
+      let curr = this;
+      while (curr && curr[parserTypeKey] === ParserType.LAZY) {
+        if (curr._cache) {
+          curr = curr._cache;
         } else {
-          lazyParsers.push(parser);
-          if (typeof parser._thunk !== "function") {
+          lazyParsers.push(curr);
+          if (typeof curr._thunk !== "function") {
             throw new TypeError("thunk is not a function");
           }
-          parser = parser._thunk.call(undefined);
+          curr = curr._thunk.call(undefined);
         }
       }
-      if (!(parser instanceof StrictParser)) {
+      if (!(curr && curr[parserTypeKey] === ParserType.STRICT)) {
         throw new TypeError("evaluation result is not a StrictParser object");
       }
-      for (const lazyParser of lazyParsers) {
-        lazyParser._cache = parser;
+      for (const parser of lazyParsers) {
+        parser._cache = curr;
       }
-      return parser;
+      return curr;
     }
 
     run(state) {
       return this.eval().run(state);
     }
   }
+
+  LazyParser.prototype[parserTypeKey] = ParserType.LAZY;
 
   /**
    * lazy: [S, U, A](thunk: () => Parser[S, U, A]): LazyParser[S, U, A]
