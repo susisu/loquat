@@ -101,76 +101,64 @@ module.exports = ({ _pos }) => {
   }
 
   /**
-   * class Result[S, U, A](
+   * type Success[S, U, A] = {
+   *   success: true,
    *   consumed: boolean,
-   *   success: boolean,
    *   err: ParseError,
-   *   val: undefined \/ A,
-   *   state: undefined \/ State[S, U]
-   * ) {
-   *   static csuc[S, U, A](err: Parser, val: A, state: State[S, U]): Result[S, U, A]
-   *   static cerr[S, U, A](err: Parser): Result[S, U, A]
-   *   static esuc[S, U, A](err: Parser, val: A, state: State[S, U]): Result[S, U, A]
-   *   static eerr[S, U, A](err: Parser): Result[S, U, A]
+   *   val: A,
+   *   state: State[S, U],
    * }
    */
-  class Result {
+
+  /**
+   * type Failure = {
+   *   success: true,
+   *   consumed: boolean,
+   *   err: ParseError,
+   * }
+   */
+
+  /**
+   * type Result[S, U, A] = Success[S, U, A] \/ Failure
+   */
+
+  /**
+   * object Result {
+   *   csuc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A]
+   *   cerr: (err: Parser) => Failure
+   *   esuc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A]
+   *   eerr: (err: Parser) => Failure
+   * }
+   */
+  const Result = Object.freeze({
     /**
-     * Result.csuc[S, U, A](err: Parser, val: A, state: State[S, U]): Result[S, U, A]
+     * Result.csuc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A]
      */
-    static csuc(err, val, state) {
-      return new Result(true, true, err, val, state);
-    }
+    csuc(err, val, state) {
+      return { success: true, consumed: true, err, val, state };
+    },
 
     /**
-     * Result.cerr[S, U, A](err: Parser): Result[S, U, A]
+     * Result.cerr: (err: Parser) => Failure
      */
-    static cerr(err) {
-      return new Result(true, false, err);
-    }
+    cerr(err) {
+      return { success: false, consumed: true, err };
+    },
 
     /**
-     * Result.esuc[S, U, A](err: Parser, val: A, state: State[S, U]): Result[S, U, A]
+     * Result.esuc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A]
      */
-    static esuc(err, val, state) {
-      return new Result(false, true, err, val, state);
-    }
+    esuc(err, val, state) {
+      return { success: true, consumed: false, err, val, state };
+    },
 
     /**
-     * Result.eerr[S, U, A](err: Parser): Result[S, U, A]
+     * Result.eerr: (err: Parser): Failure
      */
-    static eerr(err) {
-      return new Result(false, false, err);
-    }
-
-    constructor(consumed, success, err, val, state) {
-      this._consumed = consumed;
-      this._success  = success;
-      this._err      = err;
-      this._val      = val;
-      this._state    = state;
-    }
-
-    get consumed() {
-      return this._consumed;
-    }
-
-    get success() {
-      return this._success;
-    }
-
-    get err() {
-      return this._err;
-    }
-
-    get val() {
-      return this._val;
-    }
-
-    get state() {
-      return this._state;
-    }
-  }
+    eerr(err) {
+      return { success: false, consumed: false, err };
+    },
+  });
 
   /**
    * type ParserType = "strict" \/ "lazy"

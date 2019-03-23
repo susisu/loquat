@@ -15,7 +15,7 @@ describe(".create", () => {
     for (const type of types) {
       expect(type).to.be.a("string"); // assert type exists
       const msg = ErrorMessage.create(type, "foo");
-      expect(msg).to.be.an.equalErrorMessageTo({ type: type, str: "foo" });
+      expect(msg).to.be.an.equalErrorMessageTo({ type, str: "foo" });
     }
   });
 });

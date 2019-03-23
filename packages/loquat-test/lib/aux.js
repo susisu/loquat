@@ -108,8 +108,8 @@ module.exports = ({ _core }) => {
 
   const Success = {
     inspect: mkInspect("Result", [
-      { name: "consumed" },
       { name: "success" },
+      { name: "consumed" },
       { name: "err", inspector: ParseError.inspect },
       { name: "val" },
       { name: "state", inspector: State.inspect },
@@ -124,8 +124,8 @@ module.exports = ({ _core }) => {
 
   const Failure = {
     inspect: mkInspect("Result", [
-      { name: "consumed" },
       { name: "success" },
+      { name: "consumed" },
       { name: "err", inspector: ParseError.inspect },
     ]),
     equal: (resA, resB) =>

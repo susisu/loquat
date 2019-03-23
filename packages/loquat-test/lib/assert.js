@@ -88,12 +88,9 @@ module.exports = ({ _core, _aux }) => (chai, utils) => {
   });
 
   Assertion.addMethod("equalResultTo", function (exp, valEqual, inputEqual, userStateEqual) {
-    const { Result } = _core;
     const { equal, inspect } = _aux.Result;
 
     const act = this._obj;
-
-    new Assertion(act).to.be.an.instanceOf(Result);
 
     this.assert(
       equal(act, exp, valEqual, inputEqual, userStateEqual),

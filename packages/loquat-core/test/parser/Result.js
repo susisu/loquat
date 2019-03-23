@@ -5,6 +5,4 @@ describe("Result", () => {
   require("./Result/cerr");
   require("./Result/esuc");
   require("./Result/eerr");
-
-  require("./Result/constructor");
 });

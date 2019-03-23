@@ -19,10 +19,10 @@ describe(".cerr", () => {
         ]
       )
     );
-    expect(res).to.be.an.equalResultTo(new Result(
-      true,
-      false,
-      new StrictParseError(
+    expect(res).to.be.an.equalResultTo({
+      success : false,
+      consumed: true,
+      err     : new StrictParseError(
         new SourcePos("main", 496, 6, 28),
         [
           ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -30,7 +30,7 @@ describe(".cerr", () => {
           ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
           ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
         ]
-      )
-    ));
+      ),
+    });
   });
 });

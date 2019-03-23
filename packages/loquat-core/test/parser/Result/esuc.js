@@ -26,10 +26,10 @@ describe(".esuc", () => {
         "none"
       )
     );
-    expect(res).to.be.an.equalResultTo(new Result(
-      false,
-      true,
-      new StrictParseError(
+    expect(res).to.be.an.equalResultTo({
+      success : true,
+      consumed: false,
+      err     : new StrictParseError(
         new SourcePos("main", 496, 6, 28),
         [
           ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -38,13 +38,13 @@ describe(".esuc", () => {
           ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
         ]
       ),
-      "val",
-      new State(
+      val  : "val",
+      state: new State(
         new Config({ tabWidth: 4, unicode: true }),
         "rest",
         new SourcePos("main", 506, 7, 29),
         "none"
-      )
-    ));
+      ),
+    });
   });
 });

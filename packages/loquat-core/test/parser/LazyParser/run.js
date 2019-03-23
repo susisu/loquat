@@ -20,9 +20,7 @@ describe("#run(state)", () => {
           new SourcePos("main", 496, 6, 28),
           "none"
         ));
-        return new Result(
-          true,
-          true,
+        return Result.csuc(
           new StrictParseError(
             new SourcePos("main", 506, 7, 29),
             [
@@ -50,9 +48,7 @@ describe("#run(state)", () => {
     ));
     expect(evaluated).to.be.true;
     expect(flag).to.be.true;
-    expect(res).to.be.an.equalResultTo(new Result(
-      true,
-      true,
+    expect(res).to.be.an.equalResultTo(Result.csuc(
       new StrictParseError(
         new SourcePos("main", 506, 7, 29),
         [
