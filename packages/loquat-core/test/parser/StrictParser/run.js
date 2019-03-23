@@ -17,7 +17,7 @@ describe("#run", () => {
         new SourcePos("main", 496, 6, 28),
         "none"
       ));
-      return Result.csuc(
+      return Result.csucc(
         new StrictParseError(
           new SourcePos("main", 506, 7, 29),
           [
@@ -43,7 +43,7 @@ describe("#run", () => {
       "none"
     ));
     expect(flag).to.be.true;
-    expect(res).to.be.an.equalResultTo(Result.csuc(
+    expect(res).to.be.an.equalResultTo(Result.csucc(
       new StrictParseError(
         new SourcePos("main", 506, 7, 29),
         [

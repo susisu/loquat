@@ -8,7 +8,7 @@ const { Config, State, Result, StrictParser, parse } = _parser;
 
 describe("parse", () => {
   it("should run `parser' and return result as a simple object", () => {
-    // csuc
+    // csucc
     {
       const parser = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(new State(
@@ -17,7 +17,7 @@ describe("parse", () => {
           new SourcePos("main", 0, 1, 1),
           "none"
         ));
-        return Result.csuc(
+        return Result.csucc(
           new StrictParseError(
             new SourcePos("main", 496, 6, 28),
             [
@@ -76,7 +76,7 @@ describe("parse", () => {
         ]
       ));
     }
-    // esuc
+    // esucc
     {
       const parser = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(new State(
@@ -85,7 +85,7 @@ describe("parse", () => {
           new SourcePos("main", 0, 1, 1),
           "none"
         ));
-        return Result.esuc(
+        return Result.esucc(
           new StrictParseError(
             new SourcePos("main", 496, 6, 28),
             [
@@ -153,7 +153,7 @@ describe("parse", () => {
           new SourcePos("main", 0, 1, 1),
           undefined
         ));
-        return Result.csuc(
+        return Result.csucc(
           new StrictParseError(
             new SourcePos("main", 496, 6, 28),
             [

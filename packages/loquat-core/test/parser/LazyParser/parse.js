@@ -8,7 +8,7 @@ const { Config, State, Result, StrictParser, LazyParser } = _parser;
 
 describe("#parse", () => {
   it("should run the parser with a new state and return result as a simple object", () => {
-    // csuc
+    // csucc
     {
       let evaluated = false;
       const parser = new LazyParser(() => {
@@ -20,7 +20,7 @@ describe("#parse", () => {
             new SourcePos("main", 0, 1, 1),
             "none"
           ));
-          return Result.csuc(
+          return Result.csucc(
             new StrictParseError(
               new SourcePos("main", 496, 6, 28),
               [
@@ -86,7 +86,7 @@ describe("#parse", () => {
         ]
       ));
     }
-    // esuc
+    // esucc
     {
       let evaluated = false;
       const parser = new LazyParser(() => {
@@ -98,7 +98,7 @@ describe("#parse", () => {
             new SourcePos("main", 0, 1, 1),
             "none"
           ));
-          return Result.esuc(
+          return Result.esucc(
             new StrictParseError(
               new SourcePos("main", 496, 6, 28),
               [
@@ -176,7 +176,7 @@ describe("#parse", () => {
             new SourcePos("main", 0, 1, 1),
             "none"
           ));
-          return Result.csuc(
+          return Result.csucc(
             new StrictParseError(
               new SourcePos("main", 496, 6, 28),
               [

@@ -7,7 +7,7 @@ const { ParseError, Result, StrictParser } = _parser;
 describe(".constructor", () => {
   it("should create a new `StrictParser` instance", () => {
     const parser = new StrictParser(state =>
-      Result.esuc(
+      Result.esucc(
         ParseError.unknown(state.pos),
         undefined,
         state

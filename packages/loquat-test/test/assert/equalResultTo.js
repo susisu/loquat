@@ -16,7 +16,7 @@ describe("equalResultTo", () => {
   it("should throw AssertionError if the actual result is not equal to the expected one", () => {
     // success
     expect(() => {
-      const act = Result.csuc(
+      const act = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -39,7 +39,7 @@ describe("equalResultTo", () => {
     }).to.throw(AssertionError);
     // consumed
     expect(() => {
-      const act = Result.csuc(
+      const act = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -52,7 +52,7 @@ describe("equalResultTo", () => {
           "none"
         )
       );
-      const exp = Result.esuc(
+      const exp = Result.esucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -84,7 +84,7 @@ describe("equalResultTo", () => {
     }).to.throw(AssertionError);
     // err
     expect(() => {
-      const act = Result.csuc(
+      const act = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -97,7 +97,7 @@ describe("equalResultTo", () => {
           "none"
         )
       );
-      const exp = Result.csuc(
+      const exp = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.EXPECT, "bar")]
@@ -129,7 +129,7 @@ describe("equalResultTo", () => {
     }).to.throw(AssertionError);
     // val
     expect(() => {
-      const act = Result.csuc(
+      const act = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -142,7 +142,7 @@ describe("equalResultTo", () => {
           "none"
         )
       );
-      const exp = Result.csuc(
+      const exp = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -159,7 +159,7 @@ describe("equalResultTo", () => {
     }).to.throw(AssertionError);
     // state
     expect(() => {
-      const act = Result.csuc(
+      const act = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -172,7 +172,7 @@ describe("equalResultTo", () => {
           "none"
         )
       );
-      const exp = Result.csuc(
+      const exp = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -190,7 +190,7 @@ describe("equalResultTo", () => {
     // customized equality
     const caseInsensitiveEqual = (x, y) => x.toLowerCase() === y.toLowerCase();
     expect(() => {
-      const act = Result.csuc(
+      const act = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -203,7 +203,7 @@ describe("equalResultTo", () => {
           "none"
         )
       );
-      const exp = Result.csuc(
+      const exp = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -219,7 +219,7 @@ describe("equalResultTo", () => {
       expect(act).to.be.an.equalResultTo(exp, caseInsensitiveEqual);
     }).to.throw(AssertionError);
     expect(() => {
-      const act = Result.csuc(
+      const act = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -232,7 +232,7 @@ describe("equalResultTo", () => {
           "none"
         )
       );
-      const exp = Result.csuc(
+      const exp = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -248,7 +248,7 @@ describe("equalResultTo", () => {
       expect(act).to.be.an.equalResultTo(exp, undefined, caseInsensitiveEqual);
     }).to.throw(AssertionError);
     expect(() => {
-      const act = Result.csuc(
+      const act = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -261,7 +261,7 @@ describe("equalResultTo", () => {
           "none"
         )
       );
-      const exp = Result.csuc(
+      const exp = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -280,7 +280,7 @@ describe("equalResultTo", () => {
 
   it("should not throw AssertionError if the actual result is equal to the expected one", () => {
     expect(() => {
-      const act = Result.csuc(
+      const act = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -293,7 +293,7 @@ describe("equalResultTo", () => {
           "none"
         )
       );
-      const exp = Result.csuc(
+      const exp = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -326,7 +326,7 @@ describe("equalResultTo", () => {
     // customized equality
     const caseInsensitiveEqual = (x, y) => x.toLowerCase() === y.toLowerCase();
     expect(() => {
-      const act = Result.csuc(
+      const act = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -339,7 +339,7 @@ describe("equalResultTo", () => {
           "none"
         )
       );
-      const exp = Result.csuc(
+      const exp = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -355,7 +355,7 @@ describe("equalResultTo", () => {
       expect(act).to.be.an.equalResultTo(exp, caseInsensitiveEqual);
     }).to.not.throw(AssertionError);
     expect(() => {
-      const act = Result.csuc(
+      const act = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -368,7 +368,7 @@ describe("equalResultTo", () => {
           "none"
         )
       );
-      const exp = Result.csuc(
+      const exp = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -384,7 +384,7 @@ describe("equalResultTo", () => {
       expect(act).to.be.an.equalResultTo(exp, undefined, caseInsensitiveEqual);
     }).to.not.throw(AssertionError);
     expect(() => {
-      const act = Result.csuc(
+      const act = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -397,7 +397,7 @@ describe("equalResultTo", () => {
           "none"
         )
       );
-      const exp = Result.csuc(
+      const exp = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -413,7 +413,7 @@ describe("equalResultTo", () => {
       expect(act).to.be.an.equalResultTo(exp, undefined, undefined, caseInsensitiveEqual);
     }).to.not.throw(AssertionError);
     expect(() => {
-      const act = Result.csuc(
+      const act = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
@@ -426,7 +426,7 @@ describe("equalResultTo", () => {
           "none"
         )
       );
-      const exp = Result.csuc(
+      const exp = Result.csucc(
         new StrictParseError(
           new SourcePos("main", 496, 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]

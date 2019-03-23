@@ -6,9 +6,9 @@ const { SourcePos } = _pos;
 const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
 const { Config, State, Result } = _parser;
 
-describe(".esuc", () => {
-  it("should create an empty success result object", () => {
-    const res = Result.esuc(
+describe(".csucc", () => {
+  it("should create a consumed success result object", () => {
+    const res = Result.csucc(
       new StrictParseError(
         new SourcePos("main", 496, 6, 28),
         [
@@ -28,7 +28,7 @@ describe(".esuc", () => {
     );
     expect(res).to.be.an.equalResultTo({
       success : true,
-      consumed: false,
+      consumed: true,
       err     : new StrictParseError(
         new SourcePos("main", 496, 6, 28),
         [

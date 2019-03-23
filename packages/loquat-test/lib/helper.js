@@ -5,7 +5,7 @@ module.exports = ({ _core }) => {
 
   function createNoopParser() {
     return new StrictParser(state =>
-      Result.esuc(
+      Result.esucc(
         ParseError.unknown(state.pos),
         undefined,
         state
