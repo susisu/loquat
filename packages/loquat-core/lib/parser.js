@@ -14,6 +14,8 @@ module.exports = ({ _pos }) => {
    * class Config(opts?: ConfigOptions) {
    *  tabWidth: int
    *  unicode: boolean
+   *  setTabWidth(tabWidth: int): Config
+   *  setUnicode(unicode: boolean): Config
    * }
    */
   class Config {
@@ -28,6 +30,24 @@ module.exports = ({ _pos }) => {
 
     get unicode() {
       return this._unicode;
+    }
+
+    /**
+     * Config#setTabWidth(tabWidth: int): Config
+     *
+     * Creates a new config with `tabWidth` updated.
+     */
+    setTabWidth(tabWidth) {
+      return new Config({ tabWidth, unicode: this.unicode });
+    }
+
+    /**
+     * Config#setUnicode(unicode: boolean): Config
+     *
+     * Creates a new config with `unicode` updated.
+     */
+    setUnicode(unicode) {
+      return new Config({ tabWidth: this.tabWidth, unicode });
     }
   }
 
