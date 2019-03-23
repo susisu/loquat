@@ -36,7 +36,7 @@ module.exports = ({ _pos }) => {
     /**
      * ErrorMessage.messagesToString(msgs: Array[ErrorMessage]): string
      *
-     * Prints error messages in human readable format.
+     * Prints error messages in a human readable format.
      */
     static messagesToString(msgs) {
       if (msgs.length === 0) {
@@ -65,14 +65,12 @@ module.exports = ({ _pos }) => {
         }
       }
       const msgStrs = [
-                unexpects.length === 0 && systemUnexpects.length !== 0
-                    ? systemUnexpects[0] === ""
-                        ? "unexpected end of input"
-                        : "unexpected " + systemUnexpects[0]
-                    : "",
-                joinMessageStrings(cleanMessageStrings(unexpects), "unexpected"),
-                joinMessageStrings(cleanMessageStrings(expects), "expecting"),
-                joinMessageStrings(cleanMessageStrings(defaultMessages), ""),
+        unexpects.length === 0 && systemUnexpects.length !== 0
+            ? "unexpected " + (systemUnexpects[0] === "" ? "end of input" : systemUnexpects[0])
+            : "",
+        joinMessageStrings(cleanMessageStrings(unexpects), "unexpected"),
+        joinMessageStrings(cleanMessageStrings(expects), "expecting"),
+        joinMessageStrings(cleanMessageStrings(defaultMessages), ""),
       ];
       return cleanMessageStrings(msgStrs).join("\n");
     }
