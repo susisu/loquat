@@ -1,5 +1,5 @@
 "use strict";
 
 describe("helper", () => {
-  require("./helper/createNoopParser");
+  require("./helper/createDummyParser");
 });

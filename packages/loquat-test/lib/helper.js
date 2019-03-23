@@ -3,17 +3,11 @@
 module.exports = ({ _core }) => {
   const { ParseError, Result, StrictParser } = _core;
 
-  function createNoopParser() {
-    return new StrictParser(state =>
-      Result.esucc(
-        ParseError.unknown(state.pos),
-        undefined,
-        state
-      )
-    );
+  function createDummyParser() {
+    return new StrictParser(state => Result.efail(ParseError.unknown(state.pos)));
   }
 
   return Object.freeze({
-    createNoopParser,
+    createDummyParser,
   });
 };

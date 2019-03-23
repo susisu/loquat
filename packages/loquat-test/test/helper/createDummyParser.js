@@ -4,11 +4,11 @@ const { expect } = require("chai");
 
 const { SourcePos, ParseError, Config, State, Result } = _core;
 
-const { createNoopParser } = _helper;
+const { createDummyParser } = _helper;
 
-describe("createNoopParser", () => {
+describe("createDummyParser", () => {
   it("should create a new parser that does nothing", () => {
-    const parser = createNoopParser();
+    const parser = createDummyParser();
     const state = new State(
       new Config({ tabWidth: 4, unicode: true }),
       "input",
@@ -16,10 +16,8 @@ describe("createNoopParser", () => {
       "none"
     );
     const res = parser.run(state);
-    expect(res).to.be.an.equalResultTo(Result.esucc(
-      ParseError.unknown(new SourcePos("main", 496, 6, 28)),
-      undefined,
-      state
+    expect(res).to.be.an.equalResultTo(Result.efail(
+      ParseError.unknown(new SourcePos("main", 496, 6, 28))
     ));
   });
 });

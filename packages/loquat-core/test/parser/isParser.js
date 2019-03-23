@@ -4,16 +4,16 @@ const { expect } = require("chai");
 
 const { Parser, LazyParser, isParser } = _parser;
 
-const { createNoopParser } = _test.helper;
+const { createDummyParser } = _test.helper;
 
 describe("isParser", () => {
   it("should return true if the argument is an instance of `Parser`", () => {
     {
-      const parser = createNoopParser();
+      const parser = createDummyParser();
       expect(isParser(parser)).to.be.true;
     }
     {
-      const parser = new LazyParser(() => createNoopParser());
+      const parser = new LazyParser(() => createDummyParser());
       expect(isParser(parser)).to.be.true;
     }
     {

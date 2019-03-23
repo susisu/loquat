@@ -4,16 +4,16 @@ const { expect } = require("chai");
 
 const { Parser, LazyParser, assertParser } = _parser;
 
-const { createNoopParser } = _test.helper;
+const { createDummyParser } = _test.helper;
 
 describe("assertParser", () => {
   it("should just return `undefined` if the argument is an instance of `Parser`", () => {
     {
-      const parser = createNoopParser();
+      const parser = createDummyParser();
       expect(assertParser(parser)).to.be.undefined;
     }
     {
-      const parser = new LazyParser(() => createNoopParser());
+      const parser = new LazyParser(() => createDummyParser());
       expect(assertParser(parser)).to.be.undefined;
     }
     {
