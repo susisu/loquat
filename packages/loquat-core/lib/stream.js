@@ -10,14 +10,14 @@ module.exports = ({ _utils }) => {
   /**
    * trait Stream[S <: Stream[S]] { self: S =>
    *   type Token
-   *   def uncons(unicode: boolean): UnconsResult[Token, S]
+   *   def uncons(config: Config): UnconsResult[Token, S]
    * }
    *
    * `Stream[S]` abstracts input for parsers.
    */
 
   /**
-   * uncons: [S <: Stream[S]](input: S, unicode: boolean) => UnconsResult[input.Token, S]
+   * uncons: [S <: Stream[S]](input: S, config: Config) => UnconsResult[input.Token, S]
    *
    * Returns a pair of the first token (head) and the rest (tail) of the input stream.
    * The function also accepts `string` and `Array[T]` for all `T`. You can imagine that there are
@@ -26,7 +26,7 @@ module.exports = ({ _utils }) => {
    * ```
    * class ImplicitStringStream(str: String) extends Stream[ImplicitStringStream] {
    *   type Token = string
-   *   def uncons(unicode: boolean): UnconsResult[Token, ImplicitStringStream]
+   *   def uncons(config: Config): UnconsResult[Token, ImplicitStringStream]
    * }
    * ```
    *
@@ -35,7 +35,7 @@ module.exports = ({ _utils }) => {
    * ```
    * class ImplicitArrayStream[T](arr: Array[T]) extends Stream[ImplicitArrayStream[T]] {
    *   type Token = T
-   *   def uncons(unicode: boolean): UnconsResult[Token, ImplicitArrayStream[T]]
+   *   def uncons(config: Config): UnconsResult[Token, ImplicitArrayStream[T]]
    * }
    * ```
    *
@@ -43,16 +43,16 @@ module.exports = ({ _utils }) => {
    * `ArrayStream[T]` instead.
    *
    */
-  function uncons(input, unicode) {
+  function uncons(input, config) {
     if (typeof input === "string") {
-      return unconsString(input, unicode);
+      return unconsString(input, config.unicode);
     } else if (Array.isArray(input)) {
       return input.length === 0
         ? { empty: true }
         : { empty: false, head: input[0], tail: input.slice(1) };
     } else if (typeof input === "object" && input !== null) {
       if (typeof input.uncons === "function") {
-        return input.uncons(unicode);
+        return input.uncons(config);
       } else {
         throw new TypeError("input is not a stream");
       }
@@ -83,9 +83,9 @@ module.exports = ({ _utils }) => {
     }
 
     /**
-     * ArrayStream[T]#uncons(unicode: boolean): UnconsResult[T, ArrayStream[T]]
+     * ArrayStream[T]#uncons(config: Config): UnconsResult[T, ArrayStream[T]]
      */
-    uncons(unicode) {
+    uncons(config) {
       return this._index >= this._arr.length
         ? { empty: true }
         : {
