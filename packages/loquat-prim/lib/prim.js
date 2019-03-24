@@ -1,11 +1,3 @@
-/*
- * loquat-prim / prim.js
- */
-
-/**
- * @module prim
- */
-
 "use strict";
 
 module.exports = _core => {
@@ -21,17 +13,13 @@ module.exports = _core => {
   } = _core;
 
   /**
-   * @function module:prim.map
-   * @static
-   * @param {AbstractParser} parser
-   * @param {function} func
-   * @returns {AbstractParser}
+   * map: [S, U, A, B](parser: Parser[S, U, A], func: A => B): Parser[S, U, B]
    */
   function map(parser, func) {
     return new StrictParser(state => {
       const res = parser.run(state);
       return res.success
-        ? new Result(res.consumed, true, res.err, func(res.val), res.state)
+        ? Result.succ(res.consumed, res.err, func(res.val), res.state)
         : res;
     });
   }

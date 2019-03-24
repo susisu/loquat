@@ -62,9 +62,9 @@ describe("ap", () => {
         expect(state).to.be.an.equalStateTo(stateA);
         return Result.csucc(errB, "foo", stateB);
       });
-      const parser = ap(parserA, parserB);
-      expect(parser).to.be.a.parser;
-      const res = parser.run(initState);
+      const composed = ap(parserA, parserB);
+      expect(composed).to.be.a.parser;
+      const res = composed.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(errB, "bar", stateB));
     }
     // csucc, cfail
@@ -83,9 +83,9 @@ describe("ap", () => {
         expect(state).to.be.an.equalStateTo(stateA);
         return Result.cfail(errB);
       });
-      const parser = ap(parserA, parserB);
-      expect(parser).to.be.a.parser;
-      const res = parser.run(initState);
+      const composed = ap(parserA, parserB);
+      expect(composed).to.be.a.parser;
+      const res = composed.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(errB));
     }
     // csucc, esucc
@@ -105,9 +105,9 @@ describe("ap", () => {
         expect(state).to.be.an.equalStateTo(stateA);
         return Result.esucc(errB, "foo", stateB);
       });
-      const parser = ap(parserA, parserB);
-      expect(parser).to.be.a.parser;
-      const res = parser.run(initState);
+      const composed = ap(parserA, parserB);
+      expect(composed).to.be.a.parser;
+      const res = composed.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(ParseError.merge(errA, errB), "bar", stateB));
     }
     // csucc, efail
@@ -126,9 +126,9 @@ describe("ap", () => {
         expect(state).to.be.an.equalStateTo(stateA);
         return Result.efail(errB);
       });
-      const parser = ap(parserA, parserB);
-      expect(parser).to.be.a.parser;
-      const res = parser.run(initState);
+      const composed = ap(parserA, parserB);
+      expect(composed).to.be.a.parser;
+      const res = composed.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(ParseError.merge(errA, errB)));
     }
     // cfail
@@ -140,9 +140,9 @@ describe("ap", () => {
       const parserB = new StrictParser(state => {
         assert.fail("expect function to be not called");
       });
-      const parser = ap(parserA, parserB);
-      expect(parser).to.be.a.parser;
-      const res = parser.run(initState);
+      const composed = ap(parserA, parserB);
+      expect(composed).to.be.a.parser;
+      const res = composed.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(errA));
     }
     // esucc, csucc
@@ -162,9 +162,9 @@ describe("ap", () => {
         expect(state).to.be.an.equalStateTo(stateA);
         return Result.csucc(errB, "foo", stateB);
       });
-      const parser = ap(parserA, parserB);
-      expect(parser).to.be.a.parser;
-      const res = parser.run(initState);
+      const composed = ap(parserA, parserB);
+      expect(composed).to.be.a.parser;
+      const res = composed.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(errB, "bar", stateB));
     }
     // esucc, cfail
@@ -183,9 +183,9 @@ describe("ap", () => {
         expect(state).to.be.an.equalStateTo(stateA);
         return Result.cfail(errB);
       });
-      const parser = ap(parserA, parserB);
-      expect(parser).to.be.a.parser;
-      const res = parser.run(initState);
+      const composed = ap(parserA, parserB);
+      expect(composed).to.be.a.parser;
+      const res = composed.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(errB));
     }
     // esucc, esucc
@@ -205,9 +205,9 @@ describe("ap", () => {
         expect(state).to.be.an.equalStateTo(stateA);
         return Result.esucc(errB, "foo", stateB);
       });
-      const parser = ap(parserA, parserB);
-      expect(parser).to.be.a.parser;
-      const res = parser.run(initState);
+      const composed = ap(parserA, parserB);
+      expect(composed).to.be.a.parser;
+      const res = composed.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(ParseError.merge(errA, errB), "bar", stateB));
     }
     // esucc, efail
@@ -226,9 +226,9 @@ describe("ap", () => {
         expect(state).to.be.an.equalStateTo(stateA);
         return Result.efail(errB);
       });
-      const parser = ap(parserA, parserB);
-      expect(parser).to.be.a.parser;
-      const res = parser.run(initState);
+      const composed = ap(parserA, parserB);
+      expect(composed).to.be.a.parser;
+      const res = composed.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(ParseError.merge(errA, errB)));
     }
     // efail
@@ -240,9 +240,9 @@ describe("ap", () => {
       const parserB = new StrictParser(() => {
         assert.fail("expect function to be not called");
       });
-      const parser = ap(parserA, parserB);
-      expect(parser).to.be.a.parser;
-      const res = parser.run(initState);
+      const composed = ap(parserA, parserB);
+      expect(composed).to.be.a.parser;
+      const res = composed.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(errA));
     }
   });
