@@ -19,24 +19,24 @@ const assertParser     = _core.assertParser;
 const fail = _prim.fail;
 
 describe(".fail(msgStr)", () => {
-    it("should return a parser that always yield empty error with a message `msgStr'", () => {
-        const initState = new State(
-            new Config({ tabWidth: 8 }),
-            "input",
-            new SourcePos("foobar", 1, 1),
-            "none"
-        );
-        const parser = fail("nyancat");
-        assertParser(parser);
-        const res = parser.run(initState);
-        expect(Result.equal(
-            res,
-            Result.eerr(
-                new ParseError(
-                    new SourcePos("foobar", 1, 1),
-                    [new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat")]
-                )
-            )
-        )).to.be.true;
-    });
+  it("should return a parser that always yield empty error with a message `msgStr'", () => {
+    const initState = new State(
+      new Config({ tabWidth: 8 }),
+      "input",
+      new SourcePos("foobar", 1, 1),
+      "none"
+    );
+    const parser = fail("nyancat");
+    assertParser(parser);
+    const res = parser.run(initState);
+    expect(Result.equal(
+      res,
+      Result.eerr(
+        new ParseError(
+          new SourcePos("foobar", 1, 1),
+          [new ErrorMessage(ErrorMessageType.MESSAGE, "nyancat")]
+        )
+      )
+    )).to.be.true;
+  });
 });

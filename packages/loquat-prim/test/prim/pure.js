@@ -17,23 +17,23 @@ const assertParser = _core.assertParser;
 const pure = _prim.pure;
 
 describe(".pure(val)", () => {
-    it("should return a parser that always empty succeeds with `val'", () => {
-        const initState = new State(
-            new Config({ tabWidth: 8 }),
-            "input",
-            new SourcePos("foobar", 1, 1),
-            "none"
-        );
-        const parser = pure("nyancat");
-        assertParser(parser);
-        const res = parser.run(initState);
-        expect(Result.equal(
-            res,
-            Result.esuc(
-                ParseError.unknown(new SourcePos("foobar", 1, 1)),
-                "nyancat",
-                initState
-            )
-        )).to.be.true;
-    });
+  it("should return a parser that always empty succeeds with `val'", () => {
+    const initState = new State(
+      new Config({ tabWidth: 8 }),
+      "input",
+      new SourcePos("foobar", 1, 1),
+      "none"
+    );
+    const parser = pure("nyancat");
+    assertParser(parser);
+    const res = parser.run(initState);
+    expect(Result.equal(
+      res,
+      Result.esuc(
+        ParseError.unknown(new SourcePos("foobar", 1, 1)),
+        "nyancat",
+        initState
+      )
+    )).to.be.true;
+  });
 });

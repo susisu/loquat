@@ -17,22 +17,22 @@ const assertParser = _core.assertParser;
 const getInput = _prim.getInput;
 
 describe(".getInput", () => {
-    it("should get the current input of parser", () => {
-        assertParser(getInput);
-        const initState = new State(
-            new Config({ tabWidth: 8 }),
-            "input",
-            new SourcePos("foobar", 1, 1),
-            "none"
-        );
-        const res = getInput.run(initState);
-        expect(Result.equal(
-            res,
-            Result.esuc(
-                ParseError.unknown(new SourcePos("foobar", 1, 1)),
-                initState.input,
-                initState
-            )
-        )).to.be.true;
-    });
+  it("should get the current input of parser", () => {
+    assertParser(getInput);
+    const initState = new State(
+      new Config({ tabWidth: 8 }),
+      "input",
+      new SourcePos("foobar", 1, 1),
+      "none"
+    );
+    const res = getInput.run(initState);
+    expect(Result.equal(
+      res,
+      Result.esuc(
+        ParseError.unknown(new SourcePos("foobar", 1, 1)),
+        initState.input,
+        initState
+      )
+    )).to.be.true;
+  });
 });
