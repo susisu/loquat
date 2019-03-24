@@ -47,10 +47,7 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.pure
-   * @static
-   * @param {*} val
-   * @returns {AbstractParser}
+   * pure: [S, U, A](val: A): Parser[S, U, A]
    */
   function pure(val) {
     return new StrictParser(state => Result.esucc(ParseError.unknown(state.pos), val, state));
