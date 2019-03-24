@@ -144,6 +144,13 @@ module.exports = ({ _pos }) => {
 
   /**
    * object Result {
+   *   succ: [S, U, A](
+   *     consumed: boolean,
+   *     err: Parser,
+   *     val: A,
+   *     state: State[S, U]
+   *   ) => Success[S, U, A]
+   *   fail: (consumed: boolean, err: Parser) => Failure
    *   csucc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A]
    *   cfail: (err: Parser) => Failure
    *   esucc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A]
@@ -151,6 +158,25 @@ module.exports = ({ _pos }) => {
    * }
    */
   const Result = Object.freeze({
+    /**
+     * Result.succ: [S, U, A](
+     *   consumed: boolean,
+     *   err: Parser,
+     *   val: A,
+     *   state: State[S, U]
+     * ) => Success[S, U, A]
+     */
+    succ(consumed, err, val, state) {
+      return { success: true, consumed, err, val, state };
+    },
+
+    /**
+     * Result.fail: (consumed: boolean, err: Parser) => Failure
+     */
+    fail(consumed, err, val, state) {
+      return { success: false, consumed, err };
+    },
+
     /**
      * Result.csucc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A]
      */
