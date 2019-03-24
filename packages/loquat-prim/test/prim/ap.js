@@ -38,11 +38,11 @@ describe("ap", () => {
     const stateB = new State(
       new Config(),
       "restB",
-      new SourcePos("main", 2, 1, 3),
+      new SourcePos("main", 1, 1, 2),
       "someB"
     );
     const errB = new StrictParseError(
-      new SourcePos("main", 2, 1, 3),
+      new SourcePos("main", 1, 1, 2),
       [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
     );
     // csucc, csucc
