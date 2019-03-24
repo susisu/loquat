@@ -13,7 +13,8 @@
       "globals": {
          "_core": "readonly",
          "_prim": "readonly",
-         "_sugar": "readonly"
+         "_sugar": "readonly",
+         "_test": "readonly"
       },
       "rules": {
         "no-new": "off",
