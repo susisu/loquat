@@ -5,6 +5,7 @@ module.exports = _core => {
     ErrorMessageType,
     ErrorMessage,
     ParseError,
+    StrictParseError,
     LazyParseError,
     State,
     Result,
@@ -25,7 +26,7 @@ module.exports = _core => {
   }
 
   /**
-   * fmap: [A, B](func: A => B): [S, U]Parser[S, U, A] => Parser[S, U, B]
+   * fmap: [S, U, A, B](func: A => B): Parser[S, U, A] => Parser[S, U, B]
    */
   function fmap(func) {
     return parser => map(parser, func);
@@ -184,15 +185,14 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.fail
-   * @static
-   * @param {string} msgStr
-   * @returns {AbstractParser}
+   * fail: [S, U, A](str: string) => Parser[S, U, A]
    */
-  function fail(msgStr) {
-    return new StrictParser(state => Result.eerr(
-      new ParseError(state.pos, [new ErrorMessage(ErrorMessageType.MESSAGE, msgStr)])
-    ));
+  function fail(str) {
+    return new StrictParser(state =>
+      Result.efail(
+        new StrictParseError(state.pos, [ErrorMessage.create(ErrorMessageType.MESSAGE, str)])
+      )
+    );
   }
 
   /**
