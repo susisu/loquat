@@ -75,6 +75,31 @@ describe("equalErrorTo", () => {
         expect(new LazyParseError(() => act)).to.be.an.equalErrorTo(new LazyParseError(() => exp));
       }).to.throw(AssertionError, /ParseError/);
     }
+    // negated
+    {
+      const act = new StrictParseError(
+        new SourcePos("main", 496, 6, 28),
+        [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
+      );
+      const exp = new StrictParseError(
+        new SourcePos("main", 496, 6, 28),
+        [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
+      );
+      expect(() => {
+        expect(act).to.not.be.an.equalErrorTo(exp);
+      }).to.throw(AssertionError, /ParseError/);
+      expect(() => {
+        expect(act).to.not.be.an.equalErrorTo(new LazyParseError(() => exp));
+      }).to.throw(AssertionError, /ParseError/);
+      expect(() => {
+        expect(new LazyParseError(() => act)).to.not.be.an.equalErrorTo(exp);
+      }).to.throw(AssertionError, /ParseError/);
+      expect(() => {
+        expect(new LazyParseError(() => act)).to.not.be.an.equalErrorTo(
+          new LazyParseError(() => exp)
+        );
+      }).to.throw(AssertionError, /ParseError/);
+    }
   });
 
   it("should not throw AssertionError if the actual error is equal to the expected one", () => {

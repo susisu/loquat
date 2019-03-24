@@ -56,6 +56,18 @@ describe("equalErrorMessagesTo", () => {
       ];
       expect(act).to.be.an.equalErrorMessagesTo(exp);
     }).to.throw(AssertionError, /ErrorMessage/);
+    // negated
+    expect(() => {
+      const act = [
+        ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "bar"),
+      ];
+      const exp = [
+        ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "bar"),
+      ];
+      expect(act).to.not.be.an.equalErrorMessagesTo(exp);
+    }).to.throw(AssertionError, /ErrorMessage/);
   });
 
   it("should not throw AssertionError if the actual message array is equal to the expected"

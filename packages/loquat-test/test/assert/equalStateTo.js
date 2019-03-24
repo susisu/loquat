@@ -118,6 +118,22 @@ describe("equalStateTo", () => {
       );
       expect(act).to.be.an.equalStateTo(exp, undefined, caseInsensitiveEqual);
     }).to.throw(AssertionError, /State/);
+    // negated
+    expect(() => {
+      const act = new State(
+        new Config({ tabWidth: 4, unicode: true }),
+        "foo",
+        new SourcePos("main", 496, 6, 28),
+        "none"
+      );
+      const exp = new State(
+        new Config({ tabWidth: 4, unicode: true }),
+        "foo",
+        new SourcePos("main", 496, 6, 28),
+        "none"
+      );
+      expect(act).to.not.be.an.equalStateTo(exp);
+    }).to.throw(AssertionError, /State/);
   });
 
   it("should not throw AssertionError if the actual state is equal to the expected one", () => {

@@ -36,6 +36,12 @@ describe("equalPositionTo", () => {
       const exp = new SourcePos("lib", 497, 7, 29);
       expect(act).to.be.an.equalPositionTo(exp);
     }).to.throw(AssertionError, /SourcePos/);
+    // negated
+    expect(() => {
+      const act = new SourcePos("main", 496, 6, 28);
+      const exp = new SourcePos("main", 496, 6, 28);
+      expect(act).to.not.be.an.equalPositionTo(exp);
+    }).to.throw(AssertionError, /SourcePos/);
   });
 
   it("should not throw AssertionError if the actual position is equal to the expected one", () => {

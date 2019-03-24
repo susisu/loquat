@@ -276,6 +276,36 @@ describe("equalResultTo", () => {
       );
       expect(act).to.be.an.equalResultTo(exp, undefined, undefined, caseInsensitiveEqual);
     }).to.throw(AssertionError, /Result/);
+    // negated
+    expect(() => {
+      const act = Result.csucc(
+        new StrictParseError(
+          new SourcePos("main", 496, 6, 28),
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
+        ),
+        "nyancat",
+        new State(
+          new Config({ tabWidth: 4, unicode: true }),
+          "bar",
+          new SourcePos("main", 497, 7, 29),
+          "none"
+        )
+      );
+      const exp = Result.csucc(
+        new StrictParseError(
+          new SourcePos("main", 496, 6, 28),
+          [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
+        ),
+        "nyancat",
+        new State(
+          new Config({ tabWidth: 4, unicode: true }),
+          "bar",
+          new SourcePos("main", 497, 7, 29),
+          "none"
+        )
+      );
+      expect(act).to.not.be.an.equalResultTo(exp);
+    }).to.throw(AssertionError, /Result/);
   });
 
   it("should not throw AssertionError if the actual result is equal to the expected one", () => {

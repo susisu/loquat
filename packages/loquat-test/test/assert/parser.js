@@ -22,6 +22,11 @@ describe("parser", () => {
         expect(val).to.be.a.parser;
       }).to.throw(AssertionError, /to be a parser/);
     }
+    // negated
+    expect(() => {
+      const parser = createDummyParser();
+      expect(parser).to.not.be.a.parser;
+    }).to.throw(AssertionError, /to not be a parser/);
   });
 
   it("should not throw AssertionError if the object is a parser", () => {

@@ -24,6 +24,12 @@ describe("equalConfigTo", () => {
       const exp = new Config({ tabWidth: 8, unicode: false });
       expect(act).to.be.an.equalConfigTo(exp);
     }).to.throw(AssertionError, /Config/);
+    // negated
+    expect(() => {
+      const act = new Config({ tabWidth: 4, unicode: true });
+      const exp = new Config({ tabWidth: 4, unicode: true });
+      expect(act).to.not.be.an.equalConfigTo(exp);
+    }).to.throw(AssertionError, /Config/);
   });
 
   it("should not throw AssertionError if the actual config is equal to the expected one", () => {
