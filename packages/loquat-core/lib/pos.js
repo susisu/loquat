@@ -149,12 +149,11 @@ module.exports = () => {
       // For this case,
       // - `switch` is faster than `if`
       // - comparing character codes is faster than strings
-      let index = this.index;
       let line = this.line;
       let column = this.column;
+      const len = str.length;
       if (unicode) {
         for (const char of str) {
-          index += 1;
           switch (char.charCodeAt(0)) {
           case LF:
             line += 1;
@@ -168,9 +167,7 @@ module.exports = () => {
           }
         }
       } else {
-        const len = str.length;
         for (let i = 0; i < len; i++) {
-          index += 1;
           switch (str.charCodeAt(i)) {
           case LF:
             line += 1;
@@ -184,7 +181,7 @@ module.exports = () => {
           }
         }
       }
-      return new SourcePos(this.name, index, line, column);
+      return new SourcePos(this.name, this.index + len, line, column);
     }
   }
 

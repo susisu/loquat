@@ -24,6 +24,7 @@ describe("#addString", () => {
     const pos = new SourcePos("foo", 496, 6, 1);
     const copy = pos.addString("nyan\n\tcat\n\u3042\t\uD83C\uDF63", 8, true);
     expect(copy).to.not.equal(pos);
-    expect(copy).to.be.an.equalPositionTo(new SourcePos("foo", 509, 8, 10));
+    // the offset in index is not affected by the unicode flag
+    expect(copy).to.be.an.equalPositionTo(new SourcePos("foo", 510, 8, 10));
   });
 });
