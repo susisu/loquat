@@ -20,7 +20,7 @@ describe("parser", () => {
     for (const val of values) {
       expect(() => {
         expect(val).to.be.a.parser;
-      }).to.throw(AssertionError);
+      }).to.throw(AssertionError, /to be a parser/);
     }
   });
 

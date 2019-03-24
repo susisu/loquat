@@ -21,7 +21,7 @@ describe("equalStateTo", () => {
         "none"
       );
       expect(act).to.be.an.equalStateTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /State/);
     // input
     expect(() => {
       const act = new State(
@@ -37,7 +37,7 @@ describe("equalStateTo", () => {
         "none"
       );
       expect(act).to.be.an.equalStateTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /State/);
     // pos
     expect(() => {
       const act = new State(
@@ -53,7 +53,7 @@ describe("equalStateTo", () => {
         "none"
       );
       expect(act).to.be.an.equalStateTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /State/);
     // userState
     expect(() => {
       const act = new State(
@@ -69,7 +69,7 @@ describe("equalStateTo", () => {
         "some"
       );
       expect(act).to.be.an.equalStateTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /State/);
     // all
     expect(() => {
       const act = new State(
@@ -85,7 +85,7 @@ describe("equalStateTo", () => {
         "some"
       );
       expect(act).to.be.an.equalStateTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /State/);
     // customized equality
     const caseInsensitiveEqual = (x, y) => x.toLowerCase() === y.toLowerCase();
     expect(() => {
@@ -102,7 +102,7 @@ describe("equalStateTo", () => {
         "NONE"
       );
       expect(act).to.be.an.equalStateTo(exp, caseInsensitiveEqual);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /State/);
     expect(() => {
       const act = new State(
         new Config({ tabWidth: 4, unicode: true }),
@@ -117,7 +117,7 @@ describe("equalStateTo", () => {
         "none"
       );
       expect(act).to.be.an.equalStateTo(exp, undefined, caseInsensitiveEqual);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /State/);
   });
 
   it("should not throw AssertionError if the actual state is equal to the expected one", () => {
@@ -186,18 +186,28 @@ describe("equalStateTo", () => {
   });
 
   it("should throw AssertionError if the object is not a `State` instance", () => {
-    const act = {};
+    const values = [
+      null,
+      undefined,
+      "foo",
+      42,
+      true,
+      {},
+      () => {},
+    ];
     const exp = new State(
       new Config({ tabWidth: 4, unicode: true }),
       "foo",
       new SourcePos("main", 496, 6, 28),
       "none"
     );
-    expect(() => {
-      expect(act).to.be.an.equalStateTo(exp);
-    }).to.throw(AssertionError);
-    expect(() => {
-      expect(act).to.not.be.an.equalStateTo(exp);
-    }).to.throw(AssertionError);
+    for (const act of values) {
+      expect(() => {
+        expect(act).to.be.an.equalStateTo(exp);
+      }).to.throw(AssertionError, /State/);
+      expect(() => {
+        expect(act).to.not.be.an.equalStateTo(exp);
+      }).to.throw(AssertionError, /State/);
+    }
   });
 });

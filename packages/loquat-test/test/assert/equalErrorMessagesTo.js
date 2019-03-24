@@ -18,7 +18,7 @@ describe("equalErrorMessagesTo", () => {
         ErrorMessage.create(ErrorMessageType.MESSAGE, "bar"),
       ];
       expect(act).to.be.an.equalErrorMessagesTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /ErrorMessage/);
     // str
     expect(() => {
       const act = [
@@ -30,7 +30,7 @@ describe("equalErrorMessagesTo", () => {
         ErrorMessage.create(ErrorMessageType.MESSAGE, "bar"),
       ];
       expect(act).to.be.an.equalErrorMessagesTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /ErrorMessage/);
     // both
     expect(() => {
       const act = [
@@ -39,10 +39,10 @@ describe("equalErrorMessagesTo", () => {
       ];
       const exp = [
         ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
-        ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
+        ErrorMessage.create(ErrorMessageType.MESSAGE, "bar"),
       ];
       expect(act).to.be.an.equalErrorMessagesTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /ErrorMessage/);
     // length
     expect(() => {
       const act = [
@@ -55,7 +55,7 @@ describe("equalErrorMessagesTo", () => {
         ErrorMessage.create(ErrorMessageType.MESSAGE, "bar"),
       ];
       expect(act).to.be.an.equalErrorMessagesTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /ErrorMessage/);
   });
 
   it("should not throw AssertionError if the actual message array is equal to the expected"
@@ -63,7 +63,6 @@ describe("equalErrorMessagesTo", () => {
     expect(() => {
       expect([]).to.be.an.equalErrorMessagesTo([]);
     }).to.not.throw(AssertionError);
-
     expect(() => {
       const act = [
         ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo"),

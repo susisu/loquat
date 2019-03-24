@@ -8,36 +8,50 @@ describe("equalConfigTo", () => {
   it("should throw AssertionError if the actual config is not equal to the expected one", () => {
     // tabWidth
     expect(() => {
-      expect(new Config({ tabWidth: 4, unicode: true }))
-        .to.be.an.equalConfigTo(new Config({ tabWidth: 8, unicode: true }));
-    }).to.throw(AssertionError);
+      const act = new Config({ tabWidth: 4, unicode: true });
+      const exp = new Config({ tabWidth: 8, unicode: true });
+      expect(act).to.be.an.equalConfigTo(exp);
+    }).to.throw(AssertionError, /Config/);
     // unicode
     expect(() => {
-      expect(new Config({ tabWidth: 4, unicode: true }))
-        .to.be.an.equalConfigTo(new Config({ tabWidth: 4, unicode: false }));
-    }).to.throw(AssertionError);
+      const act = new Config({ tabWidth: 4, unicode: true });
+      const exp = new Config({ tabWidth: 4, unicode: false });
+      expect(act).to.be.an.equalConfigTo(exp);
+    }).to.throw(AssertionError, /Config/);
     // both
     expect(() => {
-      expect(new Config({ tabWidth: 4, unicode: true }))
-        .to.be.an.equalConfigTo(new Config({ tabWidth: 8, unicode: false }));
-    }).to.throw(AssertionError);
+      const act = new Config({ tabWidth: 4, unicode: true });
+      const exp = new Config({ tabWidth: 8, unicode: false });
+      expect(act).to.be.an.equalConfigTo(exp);
+    }).to.throw(AssertionError, /Config/);
   });
 
   it("should not throw AssertionError if the actual config is equal to the expected one", () => {
     expect(() => {
-      expect(new Config({ tabWidth: 4, unicode: true }))
-        .to.be.an.equalConfigTo(new Config({ tabWidth: 4, unicode: true }));
+      const act = new Config({ tabWidth: 4, unicode: true });
+      const exp = new Config({ tabWidth: 4, unicode: true });
+      expect(act).to.be.an.equalConfigTo(exp);
     }).to.not.throw(AssertionError);
   });
 
   it("should throw AssertionError if the object is not a `Config` instance", () => {
-    const act = {};
+    const values = [
+      null,
+      undefined,
+      "foo",
+      42,
+      true,
+      {},
+      () => {},
+    ];
     const exp = new Config({ tabWidth: 4, unicode: true });
-    expect(() => {
-      expect(act).to.be.an.equalConfigTo(exp);
-    }).to.throw(AssertionError);
-    expect(() => {
-      expect(act).to.not.be.an.equalConfigTo(exp);
-    }).to.throw(AssertionError);
+    for (const act of values) {
+      expect(() => {
+        expect(act).to.be.an.equalConfigTo(exp);
+      }).to.throw(AssertionError, /Config/);
+      expect(() => {
+        expect(act).to.not.be.an.equalConfigTo(exp);
+      }).to.throw(AssertionError, /Config/);
+    }
   });
 });

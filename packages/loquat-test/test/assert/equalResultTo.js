@@ -36,7 +36,7 @@ describe("equalResultTo", () => {
         )
       );
       expect(act).to.be.an.equalResultTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /Result/);
     // consumed
     expect(() => {
       const act = Result.csucc(
@@ -66,7 +66,7 @@ describe("equalResultTo", () => {
         )
       );
       expect(act).to.be.an.equalResultTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /Result/);
     expect(() => {
       const act = Result.cfail(
         new StrictParseError(
@@ -81,7 +81,7 @@ describe("equalResultTo", () => {
         )
       );
       expect(act).to.be.an.equalResultTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /Result/);
     // err
     expect(() => {
       const act = Result.csucc(
@@ -111,7 +111,7 @@ describe("equalResultTo", () => {
         )
       );
       expect(act).to.be.an.equalResultTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /Result/);
     expect(() => {
       const act = Result.cfail(
         new StrictParseError(
@@ -126,7 +126,7 @@ describe("equalResultTo", () => {
         )
       );
       expect(act).to.be.an.equalResultTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /Result/);
     // val
     expect(() => {
       const act = Result.csucc(
@@ -156,7 +156,7 @@ describe("equalResultTo", () => {
         )
       );
       expect(act).to.be.an.equalResultTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /Result/);
     // state
     expect(() => {
       const act = Result.csucc(
@@ -186,7 +186,7 @@ describe("equalResultTo", () => {
         )
       );
       expect(act).to.be.an.equalResultTo(exp);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /Result/);
     // customized equality
     const caseInsensitiveEqual = (x, y) => x.toLowerCase() === y.toLowerCase();
     expect(() => {
@@ -217,7 +217,7 @@ describe("equalResultTo", () => {
         )
       );
       expect(act).to.be.an.equalResultTo(exp, caseInsensitiveEqual);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /Result/);
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
@@ -246,7 +246,7 @@ describe("equalResultTo", () => {
         )
       );
       expect(act).to.be.an.equalResultTo(exp, undefined, caseInsensitiveEqual);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /Result/);
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
@@ -275,7 +275,7 @@ describe("equalResultTo", () => {
         )
       );
       expect(act).to.be.an.equalResultTo(exp, undefined, undefined, caseInsensitiveEqual);
-    }).to.throw(AssertionError);
+    }).to.throw(AssertionError, /Result/);
   });
 
   it("should not throw AssertionError if the actual result is equal to the expected one", () => {
