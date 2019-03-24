@@ -53,15 +53,11 @@ module.exports = _core => {
    * @returns {AbstractParser}
    */
   function pure(val) {
-    return new StrictParser(state => Result.esuc(ParseError.unknown(state.pos), val, state));
+    return new StrictParser(state => Result.esucc(ParseError.unknown(state.pos), val, state));
   }
 
   /**
-   * @function module:prim.ap
-   * @static
-   * @param {AbstractParser} parserA
-   * @param {AbstractParser} parserB
-   * @returns {AbstractParser}
+   * ap: [S, U, A, B](parserA: Parser[S, U, A => B], parserB: Parser[S, U, A]): Parser[S, U, B]
    */
   function ap(parserA, parserB) {
     return new StrictParser(state => {
@@ -70,17 +66,15 @@ module.exports = _core => {
         const func = resA.val;
         const resB = parserB.run(resA.state);
         if (resB.success) {
-          return new Result(
+          return Result.succ(
             resA.consumed || resB.consumed,
-            true,
-            resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err),
-            func(resB.val),
-            resB.state
+              resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err),
+              func(resB.val),
+              resB.state
           );
         } else {
-          return new Result(
+          return Result.fail(
             resA.consumed || resB.consumed,
-            false,
             resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err)
           );
         }

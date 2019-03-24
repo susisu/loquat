@@ -1,7 +1,3 @@
-/*
- * loquat-prim test / prim
- */
-
 "use strict";
 
 describe("prim", () => {
