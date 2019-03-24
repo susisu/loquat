@@ -261,14 +261,13 @@ describe("ap", () => {
       const finalState = new State(
         new Config(),
         "rest",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 0, 1, 1),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 0, 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
-
       const parsers = [
         new StrictParser(() => Result.csucc(err, "foo", finalState)),
         new StrictParser(() => Result.cfail(err)),
@@ -289,11 +288,11 @@ describe("ap", () => {
       const stateU = new State(
         new Config(),
         "restU",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 0, 1, 1),
         "someU"
       );
       const errU = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 0, 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testU")]
       );
       const us = [
@@ -306,11 +305,11 @@ describe("ap", () => {
       const stateV = new State(
         new Config(),
         "restV",
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 0, 1, 1),
         "someV"
       );
       const errV = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 0, 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testV")]
       );
       const vs = [
@@ -323,11 +322,11 @@ describe("ap", () => {
       const stateW = new State(
         new Config(),
         "restW",
-        new SourcePos("main", 3, 1, 4),
+        new SourcePos("main", 0, 1, 1),
         "someW"
       );
       const errW = new StrictParseError(
-        new SourcePos("main", 3, 1, 4),
+        new SourcePos("main", 0, 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testW")]
       );
       const ws = [
@@ -364,14 +363,13 @@ describe("ap", () => {
       const finalState = new State(
         new Config(),
         "rest",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 0, 1, 1),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 0, 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
-
       const parsers = [
         new StrictParser(() => Result.csucc(err, x => x.toUpperCase(), finalState)),
         new StrictParser(() => Result.cfail(err)),

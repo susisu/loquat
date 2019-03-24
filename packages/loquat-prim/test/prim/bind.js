@@ -1,345 +1,340 @@
-/*
- * loquat-prim test / prim.bind()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect, assert } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const pure = _prim.pure;
-const bind = _prim.bind;
+const { pure, bind } = _prim;
 
-describe(".bind(parser, func)", () => {
-  it("should return a parser that runs `parser', maps `func' to the result, and flattens its return"
-    + " value", () => {
+describe("bind", () => {
+  it("should create a parser that runs a parser, gives its result to a function, and then runs a"
+    + " parser returned by the function", () => {
     const initState = new State(
-      new Config({ tabWidth: 8 }),
+      new Config(),
       "input",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "none"
     );
     const stateA = new State(
-      new Config({ tabWidth: 4 }),
+      new Config(),
       "restA",
-      new SourcePos("foobar", 1, 2),
+      new SourcePos("main", 1, 1, 2),
       "someA"
     );
-    const errA = new ParseError(
-      new SourcePos("foobar", 1, 2),
-      [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+    const errA = new StrictParseError(
+      new SourcePos("main", 1, 1, 2),
+      [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
     );
     const stateB = new State(
-      new Config({ tabWidth: 2 }),
+      new Config(),
       "restB",
-      new SourcePos("foobar", 1, 2),
+      new SourcePos("main", 1, 1, 2),
       "someB"
     );
-    const errB = new ParseError(
-      new SourcePos("foobar", 1, 2),
-      [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+    const errB = new StrictParseError(
+      new SourcePos("main", 1, 1, 2),
+      [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
     );
-    // csuc, csuc
+    // csucc, csucc
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.csuc(errA, "nyan", stateA);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(errA, "foo", stateA);
       });
       const func = val => {
-        expect(val).to.equal("nyan");
-        return new Parser(state => {
-          expect(state).to.equal(stateA);
-          return Result.csuc(errB, "cat", stateB);
+        expect(val).to.equal("foo");
+        return new StrictParser(state => {
+          expect(state).to.be.an.equalStateTo(stateA);
+          return Result.csucc(errB, "bar", stateB);
         });
       };
-      const mapped = bind(parser, func);
-      assertParser(mapped);
-      const res = mapped.run(initState);
-      expect(Result.equal(res, Result.csuc(errB, "cat", stateB))).to.be.true;
+      const binded = bind(parser, func);
+      expect(binded).to.be.a.parser;
+      const res = binded.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.csucc(errB, "bar", stateB));
     }
-    // csuc, cerr
+    // csucc, cfail
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.csuc(errA, "nyan", stateA);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(errA, "foo", stateA);
       });
       const func = val => {
-        expect(val).to.equal("nyan");
-        return new Parser(state => {
-          expect(state).to.equal(stateA);
-          return Result.cerr(errB);
+        expect(val).to.equal("foo");
+        return new StrictParser(state => {
+          expect(state).to.be.an.equalStateTo(stateA);
+          return Result.cfail(errB);
         });
       };
-      const mapped = bind(parser, func);
-      assertParser(mapped);
-      const res = mapped.run(initState);
-      expect(Result.equal(res, Result.cerr(errB))).to.be.true;
+      const binded = bind(parser, func);
+      expect(binded).to.be.a.parser;
+      const res = binded.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.cfail(errB));
     }
-    // csuc, esuc
+    // csucc, esucc
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.csuc(errA, "nyan", stateA);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(errA, "foo", stateA);
       });
       const func = val => {
-        expect(val).to.equal("nyan");
-        return new Parser(state => {
-          expect(state).to.equal(stateA);
-          return Result.esuc(errB, "cat", stateB);
+        expect(val).to.equal("foo");
+        return new StrictParser(state => {
+          expect(state).to.be.an.equalStateTo(stateA);
+          return Result.esucc(errB, "bar", stateB);
         });
       };
-      const mapped = bind(parser, func);
-      assertParser(mapped);
-      const res = mapped.run(initState);
-      expect(
-        Result.equal(res, Result.csuc(ParseError.merge(errA, errB), "cat", stateB))
-      ).to.be.true;
+      const binded = bind(parser, func);
+      expect(binded).to.be.a.parser;
+      const res = binded.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.csucc(ParseError.merge(errA, errB), "bar", stateB));
     }
-    // csuc, eerr
+    // csucc, efail
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.csuc(errA, "nyan", stateA);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(errA, "foo", stateA);
       });
       const func = val => {
-        expect(val).to.equal("nyan");
-        return new Parser(state => {
-          expect(state).to.equal(stateA);
-          return Result.eerr(errB);
+        expect(val).to.equal("foo");
+        return new StrictParser(state => {
+          expect(state).to.be.an.equalStateTo(stateA);
+          return Result.efail(errB);
         });
       };
-      const mapped = bind(parser, func);
-      assertParser(mapped);
-      const res = mapped.run(initState);
-      expect(Result.equal(res, Result.cerr(ParseError.merge(errA, errB)))).to.be.true;
+      const binded = bind(parser, func);
+      expect(binded).to.be.a.parser;
+      const res = binded.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.cfail(ParseError.merge(errA, errB)));
     }
-    // cerr
+    // cfail
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.cerr(errA);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.cfail(errA);
       });
-      const func = () => { throw new Error("unexpected call"); };
-      const mapped = bind(parser, func);
-      assertParser(mapped);
-      const res = mapped.run(initState);
-      expect(Result.equal(res, Result.cerr(errA))).to.be.true;
+      const func = () => {
+        assert.fail("expect function to not be called");
+      };
+      const binded = bind(parser, func);
+      expect(binded).to.be.a.parser;
+      const res = binded.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.cfail(errA));
     }
-    // esuc, csuc
+    // esucc, csucc
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.esuc(errA, "nyan", stateA);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(errA, "foo", stateA);
       });
       const func = val => {
-        expect(val).to.equal("nyan");
-        return new Parser(state => {
-          expect(state).to.equal(stateA);
-          return Result.csuc(errB, "cat", stateB);
+        expect(val).to.equal("foo");
+        return new StrictParser(state => {
+          expect(state).to.be.an.equalStateTo(stateA);
+          return Result.csucc(errB, "bar", stateB);
         });
       };
-      const mapped = bind(parser, func);
-      assertParser(mapped);
-      const res = mapped.run(initState);
-      expect(Result.equal(res, Result.csuc(errB, "cat", stateB))).to.be.true;
+      const binded = bind(parser, func);
+      expect(binded).to.be.a.parser;
+      const res = binded.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.csucc(errB, "bar", stateB));
     }
-    // esuc, cerr
+    // esucc, cfail
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.esuc(errA, "nyan", stateA);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(errA, "foo", stateA);
       });
       const func = val => {
-        expect(val).to.equal("nyan");
-        return new Parser(state => {
-          expect(state).to.equal(stateA);
-          return Result.cerr(errB);
+        expect(val).to.equal("foo");
+        return new StrictParser(state => {
+          expect(state).to.be.an.equalStateTo(stateA);
+          return Result.cfail(errB);
         });
       };
-      const mapped = bind(parser, func);
-      assertParser(mapped);
-      const res = mapped.run(initState);
-      expect(Result.equal(res, Result.cerr(errB))).to.be.true;
+      const binded = bind(parser, func);
+      expect(binded).to.be.a.parser;
+      const res = binded.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.cfail(errB));
     }
-    // esuc, esuc
+    // esucc, esucc
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.esuc(errA, "nyan", stateA);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(errA, "foo", stateA);
       });
       const func = val => {
-        expect(val).to.equal("nyan");
-        return new Parser(state => {
-          expect(state).to.equal(stateA);
-          return Result.esuc(errB, "cat", stateB);
+        expect(val).to.equal("foo");
+        return new StrictParser(state => {
+          expect(state).to.be.an.equalStateTo(stateA);
+          return Result.esucc(errB, "bar", stateB);
         });
       };
-      const mapped = bind(parser, func);
-      assertParser(mapped);
-      const res = mapped.run(initState);
-      expect(
-        Result.equal(res, Result.esuc(ParseError.merge(errA, errB), "cat", stateB))
-      ).to.be.true;
+      const binded = bind(parser, func);
+      expect(binded).to.be.a.parser;
+      const res = binded.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.esucc(ParseError.merge(errA, errB), "bar", stateB));
     }
-    // esuc, eerr
+    // esucc, efail
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.esuc(errA, "nyan", stateA);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(errA, "foo", stateA);
       });
       const func = val => {
-        expect(val).to.equal("nyan");
-        return new Parser(state => {
-          expect(state).to.equal(stateA);
-          return Result.eerr(errB);
+        expect(val).to.equal("foo");
+        return new StrictParser(state => {
+          expect(state).to.be.an.equalStateTo(stateA);
+          return Result.efail(errB);
         });
       };
-      const mapped = bind(parser, func);
-      assertParser(mapped);
-      const res = mapped.run(initState);
-      expect(Result.equal(res, Result.eerr(ParseError.merge(errA, errB)))).to.be.true;
+      const binded = bind(parser, func);
+      expect(binded).to.be.a.parser;
+      const res = binded.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.efail(ParseError.merge(errA, errB)));
     }
-    // eerr
+    // efail
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.eerr(errA);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.efail(errA);
       });
-      const func = () => { throw new Error("unexpected call"); };
-      const mapped = bind(parser, func);
-      assertParser(mapped);
-      const res = mapped.run(initState);
-      expect(Result.equal(res, Result.eerr(errA))).to.be.true;
+      const func = () => {
+        assert.fail("expect function to not be called");
+      };
+      const binded = bind(parser, func);
+      expect(binded).to.be.a.parser;
+      const res = binded.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.efail(errA));
     }
   });
 
-  it("should obey the monad laws", () => {
+  it("should satisfy the monad laws", () => {
     const initState = new State(
-      new Config({ tabWidth: 8 }),
+      new Config(),
       "input",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "none"
     );
     // pure x >>= func = func x
     {
       const finalState = new State(
-        new Config({ tabWidth: 4 }),
+        new Config(),
         "rest",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "some"
       );
-      const err = new ParseError(
-        new SourcePos("foobar", 1, 1),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+      const err = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const funcs = [
-        () => new Parser(() => Result.csuc(err, "cat", finalState)),
-        () => new Parser(() => Result.cerr(err)),
-        () => new Parser(() => Result.esuc(err, "cat", finalState)),
-        () => new Parser(() => Result.eerr(err)),
+        () => new StrictParser(() => Result.csucc(err, "bar", finalState)),
+        () => new StrictParser(() => Result.cfail(err)),
+        () => new StrictParser(() => Result.esucc(err, "bar", finalState)),
+        () => new StrictParser(() => Result.efail(err)),
       ];
+
       for (const func of funcs) {
-        expect(Result.equal(
-          bind(pure("nyan"), func).run(initState),
-          func("nyan").run(initState)
-        )).to.be.true;
+        const lhs = bind(pure("foo"), func).run(initState);
+        const rhs = func("foo").run(initState);
+        expect(lhs).to.be.an.equalResultTo(rhs);
       }
     }
     // parser >>= pure = parser
     {
       const finalState = new State(
-        new Config({ tabWidth: 4 }),
+        new Config(),
         "rest",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "some"
       );
-      const err = new ParseError(
-        new SourcePos("foobar", 1, 1),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+      const err = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parsers = [
-        new Parser(() => Result.csuc(err, "nyancat", finalState)),
-        new Parser(() => Result.cerr(err)),
-        new Parser(() => Result.esuc(err, "nyancat", finalState)),
-        new Parser(() => Result.eerr(err)),
+        new StrictParser(() => Result.csucc(err, "foo", finalState)),
+        new StrictParser(() => Result.cfail(err)),
+        new StrictParser(() => Result.esucc(err, "foo", finalState)),
+        new StrictParser(() => Result.efail(err)),
       ];
+
       for (const parser of parsers) {
-        expect(Result.equal(
-          bind(parser, pure).run(initState),
-          parser.run(initState)
-        )).to.be.true;
+        const lhs = bind(parser, pure).run(initState);
+        const rhs = parser.run(initState);
+        expect(lhs).to.be.an.equalResultTo(rhs);
       }
     }
     // (parser >>= f) >>= g = parser >>= (\x -> f x >>= g)
     {
       const stateP = new State(
-        new Config({ tabWidth: 4 }),
+        new Config(),
         "restP",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "someP"
       );
-      const errP = new ParseError(
-        new SourcePos("foobar", 1, 1),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testP")]
+      const errP = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const parsers = [
-        new Parser(() => Result.csuc(errP, "p", stateP)),
-        new Parser(() => Result.cerr(errP)),
-        new Parser(() => Result.esuc(errP, "p", stateP)),
-        new Parser(() => Result.eerr(errP)),
+        new StrictParser(() => Result.csucc(errP, "p", stateP)),
+        new StrictParser(() => Result.cfail(errP)),
+        new StrictParser(() => Result.esucc(errP, "p", stateP)),
+        new StrictParser(() => Result.efail(errP)),
       ];
 
       const stateF = new State(
-        new Config({ tabWidth: 2 }),
+        new Config(),
         "restF",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "someF"
       );
-      const errF = new ParseError(
-        new SourcePos("foobar", 1, 1),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testF")]
+      const errF = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testF")]
       );
       const fs = [
-        () => new Parser(() => Result.csuc(errF, "f", stateF)),
-        () => new Parser(() => Result.cerr(errF)),
-        () => new Parser(() => Result.esuc(errF, "f", stateF)),
-        () => new Parser(() => Result.eerr(errF)),
+        () => new StrictParser(() => Result.csucc(errF, "f", stateF)),
+        () => new StrictParser(() => Result.cfail(errF)),
+        () => new StrictParser(() => Result.esucc(errF, "f", stateF)),
+        () => new StrictParser(() => Result.efail(errF)),
       ];
 
       const stateG = new State(
-        new Config({ tabWidth: 1 }),
+        new Config(),
         "restG",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "someG"
       );
-      const errG = new ParseError(
-        new SourcePos("foobar", 1, 1),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testG")]
+      const errG = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testG")]
       );
       const gs = [
-        () => new Parser(() => Result.csuc(errG, "g", stateG)),
-        () => new Parser(() => Result.cerr(errG)),
-        () => new Parser(() => Result.esuc(errG, "g", stateG)),
-        () => new Parser(() => Result.eerr(errG)),
+        () => new StrictParser(() => Result.csucc(errG, "g", stateG)),
+        () => new StrictParser(() => Result.cfail(errG)),
+        () => new StrictParser(() => Result.esucc(errG, "g", stateG)),
+        () => new StrictParser(() => Result.efail(errG)),
       ];
 
       for (const parser of parsers) {
         for (const f of fs) {
           for (const g of gs) {
-            expect(Result.equal(
-              bind(bind(parser, f), g).run(initState),
-              bind(parser, x => bind(f(x), g)).run(initState)
-            )).to.be.true;
+            const lhs = bind(bind(parser, f), g).run(initState);
+            const rhs = bind(parser, x => bind(f(x), g)).run(initState);
+            expect(lhs).to.be.an.equalResultTo(rhs);
           }
         }
       }
