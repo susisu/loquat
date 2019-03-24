@@ -74,7 +74,7 @@ describe("ap", () => {
         return Result.csucc(
           errA,
           x => {
-            assert.fail("expect function to be not called");
+            assert.fail("expect function to not be called");
           },
           stateA
         );
@@ -117,7 +117,7 @@ describe("ap", () => {
         return Result.csucc(
           errA,
           x => {
-            assert.fail("expect function to be not called");
+            assert.fail("expect function to not be called");
           },
           stateA
         );
@@ -138,7 +138,7 @@ describe("ap", () => {
         return Result.cfail(errA);
       });
       const parserB = new StrictParser(state => {
-        assert.fail("expect function to be not called");
+        assert.fail("expect function to not be called");
       });
       const composed = ap(parserA, parserB);
       expect(composed).to.be.a.parser;
@@ -174,7 +174,7 @@ describe("ap", () => {
         return Result.esucc(
           errA,
           x => {
-            assert.fail("expect function to be not called");
+            assert.fail("expect function to not be called");
           },
           stateA
         );
@@ -217,7 +217,7 @@ describe("ap", () => {
         return Result.esucc(
           errA,
           x => {
-            assert.fail("expect function to be not called");
+            assert.fail("expect function to not be called");
           },
           stateA
         );
@@ -238,7 +238,7 @@ describe("ap", () => {
         return Result.efail(errA);
       });
       const parserB = new StrictParser(() => {
-        assert.fail("expect function to be not called");
+        assert.fail("expect function to not be called");
       });
       const composed = ap(parserA, parserB);
       expect(composed).to.be.a.parser;

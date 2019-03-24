@@ -112,7 +112,7 @@ describe("left", () => {
         return Result.cfail(errA);
       });
       const parserB = new StrictParser(state => {
-        assert.fail("expect function to be not called");
+        assert.fail("expect function to not be called");
       });
       const composed = left(parserA, parserB);
       expect(composed).to.be.a.parser;
@@ -186,7 +186,7 @@ describe("left", () => {
         return Result.efail(errA);
       });
       const parserB = new StrictParser(state => {
-        assert.fail("expect function to be not called");
+        assert.fail("expect function to not be called");
       });
       const composed = left(parserA, parserB);
       expect(composed).to.be.a.parser;
