@@ -9,14 +9,17 @@
 "use strict";
 
 module.exports = _core => {
-  const ErrorMessageType = _core.ErrorMessageType;
-  const ErrorMessage     = _core.ErrorMessage;
-  const ParseError       = _core.ParseError;
-  const LazyParseError   = _core.LazyParseError;
-  const uncons           = _core.uncons;
-  const State            = _core.State;
-  const Result           = _core.Result;
-  const Parser           = _core.Parser;
+  const {
+    ErrorMessageType,
+    ErrorMessage,
+    ParseError,
+    StrictParseError,
+    LazyParseError,
+    State,
+    Result,
+    StrictParser,
+    uncons,
+  } = _core;
 
   /**
    * @function module:prim.map
@@ -26,7 +29,7 @@ module.exports = _core => {
    * @returns {AbstractParser}
    */
   function map(parser, func) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const res = parser.run(state);
       return res.success
         ? new Result(res.consumed, true, res.err, func(res.val), res.state)
@@ -51,7 +54,7 @@ module.exports = _core => {
    * @returns {AbstractParser}
    */
   function pure(val) {
-    return new Parser(state => Result.esuc(ParseError.unknown(state.pos), val, state));
+    return new StrictParser(state => Result.esuc(ParseError.unknown(state.pos), val, state));
   }
 
   /**
@@ -62,7 +65,7 @@ module.exports = _core => {
    * @returns {AbstractParser}
    */
   function ap(parserA, parserB) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const resA = parserA.run(state);
       if (resA.success) {
         const func = resA.val;
@@ -96,7 +99,7 @@ module.exports = _core => {
    * @returns {AbstractParser}
    */
   function left(parserA, parserB) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const resA = parserA.run(state);
       if (resA.success) {
         const resB = parserB.run(resA.state);
@@ -129,7 +132,7 @@ module.exports = _core => {
    * @returns {AbstractParser}
    */
   function right(parserA, parserB) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const resA = parserA.run(state);
       if (resA.success) {
         const resB = parserB.run(resA.state);
@@ -162,7 +165,7 @@ module.exports = _core => {
    * @returns {AbstractParser}
    */
   function bind(parser, func) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const resA = parser.run(state);
       if (resA.success) {
         const parserB = func(resA.val);
@@ -190,7 +193,7 @@ module.exports = _core => {
    * @returns {AbstracParser}
    */
   function then(parserA, parserB) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const resA = parserA.run(state);
       if (resA.success) {
         const resB = parserB.run(resA.state);
@@ -216,7 +219,7 @@ module.exports = _core => {
    * @returns {AbstractParser}
    */
   function fail(msgStr) {
-    return new Parser(state => Result.eerr(
+    return new StrictParser(state => Result.eerr(
       new ParseError(state.pos, [new ErrorMessage(ErrorMessageType.MESSAGE, msgStr)])
     ));
   }
@@ -229,7 +232,7 @@ module.exports = _core => {
    * @returns {AbstractParser}
    */
   function tailRecM(initVal, func) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       let consumed = false;
       let currentVal = initVal;
       let currentState = state;
@@ -286,7 +289,7 @@ module.exports = _core => {
    * @static
    * @type {AbstractParser}
    */
-  const mzero = new Parser(state => Result.eerr(ParseError.unknown(state.pos)));
+  const mzero = new StrictParser(state => Result.eerr(ParseError.unknown(state.pos)));
 
   /**
    * @function module:prim.mplus
@@ -296,7 +299,7 @@ module.exports = _core => {
    * @returns {AbstractParser}
    */
   function mplus(parserA, parserB) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const resA = parserA.run(state);
       if (!resA.consumed && !resA.success) {
         const resB = parserB.run(state);
@@ -340,7 +343,7 @@ module.exports = _core => {
         labelStrs.length === 0 ? [""] : labelStrs
       );
     }
-    return new Parser(state => {
+    return new StrictParser(state => {
       const res = parser.run(state);
       if (res.consumed) {
         return res;
@@ -375,7 +378,7 @@ module.exports = _core => {
    * @returns {AbstractParser}
    */
   function unexpected(msgStr) {
-    return new Parser(state => Result.eerr(
+    return new StrictParser(state => Result.eerr(
       new ParseError(
         state.pos,
         [new ErrorMessage(ErrorMessageType.UNEXPECT, msgStr)]
@@ -390,7 +393,7 @@ module.exports = _core => {
    * @returns {AbstractParser}
    */
   function tryParse(parser) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const res = parser.run(state);
       return res.consumed && !res.success
         ? Result.eerr(res.err)
@@ -405,7 +408,7 @@ module.exports = _core => {
    * @returns {AbstractParser}
    */
   function lookAhead(parser) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const res = parser.run(state);
       return res.success
         ? Result.esuc(ParseError.unknown(state.pos), res.val, state)
@@ -423,7 +426,7 @@ module.exports = _core => {
    * @throws {Error} `parser` accepts an empty string.
    */
   function reduceMany(parser, callback, initVal) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       let accum = initVal;
       let consumed = false;
       let currentState = state;
@@ -458,7 +461,7 @@ module.exports = _core => {
    * @throws {Error} `parser` accepts an empty string.
    */
   function many(parser) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const accum = [];
       let consumed = false;
       let currentState = state;
@@ -524,7 +527,7 @@ module.exports = _core => {
         ]
       );
     }
-    return new Parser(state => {
+    return new StrictParser(state => {
       const len = expectTokens.length;
       if (len === 0) {
         return Result.esuc(ParseError.unknown(state.pos), [], state);
@@ -589,7 +592,7 @@ module.exports = _core => {
         [new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, str)]
       );
     }
-    return new Parser(state => {
+    return new StrictParser(state => {
       const unconsed = uncons(state.input, state.config.unicode);
       if (unconsed.empty) {
         return Result.eerr(systemUnexpectError(state.pos, ""));
@@ -623,7 +626,7 @@ module.exports = _core => {
    * @static
    * @type {AbstractParser}
    */
-  const getParserState = new Parser(state =>
+  const getParserState = new StrictParser(state =>
     Result.esuc(ParseError.unknown(state.pos), state, state)
   );
 
@@ -644,7 +647,7 @@ module.exports = _core => {
    * @returns {AbstractParser}
    */
   function updateParserState(func) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const newState = func(state);
       return Result.esuc(ParseError.unknown(newState.pos), newState, newState);
     });
