@@ -25,10 +25,7 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.fmap
-   * @static
-   * @param {function} func
-   * @returns {function}
+   * fmap: [A, B](func: A => B): [S, U]Parser[S, U, A] => Parser[S, U, B]
    */
   function fmap(func) {
     return parser => map(parser, func);
