@@ -50,9 +50,9 @@ module.exports = _core => {
         if (resB.success) {
           return Result.succ(
             resA.consumed || resB.consumed,
-              resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err),
-              func(resB.val),
-              resB.state
+            resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err),
+            func(resB.val),
+            resB.state
           );
         } else {
           return Result.fail(
