@@ -94,11 +94,7 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.right
-   * @static
-   * @param {AbstractParser} parserA
-   * @param {AbstractParser} parserB
-   * @returns {AbstractParser}
+   * right: [S, U, A, B](parserA: Parser[S, U, A], parserB: Parser[S, U, B]): Parser[S, U, B]
    */
   function right(parserA, parserB) {
     return new StrictParser(state => {
@@ -106,17 +102,15 @@ module.exports = _core => {
       if (resA.success) {
         const resB = parserB.run(resA.state);
         if (resB.success) {
-          return new Result(
+          return Result.succ(
             resA.consumed || resB.consumed,
-            true,
             resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err),
             resB.val,
             resB.state
           );
         } else {
-          return new Result(
+          return Result.fail(
             resA.consumed || resB.consumed,
-            false,
             resB.consumed ? resB.err : ParseError.merge(resA.err, resB.err)
           );
         }
