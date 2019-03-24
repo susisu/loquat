@@ -13,7 +13,6 @@ module.exports = _core => {
     ErrorMessageType,
     ErrorMessage,
     ParseError,
-    StrictParseError,
     LazyParseError,
     State,
     Result,
