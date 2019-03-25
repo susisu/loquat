@@ -1,34 +1,23 @@
-/*
- * loquat-prim test / prim.mzero
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos    = _core.SourcePos;
-const ParseError   = _core.ParseError;
-const Config       = _core.Config;
-const State        = _core.State;
-const Result       = _core.Result;
-const assertParser = _core.assertParser;
+const { SourcePos, ParseError, Config, State, Result } = _core;
 
-const mzero = _prim.mzero;
+const { mzero } = _prim;
 
-describe(".mzero", () => {
-  it("should always empty fails with unknown error", () => {
-    assertParser(mzero);
+describe("mzero", () => {
+  it("should be a parser that always fails without consumption, with an unknown error", () => {
+    expect(mzero).to.be.a.parser;
     const initState = new State(
-      new Config({ tabWidth: 8 }),
+      new Config(),
       "input",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "none"
     );
     const res = mzero.run(initState);
-    expect(Result.equal(
-      res,
-      Result.eerr(ParseError.unknown(new SourcePos("foobar", 1, 1)))
-    )).to.be.true;
+    expect(res).to.be.an.equalResultTo(Result.efail(
+      ParseError.unknown(new SourcePos("main", 0, 1, 1)))
+    );
   });
 });

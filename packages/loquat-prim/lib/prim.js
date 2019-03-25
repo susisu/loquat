@@ -254,11 +254,9 @@ module.exports = _core => {
   }
 
   /**
-   * @constant module:prim.mzero
-   * @static
-   * @type {AbstractParser}
+   * mzero: [S, U, A]Parser[S, U, A]
    */
-  const mzero = new StrictParser(state => Result.eerr(ParseError.unknown(state.pos)));
+  const mzero = new StrictParser(state => Result.efail(ParseError.unknown(state.pos)));
 
   /**
    * @function module:prim.mplus
