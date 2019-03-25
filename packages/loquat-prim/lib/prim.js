@@ -259,7 +259,7 @@ module.exports = _core => {
   const mzero = new StrictParser(state => Result.efail(ParseError.unknown(state.pos)));
 
   /**
-   * mplus: [S, U, A, B](parserA: Parser[S, U, A], parserB: Parser[S, U, B]): Parser[S, U, A \/ B]
+   * mplus: [S, U, A, B](parserA: Parser[S, U, A], parserB: Parser[S, U, B]) => Parser[S, U, A \/ B]
    */
   function mplus(parserA, parserB) {
     return new StrictParser(state => {
@@ -288,44 +288,36 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.label
-   * @static
-   * @param {AbstractParser} parser
-   * @param {string} labelStr
-   * @returns {AbstractParser}
+   * label: [S, U, A](parser: Parser[S, U, A], str: string) => Parser[S, U, A]
    */
-  function label(parser, labelStr) {
-    return labels(parser, [labelStr]);
+  function label(parser, str) {
+    return labels(parser, [str]);
   }
 
   /**
-   * @function module:prim.labels
-   * @static
-   * @param {AbstractParser} parser
-   * @param {Array.<string>} labelStrs
-   * @returns {AbstractParser}
+   * labels: [S, U, A](parser: Parser[S, U, A], strs: string[]) => Parser[S, U, A]
    */
-  function labels(parser, labelStrs) {
+  function labels(parser, strs) {
     function setExpects(err) {
       return err.setSpecificTypeMessages(
         ErrorMessageType.EXPECT,
-        labelStrs.length === 0 ? [""] : labelStrs
+        strs.length === 0 ? [""] : strs
       );
     }
     return new StrictParser(state => {
       const res = parser.run(state);
-      if (res.consumed) {
-        return res;
+      if (res.success) {
+        return res.consumed
+          ? res
+          : Result.esucc(
+            new LazyParseError(() => res.err.isUnknown() ? res.err : setExpects(res.err)),
+            res.val,
+            res.state
+          );
       } else {
-        return new Result(
-          false,
-          res.success,
-          res.success
-            ? new LazyParseError(() => res.err.isUnknown() ? res.err : setExpects(res.err))
-            : setExpects(res.err),
-          res.val,
-          res.state
-        );
+        return res.consumed
+          ? res
+          : Result.efail(setExpects(res.err));
       }
     });
   }
