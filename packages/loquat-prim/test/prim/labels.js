@@ -17,7 +17,7 @@ const {
 const { labels } = _prim;
 
 describe("labels", () => {
-  it("should return a parser labelled by the given array of strings", () => {
+  it("should return a parser labelled with the given array of strings", () => {
     const initState = new State(
       new Config(),
       "input",

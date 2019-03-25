@@ -323,10 +323,7 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.hidden
-   * @static
-   * @param {AbstractParser} parser
-   * @returns {AbstractParser}
+   * hidden: [S, U, A](parser: Parser[S, U, A]) => Parser[S, U, A]
    */
   function hidden(parser) {
     return label(parser, "");

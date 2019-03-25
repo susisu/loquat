@@ -17,7 +17,7 @@ const {
 const { label } = _prim;
 
 describe("label", () => {
-  it("should create a parser labelled by the given string", () => {
+  it("should create a parser labelled with the given string", () => {
     const initState = new State(
       new Config(),
       "input",
