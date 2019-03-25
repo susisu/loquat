@@ -13,11 +13,7 @@ const {
   StrictParser,
 } = _core;
 
-const {
-  pure,
-  bind,
-  tailRecM,
-} = _prim;
+const { pure, bind, tailRecM } = _prim;
 
 describe("tailRecM", () => {
   it("should create a parser that repeats applying a function to the previous value and running"

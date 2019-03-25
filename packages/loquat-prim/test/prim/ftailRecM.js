@@ -1,568 +1,523 @@
-/*
- * loquat-prim test / prim.ftailRecM()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const ftailRecM = _prim.ftailRecM;
+const { ftailRecM } = _prim;
 
-describe(".ftailRecM(func)", () => {
-  it("should return a function that takes an initial value and calls `func' repeatedly"
-        + " until returned parser succeeds with done", () => {
+describe("ftailRecM", () => {
+  it("should create a function that chains the given function from a value to a parser", () => {
     const initState = new State(
-      new Config({ tabWidth: 8 }),
+      new Config(),
       "input",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "none"
     );
-    const initVal = "abc";
-    function generateFunc(consumed, success, vals, states, errs) {
+    const initVal = "init";
+    function generateFunc(success, consumed, vals, states, errs) {
       let i = 0;
-      const len = consumed.length;
+      const len = success.length;
       return ftailRecM(val => {
         expect(val).to.equal(i === 0 ? initVal : vals[i - 1]);
-        return new Parser(state => {
-          expect(State.equal(state, i === 0 ? initState : states[i - 1]));
-          const _consumed = consumed[i];
+        return new StrictParser(state => {
+          expect(state).to.be.an.equalStateTo(i === 0 ? initState : states[i - 1]);
           const _success  = success[i];
+          const _consumed = consumed[i];
           const _val      = { done: i === len - 1, value: vals[i] };
           const _state    = states[i];
           const _err      = errs[i];
           i += 1;
-          return new Result(_consumed, _success, _err, _val, _state);
+          return _success
+            ? Result.succ(_consumed, _err, _val, _state)
+            : Result.fail(_consumed, _err);
         });
       });
     }
     // immediately done
-    // csuc
+    // csucc
     {
       const finalState = new State(
-        new Config({ tabWidth: 4 }),
+        new Config(),
         "rest",
-        new SourcePos("foobar", 1, 2),
+        new SourcePos("main", 1, 1, 2),
         "some"
       );
-      const err = new ParseError(
-        new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+      const err = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const func = ftailRecM(val => {
-        expect(val).to.equal("nyan");
-        return new Parser(state => {
-          expect(State.equal(state, initState));
-          return Result.csuc(err, { done: true, value: "cat" }, finalState);
+        expect(val).to.equal("foo");
+        return new StrictParser(state => {
+          expect(state).to.be.an.equalStateTo(initState);
+          return Result.csucc(err, { done: true, value: "bar" }, finalState);
         });
       });
-      const parser = func("nyan");
-      assertParser(parser);
+      const parser = func("foo");
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csuc(
-          err,
-          "cat",
-          finalState
-        )
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.csucc(err, "bar", finalState));
     }
-    // cerr
+    // cfail
     {
-      const err = new ParseError(
-        new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+      const err = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const func = ftailRecM(val => {
-        expect(val).to.equal("nyan");
-        return new Parser(state => {
-          expect(State.equal(state, initState));
-          return Result.cerr(err);
+        expect(val).to.equal("foo");
+        return new StrictParser(state => {
+          expect(state).to.be.an.equalStateTo(initState);
+          return Result.cfail(err);
         });
       });
-      const parser = func("nyan");
-      assertParser(parser);
+      const parser = func("foo");
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.cerr(err)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.cfail(err));
     }
-    // esuc
+    // esucc
     {
       const finalState = new State(
-        new Config({ tabWidth: 4 }),
+        new Config(),
         "rest",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "some"
       );
-      const err = new ParseError(
-        new SourcePos("foobar", 1, 1),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+      const err = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const func = ftailRecM(val => {
-        expect(val).to.equal("nyan");
-        return new Parser(state => {
-          expect(State.equal(state, initState));
-          return Result.esuc(err, { done: true, value: "cat" }, finalState);
+        expect(val).to.equal("foo");
+        return new StrictParser(state => {
+          expect(state).to.be.an.equalStateTo(initState);
+          return Result.esucc(err, { done: true, value: "bar" }, finalState);
         });
       });
-      const parser = func("nyan");
-      assertParser(parser);
+      const parser = func("foo");
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.esuc(
-          err,
-          "cat",
-          finalState
-        )
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.esucc(err, "bar", finalState));
     }
-    // eerr
+    // efail
     {
-      const err = new ParseError(
-        new SourcePos("foobar", 1, 1),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+      const err = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const func = ftailRecM(val => {
-        expect(val).to.equal("nyan");
-        return new Parser(state => {
-          expect(State.equal(state, initState));
-          return Result.eerr(err);
+        expect(val).to.equal("foo");
+        return new StrictParser(state => {
+          expect(state).to.be.an.equalStateTo(initState);
+          return Result.efail(err);
         });
       });
-      const parser = func("nyan");
-      assertParser(parser);
+      const parser = func("foo");
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.eerr(err)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.efail(err));
     }
     // recursive
-    // csuc, csuc
+    // csucc, csucc
     {
-      const consumed = [true, true];
       const success = [true, true];
-      const vals = ["nyan", "cat"];
+      const consumed = [true, true];
+      const vals = ["foo", "bar"];
       const states = [
         new State(
-          new Config({ tabWidth: 4 }),
+          new Config(),
           "restA",
-          new SourcePos("foobar", 1, 2),
+          new SourcePos("main", 1, 1, 2),
           "someA"
         ),
         new State(
-          new Config({ tabWidth: 4 }),
+          new Config(),
           "restB",
-          new SourcePos("foobar", 1, 3),
+          new SourcePos("main", 2, 1, 3),
           "someB"
         ),
       ];
       const errs = [
-        new ParseError(
-          new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
-          new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        new StrictParseError(
+          new SourcePos("main", 2, 1, 3),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
-      const func = generateFunc(consumed, success, vals, states, errs);
+      const func = generateFunc(success, consumed, vals, states, errs);
       const parser = func(initVal);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csuc(
-          new ParseError(
-            new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
-          ),
-          "cat",
-          new State(
-            new Config({ tabWidth: 4 }),
-            "restB",
-            new SourcePos("foobar", 1, 3),
-            "someB"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        new StrictParseError(
+          new SourcePos("main", 2, 1, 3),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
+        ),
+        "bar",
+        new State(
+          new Config(),
+          "restB",
+          new SourcePos("main", 2, 1, 3),
+          "someB"
         )
-      )).to.be.true;
+      ));
     }
-    // csuc, cerr
+    // csucc, cfail
     {
-      const consumed = [true, true];
       const success = [true, false];
-      const vals = ["nyan"];
+      const consumed = [true, true];
+      const vals = ["foo"];
       const states = [
         new State(
-          new Config({ tabWidth: 4 }),
+          new Config(),
           "restA",
-          new SourcePos("foobar", 1, 2),
+          new SourcePos("main", 1, 1, 2),
           "someA"
         ),
       ];
       const errs = [
-        new ParseError(
-          new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
-          new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        new StrictParseError(
+          new SourcePos("main", 2, 1, 3),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
-      const func = generateFunc(consumed, success, vals, states, errs);
+      const func = generateFunc(success, consumed, vals, states, errs);
       const parser = func(initVal);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.cerr(
-          new ParseError(
-            new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
-          )
+      expect(res).to.be.an.equalResultTo(Result.cfail(
+        new StrictParseError(
+          new SourcePos("main", 2, 1, 3),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         )
-      )).to.be.true;
+      ));
     }
-    // csuc, esuc
+    // csucc, esucc
     {
-      const consumed = [true, false];
       const success = [true, true];
-      const vals = ["nyan", "cat"];
+      const consumed = [true, false];
+      const vals = ["foo", "bar"];
       const states = [
         new State(
-          new Config({ tabWidth: 4 }),
+          new Config(),
           "restA",
-          new SourcePos("foobar", 1, 2),
+          new SourcePos("main", 1, 1, 2),
           "someA"
         ),
         new State(
-          new Config({ tabWidth: 4 }),
+          new Config(),
           "restB",
-          new SourcePos("foobar", 1, 2),
+          new SourcePos("main", 1, 1, 2),
           "someB"
         ),
       ];
       const errs = [
-        new ParseError(
-          new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
-          new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
-      const func = generateFunc(consumed, success, vals, states, errs);
+      const func = generateFunc(success, consumed, vals, states, errs);
       const parser = func(initVal);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csuc(
-          new ParseError(
-            new SourcePos("foobar", 1, 2),
-            [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
-            ]
-          ),
-          "cat",
-          new State(
-            new Config({ tabWidth: 4 }),
-            "restB",
-            new SourcePos("foobar", 1, 2),
-            "someB"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [
+            ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+            ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
+          ]
+        ),
+        "bar",
+        new State(
+          new Config(),
+          "restB",
+          new SourcePos("main", 1, 1, 2),
+          "someB"
         )
-      )).to.be.true;
+      ));
     }
-    // csuc, eerr
+    // csucc, efail
     {
-      const consumed = [true, false];
       const success = [true, false];
-      const vals = ["nyan"];
+      const consumed = [true, false];
+      const vals = ["foo"];
       const states = [
         new State(
-          new Config({ tabWidth: 4 }),
+          new Config(),
           "restA",
-          new SourcePos("foobar", 1, 2),
+          new SourcePos("main", 1, 1, 2),
           "someA"
         ),
       ];
       const errs = [
-        new ParseError(
-          new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
-          new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
-      const func = generateFunc(consumed, success, vals, states, errs);
+      const func = generateFunc(success, consumed, vals, states, errs);
       const parser = func(initVal);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.cerr(
-          new ParseError(
-            new SourcePos("foobar", 1, 2),
-            [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.cfail(
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [
+            ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+            ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
+          ]
         )
-      )).to.be.true;
+      ));
     }
-    // cerr
+    // cfail, efail
     {
-      const consumed = [true];
-      const success = [false];
+      const success = [false, false];
+      const consumed = [true, false];
       const vals = [];
       const states = [];
       const errs = [
-        new ParseError(
-          new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+        ),
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
-      const func = generateFunc(consumed, success, vals, states, errs);
+      const func = generateFunc(success, consumed, vals, states, errs);
       const parser = func(initVal);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.cerr(
-          new ParseError(
-            new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-          )
+      expect(res).to.be.an.equalResultTo(Result.cfail(
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         )
-      )).to.be.true;
+      ));
     }
-    // esuc, csuc
+    // esucc, csucc
     {
-      const consumed = [false, true];
       const success = [true, true];
-      const vals = ["nyan", "cat"];
+      const consumed = [false, true];
+      const vals = ["foo", "bar"];
       const states = [
         new State(
-          new Config({ tabWidth: 4 }),
+          new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1),
+          new SourcePos("main", 0, 1, 1),
           "someA"
         ),
         new State(
-          new Config({ tabWidth: 4 }),
+          new Config(),
           "restB",
-          new SourcePos("foobar", 1, 2),
+          new SourcePos("main", 1, 1, 2),
           "someB"
         ),
       ];
       const errs = [
-        new ParseError(
-          new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
-          new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
-      const func = generateFunc(consumed, success, vals, states, errs);
+      const func = generateFunc(success, consumed, vals, states, errs);
       const parser = func(initVal);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csuc(
-          new ParseError(
-            new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
-          ),
-          "cat",
-          new State(
-            new Config({ tabWidth: 4 }),
-            "restB",
-            new SourcePos("foobar", 1, 2),
-            "someB"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
+        ),
+        "bar",
+        new State(
+          new Config(),
+          "restB",
+          new SourcePos("main", 1, 1, 2),
+          "someB"
         )
-      )).to.be.true;
+      ));
     }
-    // esuc, cerr
+    // esucc, cfail
     {
-      const consumed = [false, true];
       const success = [true, false];
-      const vals = ["nyan"];
+      const consumed = [false, true];
+      const vals = ["foo"];
       const states = [
         new State(
-          new Config({ tabWidth: 4 }),
+          new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1),
+          new SourcePos("main", 0, 1, 1),
           "someA"
         ),
       ];
       const errs = [
-        new ParseError(
-          new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
-          new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
-      const func = generateFunc(consumed, success, vals, states, errs);
+      const func = generateFunc(success, consumed, vals, states, errs);
       const parser = func(initVal);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.cerr(
-          new ParseError(
-            new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
-          )
+      expect(res).to.be.an.equalResultTo(Result.cfail(
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         )
-      )).to.be.true;
+      ));
     }
-    // esuc, esuc
+    // esucc, esucc
     {
-      const consumed = [false, false];
       const success = [true, true];
-      const vals = ["nyan", "cat"];
+      const consumed = [false, false];
+      const vals = ["foo", "bar"];
       const states = [
         new State(
-          new Config({ tabWidth: 4 }),
+          new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1),
+          new SourcePos("main", 0, 1, 1),
           "someA"
         ),
         new State(
-          new Config({ tabWidth: 4 }),
+          new Config(),
           "restB",
-          new SourcePos("foobar", 1, 1),
+          new SourcePos("main", 0, 1, 1),
           "someB"
         ),
       ];
       const errs = [
-        new ParseError(
-          new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
-          new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
-      const func = generateFunc(consumed, success, vals, states, errs);
+      const func = generateFunc(success, consumed, vals, states, errs);
       const parser = func(initVal);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.esuc(
-          new ParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
-            ]
-          ),
-          "cat",
-          new State(
-            new Config({ tabWidth: 4 }),
-            "restB",
-            new SourcePos("foobar", 1, 1),
-            "someB"
-          )
+      expect(res).to.be.an.equalResultTo(Result.esucc(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+            ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
+          ]
+        ),
+        "bar",
+        new State(
+          new Config(),
+          "restB",
+          new SourcePos("main", 0, 1, 1),
+          "someB"
         )
-      )).to.be.true;
+      ));
     }
-    // esuc, eerr
+    // esucc, efail
     {
-      const consumed = [false, false];
       const success = [true, false];
-      const vals = ["nyan"];
+      const consumed = [false, false];
+      const vals = ["foo"];
       const states = [
         new State(
-          new Config({ tabWidth: 4 }),
+          new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1),
+          new SourcePos("main", 0, 1, 1),
           "someA"
         ),
       ];
       const errs = [
-        new ParseError(
-          new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
-          new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
-      const func = generateFunc(consumed, success, vals, states, errs);
+      const func = generateFunc(success, consumed, vals, states, errs);
       const parser = func(initVal);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.eerr(
-          new ParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+            ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
+          ]
         )
-      )).to.be.true;
+      ));
     }
-    // eerr
+    // efail, efail
     {
-      const consumed = [false];
-      const success = [false];
+      const success = [false, false];
+      const consumed = [false, false];
       const vals = [];
       const states = [];
       const errs = [
-        new ParseError(
-          new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+        ),
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
-      const func = generateFunc(consumed, success, vals, states, errs);
+      const func = generateFunc(success, consumed, vals, states, errs);
       const parser = func(initVal);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.eerr(
-          new ParseError(
-            new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         )
-      )).to.be.true;
+      ));
     }
   });
 });

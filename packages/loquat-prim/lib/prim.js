@@ -247,10 +247,7 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.ftailRecM
-   * @static
-   * @param {function} func
-   * @returns {function}
+   * ftailRecM: [S, U, A, B](func: A => Parser[S, U, Cont[A, B]]) => (initVal: A) => Parser[S, U, B]
    */
   function ftailRecM(func) {
     return initVal => tailRecM(initVal, func);
