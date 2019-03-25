@@ -259,26 +259,28 @@ module.exports = _core => {
   const mzero = new StrictParser(state => Result.efail(ParseError.unknown(state.pos)));
 
   /**
-   * @function module:prim.mplus
-   * @static
-   * @param {AbstractParser} parserA
-   * @param {AbstractParser} parserB
-   * @returns {AbstractParser}
+   * mplus: [S, U, A, B](parserA: Parser[S, U, A], parserB: Parser[S, U, B]): Parser[S, U, A \/ B]
    */
   function mplus(parserA, parserB) {
     return new StrictParser(state => {
       const resA = parserA.run(state);
-      if (!resA.consumed && !resA.success) {
+      if (!resA.success && !resA.consumed) {
         const resB = parserB.run(state);
-        return resB.consumed
-          ? resB
-          : new Result(
-            resB.consumed,
-            resB.success,
-            ParseError.merge(resA.err, resB.err),
-            resB.val,
-            resB.state
-          );
+        if (resB.success) {
+          return resB.consumed
+            ? resB
+            : Result.esucc(
+              ParseError.merge(resA.err, resB.err),
+              resB.val,
+              resB.state
+            );
+        } else {
+          return resB.consumed
+            ? resB
+            : Result.efail(
+              ParseError.merge(resA.err, resB.err)
+            );
+        }
       } else {
         return resA;
       }
