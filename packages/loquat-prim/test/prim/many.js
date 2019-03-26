@@ -202,7 +202,7 @@ describe("many", () => {
     }
   });
 
-  it("should throw an `Error' if `parser' empty succeeds", () => {
+  it("should throw Error if the given parser succeeds without consumption", () => {
     const initState = new State(
       new Config(),
       "init",

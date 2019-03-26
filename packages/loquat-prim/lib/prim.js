@@ -431,11 +431,7 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.skipMany
-   * @static
-   * @param {AbstractParser} parser
-   * @returns {AbstractParser}
-   * @throws {Error} `parser` accepts an empty string.
+   * skipMany: [S, U, A](parser: Parser[S, U, A]) => Parser[S, U, undefined]
    */
   function skipMany(parser) {
     return reduceMany(parser, accum => accum, undefined);
