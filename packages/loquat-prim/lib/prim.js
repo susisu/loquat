@@ -496,16 +496,19 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.token
-   * @static
-   * @param {function} calcValue
-   * @param {function} tokenToString
-   * @param {function} calcPos
-   * @returns {AbstractParser}
+   * type Option[A] = { empty: true } \/ { empty: false, value: A }
+   */
+
+  /**
+   * token: [S <: Stream[S], U, A](
+   *   calcValue: (S#Token, Config) => Option[A],
+   *   tokenToString: S#Token => string,
+   *   calcPos: (S#Token, COnfig) => SourcePos
+   * ) => Parser[S, U, A]
    */
   function token(calcValue, tokenToString, calcPos) {
     function calcNextPos(pos, token, rest, config) {
-      const unconsed = uncons(rest, config.unicode);
+      const unconsed = uncons(rest, config);
       return unconsed.empty
         ? calcPos(token, config)
         : calcPos(unconsed.head, config);
@@ -524,19 +527,19 @@ module.exports = _core => {
    */
   function tokenPrim(calcValue, tokenToString, calcNextPos, calcNextUserState) {
     function systemUnexpectError(pos, str) {
-      return new ParseError(
+      return new StrictParseError(
         pos,
-        [new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, str)]
+        [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, str)]
       );
     }
     return new StrictParser(state => {
-      const unconsed = uncons(state.input, state.config.unicode);
+      const unconsed = uncons(state.input, state.config);
       if (unconsed.empty) {
-        return Result.eerr(systemUnexpectError(state.pos, ""));
+        return Result.efail(systemUnexpectError(state.pos, ""));
       } else {
         const maybeVal = calcValue(unconsed.head, state.config);
         if (maybeVal.empty) {
-          return Result.eerr(systemUnexpectError(state.pos, tokenToString(unconsed.head)));
+          return Result.efail(systemUnexpectError(state.pos, tokenToString(unconsed.head)));
         } else {
           const newPos = calcNextPos(state.pos, unconsed.head, unconsed.tail, state.config);
           const newUserState = calcNextUserState === undefined
@@ -548,7 +551,7 @@ module.exports = _core => {
               unconsed.tail,
               state.config
             );
-          return Result.csuc(
+          return Result.csucc(
             ParseError.unknown(newPos),
             maybeVal.value,
             new State(state.config, unconsed.tail, newPos, newUserState)
