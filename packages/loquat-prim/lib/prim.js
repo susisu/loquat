@@ -517,13 +517,12 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.tokenPrim
-   * @static
-   * @param {function} calcValue
-   * @param {function} tokenToString
-   * @param {function} calcNextPos
-   * @param {function} [calcNextUserState = x => x]
-   * @returns {AbstractParser}
+   * tokenPrim: [S <: Stream[S], U, A](
+   *   calcValue: (S#Token, Config) => A,
+   *   tokenToString: S#Token => string,
+   *   calcNextPos: (SourcePos, S#Token, S, Config) => SourcePos,
+   *   calcNextUserState?: (U, SourcePos, S#Token, S, Config) => U
+   * ) => Parser[S, U, A]
    */
   function tokenPrim(calcValue, tokenToString, calcNextPos, calcNextUserState) {
     function systemUnexpectError(pos, str) {

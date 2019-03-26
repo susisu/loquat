@@ -1,266 +1,271 @@
-/*
- * loquat-prim test / prim.tokenPrim()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect, assert } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const tokenPrim = _prim.tokenPrim;
+const { tokenPrim } = _prim;
 
-describe(".tokenPrim(calcValue, tokenToString, calcNextPos, calcNextUserState = x => x)", () => {
-  it("should return a parser that parses a token", () => {
+describe("tokenPrim", () => {
+  it("should create a parser that parses a single token", () => {
     // calcValue succeeds
     {
       const initState = new State(
-        new Config({ tabWidth: 8, unicode: false }),
+        new Config(),
         "ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const parser = tokenPrim(
         (x, config) => {
           expect(x).to.equal("A");
-          expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
-          return { empty: false, value: "nyancat" };
+          expect(config).to.be.an.equalConfigTo(initState.config);
+          return { empty: false, value: "foo" };
         },
-        () => { throw new Error("unexpected call"); },
+        x => {
+          assert.fail("expect function to not be called");
+        },
         (pos, x, xs, config) => {
-          expect(SourcePos.equal(pos, new SourcePos("foobar", 1, 1))).to.be.true;
+          expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(x).to.equal("A");
           expect(xs).to.equal("BC");
-          expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
-          return new SourcePos("foobar", 1, 2);
+          expect(config).to.be.an.equalConfigTo(initState.config);
+          return new SourcePos("main", 1, 1, 2);
         },
         (userState, pos, x, xs, config) => {
           expect(userState).to.equal("none");
-          expect(SourcePos.equal(pos, new SourcePos("foobar", 1, 1))).to.be.true;
+          expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(x).to.equal("A");
           expect(xs).to.equal("BC");
-          expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
+          expect(config).to.be.an.equalConfigTo(initState.config);
           return "some";
         }
       );
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csuc(
-          ParseError.unknown(new SourcePos("foobar", 1, 2)),
-          "nyancat",
-          new State(
-            initState.config,
-            "BC",
-            new SourcePos("foobar", 1, 2),
-            "some"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        "foo",
+        new State(
+          initState.config,
+          "BC",
+          new SourcePos("main", 1, 1, 2),
+          "some"
         )
-      )).to.be.true;
+      )
+      );
     }
-    // calcValue succeeds, use default argument for calcNextUserState
+    // calcValue succeeds, use the default value for calcNextUserState
     {
       const initState = new State(
-        new Config({ tabWidth: 8, unicode: false }),
+        new Config(),
         "ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const parser = tokenPrim(
         (x, config) => {
           expect(x).to.equal("A");
-          expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
+          expect(config).to.be.an.equalConfigTo(initState.config);
           return { empty: false, value: "nyancat" };
         },
-        () => { throw new Error("unexpected call"); },
+        x => {
+          assert.fail("expect function to not be called");
+        },
         (pos, x, xs, config) => {
-          expect(SourcePos.equal(pos, new SourcePos("foobar", 1, 1))).to.be.true;
+          expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(x).to.equal("A");
           expect(xs).to.equal("BC");
-          expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
-          return new SourcePos("foobar", 1, 2);
+          expect(config).to.be.an.equalConfigTo(initState.config);
+          return new SourcePos("main", 1, 1, 2);
         }
       );
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csuc(
-          ParseError.unknown(new SourcePos("foobar", 1, 2)),
-          "nyancat",
-          new State(
-            initState.config,
-            "BC",
-            new SourcePos("foobar", 1, 2),
-            "none"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        "nyancat",
+        new State(
+          initState.config,
+          "BC",
+          new SourcePos("main", 1, 1, 2),
+          "none"
         )
-      )).to.be.true;
+      )
+      );
     }
     // calcValue fails
     {
       const initState = new State(
-        new Config({ tabWidth: 8, unicode: false }),
+        new Config(),
         "ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const parser = tokenPrim(
         (x, config) => {
           expect(x).to.equal("A");
-          expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
+          expect(config).to.be.an.equalConfigTo(initState.config);
           return { empty: true };
         },
         x => {
           expect(x).to.equal("A");
-          return "nyancat";
+          return "foo";
         },
-        () => { throw new Error("unexpected call"); },
-        () => { throw new Error("unexpected call"); }
+        (pos, x, xs, config) => {
+          assert.fail("expect function to not be called");
+        },
+        (userState, pos, x, xs, config) => {
+          assert.fail("expect function to not be called");
+        }
       );
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.eerr(
-          new ParseError(
-            new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "nyancat")]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo")]
         )
-      )).to.be.true;
+      )
+      );
     }
     // empty input
     {
       const initState = new State(
-        new Config({ tabWidth: 8, unicode: false }),
+        new Config(),
         "",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const parser = tokenPrim(
-        () => { throw new Error("unexpected call"); },
-        () => { throw new Error("unexpected call"); },
-        () => { throw new Error("unexpected call"); },
-        () => { throw new Error("unexpected call"); }
+        (x, config) => {
+          assert.fail("expect function to not be called");
+        },
+        x => {
+          assert.fail("expect function to not be called");
+        },
+        (pos, x, xs, config) => {
+          assert.fail("expect function to not be called");
+        },
+        (userState, pos, x, xs, config) => {
+          assert.fail("expect function to not be called");
+        }
       );
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.eerr(
-          new ParseError(
-            new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "")]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "")]
         )
-      )).to.be.true;
+      )
+      );
     }
   });
 
-  it("should treat input in unicode mode if `unicode' flag of the config is `true'", () => {
-    // non-unicode mode
+  it("should use the unicode flag of the config", () => {
+    // unicode = false
     {
       const initState = new State(
-        new Config({ tabWidth: 8, unicode: false }),
+        new Config({ unicode: false }),
         "\uD83C\uDF63ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const parser = tokenPrim(
         (x, config) => {
           expect(x).to.equal("\uD83C");
-          expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
-          return { empty: false, value: "nyancat" };
+          expect(config).to.be.an.equalConfigTo(initState.config);
+          return { empty: false, value: "foo" };
         },
-        () => { throw new Error("unexpected call"); },
+        x => {
+          assert.fail("expect function to not be called");
+        },
         (pos, x, xs, config) => {
-          expect(SourcePos.equal(pos, new SourcePos("foobar", 1, 1))).to.be.true;
+          expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(x).to.equal("\uD83C");
           expect(xs).to.equal("\uDF63ABC");
-          expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
-          return new SourcePos("foobar", 1, 2);
+          expect(config).to.be.an.equalConfigTo(initState.config);
+          return new SourcePos("main", 1, 1, 2);
         },
         (userState, pos, x, xs, config) => {
           expect(userState).to.equal("none");
-          expect(SourcePos.equal(pos, new SourcePos("foobar", 1, 1))).to.be.true;
+          expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(x).to.equal("\uD83C");
           expect(xs).to.equal("\uDF63ABC");
-          expect(Config.equal(config, new Config({ tabWidth: 8, unicode: false }))).to.be.true;
+          expect(config).to.be.an.equalConfigTo(initState.config);
           return "some";
         }
       );
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csuc(
-          ParseError.unknown(new SourcePos("foobar", 1, 2)),
-          "nyancat",
-          new State(
-            initState.config,
-            "\uDF63ABC",
-            new SourcePos("foobar", 1, 2),
-            "some"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        "foo",
+        new State(
+          initState.config,
+          "\uDF63ABC",
+          new SourcePos("main", 1, 1, 2),
+          "some"
         )
-      )).to.be.true;
+      )
+      );
     }
     // unicode mode
     {
       const initState = new State(
-        new Config({ tabWidth: 8, unicode: true }),
+        new Config({ unicode: true }),
         "\uD83C\uDF63ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const parser = tokenPrim(
         (x, config) => {
           expect(x).to.equal("\uD83C\uDF63");
-          expect(Config.equal(config, new Config({ tabWidth: 8, unicode: true }))).to.be.true;
-          return { empty: false, value: "nyancat" };
+          expect(config).to.be.an.equalConfigTo(initState.config);
+          return { empty: false, value: "foo" };
         },
-        () => { throw new Error("unexpected call"); },
+        x => {
+          assert.fail("expect function to not be called");
+        },
         (pos, x, xs, config) => {
-          expect(SourcePos.equal(pos, new SourcePos("foobar", 1, 1))).to.be.true;
+          expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(x).to.equal("\uD83C\uDF63");
           expect(xs).to.equal("ABC");
-          expect(Config.equal(config, new Config({ tabWidth: 8, unicode: true }))).to.be.true;
-          return new SourcePos("foobar", 1, 2);
+          expect(config).to.be.an.equalConfigTo(initState.config);
+          return new SourcePos("main", 2, 1, 2);
         },
         (userState, pos, x, xs, config) => {
           expect(userState).to.equal("none");
-          expect(SourcePos.equal(pos, new SourcePos("foobar", 1, 1))).to.be.true;
+          expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(x).to.equal("\uD83C\uDF63");
           expect(xs).to.equal("ABC");
-          expect(Config.equal(config, new Config({ tabWidth: 8, unicode: true }))).to.be.true;
+          expect(config).to.be.an.equalConfigTo(initState.config);
           return "some";
         }
       );
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csuc(
-          ParseError.unknown(new SourcePos("foobar", 1, 2)),
-          "nyancat",
-          new State(
-            initState.config,
-            "ABC",
-            new SourcePos("foobar", 1, 2),
-            "some"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 2, 1, 2)),
+        "foo",
+        new State(
+          initState.config,
+          "ABC",
+          new SourcePos("main", 2, 1, 2),
+          "some"
         )
-      )).to.be.true;
+      )
+      );
     }
   });
 });
