@@ -1,93 +1,82 @@
-/*
- * loquat-prim test / prim.tryParse()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const tryParse = _prim.tryParse;
+const { tryParse } = _prim;
 
-describe(".tryParse(parser)", () => {
-  it("should return a parser that treats consumed failed result as if it was empty failed", () => {
+describe("tryParse", () => {
+  it("should create a parser that transforms failure with consumption of the original parser to"
+    + " failure without consumption", () => {
     const initState = new State(
-      new Config({ tabWidth: 8 }),
+      new Config(),
       "input",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "none"
     );
     const finalState = new State(
-      new Config({ tabWidth: 4 }),
+      new Config(),
       "rest",
-      new SourcePos("foobar", 1, 2),
+      new SourcePos("main", 1, 1, 2),
       "some"
     );
-    const err = new ParseError(
-      new SourcePos("foobar", 1, 2),
-      [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+    const err = new StrictParseError(
+      new SourcePos("main", 1, 1, 2),
+      [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
     );
+    // csucc
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.csuc(err, "nyancat", finalState);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(err, "foo", finalState);
       });
       const tryParser = tryParse(parser);
-      assertParser(tryParser);
+      expect(tryParser).to.be.a.parser;
       const res = tryParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csuc(err, "nyancat", finalState)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.csucc(err, "foo", finalState));
     }
+    // cfail
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.cerr(err);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.cfail(err);
       });
       const tryParser = tryParse(parser);
-      assertParser(tryParser);
+      expect(tryParser).to.be.a.parser;
       const res = tryParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.eerr(err)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.efail(err));
     }
+    // esucc
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.esuc(err, "nyancat", finalState);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(err, "foo", finalState);
       });
       const tryParser = tryParse(parser);
-      assertParser(tryParser);
+      expect(tryParser).to.be.a.parser;
       const res = tryParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.esuc(err, "nyancat", finalState)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.esucc(err, "foo", finalState));
     }
+    // efail
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.eerr(err);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.efail(err);
       });
       const tryParser = tryParse(parser);
-      assertParser(tryParser);
+      expect(tryParser).to.be.a.parser;
       const res = tryParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.eerr(err)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.efail(err));
     }
   });
 });

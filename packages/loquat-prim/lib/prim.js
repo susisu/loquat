@@ -341,16 +341,13 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.tryParse
-   * @static
-   * @param {AbstractParser} parser
-   * @returns {AbstractParser}
+   * tryParse: [S, U, A](parser: Parser[S, U, A]) => Parser[S, U, A]
    */
   function tryParse(parser) {
     return new StrictParser(state => {
       const res = parser.run(state);
-      return res.consumed && !res.success
-        ? Result.eerr(res.err)
+      return !res.success && res.consumed
+        ? Result.efail(res.err)
         : res;
     });
   }
