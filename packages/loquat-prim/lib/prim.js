@@ -568,10 +568,7 @@ module.exports = _core => {
   );
 
   /**
-   * @function module:prim.setParserState
-   * @static
-   * @param {State} state
-   * @returns {AbstractParser}
+   * setParserState: [S, U](state: State[S, U]) => Parser[S, U, State[S, U]]
    */
   function setParserState(state) {
     return updateParserState(() => state);
@@ -586,7 +583,7 @@ module.exports = _core => {
   function updateParserState(func) {
     return new StrictParser(state => {
       const newState = func(state);
-      return Result.esuc(ParseError.unknown(newState.pos), newState, newState);
+      return Result.esucc(ParseError.unknown(newState.pos), newState, newState);
     });
   }
 

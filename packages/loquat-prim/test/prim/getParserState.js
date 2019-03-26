@@ -2,13 +2,7 @@
 
 const { expect } = require("chai");
 
-const {
-  SourcePos,
-  ParseError,
-  Config,
-  State,
-  Result,
-} = _core;
+const { SourcePos, ParseError, Config, State, Result } = _core;
 
 const { getParserState } = _prim;
 
