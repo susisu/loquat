@@ -58,15 +58,12 @@ describe("many", () => {
       const manyParser = many(parser);
       expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
-      expect(res).to.be.an.equalResultTo(
-        Result.cfail(
-          new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
-            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
-          )
-        ),
-        chai.util.eql
-      );
+      expect(res).to.be.an.equalResultTo(Result.cfail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+        )
+      ));
     }
     // many csucc, cfail
     {
@@ -106,15 +103,12 @@ describe("many", () => {
       const manyParser = many(parser);
       expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
-      expect(res).to.be.an.equalResultTo(
-        Result.cfail(
-          new StrictParseError(
-            new SourcePos("main", 2, 1, 3),
-            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
-          )
-        ),
-        chai.util.eql
-      );
+      expect(res).to.be.an.equalResultTo(Result.cfail(
+        new StrictParseError(
+          new SourcePos("main", 2, 1, 3),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
+        )
+      ));
     }
     // efail
     {
