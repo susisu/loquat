@@ -1,38 +1,25 @@
-/*
- * loquat-prim test / prim.getPosition
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos    = _core.SourcePos;
-const ParseError   = _core.ParseError;
-const Config       = _core.Config;
-const State        = _core.State;
-const Result       = _core.Result;
-const assertParser = _core.assertParser;
+const { SourcePos, ParseError, Config, State, Result } = _core;
 
-const getPosition = _prim.getPosition;
+const { getPosition } = _prim;
 
-describe(".getPosition", () => {
-  it("should get the current position of parser", () => {
-    assertParser(getPosition);
+describe("getPosition", () => {
+  it("should be a parser that gets the position of the current parser state", () => {
+    expect(getPosition).to.be.a.parser;
     const initState = new State(
-      new Config({ tabWidth: 8 }),
+      new Config(),
       "input",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "none"
     );
     const res = getPosition.run(initState);
-    expect(Result.equal(
-      res,
-      Result.esuc(
-        ParseError.unknown(new SourcePos("foobar", 1, 1)),
-        initState.pos,
-        initState
-      )
-    )).to.be.true;
+    expect(res).to.be.an.equalResultTo(Result.esucc(
+      ParseError.unknown(new SourcePos("main", 0, 1, 1)),
+      initState.pos,
+      initState
+    ));
   });
 });

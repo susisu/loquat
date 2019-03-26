@@ -615,9 +615,7 @@ module.exports = _core => {
   }
 
   /**
-   * @constant module:prim.getPosition
-   * @static
-   * @type {AbstractParser}
+   * getPosition: [S, U]Parser[S, U, SourcePos]
    */
   const getPosition = bind(getParserState, state => pure(state.pos));
 
