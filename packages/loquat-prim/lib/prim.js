@@ -575,10 +575,7 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.updateParserState
-   * @static
-   * @param {function} func
-   * @returns {AbstractParser}
+   * updateParserState: [S, U](func: State[S, U] => State[S, U]) => Parser[S, U, State[S, U]]
    */
   function updateParserState(func) {
     return new StrictParser(state => {
