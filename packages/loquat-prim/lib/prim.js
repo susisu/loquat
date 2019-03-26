@@ -353,16 +353,13 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.lookAhead
-   * @static
-   * @param {AbstractParser} parser
-   * @returns {AbstractParser}
+   * lookAhead: [S, U, A](parser: Parser[S, U, A]) => Parser[S, U, A]
    */
   function lookAhead(parser) {
     return new StrictParser(state => {
       const res = parser.run(state);
       return res.success
-        ? Result.esuc(ParseError.unknown(state.pos), res.val, state)
+        ? Result.esucc(ParseError.unknown(state.pos), res.val, state)
         : res;
     });
   }

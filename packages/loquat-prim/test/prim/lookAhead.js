@@ -1,94 +1,89 @@
-/*
- * loquat-prim test / prim.lookAhead()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const lookAhead = _prim.lookAhead;
+const { lookAhead } = _prim;
 
-describe(".lookAhead(parser)", () => {
-  it("should return a parser that always runs `parser' "
-        + "and returns back to the original state if succeeded", () => {
+describe("lookAhead", () => {
+  it("should create a parser that runs the given parser and returns the original state when it"
+    + " succeeds", () => {
     const initState = new State(
-      new Config({ tabWidth: 8 }),
+      new Config(),
       "input",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "none"
     );
     const finalState = new State(
-      new Config({ tabWidth: 4 }),
+      new Config(),
       "rest",
-      new SourcePos("foobar", 1, 2),
+      new SourcePos("main", 1, 1, 2),
       "some"
     );
-    const err = new ParseError(
-      new SourcePos("foobar", 1, 2),
-      [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+    const err = new StrictParseError(
+      new SourcePos("main", 1, 1, 2),
+      [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
     );
+    // csucc
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.csuc(err, "nyancat", finalState);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(err, "foo", finalState);
       });
       const aheadParser = lookAhead(parser);
-      assertParser(aheadParser);
+      expect(aheadParser).to.be.a.parser;
       const res = aheadParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.esuc(ParseError.unknown(new SourcePos("foobar", 1, 1)), "nyancat", initState)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.esucc(
+        ParseError.unknown(new SourcePos("main", 0, 1, 1)),
+        "foo",
+        initState
+      ));
+    }
+    // cfail
+    {
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.cfail(err);
+      });
+      const aheadParser = lookAhead(parser);
+      expect(aheadParser).to.be.a.parser;
+      const res = aheadParser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.cfail(err));
     }
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.cerr(err);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(err, "foo", finalState);
       });
       const aheadParser = lookAhead(parser);
-      assertParser(aheadParser);
+      expect(aheadParser).to.be.a.parser;
       const res = aheadParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.cerr(err)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.esucc(
+        ParseError.unknown(new SourcePos("main", 0, 1, 1)),
+        "foo",
+        initState
+      ));
     }
     {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.esuc(err, "nyancat", finalState);
+      const parser = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.efail(err);
       });
       const aheadParser = lookAhead(parser);
-      assertParser(aheadParser);
+      expect(aheadParser).to.be.a.parser;
       const res = aheadParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.esuc(ParseError.unknown(new SourcePos("foobar", 1, 1)), "nyancat", initState)
-      )).to.be.true;
-    }
-    {
-      const parser = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.eerr(err);
-      });
-      const aheadParser = lookAhead(parser);
-      assertParser(aheadParser);
-      const res = aheadParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.eerr(err)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.efail(err));
     }
   });
 });
