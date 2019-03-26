@@ -330,18 +330,14 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.unexpected
-   * @static
-   * @param {string} msgStr
-   * @returns {AbstractParser}
+   * unexpected: [S, U, A](str: string) => Parser[S, U, A]
    */
-  function unexpected(msgStr) {
-    return new StrictParser(state => Result.eerr(
-      new ParseError(
-        state.pos,
-        [new ErrorMessage(ErrorMessageType.UNEXPECT, msgStr)]
+  function unexpected(str) {
+    return new StrictParser(state =>
+      Result.efail(
+        new StrictParseError(state.pos, [ErrorMessage.create(ErrorMessageType.UNEXPECT, str)])
       )
-    ));
+    );
   }
 
   /**

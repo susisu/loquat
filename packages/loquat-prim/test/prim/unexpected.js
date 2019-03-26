@@ -1,43 +1,36 @@
-/*
- * loquat-prim test / prim.unexpected()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const unexpected = _prim.unexpected;
+const { unexpected } = _prim;
 
-describe(".unexpected(msgStr)", () => {
-  it("should return a parser that always yield empty unexpected error with a message"
-    + " `msgStr'", () => {
+describe("unexpected", () => {
+  it("should create a parser that always fails without consumption, with an unexpected"
+    + " error", () => {
     const initState = new State(
-      new Config({ tabWidth: 8 }),
+      new Config(),
       "input",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "none"
     );
-    const parser = unexpected("nyancat");
-    assertParser(parser);
+    const parser = unexpected("foo");
+    expect(parser).to.be.a.parser;
     const res = parser.run(initState);
-    expect(Result.equal(
-      res,
-      Result.eerr(
-        new ParseError(
-          new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.UNEXPECT, "nyancat")]
-        )
+    expect(res).to.be.an.equalResultTo(Result.efail(
+      new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       )
-    )).to.be.true;
+    ));
   });
 });
