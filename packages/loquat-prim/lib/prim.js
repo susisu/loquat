@@ -438,57 +438,56 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.tokens
-   * @static
-   * @param {Array.<*>} expectTokens
-   * @param {function} tokenEqual
-   * @param {function} tokensToString
-   * @param {function} calcNextPos
-   * @returns {AbstractParser}
+   * tokens: [S <: Stream[S], U](
+   *   expectTokens: Array[S#Token],
+   *   tokenEqual: (S#Token, S#Token) => boolean,
+   *   tokensToString: Array[S#Token] => string
+   *   calcNextPos: (SourcePos, Array[S#Token], Config) => SourcePos
+   *  ): Parser[S, U, Array[S#Token]]
    */
   function tokens(expectTokens, tokenEqual, tokensToString, calcNextPos) {
     function eofError(pos) {
-      return new ParseError(
+      return new StrictParseError(
         pos,
         [
-          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-          new ErrorMessage(ErrorMessageType.EXPECT, tokensToString(expectTokens)),
+          ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+          ErrorMessage.create(ErrorMessageType.EXPECT, tokensToString(expectTokens)),
         ]
       );
     }
     function expectError(pos, token) {
-      return new ParseError(
+      return new StrictParseError(
         pos,
         [
-          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, tokensToString([token])),
-          new ErrorMessage(ErrorMessageType.EXPECT, tokensToString(expectTokens)),
+          ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, tokensToString([token])),
+          ErrorMessage.create(ErrorMessageType.EXPECT, tokensToString(expectTokens)),
         ]
       );
     }
     return new StrictParser(state => {
       const len = expectTokens.length;
       if (len === 0) {
-        return Result.esuc(ParseError.unknown(state.pos), [], state);
+        return Result.esucc(ParseError.unknown(state.pos), [], state);
       }
       let rest = state.input;
       for (let i = 0; i < len; i++) {
-        const unconsed = uncons(rest, state.config.unicode);
+        const unconsed = uncons(rest, state.config);
         if (unconsed.empty) {
           return i === 0
-            ? Result.eerr(eofError(state.pos))
-            : Result.cerr(eofError(state.pos));
+            ? Result.efail(eofError(state.pos))
+            : Result.cfail(eofError(state.pos));
         } else {
           if (tokenEqual(expectTokens[i], unconsed.head)) {
             rest = unconsed.tail;
           } else {
             return i === 0
-              ? Result.eerr(expectError(state.pos, unconsed.head))
-              : Result.cerr(expectError(state.pos, unconsed.head));
+              ? Result.efail(expectError(state.pos, unconsed.head))
+              : Result.cfail(expectError(state.pos, unconsed.head));
           }
         }
       }
       const newPos = calcNextPos(state.pos, expectTokens, state.config);
-      return Result.csuc(
+      return Result.csucc(
         ParseError.unknown(newPos),
         expectTokens,
         new State(state.config, rest, newPos, state.userState)

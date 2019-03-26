@@ -1,207 +1,166 @@
-/*
- * loquat-prim test / prim.tokens()
- */
-
 "use strict";
 
 const chai = require("chai");
-const expect = chai.expect;
+const { expect } = chai;
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const tokens = _prim.tokens;
+const { tokens } = _prim;
 
-describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () => {
-  it("should return a parser that parses tokens given by `expectTokens'", () => {
-    const arrayEqual = (xs, ys) => xs.length === ys.length && xs.every((x, i) => x === ys[i]);
-
-    const initConfig = new Config({ tabWidth: 8, unicode: false });
-    const initPos    = new SourcePos("foobar", 1, 1);
+describe("tokens", () => {
+  it("should create a parser that parses the given tokens", () => {
+    const initConfig = new Config();
+    const initPos = new SourcePos("main", 0, 1, 1);
     function generateParser(expectTokens) {
       return tokens(
         expectTokens,
         (x, y) => x === y,
         tokens => tokens.join(""),
         (pos, tokens, config) => {
-          expect(SourcePos.equal(pos, initPos)).to.be.true;
+          expect(pos).to.be.an.equalPositionTo(initPos);
           expect(tokens).to.deep.equal(expectTokens);
-          expect(Config.equal(config, initConfig)).to.be.true;
-          return new SourcePos("foobar", 1, 3);
+          expect(config).to.be.an.equalConfigTo(initConfig);
+          return new SourcePos("main", 2, 1, 3);
         }
       );
     }
 
     // expect empty
     {
-      const initState = new State(
-        initConfig,
-        "ABC",
-        initPos,
-        "none"
-      );
+      const initState = new State(initConfig, "ABC", initPos, "none");
       const expectTokens = [];
       const parser = generateParser(expectTokens);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.esuc(
+      expect(res).to.be.an.equalResultTo(
+        Result.esucc(
           ParseError.unknown(initPos),
           [],
           initState
         ),
-        arrayEqual
-      )).to.be.true;
+        chai.util.eql
+      );
     }
     // expect many, correct input
     {
-      const initState = new State(
-        initConfig,
-        "ABC",
-        initPos,
-        "none"
-      );
+      const initState = new State(initConfig, "ABC", initPos, "none");
       const expectTokens = ["A", "B"];
       const parser = generateParser(expectTokens);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csuc(
-          ParseError.unknown(new SourcePos("foobar", 1, 3)),
+      expect(res).to.be.an.equalResultTo(
+        Result.csucc(
+          ParseError.unknown(new SourcePos("main", 2, 1, 3)),
           ["A", "B"],
           new State(
             initState.config,
             "C",
-            new SourcePos("foobar", 1, 3),
+            new SourcePos("main", 2, 1, 3),
             "none"
           )
         ),
-        arrayEqual
-      )).to.be.true;
+        chai.util.eql
+      );
     }
-    // expect many, totally wrong input
+    // expect many, completely wrong input
     {
-      const initState = new State(
-        initConfig,
-        "CDE",
-        initPos,
-        "none"
+      const initState = new State(initConfig, "CDE", initPos, "none"
       );
       const expectTokens = ["A", "B"];
       const parser = generateParser(expectTokens);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.eerr(
-          new ParseError(
+      expect(res).to.be.an.equalResultTo(
+        Result.efail(
+          new StrictParseError(
             initPos,
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "C"),
-              new ErrorMessage(ErrorMessageType.EXPECT, "AB"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "C"),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "AB"),
             ]
           )
         ),
-        arrayEqual
-      )).to.be.true;
+        chai.util.eql
+      );
     }
     // expect many, partially wrong input
     {
-      const initState = new State(
-        initConfig,
-        "ACD",
-        initPos,
-        "none"
-      );
+      const initState = new State(initConfig, "ACD", initPos, "none");
       const expectTokens = ["A", "B"];
       const parser = generateParser(expectTokens);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.cerr(
-          new ParseError(
+      expect(res).to.be.an.equalResultTo(
+        Result.cfail(
+          new StrictParseError(
             initPos,
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "C"),
-              new ErrorMessage(ErrorMessageType.EXPECT, "AB"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "C"),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "AB"),
             ]
           )
         ),
-        arrayEqual
-      )).to.be.true;
+        chai.util.eql
+      );
     }
     // expect many, no input
     {
-      const initState = new State(
-        initConfig,
-        "",
-        initPos,
-        "none"
-      );
+      const initState = new State(initConfig, "", initPos, "none");
       const expectTokens = ["A", "B"];
       const parser = generateParser(expectTokens);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.eerr(
-          new ParseError(
+      expect(res).to.be.an.equalResultTo(
+        Result.efail(
+          new StrictParseError(
             initPos,
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              new ErrorMessage(ErrorMessageType.EXPECT, "AB"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "AB"),
             ]
           )
         ),
-        arrayEqual
-      )).to.be.true;
+        chai.util.eql
+      );
     }
-    // expect many, less input
+    // expect many, short input
     {
-      const initState = new State(
-        initConfig,
-        "A",
-        initPos,
-        "none"
-      );
+      const initState = new State(initConfig, "A", initPos, "none");
       const expectTokens = ["A", "B"];
       const parser = generateParser(expectTokens);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.cerr(
-          new ParseError(
+      expect(res).to.be.an.equalResultTo(
+        Result.cfail(
+          new StrictParseError(
             initPos,
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              new ErrorMessage(ErrorMessageType.EXPECT, "AB"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "AB"),
             ]
           )
         ),
-        arrayEqual
-      )).to.be.true;
+        chai.util.eql
+      );
     }
   });
 
-  it("should treat input in unicode mode if `unicode' flag of the config is `true'", () => {
-    const arrayEqual = (xs, ys) => xs.length === ys.length && xs.every((x, i) => x === ys[i]);
-
-    // non-unicode mode
+  it("should use the unicode flag of the config", () => {
+    // unicode = false
     {
       const initState = new State(
-        new Config({ tabWidth: 8, unicode: false }),
+        new Config({ unicode: false }),
         "\uD83C\uDF63ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const expectTokens = ["\uD83C\uDF63", "A"];
@@ -210,34 +169,33 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
         (x, y) => x === y,
         tokens => tokens.join(""),
         (pos, tokens, config) => {
-          expect(SourcePos.equal(pos, initState.pos)).to.be.true;
+          expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(tokens).to.deep.equal(expectTokens);
-          expect(Config.equal(config, initState.config)).to.be.true;
-          return new SourcePos("foobar", 1, 3);
+          expect(config).to.be.an.equalConfigTo(initState.config);
+          return new SourcePos("main", 2, 1, 3);
         }
       );
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.eerr(
-          new ParseError(
-            new SourcePos("foobar", 1, 1),
+      expect(res).to.be.an.equalResultTo(
+        Result.efail(
+          new StrictParseError(
+            new SourcePos("main", 0, 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "\uD83C"),
-              new ErrorMessage(ErrorMessageType.EXPECT, "\uD83C\uDF63A"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "\uD83C"),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "\uD83C\uDF63A"),
             ]
           )
         ),
-        arrayEqual
-      )).to.be.true;
+        chai.util.eql
+      );
     }
-    // unicode mode
+    // unicode = true
     {
       const initState = new State(
-        new Config({ tabWidth: 8, unicode: true }),
+        new Config({ unicode: true }),
         "\uD83C\uDF63ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const expectTokens = ["\uD83C\uDF63", "A"];
@@ -246,28 +204,27 @@ describe(".tokens(expectTokens, tokenEqual, tokensToString, calcNextPos)", () =>
         (x, y) => x === y,
         tokens => tokens.join(""),
         (pos, tokens, config) => {
-          expect(SourcePos.equal(pos, initState.pos)).to.be.true;
+          expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(tokens).to.deep.equal(expectTokens);
-          expect(Config.equal(config, initState.config)).to.be.true;
-          return new SourcePos("foobar", 1, 3);
+          expect(config).to.be.an.equalConfigTo(initState.config);
+          return new SourcePos("main", 2, 1, 3);
         }
       );
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csuc(
-          ParseError.unknown(new SourcePos("foobar", 1, 3)),
+      expect(res).to.be.an.equalResultTo(
+        Result.csucc(
+          ParseError.unknown(new SourcePos("main", 2, 1, 3)),
           ["\uD83C\uDF63", "A"],
           new State(
             initState.config,
             "BC",
-            new SourcePos("foobar", 1, 3),
+            new SourcePos("main", 2, 1, 3),
             "none"
           )
         ),
-        arrayEqual
-      )).to.be.true;
+        chai.util.eql
+      );
     }
   });
 });
