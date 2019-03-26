@@ -365,13 +365,11 @@ module.exports = _core => {
   }
 
   /**
-   * @function module:prim.reduceMany
-   * @static
-   * @param {AbstractParser} parser
-   * @param {function} callback
-   * @param {*} initVal
-   * @returns {AbstractParser}
-   * @throws {Error} `parser` accepts an empty string.
+   * reduceMany: [S, U, A, B](
+   *   parser: Parser[S, U, A],
+   *   callback: (B, A) => B,
+   *   initVal: B
+   * ) => Parser[S, U, B]
    */
   function reduceMany(parser, callback, initVal) {
     return new StrictParser(state => {
@@ -386,15 +384,15 @@ module.exports = _core => {
             accum = callback(accum, res.val);
             currentState = res.state;
           } else {
-            throw new Error("`many' is applied to a parser that accepts an empty string");
+            throw new Error("`many` is applied to a parser that accepts an empty string");
           }
         } else {
           if (res.consumed) {
             return res;
           } else {
             return consumed
-              ? Result.csuc(res.err, accum, currentState)
-              : Result.esuc(res.err, accum, currentState);
+              ? Result.csucc(res.err, accum, currentState)
+              : Result.esucc(res.err, accum, currentState);
           }
         }
       }
