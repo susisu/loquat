@@ -600,15 +600,12 @@ module.exports = _core => {
   }
 
   /**
-   * getConfig: [S, U]Parser[S, U, S]
+   * getInput: [S, U]Parser[S, U, S]
    */
   const getInput = bind(getParserState, state => pure(state.input));
 
   /**
-   * @function module:prim.setInput
-   * @static
-   * @param {(string|Array|IStream)} input
-   * @returns {AbstractParser}
+   * setInput: [S, U](input: S) => Parser[S, U, undefined]
    */
   function setInput(input) {
     return then(

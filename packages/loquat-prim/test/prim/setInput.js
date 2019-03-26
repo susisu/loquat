@@ -1,44 +1,32 @@
-/*
- * loquat-prim test / prim.setInput()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos    = _core.SourcePos;
-const ParseError   = _core.ParseError;
-const Config       = _core.Config;
-const State        = _core.State;
-const Result       = _core.Result;
-const assertParser = _core.assertParser;
+const { SourcePos, ParseError, Config, State, Result } = _core;
 
-const setInput = _prim.setInput;
+const { setInput } = _prim;
 
-describe(".setInput(input)", () => {
-  it("should return a parser that sets parser input to `input' and empty succeeds", () => {
+describe("setInput", () => {
+  it("should create a parser that sets the input of the current parser state to the specified one"
+    + " and succeeds without consumption", () => {
     const initState = new State(
-      new Config({ tabWidth: 8 }),
+      new Config(),
       "input",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "none"
     );
     const parser = setInput("rest");
-    assertParser(parser);
+    expect(parser).to.be.a.parser;
     const res = parser.run(initState);
-    expect(Result.equal(
-      res,
-      Result.esuc(
-        ParseError.unknown(new SourcePos("foobar", 1, 1)),
-        undefined,
-        new State(
-          new Config({ tabWidth: 8 }),
-          "rest",
-          new SourcePos("foobar", 1, 1),
-          "none"
-        )
+    expect(res).to.be.an.equalResultTo(Result.esucc(
+      ParseError.unknown(new SourcePos("main", 0, 1, 1)),
+      undefined,
+      new State(
+        new Config(),
+        "rest",
+        new SourcePos("main", 0, 1, 1),
+        "none"
       )
-    )).to.be.true;
+    ));
   });
 });
