@@ -1,32 +1,26 @@
-/*
- * loquat-prim / sugar.js
- */
-
-/**
- * @module sugar
- */
-
 "use strict";
 
-module.exports = (_core, _prim) => {
-  const isParser = _core.isParser;
+module.exports = (_core, { _prim }) => {
+  const { isParser } = _core;
 
-  const map        = _prim.map;
-  const pure       = _prim.pure;
-  const ap         = _prim.ap;
-  const left       = _prim.left;
-  const right      = _prim.right;
-  const bind       = _prim.bind;
-  const then       = _prim.then;
-  const fail       = _prim.fail;
-  const mplus      = _prim.mplus;
-  const label      = _prim.label;
-  const hidden     = _prim.hidden;
-  const tryParse   = _prim.tryParse;
-  const lookAhead  = _prim.lookAhead;
-  const reduceMany = _prim.reduceMany;
-  const many       = _prim.many;
-  const skipMany   = _prim.skipMany;
+  const {
+    map,
+    pure,
+    ap,
+    left,
+    right,
+    bind,
+    then,
+    fail,
+    mplus,
+    label,
+    hidden,
+    tryParse,
+    lookAhead,
+    reduceMany,
+    many,
+    skipMany,
+  } = _prim;
 
   return Object.freeze({
     map(func) {
