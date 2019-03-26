@@ -1,38 +1,25 @@
-/*
- * loquat-prim test / prim.getState
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos    = _core.SourcePos;
-const ParseError   = _core.ParseError;
-const Config       = _core.Config;
-const State        = _core.State;
-const Result       = _core.Result;
-const assertParser = _core.assertParser;
+const { SourcePos, ParseError, Config, State, Result } = _core;
 
-const getState = _prim.getState;
+const { getState } = _prim;
 
-describe(".getState", () => {
-  it("should get the current user state of parser", () => {
-    assertParser(getState);
+describe("getState", () => {
+  it("should be a parser that gets the user-defined state of the current parser state", () => {
+    expect(getState).to.be.a.parser;
     const initState = new State(
-      new Config({ tabWidth: 8 }),
+      new Config(),
       "input",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "none"
     );
     const res = getState.run(initState);
-    expect(Result.equal(
-      res,
-      Result.esuc(
-        ParseError.unknown(new SourcePos("foobar", 1, 1)),
-        initState.userState,
-        initState
-      )
-    )).to.be.true;
+    expect(res).to.be.an.equalResultTo(Result.esucc(
+      ParseError.unknown(new SourcePos("main", 0, 1, 1)),
+      initState.userState,
+      initState
+    ));
   });
 });

@@ -630,9 +630,7 @@ module.exports = _core => {
   }
 
   /**
-   * @constant module:prim.getState
-   * @static
-   * @type {AbstractParser}
+   * getState: [S, U]Parser[S, U, U]
    */
   const getState = bind(getParserState, state => pure(state.userState));
 
