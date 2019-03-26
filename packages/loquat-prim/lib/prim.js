@@ -561,12 +561,10 @@ module.exports = _core => {
   }
 
   /**
-   * @constant module:prim.getParserState
-   * @static
-   * @type {AbstractParser}
+   * getParserState: [S, U]Parser[S, U, State[S, U]]
    */
   const getParserState = new StrictParser(state =>
-    Result.esuc(ParseError.unknown(state.pos), state, state)
+    Result.esucc(ParseError.unknown(state.pos), state, state)
   );
 
   /**
