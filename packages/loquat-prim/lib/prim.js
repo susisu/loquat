@@ -590,10 +590,7 @@ module.exports = _core => {
   const getConfig = bind(getParserState, state => pure(state.config));
 
   /**
-   * @function module:prim.setConfig
-   * @static
-   * @param {Config} config
-   * @returns {AbstractParser}
+   * setConfig: [S, U](config: Config) => Parser[S, U, undefined]
    */
   function setConfig(config) {
     return then(
