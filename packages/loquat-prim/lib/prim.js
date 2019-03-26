@@ -620,10 +620,7 @@ module.exports = _core => {
   const getPosition = bind(getParserState, state => pure(state.pos));
 
   /**
-   * @function module:prim.setPosition
-   * @static
-   * @param {SourcePos} pos
-   * @returns {AbstractParser}
+   * setPosition: [S, U](pos: SourcePos) => Parser[S, U, undefined]
    */
   function setPosition(pos) {
     return then(
