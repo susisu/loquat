@@ -635,10 +635,7 @@ module.exports = _core => {
   const getState = bind(getParserState, state => pure(state.userState));
 
   /**
-   * @function module:prim.setState
-   * @static
-   * @param {*} userState
-   * @returns {AbstractParser}
+   * setState: [S, U](userState: U) => Parser[S, U, undefined]
    */
   function setState(userState) {
     return then(
