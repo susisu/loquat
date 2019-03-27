@@ -16,128 +16,112 @@ const {
 
 const { oneOf } = _char;
 
-describe(".oneOf(str)", () => {
-  it("should return a parser that parses a character contained by `str'", () => {
+describe("oneOf", () => {
+  it("should create a parser that accepts one of a character contained by the given string", () => {
     // contained
     {
       const initState = new State(
-        new Config({ tabWidth: 8, unicode: false }),
+        new Config(),
         "ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = oneOf("AXYZ");
+      const parser = oneOf("ABC");
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csucc(
-          ParseError.unknown(new SourcePos("foobar", 1, 2)),
-          "A",
-          new State(
-            initState.config,
-            "BC",
-            new SourcePos("foobar", 1, 2),
-            "none"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        "A",
+        new State(
+          initState.config,
+          "BC",
+          new SourcePos("main", 1, 1, 2),
+          "none"
         )
-      )).to.be.true;
+      ));
     }
     // not contained
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const parser = oneOf("XYZ");
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A"))]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A"))]
         )
-      )).to.be.true;
+      ));
     }
     // empty input
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = oneOf("AXYZ");
+      const parser = oneOf("ABC");
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "")]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "")]
         )
-      )).to.be.true;
+      ));
     }
   });
 
-  it("should treat characters in `str' as code points if `unicode' flag of the config is"
-    + " `true'", () => {
-    // non-unicode mode
+  it("should use the unicode flag of the config", () => {
+    // unicode = false
     {
       const initState = new State(
-        new Config({ tabWidth: 8, unicode: false }),
+        new Config({  unicode: false }),
         "\uD83C\uDF63ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const parser = oneOf("\uD83C\uDF63XYZ");
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csucc(
-          ParseError.unknown(new SourcePos("foobar", 1, 2)),
-          "\uD83C",
-          new State(
-            initState.config,
-            "\uDF63ABC",
-            new SourcePos("foobar", 1, 2),
-            "none"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        "\uD83C",
+        new State(
+          initState.config,
+          "\uDF63ABC",
+          new SourcePos("main", 1, 1, 2),
+          "none"
         )
-      )).to.be.true;
+      ));
     }
-    // unicode mode
+    // unicode = true
     {
       const initState = new State(
-        new Config({ tabWidth: 8, unicode: true }),
+        new Config({ unicode: true }),
         "\uD83C\uDF63ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const parser = oneOf("\uD83C\uDF63XYZ");
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csucc(
-          ParseError.unknown(new SourcePos("foobar", 1, 2)),
-          "\uD83C\uDF63",
-          new State(
-            initState.config,
-            "ABC",
-            new SourcePos("foobar", 1, 2),
-            "none"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 2, 1, 2)),
+        "\uD83C\uDF63",
+        new State(
+          initState.config,
+          "ABC",
+          new SourcePos("main", 2, 1, 2),
+          "none"
         )
-      )).to.be.true;
+      ));
     }
   });
 });

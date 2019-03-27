@@ -99,7 +99,7 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-   * satisfy: [S <: CharacterStream[S], U](test: (char, config) => boolean): Parser[S, U, char]
+   * satisfy: [S <: CharacterStream[S], U](test: (char, config) => boolean) => Parser[S, U, char]
    */
   function satisfy(test) {
     function systemUnexpectError(pos, str) {
@@ -128,18 +128,15 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:char.oneOf
-     * @static
-     * @param {string} str
-     * @returns {AbstractParser}
-     */
+   * oneOf: [S <: CharacterStream[S], U](str: string) => Parser[S, U, char]
+   */
   function oneOf(str) {
-    const cpChars = new Set(str);
-    const chars   = new Set();
+    const codePoints = new Set(str);
+    const codeUnits = new Set();
     for (let i = 0; i < str.length; i++) {
-      chars.add(str[i]);
+      codeUnits.add(str[i]);
     }
-    return satisfy((char, config) => config.unicode ? cpChars.has(char) : chars.has(char));
+    return satisfy((char, config) => config.unicode ? codePoints.has(char) : codeUnits.has(char));
   }
 
   /**
