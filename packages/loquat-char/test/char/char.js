@@ -20,79 +20,79 @@ const assertParser     = _core.assertParser;
 const char = _char.char;
 
 describe(".char(expectChar)", () => {
-    it("should return a parser that parses a character `expectChar'", () => {
-        // match
-        {
-            const initState = new State(
-                new Config({ tabWidth: 8 }),
-                "ABC",
-                new SourcePos("foobar", 1, 1),
-                "none"
-            );
-            const parser = char("A");
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.csuc(
-                    ParseError.unknown(new SourcePos("foobar", 1, 2)),
-                    "A",
-                    new State(
-                        initState.config,
-                        "BC",
-                        new SourcePos("foobar", 1, 2),
-                        "none"
-                    )
-                )
-            )).to.be.true;
-        }
-        // not match
-        {
-            const initState = new State(
-                new Config({ tabWidth: 8 }),
-                "XYZ",
-                new SourcePos("foobar", 1, 1),
-                "none"
-            );
-            const parser = char("A");
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.eerr(
-                    new ParseError(
-                        new SourcePos("foobar", 1, 1),
-                        [
-                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-                            new ErrorMessage(ErrorMessageType.EXPECT, show("A"))
-                        ]
-                    )
-                )
-            )).to.be.true;
-        }
-        // empty input
-        {
-            const initState = new State(
-                new Config({ tabWidth: 8 }),
-                "",
-                new SourcePos("foobar", 1, 1),
-                "none"
-            );
-            const parser = char("A");
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.eerr(
-                    new ParseError(
-                        new SourcePos("foobar", 1, 1),
-                        [
-                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                            new ErrorMessage(ErrorMessageType.EXPECT, show("A"))
-                        ]
-                    )
-                )
-            )).to.be.true;
-        }
-    });
+  it("should return a parser that parses a character `expectChar'", () => {
+    // match
+    {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        "ABC",
+        new SourcePos("foobar", 1, 1),
+        "none"
+      );
+      const parser = char("A");
+      assertParser(parser);
+      const res = parser.run(initState);
+      expect(Result.equal(
+        res,
+        Result.csuc(
+          ParseError.unknown(new SourcePos("foobar", 1, 2)),
+          "A",
+          new State(
+            initState.config,
+            "BC",
+            new SourcePos("foobar", 1, 2),
+            "none"
+          )
+        )
+      )).to.be.true;
+    }
+    // not match
+    {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        "XYZ",
+        new SourcePos("foobar", 1, 1),
+        "none"
+      );
+      const parser = char("A");
+      assertParser(parser);
+      const res = parser.run(initState);
+      expect(Result.equal(
+        res,
+        Result.eerr(
+          new ParseError(
+            new SourcePos("foobar", 1, 1),
+            [
+              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              new ErrorMessage(ErrorMessageType.EXPECT, show("A")),
+            ]
+          )
+        )
+      )).to.be.true;
+    }
+    // empty input
+    {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        "",
+        new SourcePos("foobar", 1, 1),
+        "none"
+      );
+      const parser = char("A");
+      assertParser(parser);
+      const res = parser.run(initState);
+      expect(Result.equal(
+        res,
+        Result.eerr(
+          new ParseError(
+            new SourcePos("foobar", 1, 1),
+            [
+              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+              new ErrorMessage(ErrorMessageType.EXPECT, show("A")),
+            ]
+          )
+        )
+      )).to.be.true;
+    }
+  });
 });

@@ -20,74 +20,74 @@ const assertParser     = _core.assertParser;
 const upper = _char.upper;
 
 describe(".upper", () => {
-    it("should return a parser that parses a uppercase letter", () => {
-        assertParser(upper);
-        // match
-        for (const c of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
-            const initState = new State(
-                new Config({ tabWidth: 8 }),
-                c + "abc",
-                new SourcePos("foobar", 1, 1),
-                "none"
-            );
-            const res = upper.run(initState);
-            expect(Result.equal(
-                res,
-                Result.csuc(
-                    ParseError.unknown(new SourcePos("foobar", 1, 2)),
-                    c,
-                    new State(
-                        initState.config,
-                        "abc",
-                        new SourcePos("foobar", 1, 2),
-                        "none"
-                    )
-                )
-            )).to.be.true;
-        }
-        // not match
-        {
-            const initState = new State(
-                new Config({ tabWidth: 8 }),
-                "abc",
-                new SourcePos("foobar", 1, 1),
-                "none"
-            );
-            const res = upper.run(initState);
-            expect(Result.equal(
-                res,
-                Result.eerr(
-                    new ParseError(
-                        new SourcePos("foobar", 1, 1),
-                        [
-                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("a")),
-                            new ErrorMessage(ErrorMessageType.EXPECT, "uppercase letter")
-                        ]
-                    )
-                )
-            )).to.be.true;
-        }
-        // empty input
-        {
-            const initState = new State(
-                new Config({ tabWidth: 8 }),
-                "",
-                new SourcePos("foobar", 1, 1),
-                "none"
-            );
-            const res = upper.run(initState);
-            expect(Result.equal(
-                res,
-                Result.eerr(
-                    new ParseError(
-                        new SourcePos("foobar", 1, 1),
-                        [
-                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                            new ErrorMessage(ErrorMessageType.EXPECT, "uppercase letter")
-                        ]
-                    )
-                )
-            )).to.be.true;
-        }
-    });
+  it("should return a parser that parses a uppercase letter", () => {
+    assertParser(upper);
+    // match
+    for (const c of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        c + "abc",
+        new SourcePos("foobar", 1, 1),
+        "none"
+      );
+      const res = upper.run(initState);
+      expect(Result.equal(
+        res,
+        Result.csuc(
+          ParseError.unknown(new SourcePos("foobar", 1, 2)),
+          c,
+          new State(
+            initState.config,
+            "abc",
+            new SourcePos("foobar", 1, 2),
+            "none"
+          )
+        )
+      )).to.be.true;
+    }
+    // not match
+    {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        "abc",
+        new SourcePos("foobar", 1, 1),
+        "none"
+      );
+      const res = upper.run(initState);
+      expect(Result.equal(
+        res,
+        Result.eerr(
+          new ParseError(
+            new SourcePos("foobar", 1, 1),
+            [
+              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("a")),
+              new ErrorMessage(ErrorMessageType.EXPECT, "uppercase letter"),
+            ]
+          )
+        )
+      )).to.be.true;
+    }
+    // empty input
+    {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        "",
+        new SourcePos("foobar", 1, 1),
+        "none"
+      );
+      const res = upper.run(initState);
+      expect(Result.equal(
+        res,
+        Result.eerr(
+          new ParseError(
+            new SourcePos("foobar", 1, 1),
+            [
+              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+              new ErrorMessage(ErrorMessageType.EXPECT, "uppercase letter"),
+            ]
+          )
+        )
+      )).to.be.true;
+    }
+  });
 });
