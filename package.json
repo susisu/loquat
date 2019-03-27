@@ -6,6 +6,7 @@
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap",
+    "lint": "lerna run --ignore loquat lint",
     "test": "lerna run --ignore loquat test"
   },
   "devDependencies": {

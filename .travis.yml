@@ -8,6 +8,7 @@ before_install:
   - npm install -g yarn@latest
 install:
   - yarn
-  - yarn run bootstrap
+  - yarn bootstrap
 script:
+  - yarn lint
   - yarn test
