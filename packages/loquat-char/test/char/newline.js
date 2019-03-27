@@ -16,75 +16,66 @@ const {
 
 const { newline } = _char;
 
-describe(".newline", () => {
-  it("should return a parser that parses a newline character (LF)", () => {
+describe("newline", () => {
+  it("should be a parser that accepts a newline character (LF)", () => {
     expect(newline).to.be.a.parser;
     // match
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "\nABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = newline.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csucc(
-          ParseError.unknown(new SourcePos("foobar", 2, 1)),
-          "\n",
-          new State(
-            initState.config,
-            "ABC",
-            new SourcePos("foobar", 2, 1),
-            "none"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 1, 2, 1)),
+        "\n",
+        new State(
+          initState.config,
+          "ABC",
+          new SourcePos("main", 1, 2, 1),
+          "none"
         )
-      )).to.be.true;
+      ));
     }
     // not match
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = newline.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-              ErrorMessage.create(ErrorMessageType.EXPECT, "new-line"),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+            ErrorMessage.create(ErrorMessageType.EXPECT, "new-line"),
+          ]
         )
-      )).to.be.true;
+      ));
     }
     // empty input
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = newline.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              ErrorMessage.create(ErrorMessageType.EXPECT, "new-line"),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+            ErrorMessage.create(ErrorMessageType.EXPECT, "new-line"),
+          ]
         )
-      )).to.be.true;
+      ));
     }
   });
 });
