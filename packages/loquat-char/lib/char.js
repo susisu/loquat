@@ -1,23 +1,16 @@
-/*
- * loquat-char / char.js
- */
-
-/**
- * @module char
- */
-
 "use strict";
 
-module.exports = (_core, _prim) => {
+module.exports = (_core, { _prim }) => {
   const {
     show,
     ErrorMessageType,
     ErrorMessage,
     ParseError,
-    uncons,
+    StrictParseError,
     State,
     Result,
-    Parser,
+    StrictParser,
+    uncons,
   } = _core;
 
   const { pure, bind, label, reduceMany, skipMany } = _prim;
@@ -30,27 +23,27 @@ module.exports = (_core, _prim) => {
      */
   function string(str) {
     function eofError(pos) {
-      return new ParseError(
+      return new StrictParseError(
         pos,
         [
-          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-          new ErrorMessage(ErrorMessageType.EXPECT, show(str)),
+          ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+          ErrorMessage.create(ErrorMessageType.EXPECT, show(str)),
         ]
       );
     }
     function expectError(pos, char) {
-      return new ParseError(
+      return new StrictParseError(
         pos,
         [
-          new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show(char)),
-          new ErrorMessage(ErrorMessageType.EXPECT, show(str)),
+          ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(char)),
+          ErrorMessage.create(ErrorMessageType.EXPECT, show(str)),
         ]
       );
     }
-    return new Parser(state => {
+    return new StrictParser(state => {
       const len = str.length;
       if (len === 0) {
-        return Result.esuc(ParseError.unknown(state.pos), "", state);
+        return Result.esucc(ParseError.unknown(state.pos), "", state);
       }
       const tabWidth = state.config.tabWidth;
       const unicode  = state.config.unicode;
@@ -61,16 +54,16 @@ module.exports = (_core, _prim) => {
           const unconsed = uncons(rest, unicode);
           if (unconsed.empty) {
             return !consumed
-                            ? Result.eerr(eofError(state.pos))
-                            : Result.cerr(eofError(state.pos));
+                            ? Result.efail(eofError(state.pos))
+                            : Result.cfail(eofError(state.pos));
           } else {
             if (char === unconsed.head) {
               rest     = unconsed.tail;
               consumed = true;
             } else {
               return !consumed
-                                ? Result.eerr(expectError(state.pos, unconsed.head))
-                                : Result.cerr(expectError(state.pos, unconsed.head));
+                                ? Result.efail(expectError(state.pos, unconsed.head))
+                                : Result.cfail(expectError(state.pos, unconsed.head));
             }
           }
         }
@@ -79,21 +72,21 @@ module.exports = (_core, _prim) => {
           const unconsed = uncons(rest, unicode);
           if (unconsed.empty) {
             return i === 0
-                            ? Result.eerr(eofError(state.pos))
-                            : Result.cerr(eofError(state.pos));
+                            ? Result.efail(eofError(state.pos))
+                            : Result.cfail(eofError(state.pos));
           } else {
             if (str[i] === unconsed.head) {
               rest = unconsed.tail;
             } else {
               return i === 0
-                                ? Result.eerr(expectError(state.pos, unconsed.head))
-                                : Result.cerr(expectError(state.pos, unconsed.head));
+                                ? Result.efail(expectError(state.pos, unconsed.head))
+                                : Result.cfail(expectError(state.pos, unconsed.head));
             }
           }
         }
       }
       const newPos = state.pos.addString(str, tabWidth, unicode);
-      return Result.csuc(
+      return Result.csucc(
         ParseError.unknown(newPos),
         str,
         new State(state.config, rest, newPos, state.userState)
@@ -109,25 +102,25 @@ module.exports = (_core, _prim) => {
      */
   function satisfy(test) {
     function systemUnexpectError(pos, str) {
-      return new ParseError(
+      return new StrictParseError(
         pos,
-        [new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, str)]
+        [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, str)]
       );
     }
-    return new Parser(state => {
+    return new StrictParser(state => {
       const unconsed = uncons(state.input, state.config.unicode);
       if (unconsed.empty) {
-        return Result.eerr(systemUnexpectError(state.pos, ""));
+        return Result.efail(systemUnexpectError(state.pos, ""));
       } else {
         if (test(unconsed.head, state.config)) {
           const newPos = state.pos.addChar(unconsed.head, state.config.tabWidth);
-          return Result.csuc(
+          return Result.csucc(
             ParseError.unknown(newPos),
             unconsed.head,
             new State(state.config, unconsed.tail, newPos, state.userState)
           );
         } else {
-          return Result.eerr(systemUnexpectError(state.pos, show(unconsed.head)));
+          return Result.efail(systemUnexpectError(state.pos, show(unconsed.head)));
         }
       }
     });
@@ -302,7 +295,7 @@ module.exports = (_core, _prim) => {
             + (re.unicode ? "u" : "");
     const anchored = new RegExp(`^(?:${re.source})`, flags);
     const expectStr = show(re);
-    return new Parser(state => {
+    return new StrictParser(state => {
       if (typeof state.input !== "string") {
         throw new Error("`regexp' is only applicable to string input");
       }
@@ -311,14 +304,14 @@ module.exports = (_core, _prim) => {
         const str = match[0];
         const val = match[groupId];
         if (str.length === 0) {
-          return Result.esuc(
+          return Result.esucc(
             ParseError.unknown(state.pos),
             val,
             state
           );
         } else {
           const newPos = state.pos.addString(str, state.config.tabWidth, state.config.unicode);
-          return Result.csuc(
+          return Result.csucc(
             ParseError.unknown(newPos),
             val,
             new State(
@@ -330,10 +323,10 @@ module.exports = (_core, _prim) => {
           );
         }
       } else {
-        return Result.eerr(
-          new ParseError(
+        return Result.efail(
+          new StrictParseError(
             state.pos,
-            [new ErrorMessage(ErrorMessageType.EXPECT, expectStr)]
+            [ErrorMessage.create(ErrorMessageType.EXPECT, expectStr)]
           )
         );
       }

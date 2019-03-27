@@ -1,22 +1,19 @@
-/*
- * loquat-char test / char.string()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const string = _char.string;
+const { string } = _char;
 
 describe(".string(str)", () => {
   it("should return a parser that parses string (character sequence) given by `str'", () => {
@@ -29,11 +26,11 @@ describe(".string(str)", () => {
         "none"
       );
       const parser = string("");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(
+        Result.esucc(
           ParseError.unknown(new SourcePos("foobar", 1, 1)),
           "",
           new State(
@@ -54,11 +51,11 @@ describe(".string(str)", () => {
         "none"
       );
       const parser = string("\uD83C\uDF63");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 3)),
           "\uD83C\uDF63",
           new State(
@@ -79,16 +76,16 @@ describe(".string(str)", () => {
         "none"
       );
       const parser = string("\uD83C\uDF63");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "\"X\""),
-              new ErrorMessage(ErrorMessageType.EXPECT, "\"\uD83C\uDF63\""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "\"X\""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "\"\uD83C\uDF63\""),
             ]
           )
         )
@@ -103,16 +100,16 @@ describe(".string(str)", () => {
         "none"
       );
       const parser = string("\uD83C\uDF63");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "\"X\""),
-              new ErrorMessage(ErrorMessageType.EXPECT, "\"\uD83C\uDF63\""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "\"X\""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "\"\uD83C\uDF63\""),
             ]
           )
         )
@@ -127,16 +124,16 @@ describe(".string(str)", () => {
         "none"
       );
       const parser = string("\uD83C\uDF63");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              new ErrorMessage(ErrorMessageType.EXPECT, "\"\uD83C\uDF63\""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "\"\uD83C\uDF63\""),
             ]
           )
         )
@@ -151,16 +148,16 @@ describe(".string(str)", () => {
         "none"
       );
       const parser = string("\uD83C\uDF63");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              new ErrorMessage(ErrorMessageType.EXPECT, "\"\uD83C\uDF63\""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "\"\uD83C\uDF63\""),
             ]
           )
         )
@@ -178,11 +175,11 @@ describe(".string(str)", () => {
         "none"
       );
       const parser = string("");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(
+        Result.esucc(
           ParseError.unknown(new SourcePos("foobar", 1, 1)),
           "",
           new State(
@@ -204,11 +201,11 @@ describe(".string(str)", () => {
         "none"
       );
       const parser = string("\uD83C\uDF63X");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 3)),
           "\uD83C\uDF63X",
           new State(
@@ -230,16 +227,16 @@ describe(".string(str)", () => {
         "none"
       );
       const parser = string("\uD83C\uDF63X");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "\"X\""),
-              new ErrorMessage(ErrorMessageType.EXPECT, "\"\uD83C\uDF63X\""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "\"X\""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "\"\uD83C\uDF63X\""),
             ]
           )
         ),
@@ -255,16 +252,16 @@ describe(".string(str)", () => {
         "none"
       );
       const parser = string("\uD83C\uDF63X");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "\"Y\""),
-              new ErrorMessage(ErrorMessageType.EXPECT, "\"\uD83C\uDF63X\""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "\"Y\""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "\"\uD83C\uDF63X\""),
             ]
           )
         ),
@@ -280,16 +277,16 @@ describe(".string(str)", () => {
         "none"
       );
       const parser = string("\uD83C\uDF63X");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              new ErrorMessage(ErrorMessageType.EXPECT, "\"\uD83C\uDF63X\""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "\"\uD83C\uDF63X\""),
             ]
           )
         ),
@@ -305,16 +302,16 @@ describe(".string(str)", () => {
         "none"
       );
       const parser = string("\uD83C\uDF63X");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              new ErrorMessage(ErrorMessageType.EXPECT, "\"\uD83C\uDF63X\""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "\"\uD83C\uDF63X\""),
             ]
           )
         ),

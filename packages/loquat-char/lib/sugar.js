@@ -1,16 +1,7 @@
-/*
- * loquat-char / sugar.js
- */
-
-/**
- * @module sugar
- */
-
 "use strict";
 
-module.exports = (_core, _char) => {
-  const manyChars  = _char.manyChars;
-  const manyChars1 = _char.manyChars1;
+module.exports = (_core, { _char }) => {
+  const { manyChars, manyChars1 } = _char;
 
   return Object.freeze({
     manyChars() {

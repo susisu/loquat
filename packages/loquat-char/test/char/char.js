@@ -1,23 +1,20 @@
-/*
- * loquat-char test / char.char()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show             = _core.show;
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const char = _char.char;
+const { char } = _char;
 
 describe(".char(expectChar)", () => {
   it("should return a parser that parses a character `expectChar'", () => {
@@ -30,11 +27,11 @@ describe(".char(expectChar)", () => {
         "none"
       );
       const parser = char("A");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 2)),
           "A",
           new State(
@@ -55,16 +52,16 @@ describe(".char(expectChar)", () => {
         "none"
       );
       const parser = char("A");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, show("A")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, show("A")),
             ]
           )
         )
@@ -79,16 +76,16 @@ describe(".char(expectChar)", () => {
         "none"
       );
       const parser = char("A");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              new ErrorMessage(ErrorMessageType.EXPECT, show("A")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, show("A")),
             ]
           )
         )

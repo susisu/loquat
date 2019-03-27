@@ -1,27 +1,24 @@
-/*
- * loquat-char test / char.tab
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show             = _core.show;
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const tab = _char.tab;
+const { tab } = _char;
 
 describe(".tab", () => {
   it("should return a parser that parses a tab character", () => {
-    assertParser(tab);
+    expect(tab).to.be.a.parser;
     // match
     {
       const initState = new State(
@@ -33,7 +30,7 @@ describe(".tab", () => {
       const res = tab.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 9)),
           "\t",
           new State(
@@ -56,12 +53,12 @@ describe(".tab", () => {
       const res = tab.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "tab"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "tab"),
             ]
           )
         )
@@ -78,12 +75,12 @@ describe(".tab", () => {
       const res = tab.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              new ErrorMessage(ErrorMessageType.EXPECT, "tab"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "tab"),
             ]
           )
         )

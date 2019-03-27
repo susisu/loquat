@@ -1,25 +1,19 @@
-/*
- * loquat-char test / sugar
- */
-
 "use strict";
 
-const chai   = require("chai");
-const expect = chai.expect;
+const { expect }   = require("chai");
 
-const Parser       = _core.Parser;
-const assertParser = _core.assertParser;
+const { StrictParser } = _core;
 
 describe("sugar", () => {
   it("should contain parser extension methods", () => {
     expect(_sugar.manyChars).to.be.a("function");
-    assertParser(_sugar.manyChars.call(
-      new Parser(() => {})
-    ));
+    expect(_sugar.manyChars.call(
+      new StrictParser(() => {})
+    )).to.be.a.parser;
 
     expect(_sugar.manyChars1).to.be.a("function");
-    assertParser(_sugar.manyChars1.call(
-      new Parser(() => {})
-    ));
+    expect(_sugar.manyChars1.call(
+      new StrictParser(() => {})
+    )).to.be.a.parser;
   });
 });

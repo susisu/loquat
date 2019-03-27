@@ -1,23 +1,20 @@
-/*
- * loquat-char test / char.regexp()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show             = _core.show;
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const regexp = _char.regexp;
+const { regexp } = _char;
 
 describe(".regexp(re, groupId = 0)", () => {
   it("should return a parser that parses characters that regular expression `re' matches,"
@@ -31,11 +28,11 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(new RegExp(""), 0);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(
+        Result.esucc(
           ParseError.unknown(new SourcePos("foobar", 1, 1)),
           "",
           new State(
@@ -56,11 +53,11 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(/.{2}/, 0);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 3)),
           "XY",
           new State(
@@ -81,11 +78,11 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(/.{2}/);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 3)),
           "XY",
           new State(
@@ -106,11 +103,11 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(/.(.)/, 1);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 3)),
           "Y",
           new State(
@@ -131,14 +128,14 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(/abc/, 0);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.EXPECT, show(/abc/))]
+            [ErrorMessage.create(ErrorMessageType.EXPECT, show(/abc/))]
           )
         )
       )).to.be.true;
@@ -155,14 +152,14 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(/xy/, 0);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.EXPECT, show(/xy/))]
+            [ErrorMessage.create(ErrorMessageType.EXPECT, show(/xy/))]
           )
         )
       )).to.be.true;
@@ -176,11 +173,11 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(/xy/i, 0);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 3)),
           "XY",
           new State(
@@ -204,14 +201,14 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(/XY$/, 0);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.EXPECT, show(/XY$/))]
+            [ErrorMessage.create(ErrorMessageType.EXPECT, show(/XY$/))]
           )
         )
       )).to.be.true;
@@ -225,11 +222,11 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(/XY$/m, 0);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 3)),
           "XY",
           new State(
@@ -253,11 +250,11 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(/./, 0);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 2)),
           "\uD83C",
           new State(
@@ -277,14 +274,14 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(/\u{1F363}/, 0);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.EXPECT, show(/\u{1F363}/))]
+            [ErrorMessage.create(ErrorMessageType.EXPECT, show(/\u{1F363}/))]
           )
         )
       )).to.be.true;
@@ -298,11 +295,11 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(/./u, 0);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 2)),
           "\uD83C\uDF63",
           new State(
@@ -322,11 +319,11 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(/\u{1F363}/u, 0);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 2)),
           "\uD83C\uDF63",
           new State(
@@ -350,7 +347,7 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(/./, 0);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       expect(() => { parser.run(initState); }).to.throw(Error, /regexp/);
     }
     // IStream
@@ -362,7 +359,7 @@ describe(".regexp(re, groupId = 0)", () => {
         "none"
       );
       const parser = regexp(/./, 0);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       expect(() => { parser.run(initState); }).to.throw(Error, /regexp/);
     }
   });

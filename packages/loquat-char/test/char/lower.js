@@ -1,27 +1,24 @@
-/*
- * loquat-char test / char.lower
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show             = _core.show;
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const lower = _char.lower;
+const { lower } = _char;
 
 describe(".lower", () => {
   it("should return a parser that parses a lowercase letter", () => {
-    assertParser(lower);
+    expect(lower).to.be.a.parser;
     // match
     for (const c of "abcdefghijklmnopqrstuvwxyz") {
       const initState = new State(
@@ -33,7 +30,7 @@ describe(".lower", () => {
       const res = lower.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 2)),
           c,
           new State(
@@ -56,12 +53,12 @@ describe(".lower", () => {
       const res = lower.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "lowercase letter"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "lowercase letter"),
             ]
           )
         )
@@ -78,12 +75,12 @@ describe(".lower", () => {
       const res = lower.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              new ErrorMessage(ErrorMessageType.EXPECT, "lowercase letter"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "lowercase letter"),
             ]
           )
         )

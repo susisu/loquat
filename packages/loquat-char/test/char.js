@@ -1,7 +1,3 @@
-/*
- * loquat-char test / char
- */
-
 "use strict";
 
 describe("char", () => {

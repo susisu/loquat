@@ -1,27 +1,24 @@
-/*
- * loquat-char test / char.space
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show             = _core.show;
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const space = _char.space;
+const { space } = _char;
 
 describe(".space", () => {
   it("should return a parser that parses a space character", () => {
-    assertParser(space);
+    expect(space).to.be.a.parser;
     // match
     for (const c of " \f\r\v") {
       const initState = new State(
@@ -33,7 +30,7 @@ describe(".space", () => {
       const res = space.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 2)),
           c,
           new State(
@@ -56,7 +53,7 @@ describe(".space", () => {
       const res = space.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 2, 1)),
           "\n",
           new State(
@@ -79,7 +76,7 @@ describe(".space", () => {
       const res = space.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 9)),
           "\t",
           new State(
@@ -102,12 +99,12 @@ describe(".space", () => {
       const res = space.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "space"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "space"),
             ]
           )
         )
@@ -124,12 +121,12 @@ describe(".space", () => {
       const res = space.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              new ErrorMessage(ErrorMessageType.EXPECT, "space"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "space"),
             ]
           )
         )
