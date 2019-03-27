@@ -16,11 +16,15 @@ module.exports = (_core, { _prim }) => {
   const { pure, bind, label, reduceMany, skipMany } = _prim;
 
   /**
-   * type CharacterStream[S] = Stream[S] /\ { type Token = string }
+   * type char = string
    */
 
   /**
-   * string: [S <: CharacterStream[S], U](str: string): Parser[S, U, string]
+   * type CharacterStream[S] = Stream[S] /\ { type Token = char }
+   */
+
+  /**
+   * string: [S <: CharacterStream[S], U](str: string) => Parser[S, U, string]
    */
   function string(str) {
     function eofError(pos) {
@@ -95,11 +99,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:char.satisfy
-     * @static
-     * @param {function} test
-     * @returns {AbstractParser}
-     */
+   * satisfy: [S <: CharacterStream[S], U](test: (char, config) => boolean): Parser[S, U, char]
+   */
   function satisfy(test) {
     function systemUnexpectError(pos, str) {
       return new StrictParseError(
@@ -108,7 +109,7 @@ module.exports = (_core, { _prim }) => {
       );
     }
     return new StrictParser(state => {
-      const unconsed = uncons(state.input, state.config.unicode);
+      const unconsed = uncons(state.input, state.config);
       if (unconsed.empty) {
         return Result.efail(systemUnexpectError(state.pos, ""));
       } else {

@@ -1,6 +1,6 @@
 "use strict";
 
-const { expect } = require("chai");
+const { expect, assert } = require("chai");
 
 const {
   show,
@@ -16,86 +16,130 @@ const {
 
 const { satisfy } = _char;
 
-describe(".satisfy(test)", () => {
-  it("should return a parser that parses a character satisfying `test'", () => {
+describe("satisfy", () => {
+  it("should create a parser that accepts a character satisfying the given predicate", () => {
     // test succeeds
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = satisfy(
-        (char, config) => {
-          expect(char).to.equal("A");
-          expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
-          return true;
-        }
-      );
+      const parser = satisfy((char, config) => {
+        expect(char).to.equal("A");
+        expect(config).to.be.an.equalConfigTo(initState.config);
+        return true;
+      });
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csucc(
-          ParseError.unknown(new SourcePos("foobar", 1, 2)),
-          "A",
-          new State(
-            initState.config,
-            "BC",
-            new SourcePos("foobar", 1, 2),
-            "none"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        "A",
+        new State(
+          initState.config,
+          "BC",
+          new SourcePos("main", 1, 1, 2),
+          "none"
         )
-      )).to.be.true;
+      ));
     }
     // test fails
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = satisfy(
-        (x, config) => {
-          expect(x).to.equal("A");
-          expect(Config.equal(config, new Config({ tabWidth: 8 }))).to.be.true;
-          return false;
-        }
-      );
+      const parser = satisfy((char, config) => {
+        expect(char).to.equal("A");
+        expect(config).to.be.an.equalConfigTo(initState.config);
+        return false;
+      });
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A"))]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A"))]
         )
-      )).to.be.true;
+      ));
     }
     // empty input
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = satisfy(() => { throw new Error("unexpected call"); });
+      const parser = satisfy((char, config) => {
+        assert.fail("expect function to not be called");
+      });
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "")]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "")]
         )
-      )).to.be.true;
+      ));
+    }
+  });
+
+  it("should use the unicode flag of the config", () => {
+    // unicode = false
+    {
+      const initState = new State(
+        new Config({ unicode: false }),
+        "\uD83C\uDF63ABC",
+        new SourcePos("main", 0, 1, 1),
+        "none"
+      );
+      const parser = satisfy((char, config) => {
+        expect(char).to.equal("\uD83C");
+        expect(config).to.be.an.equalConfigTo(initState.config);
+        return true;
+      });
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        "\uD83C",
+        new State(
+          initState.config,
+          "\uDF63ABC",
+          new SourcePos("main", 1, 1, 2),
+          "none"
+        )
+      ));
+    }
+    // unicode = true
+    {
+      const initState = new State(
+        new Config({ unicode: true }),
+        "\uD83C\uDF63ABC",
+        new SourcePos("main", 0, 1, 1),
+        "none"
+      );
+      const parser = satisfy((char, config) => {
+        expect(char).to.equal("\uD83C\uDF63");
+        expect(config).to.be.an.equalConfigTo(initState.config);
+        return true;
+      });
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 2, 1, 2)),
+        "\uD83C\uDF63",
+        new State(
+          initState.config,
+          "ABC",
+          new SourcePos("main", 2, 1, 2),
+          "none"
+        )
+      ));
     }
   });
 });
