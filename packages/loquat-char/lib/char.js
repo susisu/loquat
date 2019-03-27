@@ -200,14 +200,12 @@ module.exports = (_core, { _prim }) => {
   /**
    * lower: [S <: CharacterStream[S], U]Parser[S, U, char]
    */
-  const lower = label(satisfy(char => lowerChars.has(char)), "lowercase letter");
+  const lower = label(satisfy((char, config) => lowerChars.has(char)), "lowercase letter");
 
   /**
-     * @constant module:char.letter
-     * @static
-     * @type {AbstractParser}
-     */
-  const letter = label(satisfy(char => letterChars.has(char)), "letter");
+   * letter: [S <: CharacterStream[S], U]Parser[S, U, char]
+   */
+  const letter = label(satisfy((char, config) => letterChars.has(char)), "letter");
 
   /**
      * @constant module:char.digit
