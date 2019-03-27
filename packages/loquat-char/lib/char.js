@@ -159,11 +159,9 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @constant module:char.anyChar
-     * @static
-     * @type {AbstractParser}
-     */
-  const anyChar = satisfy(() => true);
+   * anyChar: [S <: CharacterStream[S], U]Parser[S, U, char]
+   */
+  const anyChar = satisfy((char, config) => true);
 
   const spaceChars    = new Set(" \f\n\r\t\v");
   const upperChars    = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
