@@ -62,7 +62,7 @@ module.exports = (_core, { _prim }) => {
               : Result.cfail(eofError(state.pos));
           } else {
             if (char === unconsed.head) {
-              rest     = unconsed.tail;
+              rest = unconsed.tail;
               consumed = true;
             } else {
               return !consumed
@@ -213,11 +213,9 @@ module.exports = (_core, { _prim }) => {
   const digit = label(satisfy((char, config) => digitChars.has(char)), "digit");
 
   /**
-     * @constant module:char.alphaNum
-     * @static
-     * @type {AbstractParser}
-     */
-  const alphaNum = label(satisfy(char => alphaNumChars.has(char)), "letter or digit");
+   * alphaNum: [S <: CharacterStream[S], U]Parser[S, U, char]
+   */
+  const alphaNum = label(satisfy((char, config) => alphaNumChars.has(char)), "letter or digit");
 
   /**
      * @constant module:char.octDigit

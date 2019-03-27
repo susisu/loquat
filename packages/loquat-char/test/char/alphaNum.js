@@ -16,75 +16,66 @@ const {
 
 const { alphaNum } = _char;
 
-describe(".alphaNum", () => {
-  it("should return a parser that parses a letter or digit", () => {
+describe("alphaNum", () => {
+  it("should be a parser that accepts an alphabetical letter or a decimal digit", () => {
     expect(alphaNum).to.be.a.parser;
     // match
     for (const c of "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         c + "+-*",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = alphaNum.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csucc(
-          ParseError.unknown(new SourcePos("foobar", 1, 2)),
-          c,
-          new State(
-            initState.config,
-            "+-*",
-            new SourcePos("foobar", 1, 2),
-            "none"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        c,
+        new State(
+          initState.config,
+          "+-*",
+          new SourcePos("main", 1, 1, 2),
+          "none"
         )
-      )).to.be.true;
+      ));
     }
     // not match
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "+-*",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = alphaNum.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("+")),
-              ErrorMessage.create(ErrorMessageType.EXPECT, "letter or digit"),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("+")),
+            ErrorMessage.create(ErrorMessageType.EXPECT, "letter or digit"),
+          ]
         )
-      )).to.be.true;
+      ));
     }
     // empty input
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = alphaNum.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              ErrorMessage.create(ErrorMessageType.EXPECT, "letter or digit"),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+            ErrorMessage.create(ErrorMessageType.EXPECT, "letter or digit"),
+          ]
         )
-      )).to.be.true;
+      ));
     }
   });
 });
