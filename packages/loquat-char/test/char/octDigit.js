@@ -16,75 +16,66 @@ const {
 
 const { octDigit } = _char;
 
-describe(".octDigit", () => {
-  it("should return a parser that parses a octal digit", () => {
+describe("octDigit", () => {
+  it("should be a parser that accepts an octal digit", () => {
     expect(octDigit).to.be.a.parser;
     // match
     for (const c of "01234567") {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
-        c + "ABC",
-        new SourcePos("foobar", 1, 1),
+        new Config(),
+        c + "89A",
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = octDigit.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csucc(
-          ParseError.unknown(new SourcePos("foobar", 1, 2)),
-          c,
-          new State(
-            initState.config,
-            "ABC",
-            new SourcePos("foobar", 1, 2),
-            "none"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        c,
+        new State(
+          initState.config,
+          "89A",
+          new SourcePos("main", 1, 1, 2),
+          "none"
         )
-      )).to.be.true;
+      ));
     }
     // not match
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
-        "ABC",
-        new SourcePos("foobar", 1, 1),
+        new Config(),
+        "89A",
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = octDigit.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-              ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("8")),
+            ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
+          ]
         )
-      )).to.be.true;
+      ));
     }
     // empty input
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = octDigit.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+            ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
+          ]
         )
-      )).to.be.true;
+      ));
     }
   });
 });
