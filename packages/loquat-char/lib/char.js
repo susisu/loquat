@@ -16,11 +16,12 @@ module.exports = (_core, { _prim }) => {
   const { pure, bind, label, reduceMany, skipMany } = _prim;
 
   /**
-     * @function module:char.string
-     * @static
-     * @param {string} str
-     * @returns {AbstractParser}
-     */
+   * type CharacterStream[S] = Stream[S] /\ { type Token = string }
+   */
+
+  /**
+   * string: [S <: CharacterStream[S], U](str: string): Parser[S, U, string]
+   */
   function string(str) {
     function eofError(pos) {
       return new StrictParseError(
@@ -45,47 +46,46 @@ module.exports = (_core, { _prim }) => {
       if (len === 0) {
         return Result.esucc(ParseError.unknown(state.pos), "", state);
       }
-      const tabWidth = state.config.tabWidth;
-      const unicode  = state.config.unicode;
+      const config = state.config;
       let rest = state.input;
-      if (unicode) {
+      if (config.unicode) {
         let consumed = false;
         for (const char of str) {
-          const unconsed = uncons(rest, unicode);
+          const unconsed = uncons(rest, config);
           if (unconsed.empty) {
             return !consumed
-                            ? Result.efail(eofError(state.pos))
-                            : Result.cfail(eofError(state.pos));
+              ? Result.efail(eofError(state.pos))
+              : Result.cfail(eofError(state.pos));
           } else {
             if (char === unconsed.head) {
               rest     = unconsed.tail;
               consumed = true;
             } else {
               return !consumed
-                                ? Result.efail(expectError(state.pos, unconsed.head))
-                                : Result.cfail(expectError(state.pos, unconsed.head));
+                ? Result.efail(expectError(state.pos, unconsed.head))
+                : Result.cfail(expectError(state.pos, unconsed.head));
             }
           }
         }
       } else {
         for (let i = 0; i < len; i++) {
-          const unconsed = uncons(rest, unicode);
+          const unconsed = uncons(rest, config);
           if (unconsed.empty) {
             return i === 0
-                            ? Result.efail(eofError(state.pos))
-                            : Result.cfail(eofError(state.pos));
+              ? Result.efail(eofError(state.pos))
+              : Result.cfail(eofError(state.pos));
           } else {
             if (str[i] === unconsed.head) {
               rest = unconsed.tail;
             } else {
               return i === 0
-                                ? Result.efail(expectError(state.pos, unconsed.head))
-                                : Result.cfail(expectError(state.pos, unconsed.head));
+                ? Result.efail(expectError(state.pos, unconsed.head))
+                : Result.cfail(expectError(state.pos, unconsed.head));
             }
           }
         }
       }
-      const newPos = state.pos.addString(str, tabWidth, unicode);
+      const newPos = state.pos.addString(str, config.tabWidth, config.unicode);
       return Result.csucc(
         ParseError.unknown(newPos),
         str,
