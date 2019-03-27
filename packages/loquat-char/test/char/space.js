@@ -16,121 +16,106 @@ const {
 
 const { space } = _char;
 
-describe(".space", () => {
-  it("should return a parser that parses a space character", () => {
+describe("space", () => {
+  it("should be a parser that accepts a space character", () => {
     expect(space).to.be.a.parser;
     // match
     for (const c of " \f\r\v") {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         c + "ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = space.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csucc(
-          ParseError.unknown(new SourcePos("foobar", 1, 2)),
-          c,
-          new State(
-            initState.config,
-            "ABC",
-            new SourcePos("foobar", 1, 2),
-            "none"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        c,
+        new State(
+          initState.config,
+          "ABC",
+          new SourcePos("main", 1, 1, 2),
+          "none"
         )
-      )).to.be.true;
+      ));
     }
     // \n
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "\nABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = space.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csucc(
-          ParseError.unknown(new SourcePos("foobar", 2, 1)),
-          "\n",
-          new State(
-            initState.config,
-            "ABC",
-            new SourcePos("foobar", 2, 1),
-            "none"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 1, 2, 1)),
+        "\n",
+        new State(
+          initState.config,
+          "ABC",
+          new SourcePos("main", 1, 2, 1),
+          "none"
         )
-      )).to.be.true;
+      ));
     }
     // \t
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "\tABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = space.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csucc(
-          ParseError.unknown(new SourcePos("foobar", 1, 9)),
-          "\t",
-          new State(
-            initState.config,
-            "ABC",
-            new SourcePos("foobar", 1, 9),
-            "none"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 1, 1, 9)),
+        "\t",
+        new State(
+          initState.config,
+          "ABC",
+          new SourcePos("main", 1, 1, 9),
+          "none"
         )
-      )).to.be.true;
+      ));
     }
     // not match
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = space.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-              ErrorMessage.create(ErrorMessageType.EXPECT, "space"),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+            ErrorMessage.create(ErrorMessageType.EXPECT, "space"),
+          ]
         )
-      )).to.be.true;
+      ));
     }
     // empty input
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = space.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              ErrorMessage.create(ErrorMessageType.EXPECT, "space"),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+            ErrorMessage.create(ErrorMessageType.EXPECT, "space"),
+          ]
         )
-      )).to.be.true;
+      ));
     }
   });
 });

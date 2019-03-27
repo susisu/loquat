@@ -173,11 +173,9 @@ module.exports = (_core, { _prim }) => {
   const hexDigitChars = new Set("0123456789ABCDEFabcdef");
 
   /**
-     * @constant module:char.space
-     * @static
-     * @type {AbstractParser}
-     */
-  const space = label(satisfy(char => spaceChars.has(char)), "space");
+   * space: [S <: CharacterStream[S], U]Parser[S, U, char]
+   */
+  const space = label(satisfy((char, config) => spaceChars.has(char)), "space");
 
   /**
      * @constant module:char.spaces
