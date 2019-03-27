@@ -152,11 +152,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:char.char
-     * @static
-     * @param {string} expectChar
-     * @returns {AbstractParser}
-     */
+   * char: [S <: CharacterStream[S], U](expectChar: char) => Parser[S, U, char]
+   */
   function char(expectChar) {
     return label(satisfy(char => char === expectChar), show(expectChar));
   }
