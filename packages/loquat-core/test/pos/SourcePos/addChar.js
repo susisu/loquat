@@ -78,7 +78,7 @@ describe("#addChar", () => {
       const pos = new SourcePos("foo", 496, 6, 28);
       const copy = pos.addChar("\uD83C\uDF63", 8);
       expect(copy).to.not.equal(pos);
-      expect(copy).to.be.an.equalPositionTo(new SourcePos("foo", 497, 6, 29));
+      expect(copy).to.be.an.equalPositionTo(new SourcePos("foo", 498, 6, 29));
     }
   });
 });

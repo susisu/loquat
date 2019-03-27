@@ -136,7 +136,7 @@ module.exports = () => {
           this.column + tabWidth - (this.column - 1) % tabWidth
         );
       } else {
-        return new SourcePos(this.name, this.index + 1, this.line, this.column + 1);
+        return new SourcePos(this.name, this.index + char.length, this.line, this.column + 1);
       }
     }
 
