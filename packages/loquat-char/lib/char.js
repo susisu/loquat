@@ -155,7 +155,7 @@ module.exports = (_core, { _prim }) => {
    * char: [S <: CharacterStream[S], U](expectChar: char) => Parser[S, U, char]
    */
   function char(expectChar) {
-    return label(satisfy(char => char === expectChar), show(expectChar));
+    return label(satisfy((char, config) => char === expectChar), show(expectChar));
   }
 
   /**
@@ -178,10 +178,8 @@ module.exports = (_core, { _prim }) => {
   const space = label(satisfy((char, config) => spaceChars.has(char)), "space");
 
   /**
-     * @constant module:char.spaces
-     * @static
-     * @type {AbstractParser}
-     */
+   * spaces: [S <: CharacterStream[S], U]Parser[S, U, undefined]
+   */
   const spaces = label(skipMany(space), "white space");
 
   /**
