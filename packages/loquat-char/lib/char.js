@@ -208,11 +208,9 @@ module.exports = (_core, { _prim }) => {
   const letter = label(satisfy((char, config) => letterChars.has(char)), "letter");
 
   /**
-     * @constant module:char.digit
-     * @static
-     * @type {AbstractParser}
-     */
-  const digit = label(satisfy(char => digitChars.has(char)), "digit");
+   * digit: [S <: CharacterStream[S], U]Parser[S, U, char]
+   */
+  const digit = label(satisfy((char, config) => digitChars.has(char)), "digit");
 
   /**
      * @constant module:char.alphaNum
