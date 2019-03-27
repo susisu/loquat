@@ -183,15 +183,13 @@ module.exports = (_core, { _prim }) => {
   const spaces = label(skipMany(space), "white space");
 
   /**
-   * space: [S <: CharacterStream[S], U]Parser[S, U, "\n"]
+   * newline: [S <: CharacterStream[S], U]Parser[S, U, "\n"]
    */
   const newline = label(char("\n"), "new-line");
 
   /**
-     * @constant module:char.tab
-     * @static
-     * @type {AbstractParser}
-     */
+   * tab: [S <: CharacterStream[S], U]Parser[S, U, "\t"]
+   */
   const tab = label(char("\t"), "tab");
 
   /**
