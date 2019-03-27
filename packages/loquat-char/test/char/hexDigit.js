@@ -16,75 +16,66 @@ const {
 
 const { hexDigit } = _char;
 
-describe(".hexDigit", () => {
-  it("should return a parser that parses a hexadecimal digit", () => {
+describe("hexDigit", () => {
+  it("should be a parser that accepts a hexadecimal digit", () => {
     expect(hexDigit).to.be.a.parser;
     // match
     for (const c of "0123456789ABCDEFabcdef") {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         c + "GHI",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = hexDigit.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csucc(
-          ParseError.unknown(new SourcePos("foobar", 1, 2)),
-          c,
-          new State(
-            initState.config,
-            "GHI",
-            new SourcePos("foobar", 1, 2),
-            "none"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        c,
+        new State(
+          initState.config,
+          "GHI",
+          new SourcePos("main", 1, 1, 2),
+          "none"
         )
-      )).to.be.true;
+      ));
     }
     // not match
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "GHI",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = hexDigit.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("G")),
-              ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("G")),
+            ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
+          ]
         )
-      )).to.be.true;
+      ));
     }
     // empty input
     {
       const initState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = hexDigit.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+            ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
+          ]
         )
-      )).to.be.true;
+      ));
     }
   });
 });

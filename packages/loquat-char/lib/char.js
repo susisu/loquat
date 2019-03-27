@@ -223,11 +223,9 @@ module.exports = (_core, { _prim }) => {
   const octDigit = label(satisfy((char, config) => octDigitChars.has(char)), "octal digit");
 
   /**
-     * @constant module:char.hexDigit
-     * @static
-     * @type {AbstractParser}
-     */
-  const hexDigit = label(satisfy(char => hexDigitChars.has(char)), "hexadecimal digit");
+   * hexDigit: [S <: CharacterStream[S], U]Parser[S, U, char]
+   */
+  const hexDigit = label(satisfy((char, config) => hexDigitChars.has(char)), "hexadecimal digit");
 
   /**
      * @function module:char.manyChars
