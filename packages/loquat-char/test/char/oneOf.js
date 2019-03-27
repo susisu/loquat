@@ -17,7 +17,7 @@ const {
 const { oneOf } = _char;
 
 describe("oneOf", () => {
-  it("should create a parser that accepts one of a character contained by the given string", () => {
+  it("should create a parser that accepts one of a character contained in the given string", () => {
     // contained
     {
       const initState = new State(
