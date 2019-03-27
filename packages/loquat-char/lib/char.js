@@ -228,11 +228,8 @@ module.exports = (_core, { _prim }) => {
   const hexDigit = label(satisfy((char, config) => hexDigitChars.has(char)), "hexadecimal digit");
 
   /**
-     * @function module:char.manyChars
-     * @static
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * manyChars: [S, U](parser: Parser[S, U, char]) => Parser[S, U, string]
+   */
   function manyChars(parser) {
     return reduceMany(parser, (accum, char) => accum + char, "");
   }
