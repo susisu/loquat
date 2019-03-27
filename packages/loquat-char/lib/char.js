@@ -193,11 +193,9 @@ module.exports = (_core, { _prim }) => {
   const tab = label(char("\t"), "tab");
 
   /**
-     * @constant module:char.upper
-     * @static
-     * @type {AbstractParser}
-     */
-  const upper = label(satisfy(char => upperChars.has(char)), "uppercase letter");
+   * upper: [S <: CharacterStream[S], U]Parser[S, U, char]
+   */
+  const upper = label(satisfy((char, config) => upperChars.has(char)), "uppercase letter");
 
   /**
      * @constant module:char.lower
