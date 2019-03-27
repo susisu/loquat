@@ -192,7 +192,7 @@ describe("manyChars", () => {
   it("should throw Error if the given parser succeeds without consumption", () => {
     const initState = new State(
       new Config(),
-      "abc",
+      "init",
       new SourcePos("main", 0, 1, 1),
       "none"
     );

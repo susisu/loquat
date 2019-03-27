@@ -235,13 +235,14 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:char.manyChars1
-     * @static
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * manyChars1: [S, U](parser: Parser[S, U, char]) => Parser[S, U, string]
+   */
   function manyChars1(parser) {
-    return bind(parser, head => bind(manyChars(parser), tail => pure(head + tail)));
+    return bind(parser, head =>
+      bind(manyChars(parser), tail =>
+        pure(head + tail)
+      )
+    );
   }
 
   /**
