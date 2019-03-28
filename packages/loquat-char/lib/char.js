@@ -246,24 +246,17 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:char.regexp
-     * @static
-     * @param {RegExp} re
-     * @param {number} [groupId = 0]
-     * @returns {AbstractParser}
-     */
-  function regexp(re, groupId) {
-    if (groupId === undefined) {
-      groupId = 0;
-    }
+   * regexp: [U](re: RegExp, groupId?: int) => Parser[string, U, string]
+   */
+  function regexp(re, groupId = 0) {
     const flags = (re.ignoreCase ? "i" : "")
-            + (re.multiline ? "m" : "")
-            + (re.unicode ? "u" : "");
+      + (re.multiline ? "m" : "")
+      + (re.unicode ? "u" : "");
     const anchored = new RegExp(`^(?:${re.source})`, flags);
     const expectStr = show(re);
     return new StrictParser(state => {
       if (typeof state.input !== "string") {
-        throw new Error("`regexp' is only applicable to string input");
+        throw new Error("`regexp` is only applicable to string input");
       }
       const match = anchored.exec(state.input);
       if (match) {
