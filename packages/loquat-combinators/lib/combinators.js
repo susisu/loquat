@@ -19,11 +19,8 @@ module.exports = (_core, { _prim }) => {
   } = _prim;
 
   /**
-     * @function module:combinators.choice
-     * @static
-     * @param {Array.<AbstractParser>} parsers
-     * @returns {AbstractParser}
-     */
+   * choice: [S, U, A](parsers: Array[Parser[S, U, A]]): Parser[S, U, A]
+   */
   function choice(parsers) {
     return parsers.reduceRight((accum, parser) => mplus(parser, accum), mzero);
   }
