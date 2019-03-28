@@ -33,7 +33,7 @@ describe("choice", () => {
     );
   });
 
-  it("should create a parser that trys running each given parser, and returns the result of the"
+  it("should create a parser that tries running each given parser, and returns the result of the"
     + " first successful one", () => {
     const initState = new State(
       new Config(),

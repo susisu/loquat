@@ -26,12 +26,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.option
-     * @static
-     * @param {*} val
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * option: [S, U, A, B](val: A, parser: Parser[S, U, B]): Parser[S, U, A \/ B]
+   */
   function option(val, parser) {
     return mplus(parser, pure(val));
   }
