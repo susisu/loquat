@@ -34,5 +34,6 @@ module.exports = (_core, opts = {}) => {
     manyChars : _char.manyChars,
     manyChars1: _char.manyChars1,
     regexp    : _char.regexp,
+    regexpPrim: _char.regexpPrim,
   });
 };
