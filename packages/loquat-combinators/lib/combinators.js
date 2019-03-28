@@ -19,25 +19,26 @@ module.exports = (_core, { _prim }) => {
   } = _prim;
 
   /**
-   * choice: [S, U, A](parsers: Array[Parser[S, U, A]]): Parser[S, U, A]
+   * choice: [S, U, A](parsers: Array[Parser[S, U, A]]) => Parser[S, U, A]
    */
   function choice(parsers) {
     return parsers.reduceRight((accum, parser) => mplus(parser, accum), mzero);
   }
 
   /**
-   * option: [S, U, A, B](val: A, parser: Parser[S, U, B]): Parser[S, U, A \/ B]
+   * option: [S, U, A, B](val: A, parser: Parser[S, U, B]) => Parser[S, U, A \/ B]
    */
   function option(val, parser) {
     return mplus(parser, pure(val));
   }
 
   /**
-     * @function module:combinators.optionmaybe
-     * @static
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * type Option[A] = { empty: true } \/ { empty: false, value: A }
+   */
+
+  /**
+   * optionMaybe: [S, U, A](parser: Parser[S, U, A]) => Parser[S, U, Option[A]]
+   */
   function optionMaybe(parser) {
     return mplus(
       map(parser, val => ({ empty: false, value: val })),
@@ -46,7 +47,7 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-   * optional: [S, U, A](parser: Parser[S, U, A]): Parser[S, U, undefined]
+   * optional: [S, U, A](parser: Parser[S, U, A]) => Parser[S, U, undefined]
    */
   function optional(parser) {
     return mplus(then(parser, pure(undefined)), pure(undefined));
