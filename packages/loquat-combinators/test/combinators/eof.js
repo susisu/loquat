@@ -20,53 +20,53 @@ const assertParser     = _core.assertParser;
 const eof = _combinators.eof;
 
 describe(".eof", () => {
-    it("should return a parser that accepts any token", () => {
-        assertParser(eof);
-        // empty input
-        {
-            const initState = new State(
-                new Config({ tabWidth: 8 }),
-                "",
-                new SourcePos("foobar", 1, 1),
-                "none"
-            );
-            const res = eof.run(initState);
-            expect(Result.equal(
-                res,
-                Result.esuc(
-                    new ParseError(
-                        new SourcePos("foobar", 1, 1),
-                        [
-                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                            new ErrorMessage(ErrorMessageType.EXPECT, "end of input")
-                        ]
-                    ),
-                    undefined,
-                    initState
-                )
-            )).to.be.true;
-        }
-        // some input
-        {
-            const initState = new State(
-                new Config({ tabWidth: 8 }),
-                "ABC",
-                new SourcePos("foobar", 1, 1),
-                "none"
-            );
-            const res = eof.run(initState);
-            expect(Result.equal(
-                res,
-                Result.eerr(
-                    new ParseError(
-                        new SourcePos("foobar", 1, 1),
-                        [
-                            new ErrorMessage(ErrorMessageType.UNEXPECT, show("A")),
-                            new ErrorMessage(ErrorMessageType.EXPECT, "end of input")
-                        ]
-                    )
-                )
-            )).to.be.true;
-        }
-    });
+  it("should return a parser that accepts any token", () => {
+    assertParser(eof);
+    // empty input
+    {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        "",
+        new SourcePos("foobar", 1, 1),
+        "none"
+      );
+      const res = eof.run(initState);
+      expect(Result.equal(
+        res,
+        Result.esuc(
+          new ParseError(
+            new SourcePos("foobar", 1, 1),
+            [
+              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+              new ErrorMessage(ErrorMessageType.EXPECT, "end of input"),
+            ]
+          ),
+          undefined,
+          initState
+        )
+      )).to.be.true;
+    }
+    // some input
+    {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        "ABC",
+        new SourcePos("foobar", 1, 1),
+        "none"
+      );
+      const res = eof.run(initState);
+      expect(Result.equal(
+        res,
+        Result.eerr(
+          new ParseError(
+            new SourcePos("foobar", 1, 1),
+            [
+              new ErrorMessage(ErrorMessageType.UNEXPECT, show("A")),
+              new ErrorMessage(ErrorMessageType.EXPECT, "end of input"),
+            ]
+          )
+        )
+      )).to.be.true;
+    }
+  });
 });
