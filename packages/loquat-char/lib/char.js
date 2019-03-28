@@ -13,7 +13,7 @@ module.exports = (_core, { _prim }) => {
     uncons,
   } = _core;
 
-  const { pure, bind, label, reduceMany, skipMany } = _prim;
+  const { map, pure, bind, label, reduceMany, skipMany } = _prim;
 
   /**
    * type char = string
@@ -249,6 +249,13 @@ module.exports = (_core, { _prim }) => {
    * regexp: [U](re: RegExp, groupId?: int) => Parser[string, U, string]
    */
   function regexp(re, groupId = 0) {
+    return map(regexpPrim(re), match => match[groupId]);
+  }
+
+  /**
+   * regexpPrim: [U](re: RegExp) => Parser[string, U, Array[string]]
+   */
+  function regexpPrim(re) {
     const flags = (re.ignoreCase ? "i" : "")
       + (re.multiline ? "m" : "")
       + (re.unicode ? "u" : "");
@@ -267,18 +274,17 @@ module.exports = (_core, { _prim }) => {
       const match = anchored.exec(state.input);
       if (match) {
         const str = match[0];
-        const val = match[groupId];
         if (str.length === 0) {
           return Result.esucc(
             ParseError.unknown(state.pos),
-            val,
+            match,
             state
           );
         } else {
           const newPos = state.pos.addString(str, state.config.tabWidth, state.config.unicode);
           return Result.csucc(
             ParseError.unknown(newPos),
-            val,
+            match,
             new State(
               state.config,
               state.input.substr(str.length),
@@ -319,5 +325,6 @@ module.exports = (_core, { _prim }) => {
     manyChars,
     manyChars1,
     regexp,
+    regexpPrim,
   });
 };

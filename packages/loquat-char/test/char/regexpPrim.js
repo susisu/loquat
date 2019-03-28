@@ -1,6 +1,7 @@
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
+const { expect } = chai;
 
 const {
   show,
@@ -14,11 +15,11 @@ const {
   Result,
 } = _core;
 
-const { regexp } = _char;
+const { regexpPrim } = _char;
 
-describe("regexp", () => {
+describe("regexpPrim", () => {
   it("should create a parser that accepts a string that the given regular expression"
-    + " matches and returns the matched string", () => {
+    + " matches and returns an array containing the matched strings", () => {
     // empty match
     {
       const initState = new State(
@@ -27,21 +28,24 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(new RegExp("", "u"), 0);
+      const parser = regexpPrim(new RegExp("", "u"));
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(res).to.be.an.equalResultTo(Result.esucc(
-        ParseError.unknown(new SourcePos("main", 0, 1, 1)),
-        "",
-        new State(
-          new Config(),
-          "XYZ",
-          new SourcePos("main", 0, 1, 1),
-          "none"
-        )
-      ));
+      expect(res).to.be.an.equalResultTo(
+        Result.esucc(
+          ParseError.unknown(new SourcePos("main", 0, 1, 1)),
+          [""],
+          new State(
+            new Config(),
+            "XYZ",
+            new SourcePos("main", 0, 1, 1),
+            "none"
+          )
+        ),
+        chai.util.eql
+      );
     }
-    // many characters match
+    // many characters match with groups
     {
       const initState = new State(
         new Config(),
@@ -49,63 +53,22 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/.{2}/u, 0);
+      const parser = regexpPrim(/(.)(.)/u);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 3)),
-        "XY",
-        new State(
-          new Config(),
-          "Z",
-          new SourcePos("main", 2, 1, 3),
-          "none"
-        )
-      ));
-    }
-    // use default groupId = 0
-    {
-      const initState = new State(
-        new Config(),
-        "XYZ",
-        new SourcePos("main", 0, 1, 1),
-        "none"
+      expect(res).to.be.an.equalResultTo(
+        Result.csucc(
+          ParseError.unknown(new SourcePos("main", 2, 1, 3)),
+          ["XY", "X", "Y"],
+          new State(
+            new Config(),
+            "Z",
+            new SourcePos("main", 2, 1, 3),
+            "none"
+          )
+        ),
+        chai.util.eql
       );
-      const parser = regexp(/.{2}/u);
-      expect(parser).to.be.a.parser;
-      const res = parser.run(initState);
-      expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 3)),
-        "XY",
-        new State(
-          new Config(),
-          "Z",
-          new SourcePos("main", 2, 1, 3),
-          "none"
-        )
-      ));
-    }
-    // specify groupId
-    {
-      const initState = new State(
-        new Config(),
-        "XYZ",
-        new SourcePos("main", 0, 1, 1),
-        "none"
-      );
-      const parser = regexp(/(.)(.)/u, 2);
-      expect(parser).to.be.a.parser;
-      const res = parser.run(initState);
-      expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 3)),
-        "Y",
-        new State(
-          new Config(),
-          "Z",
-          new SourcePos("main", 2, 1, 3),
-          "none"
-        )
-      ));
     }
     // no matches
     {
@@ -115,7 +78,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/abc/u, 0);
+      const parser = regexpPrim(/abc/u);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
@@ -136,7 +99,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/xy/u, 0);
+      const parser = regexpPrim(/xy/u);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
@@ -154,19 +117,22 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/xy/iu, 0);
+      const parser = regexpPrim(/xy/iu);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 3)),
-        "XY",
-        new State(
-          new Config(),
-          "Z",
-          new SourcePos("main", 2, 1, 3),
-          "none"
-        )
-      ));
+      expect(res).to.be.an.equalResultTo(
+        Result.csucc(
+          ParseError.unknown(new SourcePos("main", 2, 1, 3)),
+          ["XY"],
+          new State(
+            new Config(),
+            "Z",
+            new SourcePos("main", 2, 1, 3),
+            "none"
+          )
+        ),
+        chai.util.eql
+      );
     }
   });
 
@@ -179,7 +145,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/XY$/u, 0);
+      const parser = regexpPrim(/XY$/u, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
@@ -197,19 +163,22 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/XY$/mu, 0);
+      const parser = regexpPrim(/XY$/mu, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 3)),
-        "XY",
-        new State(
-          new Config(),
-          "\nZ",
-          new SourcePos("main", 2, 1, 3),
-          "none"
-        )
-      ));
+      expect(res).to.be.an.equalResultTo(
+        Result.csucc(
+          ParseError.unknown(new SourcePos("main", 2, 1, 3)),
+          ["XY"],
+          new State(
+            new Config(),
+            "\nZ",
+            new SourcePos("main", 2, 1, 3),
+            "none"
+          )
+        ),
+        chai.util.eql
+      );
     }
   });
 
@@ -222,19 +191,22 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/./, 0);
+      const parser = regexpPrim(/./);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
-        "\uD83C",
-        new State(
-          new Config({ unicode: false }),
-          "\uDF63XYZ",
-          new SourcePos("main", 1, 1, 2),
-          "none"
-        )
-      ));
+      expect(res).to.be.an.equalResultTo(
+        Result.csucc(
+          ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+          ["\uD83C"],
+          new State(
+            new Config({ unicode: false }),
+            "\uDF63XYZ",
+            new SourcePos("main", 1, 1, 2),
+            "none"
+          )
+        ),
+        chai.util.eql
+      );
     }
     {
       const initState = new State(
@@ -243,7 +215,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/\u{1F363}/, 0);
+      const parser = regexpPrim(/\u{1F363}/);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
@@ -261,19 +233,22 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/./u, 0);
+      const parser = regexpPrim(/./u);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 2)),
-        "\uD83C\uDF63",
-        new State(
-          new Config({ unicode: true }),
-          "XYZ",
-          new SourcePos("main", 2, 1, 2),
-          "none"
-        )
-      ));
+      expect(res).to.be.an.equalResultTo(
+        Result.csucc(
+          ParseError.unknown(new SourcePos("main", 2, 1, 2)),
+          ["\uD83C\uDF63"],
+          new State(
+            new Config({ unicode: true }),
+            "XYZ",
+            new SourcePos("main", 2, 1, 2),
+            "none"
+          )
+        ),
+        chai.util.eql
+      );
     }
     {
       const initState = new State(
@@ -282,19 +257,22 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/\u{1F363}/u, 0);
+      const parser = regexpPrim(/\u{1F363}/u);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 2)),
-        "\uD83C\uDF63",
-        new State(
-          new Config({ unicode: true }),
-          "XYZ",
-          new SourcePos("main", 2, 1, 2),
-          "none"
-        )
-      ));
+      expect(res).to.be.an.equalResultTo(
+        Result.csucc(
+          ParseError.unknown(new SourcePos("main", 2, 1, 2)),
+          ["\uD83C\uDF63"],
+          new State(
+            new Config({ unicode: true }),
+            "XYZ",
+            new SourcePos("main", 2, 1, 2),
+            "none"
+          )
+        ),
+        chai.util.eql
+      );
     }
   });
 
@@ -307,7 +285,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/./u, 0);
+      const parser = regexpPrim(/./u);
       expect(parser).to.be.a.parser;
       expect(() => {
         parser.run(initState);
@@ -321,7 +299,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/./u, 0);
+      const parser = regexpPrim(/./u);
       expect(parser).to.be.a.parser;
       expect(() => {
         parser.run(initState);
@@ -339,7 +317,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/./, 0);
+      const parser = regexpPrim(/./);
       expect(parser).to.be.a.parser;
       expect(() => {
         parser.run(initState);
@@ -353,7 +331,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/./u, 0);
+      const parser = regexpPrim(/./u);
       expect(parser).to.be.a.parser;
       expect(() => {
         parser.run(initState);
