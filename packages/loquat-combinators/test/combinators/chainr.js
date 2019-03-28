@@ -20,8 +20,8 @@ const assertParser     = _core.assertParser;
 const chainr = _combinators.chainr;
 
 describe(".chainr(term, op, defaultVal)", () => {
-  it("should return a parser that parses zero or more terms accepted by `term' and operators accepted by `op',"
-        + " and reduces the values to a single value from right to left", () => {
+  it("should return a parser that parses zero or more terms accepted by `term' and operators"
+    + " accepted by `op', and reduces the values to a single value from right to left", () => {
     const initState = new State(
       new Config({ tabWidth: 8 }),
       "input",

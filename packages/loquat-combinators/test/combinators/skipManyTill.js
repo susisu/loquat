@@ -20,8 +20,8 @@ const assertParser     = _core.assertParser;
 const skipManyTill = _combinators.skipManyTill;
 
 describe(".skipManyTill(parser, end)", () => {
-  it("should return a parser that parses zero or more tokens accepted by `parser' until `end' succeeds,"
-        + " and discards the resultant values", () => {
+  it("should return a parser that parses zero or more tokens accepted by `parser' until `end'"
+    + " succeeds, and discards the resultant values", () => {
     const initState = new State(
       new Config({ tabWidth: 8 }),
       "input",

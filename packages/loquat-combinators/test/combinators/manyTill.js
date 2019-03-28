@@ -20,8 +20,10 @@ const assertParser     = _core.assertParser;
 const manyTill = _combinators.manyTill;
 
 describe(".manyTill(parser, end)", () => {
-  it("should return a parser that parses zero or more tokens accepted by `parser' until `end' succeeds", () => {
-    const arrayEqual = (arrA, arrB) => arrA.length === arrB.length && arrA.every((elem, i) => elem === arrB[i]);
+  it("should return a parser that parses zero or more tokens accepted by `parser' until `end'"
+    + " succeeds", () => {
+    const arrayEqual = (arrA, arrB) => arrA.length === arrB.length
+      && arrA.every((elem, i) => elem === arrB[i]);
 
     const initState = new State(
       new Config({ tabWidth: 8 }),

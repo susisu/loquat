@@ -21,7 +21,8 @@ const assertParser     = _core.assertParser;
 const notFollowedBy = _combinators.notFollowedBy;
 
 describe(".notFollowedBy(parser)", () => {
-  it("should return a parser that succeeds without consuming input only when `parser' fails", () => {
+  it("should return a parser that succeeds without consuming input only when `parser'"
+    + " fails", () => {
     const initState = new State(
       new Config({ tabWidth: 8 }),
       "input",

@@ -9,35 +9,6 @@
 "use strict";
 
 module.exports = (_core, _prim) => {
-  function end() {
-    return Object.freeze({
-      choice,
-      option,
-      optionMaybe,
-      optional,
-      between,
-      many1,
-      skipMany1,
-      sepBy,
-      sepBy1,
-      sepEndBy,
-      sepEndBy1,
-      endBy,
-      endBy1,
-      count,
-      chainl,
-      chainl1,
-      chainr,
-      chainr1,
-      anyToken,
-      notFollowedBy,
-      eof,
-      reduceManyTill,
-      manyTill,
-      skipManyTill,
-    });
-  }
-
   const show       = _core.show;
   const ParseError = _core.ParseError;
   const Result     = _core.Result;
@@ -202,8 +173,8 @@ module.exports = (_core, _prim) => {
             return res;
           } else {
             return consumed
-                            ? Result.csuc(ParseError.merge(currentErr, res.err), accum, currentState)
-                            : Result.esuc(ParseError.merge(currentErr, res.err), accum, currentState);
+              ? Result.csuc(ParseError.merge(currentErr, res.err), accum, currentState)
+              : Result.esuc(ParseError.merge(currentErr, res.err), accum, currentState);
           }
         }
         const sepRes = sep.run(currentState);
@@ -221,8 +192,8 @@ module.exports = (_core, _prim) => {
             return sepRes;
           } else {
             return consumed
-                            ? Result.csuc(ParseError.merge(currentErr, sepRes.err), accum, currentState)
-                            : Result.esuc(ParseError.merge(currentErr, sepRes.err), accum, currentState);
+              ? Result.csuc(ParseError.merge(currentErr, sepRes.err), accum, currentState)
+              : Result.esuc(ParseError.merge(currentErr, sepRes.err), accum, currentState);
           }
         }
       }
@@ -313,14 +284,14 @@ module.exports = (_core, _prim) => {
               return res;
             } else {
               return consumed
-                                ? Result.cerr(ParseError.merge(currentErr, res.err))
-                                : Result.eerr(ParseError.merge(currentErr, res.err));
+                ? Result.cerr(ParseError.merge(currentErr, res.err))
+                : Result.eerr(ParseError.merge(currentErr, res.err));
             }
           }
         }
         return consumed
-                    ? Result.csuc(currentErr, accum, currentState)
-                    : Result.esuc(currentErr, accum, currentState);
+          ? Result.csuc(currentErr, accum, currentState)
+          : Result.esuc(currentErr, accum, currentState);
       });
     }
   }
@@ -368,8 +339,8 @@ module.exports = (_core, _prim) => {
         }
       } else {
         return headRes.consumed
-                    ? headRes
-                    : Result.eerr(ParseError.merge(currentErr, headRes.err));
+          ? headRes
+          : Result.eerr(ParseError.merge(currentErr, headRes.err));
       }
 
       while (true) {
@@ -393,8 +364,8 @@ module.exports = (_core, _prim) => {
             return opRes;
           } else {
             return consumed
-                            ? Result.csuc(ParseError.merge(currentErr, opRes.err), currentVal, initState)
-                            : Result.esuc(ParseError.merge(currentErr, opRes.err), currentVal, initState);
+              ? Result.csuc(ParseError.merge(currentErr, opRes.err), currentVal, initState)
+              : Result.esuc(ParseError.merge(currentErr, opRes.err), currentVal, initState);
           }
         }
 
@@ -418,8 +389,8 @@ module.exports = (_core, _prim) => {
               return Result.cerr(ParseError.merge(currentErr, termRes.err));
             } else {
               return consumed
-                                ? Result.csuc(ParseError.merge(currentErr, termRes.err), currentVal, initState)
-                                : Result.esuc(ParseError.merge(currentErr, termRes.err), currentVal, initState);
+                ? Result.csuc(ParseError.merge(currentErr, termRes.err), currentVal, initState)
+                : Result.esuc(ParseError.merge(currentErr, termRes.err), currentVal, initState);
             }
           }
         }
@@ -470,8 +441,8 @@ module.exports = (_core, _prim) => {
         }
       } else {
         return headRes.consumed
-                    ? headRes
-                    : Result.eerr(ParseError.merge(currentErr, headRes.err));
+          ? headRes
+          : Result.eerr(ParseError.merge(currentErr, headRes.err));
       }
 
       const accum = [];
@@ -503,8 +474,8 @@ module.exports = (_core, _prim) => {
               resultVal = operations[0](resultVal, currentVal);
             }
             return consumed
-                            ? Result.csuc(ParseError.merge(currentErr, opRes.err), resultVal, initState)
-                            : Result.esuc(ParseError.merge(currentErr, opRes.err), resultVal, initState);
+              ? Result.csuc(ParseError.merge(currentErr, opRes.err), resultVal, initState)
+              : Result.esuc(ParseError.merge(currentErr, opRes.err), resultVal, initState);
           }
         }
 
@@ -535,8 +506,8 @@ module.exports = (_core, _prim) => {
                 resultVal = operations[0](resultVal, currentVal);
               }
               return consumed
-                                ? Result.csuc(ParseError.merge(currentErr, termRes.err), resultVal, initState)
-                                : Result.esuc(ParseError.merge(currentErr, termRes.err), resultVal, initState);
+                ? Result.csuc(ParseError.merge(currentErr, termRes.err), resultVal, initState)
+                : Result.esuc(ParseError.merge(currentErr, termRes.err), resultVal, initState);
             }
           }
         }
@@ -609,8 +580,8 @@ module.exports = (_core, _prim) => {
             return Result.csuc(endRes.err, accum, endRes.state);
           } else {
             return consumed
-                            ? Result.csuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state)
-                            : Result.esuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state);
+              ? Result.csuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state)
+              : Result.esuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state);
           }
         } else {
           if (endRes.consumed) {
@@ -637,8 +608,8 @@ module.exports = (_core, _prim) => {
             return res;
           } else {
             return consumed
-                            ? Result.cerr(ParseError.merge(currentErr, res.err))
-                            : Result.eerr(ParseError.merge(currentErr, res.err));
+              ? Result.cerr(ParseError.merge(currentErr, res.err))
+              : Result.eerr(ParseError.merge(currentErr, res.err));
           }
         }
       }
@@ -665,8 +636,8 @@ module.exports = (_core, _prim) => {
             return Result.csuc(endRes.err, accum, endRes.state);
           } else {
             return consumed
-                            ? Result.csuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state)
-                            : Result.esuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state);
+              ? Result.csuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state)
+              : Result.esuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state);
           }
         } else {
           if (endRes.consumed) {
@@ -693,8 +664,8 @@ module.exports = (_core, _prim) => {
             return res;
           } else {
             return consumed
-                            ? Result.cerr(ParseError.merge(currentErr, res.err))
-                            : Result.eerr(ParseError.merge(currentErr, res.err));
+              ? Result.cerr(ParseError.merge(currentErr, res.err))
+              : Result.eerr(ParseError.merge(currentErr, res.err));
           }
         }
       }
@@ -712,5 +683,30 @@ module.exports = (_core, _prim) => {
     return reduceManyTill(parser, end, accum => accum, undefined);
   }
 
-  return end();
+  return Object.freeze({
+    choice,
+    option,
+    optionMaybe,
+    optional,
+    between,
+    many1,
+    skipMany1,
+    sepBy,
+    sepBy1,
+    sepEndBy,
+    sepEndBy1,
+    endBy,
+    endBy1,
+    count,
+    chainl,
+    chainl1,
+    chainr,
+    chainr1,
+    anyToken,
+    notFollowedBy,
+    eof,
+    reduceManyTill,
+    manyTill,
+    skipManyTill,
+  });
 };

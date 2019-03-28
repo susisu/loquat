@@ -20,9 +20,10 @@ const assertParser     = _core.assertParser;
 const endBy1 = _combinators.endBy1;
 
 describe(".endBy1(parser, sep)", () => {
-  it("should return a parser that parses one or more tokens accepted by `parser'"
-        + " ended by token accepted by `sep', and concats the resultant values into an array", () => {
-    const arrayEqual = (arrA, arrB) => arrA.length === arrB.length && arrA.every((elem, i) => elem === arrB[i]);
+  it("should return a parser that parses one or more tokens accepted by `parser' ended by token"
+    + " accepted by `sep', and concats the resultant values into an array", () => {
+    const arrayEqual = (arrA, arrB) => arrA.length === arrB.length
+      && arrA.every((elem, i) => elem === arrB[i]);
 
     const initState = new State(
       new Config({ tabWidth: 8 }),

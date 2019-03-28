@@ -20,9 +20,10 @@ const assertParser     = _core.assertParser;
 const many1 = _combinators.many1;
 
 describe(".many1(parser)", () => {
-  it("should return a parser that parses one or more tokens accepted by `parser' until it empty fails"
-        + " and concats the resultant values into an array", () => {
-    const arrayEqual = (arrA, arrB) => arrA.length === arrB.length && arrA.every((elem, i) => elem === arrB[i]);
+  it("should return a parser that parses one or more tokens accepted by `parser' until it empty"
+    + " fails and concats the resultant values into an array", () => {
+    const arrayEqual = (arrA, arrB) => arrA.length === arrB.length
+      && arrA.every((elem, i) => elem === arrB[i]);
 
     const initState = new State(
       new Config({ tabWidth: 8 }),

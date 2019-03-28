@@ -4,11 +4,7 @@
 
 "use strict";
 
-module.exports = (_core, opts) => {
-  if (opts === undefined) {
-    opts = {};
-  }
-
+module.exports = (_core, opts = {}) => {
   const _prim        = require("loquat-prim")(_core);
   const _combinators = require("./lib/combinators.js")(_core, _prim);
 

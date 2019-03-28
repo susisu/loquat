@@ -20,8 +20,10 @@ const assertParser     = _core.assertParser;
 const count = _combinators.count;
 
 describe(".count(num, parsers)", () => {
-  it("should return a parser that runs `parsers' `num' times sequentially and returns values as an array", () => {
-    const arrayEqual = (arrA, arrB) => arrA.length === arrB.length && arrA.every((elem, i) => elem === arrB[i]);
+  it("should return a parser that runs `parsers' `num' times sequentially and returns values as an"
+    + " array", () => {
+    const arrayEqual = (arrA, arrB) => arrA.length === arrB.length
+      && arrA.every((elem, i) => elem === arrB[i]);
 
     const initState = new State(
       new Config({ tabWidth: 8 }),

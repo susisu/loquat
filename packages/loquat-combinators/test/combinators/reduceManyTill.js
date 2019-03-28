@@ -20,8 +20,8 @@ const assertParser     = _core.assertParser;
 const reduceManyTill = _combinators.reduceManyTill;
 
 describe(".reduceManyTill(parser, end, callback, initVal)", () => {
-  it("should return a parser that parses zero or more tokens accepted by `parser' until `end' succeeds,"
-        + " and reduces the resultant values by a function `callback'", () => {
+  it("should return a parser that parses zero or more tokens accepted by `parser' until `end'"
+    + " succeeds, and reduces the resultant values by a function `callback'", () => {
     const initState = new State(
       new Config({ tabWidth: 8 }),
       "input",

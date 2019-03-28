@@ -20,7 +20,8 @@ const assertParser     = _core.assertParser;
 const skipMany1 = _combinators.skipMany1;
 
 describe(".skipMany1(parser)", () => {
-  it("should return a parser that skips one or more tokens accepted by `parser' until it empty fails", () => {
+  it("should return a parser that skips one or more tokens accepted by `parser' until it empty"
+    + " fails", () => {
     const initState = new State(
       new Config({ tabWidth: 8 }),
       "abc",
