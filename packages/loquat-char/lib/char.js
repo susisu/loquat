@@ -258,6 +258,12 @@ module.exports = (_core, { _prim }) => {
       if (typeof state.input !== "string") {
         throw new Error("`regexp` is only applicable to string input");
       }
+      if (anchored.unicode !== state.config.unicode) {
+        throw new Error(
+          "unicode flag does not match; "
+            + (state.config.unicode ? "add `/.../u` to fix" : "remove `/.../u` to fix")
+        );
+      }
       const match = anchored.exec(state.input);
       if (match) {
         const str = match[0];

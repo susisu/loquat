@@ -27,7 +27,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(new RegExp(""), 0);
+      const parser = regexp(new RegExp("", "u"), 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
@@ -49,7 +49,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/.{2}/, 0);
+      const parser = regexp(/.{2}/u, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
@@ -71,7 +71,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/.{2}/);
+      const parser = regexp(/.{2}/u);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
@@ -93,7 +93,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/.(.)/, 1);
+      const parser = regexp(/.(.)/u, 1);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
@@ -115,20 +115,20 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/abc/, 0);
+      const parser = regexp(/abc/u, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
           new SourcePos("main", 0, 1, 1),
-          [ErrorMessage.create(ErrorMessageType.EXPECT, show(/abc/))]
+          [ErrorMessage.create(ErrorMessageType.EXPECT, show(/abc/u))]
         )
       ));
     }
   });
 
-  it("should ignore case if `i` flag is specified", () => {
-    // not specified
+  it("should ignore case if `i` flag is used", () => {
+    // not used
     {
       const initState = new State(
         new Config(),
@@ -136,17 +136,17 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/xy/, 0);
+      const parser = regexp(/xy/u, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
           new SourcePos("main", 0, 1, 1),
-          [ErrorMessage.create(ErrorMessageType.EXPECT, show(/xy/))]
+          [ErrorMessage.create(ErrorMessageType.EXPECT, show(/xy/u))]
         )
       ));
     }
-    // specified
+    // used
     {
       const initState = new State(
         new Config(),
@@ -154,7 +154,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/xy/i, 0);
+      const parser = regexp(/xy/iu, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
@@ -170,8 +170,8 @@ describe("regexp", () => {
     }
   });
 
-  it("`$` should match at the end of a line if `m` flag is specified", () => {
-    // not specified
+  it("`$` should match at the end of a line if `m` flag is used", () => {
+    // not used
     {
       const initState = new State(
         new Config(),
@@ -179,17 +179,17 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/XY$/, 0);
+      const parser = regexp(/XY$/u, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
           new SourcePos("main", 0, 1, 1),
-          [ErrorMessage.create(ErrorMessageType.EXPECT, show(/XY$/))]
+          [ErrorMessage.create(ErrorMessageType.EXPECT, show(/XY$/u))]
         )
       ));
     }
-    // specified
+    // used
     {
       const initState = new State(
         new Config(),
@@ -197,7 +197,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/XY$/m, 0);
+      const parser = regexp(/XY$/mu, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
@@ -213,8 +213,8 @@ describe("regexp", () => {
     }
   });
 
-  it("should enable unicode features if `u` flag is specified", () => {
-    // not specified
+  it("should enable unicode features if `u` flag is used", () => {
+    // not used
     {
       const initState = new State(
         new Config({ unicode: false }),
@@ -253,7 +253,7 @@ describe("regexp", () => {
         )
       ));
     }
-    // specified
+    // used
     {
       const initState = new State(
         new Config({ unicode: true }),
@@ -307,7 +307,7 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/./, 0);
+      const parser = regexp(/./u, 0);
       expect(parser).to.be.a.parser;
       expect(() => {
         parser.run(initState);
@@ -321,11 +321,43 @@ describe("regexp", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = regexp(/./, 0);
+      const parser = regexp(/./u, 0);
       expect(parser).to.be.a.parser;
       expect(() => {
         parser.run(initState);
       }).to.throw(Error, /regexp/);
+    }
+  });
+
+  it("should throw Error if the unicode flag of the config and `u` flag of the regular expression"
+    + " does not match", () => {
+    // unicode = true, u not specified
+    {
+      const initState = new State(
+        new Config({ unicode: true }),
+        "\uD83C\uDF63XYZ",
+        new SourcePos("main", 0, 1, 1),
+        "none"
+      );
+      const parser = regexp(/./, 0);
+      expect(parser).to.be.a.parser;
+      expect(() => {
+        parser.run(initState);
+      }).to.throw(Error, /unicode flag does not match/);
+    }
+    // unicode = false, u specified
+    {
+      const initState = new State(
+        new Config({ unicode: false }),
+        "\uD83C\uDF63XYZ",
+        new SourcePos("main", 0, 1, 1),
+        "none"
+      );
+      const parser = regexp(/./u, 0);
+      expect(parser).to.be.a.parser;
+      expect(() => {
+        parser.run(initState);
+      }).to.throw(Error, /unicode flag does not match/);
     }
   });
 });
