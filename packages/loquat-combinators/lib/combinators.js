@@ -1,31 +1,22 @@
-/*
- * loquat-combinators / combinators.js
- */
-
-/**
- * @module combinators
- */
-
 "use strict";
 
-module.exports = (_core, _prim) => {
-  const show       = _core.show;
-  const ParseError = _core.ParseError;
-  const Result     = _core.Result;
-  const Parser     = _core.Parser;
+module.exports = (_core, { _prim }) => {
+  const { show, ParseError, Result, StrictParser } = _core;
 
-  const map        = _prim.map;
-  const pure       = _prim.pure;
-  const bind       = _prim.bind;
-  const then       = _prim.then;
-  const mzero      = _prim.mzero;
-  const mplus      = _prim.mplus;
-  const label      = _prim.label;
-  const unexpected = _prim.unexpected;
-  const tryParse   = _prim.tryParse;
-  const many       = _prim.many;
-  const skipMany   = _prim.skipMany;
-  const tokenPrim  = _prim.tokenPrim;
+  const {
+    map,
+    pure,
+    bind,
+    then,
+    mzero,
+    mplus,
+    label,
+    unexpected,
+    tryParse,
+    many,
+    skipMany,
+    tokenPrim,
+  } = _prim;
 
   /**
      * @function module:combinators.choice
@@ -150,7 +141,7 @@ module.exports = (_core, _prim) => {
      * @returns {AbstractParser}
      */
   function sepEndBy(parser, sep) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const accum = [];
       let currentState = state;
       let currentErr = ParseError.unknown(state.pos);
@@ -173,8 +164,8 @@ module.exports = (_core, _prim) => {
             return res;
           } else {
             return consumed
-              ? Result.csuc(ParseError.merge(currentErr, res.err), accum, currentState)
-              : Result.esuc(ParseError.merge(currentErr, res.err), accum, currentState);
+              ? Result.csucc(ParseError.merge(currentErr, res.err), accum, currentState)
+              : Result.esucc(ParseError.merge(currentErr, res.err), accum, currentState);
           }
         }
         const sepRes = sep.run(currentState);
@@ -192,8 +183,8 @@ module.exports = (_core, _prim) => {
             return sepRes;
           } else {
             return consumed
-              ? Result.csuc(ParseError.merge(currentErr, sepRes.err), accum, currentState)
-              : Result.esuc(ParseError.merge(currentErr, sepRes.err), accum, currentState);
+              ? Result.csucc(ParseError.merge(currentErr, sepRes.err), accum, currentState)
+              : Result.esucc(ParseError.merge(currentErr, sepRes.err), accum, currentState);
           }
         }
       }
@@ -261,7 +252,7 @@ module.exports = (_core, _prim) => {
     if (num <= 0) {
       return map(pure(undefined), () => []);
     } else {
-      return new Parser(state => {
+      return new StrictParser(state => {
         const accum = [];
         let currentState = state;
         let currentErr = ParseError.unknown(state.pos);
@@ -284,14 +275,14 @@ module.exports = (_core, _prim) => {
               return res;
             } else {
               return consumed
-                ? Result.cerr(ParseError.merge(currentErr, res.err))
-                : Result.eerr(ParseError.merge(currentErr, res.err));
+                ? Result.cfail(ParseError.merge(currentErr, res.err))
+                : Result.efail(ParseError.merge(currentErr, res.err));
             }
           }
         }
         return consumed
-          ? Result.csuc(currentErr, accum, currentState)
-          : Result.esuc(currentErr, accum, currentState);
+          ? Result.csucc(currentErr, accum, currentState)
+          : Result.esucc(currentErr, accum, currentState);
       });
     }
   }
@@ -319,7 +310,7 @@ module.exports = (_core, _prim) => {
      * @returns {AbstractParser}
      */
   function chainl1(term, op) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       let currentVal;
       let currentState = state;
       let currentErr = ParseError.unknown(state.pos);
@@ -340,7 +331,7 @@ module.exports = (_core, _prim) => {
       } else {
         return headRes.consumed
           ? headRes
-          : Result.eerr(ParseError.merge(currentErr, headRes.err));
+          : Result.efail(ParseError.merge(currentErr, headRes.err));
       }
 
       while (true) {
@@ -364,8 +355,8 @@ module.exports = (_core, _prim) => {
             return opRes;
           } else {
             return consumed
-              ? Result.csuc(ParseError.merge(currentErr, opRes.err), currentVal, initState)
-              : Result.esuc(ParseError.merge(currentErr, opRes.err), currentVal, initState);
+              ? Result.csucc(ParseError.merge(currentErr, opRes.err), currentVal, initState)
+              : Result.esucc(ParseError.merge(currentErr, opRes.err), currentVal, initState);
           }
         }
 
@@ -386,11 +377,11 @@ module.exports = (_core, _prim) => {
             return termRes;
           } else {
             if (opRes.consumed) {
-              return Result.cerr(ParseError.merge(currentErr, termRes.err));
+              return Result.cfail(ParseError.merge(currentErr, termRes.err));
             } else {
               return consumed
-                ? Result.csuc(ParseError.merge(currentErr, termRes.err), currentVal, initState)
-                : Result.esuc(ParseError.merge(currentErr, termRes.err), currentVal, initState);
+                ? Result.csucc(ParseError.merge(currentErr, termRes.err), currentVal, initState)
+                : Result.esucc(ParseError.merge(currentErr, termRes.err), currentVal, initState);
             }
           }
         }
@@ -421,7 +412,7 @@ module.exports = (_core, _prim) => {
      * @returns {AbstractParser}
      */
   function chainr1(term, op) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       let resultVal;
       let currentState = state;
       let currentErr = ParseError.unknown(state.pos);
@@ -442,7 +433,7 @@ module.exports = (_core, _prim) => {
       } else {
         return headRes.consumed
           ? headRes
-          : Result.eerr(ParseError.merge(currentErr, headRes.err));
+          : Result.efail(ParseError.merge(currentErr, headRes.err));
       }
 
       const accum = [];
@@ -474,8 +465,8 @@ module.exports = (_core, _prim) => {
               resultVal = operations[0](resultVal, currentVal);
             }
             return consumed
-              ? Result.csuc(ParseError.merge(currentErr, opRes.err), resultVal, initState)
-              : Result.esuc(ParseError.merge(currentErr, opRes.err), resultVal, initState);
+              ? Result.csucc(ParseError.merge(currentErr, opRes.err), resultVal, initState)
+              : Result.esucc(ParseError.merge(currentErr, opRes.err), resultVal, initState);
           }
         }
 
@@ -496,7 +487,7 @@ module.exports = (_core, _prim) => {
             return termRes;
           } else {
             if (opRes.consumed) {
-              return Result.cerr(ParseError.merge(currentErr, termRes.err));
+              return Result.cfail(ParseError.merge(currentErr, termRes.err));
             } else {
               if (accum.length > 0) {
                 let currentVal = accum[accum.length - 1];
@@ -506,8 +497,8 @@ module.exports = (_core, _prim) => {
                 resultVal = operations[0](resultVal, currentVal);
               }
               return consumed
-                ? Result.csuc(ParseError.merge(currentErr, termRes.err), resultVal, initState)
-                : Result.esuc(ParseError.merge(currentErr, termRes.err), resultVal, initState);
+                ? Result.csucc(ParseError.merge(currentErr, termRes.err), resultVal, initState)
+                : Result.esucc(ParseError.merge(currentErr, termRes.err), resultVal, initState);
             }
           }
         }
@@ -533,12 +524,12 @@ module.exports = (_core, _prim) => {
      * @returns {AbstractParser}
      */
   function notFollowedBy(parser) {
-    const modParser = new Parser(state => {
+    const modParser = new StrictParser(state => {
       const res = parser.run(state);
       if (res.consumed && !res.success) {
-        return Result.eerr(res.err);
+        return Result.efail(res.err);
       } else if (!res.consumed && res.success) {
-        return Result.csuc(res.err, res.val, res.state);
+        return Result.csucc(res.err, res.val, res.state);
       } else {
         return res;
       }
@@ -568,7 +559,7 @@ module.exports = (_core, _prim) => {
      * @returns {AbstractParser}
      */
   function reduceManyTill(parser, end, callback, initVal) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       let accum = initVal;
       let currentState = state;
       let currentErr = ParseError.unknown(state.pos);
@@ -577,11 +568,11 @@ module.exports = (_core, _prim) => {
         const endRes = end.run(currentState);
         if (endRes.success) {
           if (endRes.consumed) {
-            return Result.csuc(endRes.err, accum, endRes.state);
+            return Result.csucc(endRes.err, accum, endRes.state);
           } else {
             return consumed
-              ? Result.csuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state)
-              : Result.esuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state);
+              ? Result.csucc(ParseError.merge(currentErr, endRes.err), accum, endRes.state)
+              : Result.esucc(ParseError.merge(currentErr, endRes.err), accum, endRes.state);
           }
         } else {
           if (endRes.consumed) {
@@ -608,8 +599,8 @@ module.exports = (_core, _prim) => {
             return res;
           } else {
             return consumed
-              ? Result.cerr(ParseError.merge(currentErr, res.err))
-              : Result.eerr(ParseError.merge(currentErr, res.err));
+              ? Result.cfail(ParseError.merge(currentErr, res.err))
+              : Result.efail(ParseError.merge(currentErr, res.err));
           }
         }
       }
@@ -624,7 +615,7 @@ module.exports = (_core, _prim) => {
      * @returns {AbstractParser}
      */
   function manyTill(parser, end) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const accum = [];
       let currentState = state;
       let currentErr = ParseError.unknown(state.pos);
@@ -633,11 +624,11 @@ module.exports = (_core, _prim) => {
         const endRes = end.run(currentState);
         if (endRes.success) {
           if (endRes.consumed) {
-            return Result.csuc(endRes.err, accum, endRes.state);
+            return Result.csucc(endRes.err, accum, endRes.state);
           } else {
             return consumed
-              ? Result.csuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state)
-              : Result.esuc(ParseError.merge(currentErr, endRes.err), accum, endRes.state);
+              ? Result.csucc(ParseError.merge(currentErr, endRes.err), accum, endRes.state)
+              : Result.esucc(ParseError.merge(currentErr, endRes.err), accum, endRes.state);
           }
         } else {
           if (endRes.consumed) {
@@ -664,8 +655,8 @@ module.exports = (_core, _prim) => {
             return res;
           } else {
             return consumed
-              ? Result.cerr(ParseError.merge(currentErr, res.err))
-              : Result.eerr(ParseError.merge(currentErr, res.err));
+              ? Result.cfail(ParseError.merge(currentErr, res.err))
+              : Result.efail(ParseError.merge(currentErr, res.err));
           }
         }
       }

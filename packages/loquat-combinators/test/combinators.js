@@ -1,7 +1,3 @@
-/*
- * loquat-combinators test / combinators
- */
-
 "use strict";
 
 describe("combinators", () => {

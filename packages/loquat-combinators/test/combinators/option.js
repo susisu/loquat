@@ -1,23 +1,19 @@
-/*
- * loquat-combinators test / combinators.option()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const option = _combinators.option;
+const { option } = _combinators;
 
 describe(".option(val, parser)", () => {
   it("should return a parser that attempts to parse by `parser',"
@@ -34,64 +30,64 @@ describe(".option(val, parser)", () => {
       new SourcePos("foobar", 496, 28),
       "some"
     );
-    const err = new ParseError(
+    const err = new StrictParseError(
       new SourcePos("foobar", 496, 28),
-      [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+      [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
     );
-    // csuc
+    // csucc
     {
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.csuc(err, "nyan", finalState);
+        return Result.csucc(err, "nyan", finalState);
       });
       const optParser = option("cat", parser);
-      assertParser(optParser);
+      expect(optParser).to.be.a.parser;
       const res = optParser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(err, "nyan", finalState)
+        Result.csucc(err, "nyan", finalState)
       )).to.be.true;
     }
-    // cerr
+    // cfail
     {
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.cerr(err);
+        return Result.cfail(err);
       });
       const optParser = option("cat", parser);
-      assertParser(optParser);
+      expect(optParser).to.be.a.parser;
       const res = optParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(err)
+        Result.cfail(err)
       )).to.be.true;
     }
-    // esuc
+    // esucc
     {
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.esuc(err, "nyan", finalState);
+        return Result.esucc(err, "nyan", finalState);
       });
       const optParser = option("cat", parser);
-      assertParser(optParser);
+      expect(optParser).to.be.a.parser;
       const res = optParser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(err, "nyan", finalState)
+        Result.esucc(err, "nyan", finalState)
       )).to.be.true;
     }
-    // eerr
+    // efail
     {
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.eerr(err);
+        return Result.efail(err);
       });
       const optParser = option("cat", parser);
-      assertParser(optParser);
+      expect(optParser).to.be.a.parser;
       const res = optParser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(err, "cat", initState)
+        Result.esucc(err, "cat", initState)
       )).to.be.true;
     }
   });

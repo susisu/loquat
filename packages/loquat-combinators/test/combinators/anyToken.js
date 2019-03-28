@@ -1,26 +1,23 @@
-/*
- * loquat-combinators test / combinators.anyToken
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const anyToken = _combinators.anyToken;
+const { anyToken } = _combinators;
 
 describe(".anyToken", () => {
   it("should return a parser that accepts any token", () => {
-    assertParser(anyToken);
+    expect(anyToken).to.be.a.parser;
     // empty input
     {
       const initState = new State(
@@ -32,10 +29,10 @@ describe(".anyToken", () => {
       const res = anyToken.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, "")]
+            [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "")]
           )
         )
       )).to.be.true;
@@ -51,7 +48,7 @@ describe(".anyToken", () => {
       const res = anyToken.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
+        Result.csucc(
           ParseError.unknown(new SourcePos("foobar", 1, 1)),
           "A",
           new State(

@@ -1,36 +1,29 @@
-/*
- * loquat-combinators / sugar.js
- */
-
-/**
- * @module sugar
- */
-
 "use strict";
 
-module.exports = (_core, _prim, _combinators) => {
-  const isParser = _core.isParser;
+module.exports = (_core, { _prim, _combinators }) => {
+  const { isParser } = _core;
 
-  const left     = _prim.left;
-  const tryParse = _prim.tryParse;
+  const { left, tryParse } = _prim;
 
-  const option         = _combinators.option;
-  const optionMaybe    = _combinators.optionMaybe;
-  const optional       = _combinators.optional;
-  const between        = _combinators.between;
-  const many1          = _combinators.many1;
-  const skipMany1      = _combinators.skipMany1;
-  const sepBy          = _combinators.sepBy;
-  const sepBy1         = _combinators.sepBy1;
-  const sepEndBy       = _combinators.sepEndBy;
-  const sepEndBy1      = _combinators.sepEndBy1;
-  const endBy          = _combinators.endBy;
-  const endBy1         = _combinators.endBy1;
-  const count          = _combinators.count;
-  const notFollowedBy  = _combinators.notFollowedBy;
-  const reduceManyTill = _combinators.reduceManyTill;
-  const manyTill       = _combinators.manyTill;
-  const skipManyTill   = _combinators.skipManyTill;
+  const {
+    option,
+    optionMaybe,
+    optional,
+    between,
+    many1,
+    skipMany1,
+    sepBy,
+    sepBy1,
+    sepEndBy,
+    sepEndBy1,
+    endBy,
+    endBy1,
+    count,
+    notFollowedBy,
+    reduceManyTill,
+    manyTill,
+    skipManyTill,
+  } = _combinators;
 
   return Object.freeze({
     option(val) {

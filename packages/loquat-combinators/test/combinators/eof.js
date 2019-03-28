@@ -1,27 +1,23 @@
-/*
- * loquat-combinators test / combinators.eof
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show             = _core.show;
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const eof = _combinators.eof;
+const { eof } = _combinators;
 
 describe(".eof", () => {
   it("should return a parser that accepts any token", () => {
-    assertParser(eof);
+    expect(eof).to.be.a.parser;
     // empty input
     {
       const initState = new State(
@@ -33,12 +29,12 @@ describe(".eof", () => {
       const res = eof.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(
-          new ParseError(
+        Result.esucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-              new ErrorMessage(ErrorMessageType.EXPECT, "end of input"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "end of input"),
             ]
           ),
           undefined,
@@ -57,12 +53,12 @@ describe(".eof", () => {
       const res = eof.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.UNEXPECT, show("A")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "end of input"),
+              ErrorMessage.create(ErrorMessageType.UNEXPECT, show("A")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "end of input"),
             ]
           )
         )

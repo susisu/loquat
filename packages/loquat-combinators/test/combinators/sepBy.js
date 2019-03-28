@@ -1,23 +1,19 @@
-/*
- * loquat-combinators test / combinators.sepBy()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const sepBy = _combinators.sepBy;
+const { sepBy } = _combinators;
 
 describe(".sepBy(parser, sep)", () => {
   it("should return a parser that parses zero or more tokens accepted by `parser' separated by"
@@ -35,7 +31,7 @@ describe(".sepBy(parser, sep)", () => {
       let i = 0;
       let j = 1;
       return [
-        new Parser(state => {
+        new StrictParser(state => {
           expect(State.equal(state, i === 0 ? initState : states[j - 2])).to.be.true;
           const _consumed = consumed[i];
           const _success  = success[i];
@@ -45,7 +41,7 @@ describe(".sepBy(parser, sep)", () => {
           i += 2;
           return new Result(_consumed, _success, _err, _val, _state);
         }),
-        new Parser(state => {
+        new StrictParser(state => {
           expect(State.equal(state, states[i - 2])).to.be.true;
           const _consumed = consumed[j];
           const _success  = success[j];
@@ -57,7 +53,7 @@ describe(".sepBy(parser, sep)", () => {
         }),
       ];
     }
-    // csuc, csuc, csuc, cerr
+    // csucc, csucc, csucc, cfail
     {
       const consumed = [true, true, true, true];
       const success = [true, true, true, false];
@@ -83,39 +79,39 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 4),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 5),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 5),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // csuc, csuc, csuc, eerr
+    // csucc, csucc, csucc, efail
     {
       const consumed = [true, true, true, false];
       const success = [true, true, true, false];
@@ -141,33 +137,33 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 4),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 4),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 4),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
           ),
           ["nyan", "cat"],
           new State(
@@ -180,7 +176,7 @@ describe(".sepBy(parser, sep)", () => {
         arrayEqual
       )).to.be.true;
     }
-    // csuc, csuc, cerr
+    // csucc, csucc, cfail
     {
       const consumed = [true, true, true];
       const success = [true, true, false];
@@ -200,35 +196,35 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 4),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 4),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // csuc, csuc, esuc, cerr
+    // csucc, csucc, esucc, cfail
     {
       const consumed = [true, true, false, true];
       const success = [true, true, true, false];
@@ -254,39 +250,39 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 4),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 4),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // csuc, csuc, esuc, eerr
+    // csucc, csucc, esucc, efail
     {
       const consumed = [true, true, false, false];
       const success = [true, true, true, false];
@@ -312,33 +308,33 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
           ),
           ["nyan", "cat"],
           new State(
@@ -351,7 +347,7 @@ describe(".sepBy(parser, sep)", () => {
         arrayEqual
       )).to.be.true;
     }
-    // csuc, csuc, eerr
+    // csucc, csucc, efail
     {
       const consumed = [true, true, false];
       const success = [true, true, false];
@@ -371,38 +367,38 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testC"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
             ]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // csuc, cerr
+    // csucc, cfail
     {
       const consumed = [true, true];
       const success = [true, false];
@@ -416,31 +412,31 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // csuc, esuc, csuc, cerr
+    // csucc, esucc, csucc, cfail
     {
       const consumed = [true, false, true, true];
       const success = [true, true, true, false];
@@ -466,39 +462,39 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 4),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 4),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // csuc, esuc, csuc, eerr
+    // csucc, esucc, csucc, efail
     {
       const consumed = [true, false, true, false];
       const success = [true, true, true, false];
@@ -524,33 +520,33 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
           ),
           ["nyan", "cat"],
           new State(
@@ -563,7 +559,7 @@ describe(".sepBy(parser, sep)", () => {
         arrayEqual
       )).to.be.true;
     }
-    // csuc, esuc, cerr
+    // csucc, esucc, cfail
     {
       const consumed = [true, false, true];
       const success = [true, true, false];
@@ -583,37 +579,37 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // csuc, esuc, esuc, cerr -> error
-    // csuc, esuc, esuc, eerr -> error
-    // csuc, esuc, eerr
+    // csucc, esucc, esucc, cfail -> error
+    // csucc, esucc, esucc, efail -> error
+    // csucc, esucc, efail
     {
       const consumed = [true, false, false];
       const success = [true, true, false];
@@ -633,32 +629,32 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testC"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
             ]
           ),
           ["nyan"],
@@ -672,7 +668,7 @@ describe(".sepBy(parser, sep)", () => {
         arrayEqual
       )).to.be.true;
     }
-    // csuc, eerr
+    // csucc, efail
     {
       const consumed = [true, false];
       const success = [true, false];
@@ -686,27 +682,27 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
             ]
           ),
           ["nyan"],
@@ -720,34 +716,34 @@ describe(".sepBy(parser, sep)", () => {
         arrayEqual
       )).to.be.true;
     }
-    // cerr
+    // cfail
     {
       const consumed = [true];
       const success = [false];
       const vals = [];
       const states = [];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // esuc, csuc, csuc, cerr
+    // esucc, csucc, csucc, cfail
     {
       const consumed = [false, true, true, true];
       const success = [true, true, true, false];
@@ -773,39 +769,39 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 4),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 4),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // esuc, csuc, csuc, eerr
+    // esucc, csucc, csucc, efail
     {
       const consumed = [false, true, true, false];
       const success = [true, true, true, false];
@@ -831,33 +827,33 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
           ),
           ["nyan", "cat"],
           new State(
@@ -870,7 +866,7 @@ describe(".sepBy(parser, sep)", () => {
         arrayEqual
       )).to.be.true;
     }
-    // esuc, csuc, cerr
+    // esucc, csucc, cfail
     {
       const consumed = [false, true, true];
       const success = [true, true, false];
@@ -890,35 +886,35 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // esuc, csuc, esuc, cerr
+    // esucc, csucc, esucc, cfail
     {
       const consumed = [false, true, false, true];
       const success = [true, true, true, false];
@@ -944,39 +940,39 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // esuc, csuc, esuc, eerr
+    // esucc, csucc, esucc, efail
     {
       const consumed = [false, true, false, false];
       const success = [true, true, true, false];
@@ -1002,33 +998,33 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
           ),
           ["nyan", "cat"],
           new State(
@@ -1041,7 +1037,7 @@ describe(".sepBy(parser, sep)", () => {
         arrayEqual
       )).to.be.true;
     }
-    // esuc, csuc, eerr
+    // esucc, csucc, efail
     {
       const consumed = [false, true, false];
       const success = [true, true, false];
@@ -1061,38 +1057,38 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testC"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
             ]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // esuc, cerr
+    // esucc, cfail
     {
       const consumed = [false, true];
       const success = [true, false];
@@ -1106,31 +1102,31 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // esuc, esuc, csuc, cerr
+    // esucc, esucc, csucc, cfail
     {
       const consumed = [false, false, true, true];
       const success = [true, true, true, false];
@@ -1156,39 +1152,39 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // esuc, esuc, csuc, eerr
+    // esucc, esucc, csucc, efail
     {
       const consumed = [false, false, true, false];
       const success = [true, true, true, false];
@@ -1214,33 +1210,33 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
           ),
           ["nyan", "cat"],
           new State(
@@ -1253,7 +1249,7 @@ describe(".sepBy(parser, sep)", () => {
         arrayEqual
       )).to.be.true;
     }
-    // esuc, esuc, cerr
+    // esucc, esucc, cfail
     {
       const consumed = [false, false, true];
       const success = [true, true, false];
@@ -1273,37 +1269,37 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // esuc, esuc, esuc, cerr -> error
-    // esuc, esuc, esuc, eerr -> error
-    // esuc, esuc, eerr
+    // esucc, esucc, esucc, cfail -> error
+    // esucc, esucc, esucc, efail -> error
+    // esucc, esucc, efail
     {
       const consumed = [false, false, false];
       const success = [true, true, false];
@@ -1323,32 +1319,32 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(
-          new ParseError(
+        Result.esucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testC"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
             ]
           ),
           ["nyan"],
@@ -1362,7 +1358,7 @@ describe(".sepBy(parser, sep)", () => {
         arrayEqual
       )).to.be.true;
     }
-    // esuc, eerr
+    // esucc, efail
     {
       const consumed = [false, false];
       const success = [true, false];
@@ -1376,27 +1372,27 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(
-          new ParseError(
+        Result.esucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
             ]
           ),
           ["nyan"],
@@ -1410,28 +1406,28 @@ describe(".sepBy(parser, sep)", () => {
         arrayEqual
       )).to.be.true;
     }
-    // eerr
+    // efail
     {
       const consumed = [false];
       const success = [false];
       const vals = [];
       const states = [];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       const res = manyParser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(
-          new ParseError(
+        Result.esucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
           ),
           [],
           initState
@@ -1452,7 +1448,7 @@ describe(".sepBy(parser, sep)", () => {
       let i = 0;
       let j = 1;
       return [
-        new Parser(state => {
+        new StrictParser(state => {
           expect(State.equal(state, i === 0 ? initState : states[j - 2])).to.be.true;
           const _consumed = consumed[i];
           const _success  = success[i];
@@ -1462,7 +1458,7 @@ describe(".sepBy(parser, sep)", () => {
           i += 2;
           return new Result(_consumed, _success, _err, _val, _state);
         }),
-        new Parser(state => {
+        new StrictParser(state => {
           expect(State.equal(state, states[i - 2])).to.be.true;
           const _consumed = consumed[j];
           const _success  = success[j];
@@ -1474,7 +1470,7 @@ describe(".sepBy(parser, sep)", () => {
         }),
       ];
     }
-    // csuc, esuc, esuc, cerr
+    // csucc, esucc, esucc, cfail
     {
       const consumed = [true, false, false, true];
       const success = [true, true, true, false];
@@ -1500,29 +1496,29 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       expect(() => { manyParser.run(initState); }).to.throw(Error, /many/);
     }
-    // csuc, esuc, esuc, eerr
+    // csucc, esucc, esucc, efail
     {
       const consumed = [true, false, false, false];
       const success = [true, true, true, false];
@@ -1548,29 +1544,29 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       expect(() => { manyParser.run(initState); }).to.throw(Error, /many/);
     }
-    // esuc, esuc, esuc, cerr
+    // esucc, esucc, esucc, cfail
     {
       const consumed = [false, false, false, true];
       const success = [true, true, true, false];
@@ -1596,29 +1592,29 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       expect(() => { manyParser.run(initState); }).to.throw(Error, /many/);
     }
-    // esuc, esuc, esuc, eerr
+    // esucc, esucc, esucc, efail
     {
       const consumed = [false, false, false, false];
       const success = [true, true, true, false];
@@ -1644,26 +1640,26 @@ describe(".sepBy(parser, sep)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testC")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testD")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
       const parsers = generateParsers(consumed, success, vals, states, errs);
       const manyParser = sepBy(parsers[0], parsers[1]);
-      assertParser(manyParser);
+      expect(manyParser).to.be.a.parser;
       expect(() => { manyParser.run(initState); }).to.throw(Error, /many/);
     }
   });

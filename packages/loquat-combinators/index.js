@@ -6,10 +6,10 @@
 
 module.exports = (_core, opts = {}) => {
   const _prim        = require("loquat-prim")(_core);
-  const _combinators = require("./lib/combinators.js")(_core, _prim);
+  const _combinators = require("./lib/combinators.js")(_core, { _prim });
 
   if (opts.sugar) {
-    const _sugar = require("./lib/sugar.js")(_core, _prim, _combinators);
+    const _sugar = require("./lib/sugar.js")(_core, { _prim, _combinators });
     _core.extendParser(_sugar);
   }
 
