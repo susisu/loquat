@@ -15,80 +15,68 @@ const {
 
 const { optional } = _combinators;
 
-describe(".optional(parser)", () => {
-  it("should return a parser that attempts to parse by `parser',"
-        + " and returns `undefined' unless it consumed and failed", () => {
+describe("optional", () => {
+  it("should create a parser that tries the given parser and ignores its failure if there is no"
+    + " consumption", () => {
     const initState = new State(
-      new Config({ tabWidth: 8 }),
+      new Config(),
       "input",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "none"
     );
     const finalState = new State(
-      new Config({ tabWidth: 4 }),
+      new Config(),
       "rest",
-      new SourcePos("foobar", 496, 28),
+      new SourcePos("main", 1, 1, 2),
       "some"
     );
     const err = new StrictParseError(
-      new SourcePos("foobar", 496, 28),
+      new SourcePos("main", 1, 1, 2),
       [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
     );
     // csucc
     {
       const parser = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.csucc(err, "nyancat", finalState);
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(err, "foo", finalState);
       });
       const optParser = optional(parser);
       expect(optParser).to.be.a.parser;
       const res = optParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csucc(err, undefined, finalState)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.csucc(err, undefined, finalState));
     }
     // cfail
     {
       const parser = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
+        expect(state).to.be.an.equalStateTo(initState);
         return Result.cfail(err);
       });
       const optParser = optional(parser);
       expect(optParser).to.be.a.parser;
       const res = optParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.cfail(err)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.cfail(err));
     }
     // esucc
     {
       const parser = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.esucc(err, "nyancat", finalState);
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(err, "foo", finalState);
       });
       const optParser = optional(parser);
       expect(optParser).to.be.a.parser;
       const res = optParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.esucc(err, undefined, finalState)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.esucc(err, undefined, finalState));
     }
     // efail
     {
       const parser = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
+        expect(state).to.be.an.equalStateTo(initState);
         return Result.efail(err);
       });
       const optParser = optional(parser);
       expect(optParser).to.be.a.parser;
       const res = optParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.esucc(err, undefined, initState)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.esucc(err, undefined, initState));
     }
   });
 });

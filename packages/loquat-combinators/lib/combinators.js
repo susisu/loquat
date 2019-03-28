@@ -46,11 +46,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.optional
-     * @static
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * optional: [S, U, A](parser: Parser[S, U, A]): Parser[S, U, undefined]
+   */
   function optional(parser) {
     return mplus(then(parser, pure(undefined)), pure(undefined));
   }

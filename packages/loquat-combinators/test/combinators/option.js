@@ -16,8 +16,8 @@ const {
 const { option } = _combinators;
 
 describe("option", () => {
-  it("should create a parser that tries running the given parser and returns its result if it"
-    + " succeeds, or returns the given alternative value if it fails without consumption", () => {
+  it("should create a parser that tries the given parser and returns its result if it succeeds, or"
+    + " returns the given alternative value if it fails without consumption", () => {
     const initState = new State(
       new Config(),
       "input",
