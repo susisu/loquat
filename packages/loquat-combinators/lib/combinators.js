@@ -73,11 +73,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.many1
-     * @static
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * many1: [S, U, A](parser: Parser[S, U, A]) => Parser[S, U, Array[A]]
+   */
   function many1(parser) {
     return bind(parser, head =>
       bind(many(parser), tail =>
