@@ -376,12 +376,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.chainr1
-     * @static
-     * @param {AbstractParser} term
-     * @param {AbstractParser} op
-     * @returns {AbstractParser}
-     */
+   * chainr1: [S, U, A](term: Parser[S, U, A], op: Parser[S, U, (A, A) => A]) => Parser[S, U, A]
+   */
   function chainr1(term, op) {
     return new StrictParser(state => {
       let resultVal;
