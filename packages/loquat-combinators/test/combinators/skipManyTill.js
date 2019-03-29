@@ -96,7 +96,7 @@ describe("skipManyTill", () => {
     {
       const success = [false, true, false, true, true];
       const consumed = [false, true, false, true, true];
-      const vals = [undefined, "nyan", undefined, "cat", undefined];
+      const vals = [undefined, "foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -173,7 +173,7 @@ describe("skipManyTill", () => {
     {
       const success = [false, true, false, true, true];
       const consumed = [false, false, false, false, true];
-      const vals = [undefined, "nyan", undefined, "cat", undefined];
+      const vals = [undefined, "foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -273,7 +273,7 @@ describe("skipManyTill", () => {
     {
       const success = [false, true, false, true, false];
       const consumed = [false, true, false, true, true];
-      const vals = [undefined, "nyan", undefined, "cat"];
+      const vals = [undefined, "foo", undefined, "bar"];
       const states = [
         new State(
           new Config(),
@@ -337,7 +337,7 @@ describe("skipManyTill", () => {
     {
       const success = [false, true, false, true, false];
       const consumed = [false, false, false, false, true];
-      const vals = [undefined, "nyan", undefined, "cat"];
+      const vals = [undefined, "foo", undefined, "bar"];
       const states = [
         new State(
           new Config(),
@@ -438,7 +438,7 @@ describe("skipManyTill", () => {
     {
       const success = [false, true, false, true, true];
       const consumed = [false, true, false, true, false];
-      const vals = [undefined, "nyan", undefined, "cat", undefined];
+      const vals = [undefined, "foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -518,7 +518,7 @@ describe("skipManyTill", () => {
     {
       const success = [false, true, false, true, true];
       const consumed = [false, false, false, false, false];
-      const vals = [undefined, "nyan", undefined, "cat", undefined];
+      const vals = [undefined, "foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -628,7 +628,7 @@ describe("skipManyTill", () => {
     {
       const success = [false, true, false, true, false, false];
       const consumed = [false, true, false, true, false, true];
-      const vals = [undefined, "nyan", undefined, "cat", undefined];
+      const vals = [undefined, "foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -732,7 +732,7 @@ describe("skipManyTill", () => {
     {
       const success = [false, true, false, true, false, false];
       const consumed = [false, true, false, true, false, false];
-      const vals = [undefined, "nyan", undefined, "cat", undefined];
+      const vals = [undefined, "foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),

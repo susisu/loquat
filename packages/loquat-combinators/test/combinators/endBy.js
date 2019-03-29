@@ -60,7 +60,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [true, true, true, true, true];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -124,7 +124,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [true, true, true, true, false];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -183,7 +183,7 @@ describe("endBy", () => {
             new SourcePos("main", 4, 1, 5),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
-          ["nyan", "cat"],
+          ["foo", "bar"],
           new State(
             new Config(),
             "restD",
@@ -198,7 +198,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, false];
       const consumed = [true, true, true, true];
-      const vals = ["nyan", undefined, "cat"];
+      const vals = ["foo", undefined, "bar"];
       const states = [
         new State(
           new Config(),
@@ -252,7 +252,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [true, true, true, false, true];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -316,7 +316,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [true, true, true, false, false];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -375,7 +375,7 @@ describe("endBy", () => {
             new SourcePos("main", 3, 1, 4),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
-          ["nyan", "cat"],
+          ["foo", "bar"],
           new State(
             new Config(),
             "restD",
@@ -390,7 +390,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, false];
       const consumed = [true, true, true, false];
-      const vals = ["nyan", undefined, "cat"];
+      const vals = ["foo", undefined, "bar"];
       const states = [
         new State(
           new Config(),
@@ -447,7 +447,7 @@ describe("endBy", () => {
     {
       const success = [true, true, false];
       const consumed = [true, true, true];
-      const vals = ["nyan", undefined];
+      const vals = ["foo", undefined];
       const states = [
         new State(
           new Config(),
@@ -491,7 +491,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [true, true, false, true, true];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -555,7 +555,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [true, true, false, true, false];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -614,7 +614,7 @@ describe("endBy", () => {
             new SourcePos("main", 3, 1, 4),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
-          ["nyan", "cat"],
+          ["foo", "bar"],
           new State(
             new Config(),
             "restD",
@@ -629,7 +629,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, false];
       const consumed = [true, true, false, true];
-      const vals = ["nyan", undefined, "cat"];
+      const vals = ["foo", undefined, "bar"];
       const states = [
         new State(
           new Config(),
@@ -685,7 +685,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, false];
       const consumed = [true, true, false, false];
-      const vals = ["nyan", undefined, "cat"];
+      const vals = ["foo", undefined, "bar"];
       const states = [
         new State(
           new Config(),
@@ -737,7 +737,7 @@ describe("endBy", () => {
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testD"),
             ]
           ),
-          ["nyan"],
+          ["foo"],
           new State(
             new Config(),
             "restB",
@@ -752,7 +752,7 @@ describe("endBy", () => {
     {
       const success = [true, true, false];
       const consumed = [true, true, false];
-      const vals = ["nyan", undefined];
+      const vals = ["foo", undefined];
       const states = [
         new State(
           new Config(),
@@ -791,7 +791,7 @@ describe("endBy", () => {
             new SourcePos("main", 2, 1, 3),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
           ),
-          ["nyan"],
+          ["foo"],
           new State(
             new Config(),
             "restB",
@@ -806,7 +806,7 @@ describe("endBy", () => {
     {
       const success = [true, false];
       const consumed = [true, true];
-      const vals = ["nyan"];
+      const vals = ["foo"];
       const states = [
         new State(
           new Config(),
@@ -840,7 +840,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [true, false, true, true, true];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -904,7 +904,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [true, false, true, true, false];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -963,7 +963,7 @@ describe("endBy", () => {
             new SourcePos("main", 3, 1, 4),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
-          ["nyan", "cat"],
+          ["foo", "bar"],
           new State(
             new Config(),
             "restD",
@@ -978,7 +978,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, false];
       const consumed = [true, false, true, true];
-      const vals = ["nyan", undefined, "cat"];
+      const vals = ["foo", undefined, "bar"];
       const states = [
         new State(
           new Config(),
@@ -1032,7 +1032,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [true, false, true, false, true];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -1096,7 +1096,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [true, false, true, false, false];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -1155,7 +1155,7 @@ describe("endBy", () => {
             new SourcePos("main", 2, 1, 3),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
-          ["nyan", "cat"],
+          ["foo", "bar"],
           new State(
             new Config(),
             "restD",
@@ -1170,7 +1170,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, false];
       const consumed = [true, false, true, false];
-      const vals = ["nyan", undefined, "cat"];
+      const vals = ["foo", undefined, "bar"];
       const states = [
         new State(
           new Config(),
@@ -1227,7 +1227,7 @@ describe("endBy", () => {
     {
       const success = [true, true, false];
       const consumed = [true, false, true];
-      const vals = ["nyan", undefined];
+      const vals = ["foo", undefined];
       const states = [
         new State(
           new Config(),
@@ -1271,7 +1271,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [true, false, false, true, true];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -1335,7 +1335,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [true, false, false, true, false];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -1394,7 +1394,7 @@ describe("endBy", () => {
             new SourcePos("main", 2, 1, 3),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
-          ["nyan", "cat"],
+          ["foo", "bar"],
           new State(
             new Config(),
             "restD",
@@ -1409,7 +1409,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, false];
       const consumed = [true, false, false, true];
-      const vals = ["nyan", undefined, "cat"];
+      const vals = ["foo", undefined, "bar"];
       const states = [
         new State(
           new Config(),
@@ -1465,7 +1465,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, false];
       const consumed = [true, false, false, false];
-      const vals = ["nyan", undefined, "cat"];
+      const vals = ["foo", undefined, "bar"];
       const states = [
         new State(
           new Config(),
@@ -1517,7 +1517,7 @@ describe("endBy", () => {
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testD"),
             ]
           ),
-          ["nyan"],
+          ["foo"],
           new State(
             new Config(),
             "restB",
@@ -1532,7 +1532,7 @@ describe("endBy", () => {
     {
       const success = [true, true, false];
       const consumed = [true, false, false];
-      const vals = ["nyan", undefined];
+      const vals = ["foo", undefined];
       const states = [
         new State(
           new Config(),
@@ -1571,7 +1571,7 @@ describe("endBy", () => {
             new SourcePos("main", 1, 1, 2),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
           ),
-          ["nyan"],
+          ["foo"],
           new State(
             new Config(),
             "restB",
@@ -1586,7 +1586,7 @@ describe("endBy", () => {
     {
       const success = [true, false];
       const consumed = [true, false];
-      const vals = ["nyan"];
+      const vals = ["foo"];
       const states = [
         new State(
           new Config(),
@@ -1646,7 +1646,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [false, true, true, true, true];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -1710,7 +1710,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [false, true, true, true, false];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -1769,7 +1769,7 @@ describe("endBy", () => {
             new SourcePos("main", 3, 1, 4),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
-          ["nyan", "cat"],
+          ["foo", "bar"],
           new State(
             new Config(),
             "restD",
@@ -1784,7 +1784,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, false];
       const consumed = [false, true, true, true];
-      const vals = ["nyan", undefined, "cat"];
+      const vals = ["foo", undefined, "bar"];
       const states = [
         new State(
           new Config(),
@@ -1838,7 +1838,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [false, true, true, false, true];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -1902,7 +1902,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [false, true, true, false, false];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -1961,7 +1961,7 @@ describe("endBy", () => {
             new SourcePos("main", 2, 1, 3),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
-          ["nyan", "cat"],
+          ["foo", "bar"],
           new State(
             new Config(),
             "restD",
@@ -1976,7 +1976,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, false];
       const consumed = [false, true, true, false];
-      const vals = ["nyan", undefined, "cat"];
+      const vals = ["foo", undefined, "bar"];
       const states = [
         new State(
           new Config(),
@@ -2033,7 +2033,7 @@ describe("endBy", () => {
     {
       const success = [true, true, false];
       const consumed = [false, true, true];
-      const vals = ["nyan", undefined];
+      const vals = ["foo", undefined];
       const states = [
         new State(
           new Config(),
@@ -2077,7 +2077,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [false, true, false, true, true];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -2141,7 +2141,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [false, true, false, true, false];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -2200,7 +2200,7 @@ describe("endBy", () => {
             new SourcePos("main", 2, 1, 3),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
-          ["nyan", "cat"],
+          ["foo", "bar"],
           new State(
             new Config(),
             "restD",
@@ -2215,7 +2215,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, false];
       const consumed = [false, true, false, true];
-      const vals = ["nyan", undefined, "cat"];
+      const vals = ["foo", undefined, "bar"];
       const states = [
         new State(
           new Config(),
@@ -2271,7 +2271,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, false];
       const consumed = [false, true, false, false];
-      const vals = ["nyan", undefined, "cat"];
+      const vals = ["foo", undefined, "bar"];
       const states = [
         new State(
           new Config(),
@@ -2323,7 +2323,7 @@ describe("endBy", () => {
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testD"),
             ]
           ),
-          ["nyan"],
+          ["foo"],
           new State(
             new Config(),
             "restB",
@@ -2338,7 +2338,7 @@ describe("endBy", () => {
     {
       const success = [true, true, false];
       const consumed = [false, true, false];
-      const vals = ["nyan", undefined];
+      const vals = ["foo", undefined];
       const states = [
         new State(
           new Config(),
@@ -2377,7 +2377,7 @@ describe("endBy", () => {
             new SourcePos("main", 1, 1, 2),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
           ),
-          ["nyan"],
+          ["foo"],
           new State(
             new Config(),
             "restB",
@@ -2392,7 +2392,7 @@ describe("endBy", () => {
     {
       const success = [true, false];
       const consumed = [false, true];
-      const vals = ["nyan"];
+      const vals = ["foo"];
       const states = [
         new State(
           new Config(),
@@ -2440,7 +2440,7 @@ describe("endBy", () => {
     {
       const success = [true, false];
       const consumed = [false, false];
-      const vals = ["nyan"];
+      const vals = ["foo"];
       const states = [
         new State(
           new Config(),
@@ -2551,7 +2551,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [true, true, false, false, true];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -2611,7 +2611,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [true, false, false, false, true];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -2671,7 +2671,7 @@ describe("endBy", () => {
     {
       const success = [true, true, true, true, false];
       const consumed = [false, true, false, false, true];
-      const vals = ["nyan", undefined, "cat", undefined];
+      const vals = ["foo", undefined, "bar", undefined];
       const states = [
         new State(
           new Config(),
@@ -2731,7 +2731,7 @@ describe("endBy", () => {
     {
       const success = [true, true, false];
       const consumed = [false, false, true];
-      const vals = ["nyan", undefined];
+      const vals = ["foo", undefined];
       const states = [
         new State(
           new Config(),
