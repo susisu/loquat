@@ -474,14 +474,12 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @constant module:combinators.anyToken
-     * @static
-     * @type {AbstractParser}
-     */
+   * anyToken: [S <: Stream[S], U]Parser[S, U, S#Token]
+   */
   const anyToken = tokenPrim(
-    token => ({ empty: false, value: token }),
+    (token, config) => ({ empty: false, value: token }),
     show,
-    pos => pos
+    (pos, token, rest, config) => pos
   );
 
   /**
