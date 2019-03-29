@@ -501,10 +501,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @constant module:combinators.eof
-     * @static
-     * @type {AbstractParser}
-     */
+   * eof: [S <: Stream[S], U]Parser[S, U, undefined]
+   */
   const eof = label(notFollowedBy(anyToken), "end of input");
 
   /**
