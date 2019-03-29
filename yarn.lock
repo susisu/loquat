@@ -3894,6 +3894,13 @@ loquat-core@^2.0.0, loquat-core@~2.0.0:
   resolved "https://registry.yarnpkg.com/loquat-core/-/loquat-core-2.0.2.tgz#e6d71d25ab4ba60f2b468b2055d9cced9eed230c"
   integrity sha512-Qiq1gdqmL0H14BkjgGX1hc9i9Hkksvp+Yhc57ZvddL2iT2n9ijFYvbdyTBwwUrH96i81wvtKPP/fxcwLgGaZuw==
 
+loquat-monad@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/loquat-monad/-/loquat-monad-2.0.0.tgz#e4d97f165fddf1e9e1c0953a88b5d0a4c89d84d5"
+  integrity sha1-5Nl/Fl/d8enhwJU6iLXQpMidhNU=
+  dependencies:
+    loquat-prim "^2.0.0"
+
 loquat-prim@^2.0.0, loquat-prim@~2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/loquat-prim/-/loquat-prim-2.0.1.tgz#b3c021f1abfc9a9a9184985cbef3cf0ea1a6e678"
