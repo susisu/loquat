@@ -483,21 +483,14 @@ module.exports = (_core, { _prim }) => {
   );
 
   /**
-     * @function module:combinators.notFollowedBy
-     * @static
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * notFollowedBy: [S, U, A](parser: Parser[S, U, A]) => Parser[S, U, undefined]
+   */
   function notFollowedBy(parser) {
     const modParser = new StrictParser(state => {
       const res = parser.run(state);
-      if (res.consumed && !res.success) {
-        return Result.efail(res.err);
-      } else if (!res.consumed && res.success) {
-        return Result.csucc(res.err, res.val, res.state);
-      } else {
-        return res;
-      }
+      return !res.success &&  res.consumed ? Result.efail(res.err)
+           :  res.success && !res.consumed ? Result.csucc(res.err, res.val, res.state)
+                                           : res;
     });
     return tryParse(
       mplus(

@@ -16,110 +16,98 @@ const {
 
 const { notFollowedBy } = _combinators;
 
-describe(".notFollowedBy(parser)", () => {
-  it("should return a parser that succeeds without consuming input only when `parser'"
+describe("notFollowedBy", () => {
+  it("should create a parser that succeeds without consumption only when the given parser"
     + " fails", () => {
     const initState = new State(
-      new Config({ tabWidth: 8 }),
+      new Config(),
       "input",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "none"
     );
     const finalState = new State(
-      new Config({ tabWidth: 4 }),
+      new Config(),
       "rest",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "some"
     );
     const err = new StrictParseError(
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
     );
     // csucc
     {
       const p = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.csucc(err, "nyancat", finalState);
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(err, "foo", finalState);
       });
       const parser = notFollowedBy(p);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
-              ErrorMessage.create(ErrorMessageType.UNEXPECT, show("nyancat")),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
+            ErrorMessage.create(ErrorMessageType.UNEXPECT, show("foo")),
+          ]
         )
-      )).to.be.true;
+      ));
     }
     // cfail
     {
       const p = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
+        expect(state).to.be.an.equalStateTo(initState);
         return Result.cfail(err);
       });
       const parser = notFollowedBy(p);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.esucc(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
-          ),
-          undefined,
-          initState
-        )
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.esucc(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
+        ),
+        undefined,
+        initState
+      ));
     }
     // esucc
     {
       const p = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.esucc(err, "nyancat", finalState);
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(err, "foo", finalState);
       });
       const parser = notFollowedBy(p);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
-              ErrorMessage.create(ErrorMessageType.UNEXPECT, show("nyancat")),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
+            ErrorMessage.create(ErrorMessageType.UNEXPECT, show("foo")),
+          ]
         )
-      )).to.be.true;
+      ));
     }
     // efail
     {
       const p = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
+        expect(state).to.be.an.equalStateTo(initState);
         return Result.efail(err);
       });
       const parser = notFollowedBy(p);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.esucc(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
-          ),
-          undefined,
-          initState
-        )
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.esucc(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
+        ),
+        undefined,
+        initState
+      ));
     }
   });
 });
