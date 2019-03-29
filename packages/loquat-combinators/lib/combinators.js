@@ -175,16 +175,16 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.sepEndBy1
-     * @static
-     * @param {AbstractParser} parser
-     * @param {AbstractParser} sep
-     * @returns {AbstractParser}
-     */
+   * sepEndBy1: [S, U, A, Sep](
+   *   parser: Parser[S, U, A],
+   *   sep: Parser[S, U, Sep]
+   * ) => Parser[S, U, Array[A]]
+   */
   function sepEndBy1(parser, sep) {
     return bind(parser, head =>
       mplus(
-        then(sep,
+        then(
+          sep,
           bind(sepEndBy(parser, sep), tail =>
             pure([head].concat(tail))
           )
