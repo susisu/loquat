@@ -265,13 +265,12 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.chainl
-     * @static
-     * @param {AbstractParser} term
-     * @param {AbstractParser} op
-     * @param {*} defaultVal
-     * @returns {AbstractParser}
-     */
+   * chainl: [S, U, A](
+   *   term: Parser[S, U, A],
+   *   op: Parser[S, U, (A, A) => A],
+   *   defaultVal: A
+   * ) => Parser[S, U, A]
+   */
   function chainl(term, op, defaultVal) {
     return mplus(
       chainl1(term, op),
@@ -280,12 +279,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.chainl1
-     * @static
-     * @param {AbstractParser} term
-     * @param {AbstractParser} op
-     * @returns {AbstractParser}
-     */
+   * chainl1: [S, U, A](term: Parser[S, U, A], op: Parser[S, U, (A, A) => A]) => Parser[S, U, A]
+   */
   function chainl1(term, op) {
     return new StrictParser(state => {
       let currentVal;
