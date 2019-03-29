@@ -16,8 +16,8 @@ const {
 const { chainl } = _combinators;
 
 describe("chainl", () => {
-  it("should create a parser that parses an expression and folds the results with the operators"
-    + " from left to right", () => {
+  it("should create a parser that parses a maybe empty expression and folds the results with the"
+    + " operators from left to right", () => {
     const initState = new State(
       new Config(),
       "input",
