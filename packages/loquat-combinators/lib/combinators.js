@@ -195,12 +195,11 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.endBy
-     * @static
-     * @param {AbstractParser} parser
-     * @param {AbstractParser} sep
-     * @returns {AbstractParser}
-     */
+   * endBy: [S, U, A, Sep](
+   *   parser: Parser[S, U, A],
+   *   sep: Parser[S, U, Sep]
+   * ) => Parser[S, U, Array[A]]
+   */
   function endBy(parser, sep) {
     return many(
       bind(parser, val =>

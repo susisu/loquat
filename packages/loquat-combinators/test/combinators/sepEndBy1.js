@@ -17,7 +17,8 @@ const {
 const { sepEndBy1 } = _combinators;
 
 describe("sepEndBy1", () => {
-  it("should create a parser that parses one or more tokens separated or ended by symbols", () => {
+  it("should create a parser that parses one or more tokens separated or maybe ended by"
+    + " symbols", () => {
     const initState = new State(
       new Config(),
       "input",
