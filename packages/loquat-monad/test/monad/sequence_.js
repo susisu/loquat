@@ -1,23 +1,20 @@
-/*
- * loquat-monad test / monad.sequence_()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const sequence_ = _monad.sequence_;
+const { sequence_ } = _monad;
 
 describe(".sequence_(parsers)", () => {
   it("should return a parser that runs `parsers' sequentially and discards result values", () => {
@@ -30,14 +27,14 @@ describe(".sequence_(parsers)", () => {
     // empty
     {
       const parser = sequence_([]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(ParseError.unknown(initState.pos), undefined, initState)
+        Result.esucc(ParseError.unknown(initState.pos), undefined, initState)
       )).to.be.true;
     }
-    // csuc, csuc
+    // csucc, csucc
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -45,13 +42,13 @@ describe(".sequence_(parsers)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
-      const parserA = new Parser(state => {
+      const parserA = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.csuc(errA, "nyan", stateA);
+        return Result.csucc(errA, "nyan", stateA);
       });
 
       const stateB = new State(
@@ -60,24 +57,24 @@ describe(".sequence_(parsers)", () => {
         new SourcePos("foobar", 1, 3),
         "someB"
       );
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 3),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
-      const parserB = new Parser(state => {
+      const parserB = new StrictParser(state => {
         expect(State.equal(state, stateA)).to.be.true;
-        return Result.csuc(errB, "cat", stateB);
+        return Result.csucc(errB, "cat", stateB);
       });
 
       const parser = sequence_([parserA, parserB]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(errB, undefined, stateB)
+        Result.csucc(errB, undefined, stateB)
       )).to.be.true;
     }
-    // csuc, cerr
+    // csucc, cfail
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -85,33 +82,33 @@ describe(".sequence_(parsers)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
-      const parserA = new Parser(state => {
+      const parserA = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.csuc(errA, "nyan", stateA);
+        return Result.csucc(errA, "nyan", stateA);
       });
 
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 3),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
-      const parserB = new Parser(state => {
+      const parserB = new StrictParser(state => {
         expect(State.equal(state, stateA)).to.be.true;
-        return Result.cerr(errB);
+        return Result.cfail(errB);
       });
 
       const parser = sequence_([parserA, parserB]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(errB)
+        Result.cfail(errB)
       )).to.be.true;
     }
-    // csuc, esuc
+    // csucc, esucc
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -119,13 +116,13 @@ describe(".sequence_(parsers)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
-      const parserA = new Parser(state => {
+      const parserA = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.csuc(errA, "nyan", stateA);
+        return Result.csucc(errA, "nyan", stateA);
       });
 
       const stateB = new State(
@@ -134,24 +131,24 @@ describe(".sequence_(parsers)", () => {
         new SourcePos("foobar", 1, 3),
         "someB"
       );
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 3),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
-      const parserB = new Parser(state => {
+      const parserB = new StrictParser(state => {
         expect(State.equal(state, stateA)).to.be.true;
-        return Result.esuc(errB, "cat", stateB);
+        return Result.esucc(errB, "cat", stateB);
       });
 
       const parser = sequence_([parserA, parserB]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(ParseError.merge(errA, errB), undefined, stateB)
+        Result.csucc(ParseError.merge(errA, errB), undefined, stateB)
       )).to.be.true;
     }
-    // csuc, eerr
+    // csucc, efail
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -159,54 +156,54 @@ describe(".sequence_(parsers)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
-      const parserA = new Parser(state => {
+      const parserA = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.csuc(errA, "nyan", stateA);
+        return Result.csucc(errA, "nyan", stateA);
       });
 
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 3),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
-      const parserB = new Parser(state => {
+      const parserB = new StrictParser(state => {
         expect(State.equal(state, stateA)).to.be.true;
-        return Result.eerr(errB);
+        return Result.efail(errB);
       });
 
       const parser = sequence_([parserA, parserB]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(ParseError.merge(errA, errB))
+        Result.cfail(ParseError.merge(errA, errB))
       )).to.be.true;
     }
-    // cerr, *
+    // cfail, *
     {
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
-      const parserA = new Parser(state => {
+      const parserA = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.cerr(errA);
+        return Result.cfail(errA);
       });
 
-      const parserB = new Parser(() => { throw new Error("unexpected call"); });
+      const parserB = new StrictParser(() => { throw new Error("unexpected call"); });
 
       const parser = sequence_([parserA, parserB]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(errA)
+        Result.cfail(errA)
       )).to.be.true;
     }
-    // esuc, csuc
+    // esucc, csucc
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -214,13 +211,13 @@ describe(".sequence_(parsers)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
-      const parserA = new Parser(state => {
+      const parserA = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.esuc(errA, "nyan", stateA);
+        return Result.esucc(errA, "nyan", stateA);
       });
 
       const stateB = new State(
@@ -229,24 +226,24 @@ describe(".sequence_(parsers)", () => {
         new SourcePos("foobar", 1, 3),
         "someB"
       );
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 3),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
-      const parserB = new Parser(state => {
+      const parserB = new StrictParser(state => {
         expect(State.equal(state, stateA)).to.be.true;
-        return Result.csuc(errB, "cat", stateB);
+        return Result.csucc(errB, "cat", stateB);
       });
 
       const parser = sequence_([parserA, parserB]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(errB, undefined, stateB)
+        Result.csucc(errB, undefined, stateB)
       )).to.be.true;
     }
-    // esuc, cerr
+    // esucc, cfail
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -254,33 +251,33 @@ describe(".sequence_(parsers)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
-      const parserA = new Parser(state => {
+      const parserA = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.esuc(errA, "nyan", stateA);
+        return Result.esucc(errA, "nyan", stateA);
       });
 
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 3),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
-      const parserB = new Parser(state => {
+      const parserB = new StrictParser(state => {
         expect(State.equal(state, stateA)).to.be.true;
-        return Result.cerr(errB);
+        return Result.cfail(errB);
       });
 
       const parser = sequence_([parserA, parserB]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(errB)
+        Result.cfail(errB)
       )).to.be.true;
     }
-    // esuc, esuc
+    // esucc, esucc
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -288,13 +285,13 @@ describe(".sequence_(parsers)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
-      const parserA = new Parser(state => {
+      const parserA = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.esuc(errA, "nyan", stateA);
+        return Result.esucc(errA, "nyan", stateA);
       });
 
       const stateB = new State(
@@ -303,24 +300,24 @@ describe(".sequence_(parsers)", () => {
         new SourcePos("foobar", 1, 3),
         "someB"
       );
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 3),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
-      const parserB = new Parser(state => {
+      const parserB = new StrictParser(state => {
         expect(State.equal(state, stateA)).to.be.true;
-        return Result.esuc(errB, "cat", stateB);
+        return Result.esucc(errB, "cat", stateB);
       });
 
       const parser = sequence_([parserA, parserB]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(ParseError.merge(errA, errB), undefined, stateB)
+        Result.esucc(ParseError.merge(errA, errB), undefined, stateB)
       )).to.be.true;
     }
-    // esuc, eerr
+    // esucc, efail
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -328,51 +325,51 @@ describe(".sequence_(parsers)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
-      const parserA = new Parser(state => {
+      const parserA = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.esuc(errA, "nyan", stateA);
+        return Result.esucc(errA, "nyan", stateA);
       });
 
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 3),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
-      const parserB = new Parser(state => {
+      const parserB = new StrictParser(state => {
         expect(State.equal(state, stateA)).to.be.true;
-        return Result.eerr(errB);
+        return Result.efail(errB);
       });
 
       const parser = sequence_([parserA, parserB]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(ParseError.merge(errA, errB))
+        Result.efail(ParseError.merge(errA, errB))
       )).to.be.true;
     }
-    // eerr, *
+    // efail, *
     {
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
-      const parserA = new Parser(state => {
+      const parserA = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.eerr(errA);
+        return Result.efail(errA);
       });
 
-      const parserB = new Parser(() => { throw new Error("unexpected call"); });
+      const parserB = new StrictParser(() => { throw new Error("unexpected call"); });
 
       const parser = sequence_([parserA, parserB]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(errA)
+        Result.efail(errA)
       )).to.be.true;
     }
   });

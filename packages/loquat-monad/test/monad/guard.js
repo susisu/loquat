@@ -1,20 +1,16 @@
-/*
- * loquat-monad test / monad.guard()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const guard = _monad.guard;
+const { guard } = _monad;
 
 describe(".guard(cond)", () => {
   it("returns a parser that empty succeeds with undefined if `cond' is `true'", () => {
@@ -25,11 +21,11 @@ describe(".guard(cond)", () => {
       "none"
     );
     const parser = guard(true);
-    assertParser(parser);
+    expect(parser).to.be.a.parser;
     const res = parser.run(initState);
     expect(Result.equal(
       res,
-      Result.esuc(
+      Result.esucc(
         ParseError.unknown(initState.pos),
         undefined,
         initState
@@ -45,11 +41,11 @@ describe(".guard(cond)", () => {
       "none"
     );
     const parser = guard(false);
-    assertParser(parser);
+    expect(parser).to.be.a.parser;
     const res = parser.run(initState);
     expect(Result.equal(
       res,
-      Result.eerr(ParseError.unknown(initState.pos))
+      Result.efail(ParseError.unknown(initState.pos))
     )).to.be.true;
   });
 });

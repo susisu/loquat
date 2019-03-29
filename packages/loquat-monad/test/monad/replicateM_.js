@@ -1,23 +1,20 @@
-/*
- * loquat-monad test / monad.replicateM_()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const replicateM_ = _monad.replicateM_;
+const { replicateM_ } = _monad;
 
 describe(".replicateM_(num, parsers)", () => {
   it("should return a parser that runs `parsers' `num' times sequentially and discards"
@@ -30,7 +27,7 @@ describe(".replicateM_(num, parsers)", () => {
     );
     function generateParser(consumed, success, vals, states, errs) {
       let i = 0;
-      return new Parser(state => {
+      return new StrictParser(state => {
         expect(State.equal(state, i === 0 ? initState : states[i - 1])).to.be.true;
         const _consumed = consumed[i];
         const _success  = success[i];
@@ -44,16 +41,16 @@ describe(".replicateM_(num, parsers)", () => {
 
     // empty
     {
-      const parser = new Parser(() => { throw new Error("unexpected call"); });
+      const parser = new StrictParser(() => { throw new Error("unexpected call"); });
       const repParser = replicateM_(0, parser);
-      assertParser(repParser);
+      expect(repParser).to.be.a.parser;
       const res = repParser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(ParseError.unknown(initState.pos), undefined, initState)
+        Result.esucc(ParseError.unknown(initState.pos), undefined, initState)
       )).to.be.true;
     }
-    // csuc, csuc
+    // csucc, csucc
     {
       const consumed = [true, true];
       const success = [true, true];
@@ -73,25 +70,25 @@ describe(".replicateM_(num, parsers)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const parser = generateParser(consumed, success, vals, states, errs);
       const repParser = replicateM_(2, parser);
-      assertParser(repParser);
+      expect(repParser).to.be.a.parser;
       const res = repParser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
           ),
           undefined,
           new State(
@@ -103,7 +100,7 @@ describe(".replicateM_(num, parsers)", () => {
         )
       )).to.be.true;
     }
-    // csuc, cerr
+    // csucc, cfail
     {
       const consumed = [true, true];
       const success = [true, false];
@@ -117,30 +114,30 @@ describe(".replicateM_(num, parsers)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const parser = generateParser(consumed, success, vals, states, errs);
       const repParser = replicateM_(2, parser);
-      assertParser(repParser);
+      expect(repParser).to.be.a.parser;
       const res = repParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
           )
         )
       )).to.be.true;
     }
-    // csuc, esuc
+    // csucc, esucc
     {
       const consumed = [true, false];
       const success = [true, true];
@@ -160,27 +157,27 @@ describe(".replicateM_(num, parsers)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const parser = generateParser(consumed, success, vals, states, errs);
       const repParser = replicateM_(2, parser);
-      assertParser(repParser);
+      expect(repParser).to.be.a.parser;
       const res = repParser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
             ]
           ),
           undefined,
@@ -193,7 +190,7 @@ describe(".replicateM_(num, parsers)", () => {
         )
       )).to.be.true;
     }
-    // csuc, eerr
+    // csucc, efail
     {
       const consumed = [true, false];
       const success = [true, false];
@@ -207,59 +204,59 @@ describe(".replicateM_(num, parsers)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const parser = generateParser(consumed, success, vals, states, errs);
       const repParser = replicateM_(2, parser);
-      assertParser(repParser);
+      expect(repParser).to.be.a.parser;
       const res = repParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
             ]
           )
         )
       )).to.be.true;
     }
-    // cerr
+    // cfail
     {
       const consumed = [true];
       const success = [false];
       const vals = [];
       const states = [];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
       ];
       const parser = generateParser(consumed, success, vals, states, errs);
       const repParser = replicateM_(2, parser);
-      assertParser(repParser);
+      expect(repParser).to.be.a.parser;
       const res = repParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
           )
         )
       )).to.be.true;
     }
-    // esuc, csuc
+    // esucc, csucc
     {
       const consumed = [false, true];
       const success = [true, true];
@@ -279,25 +276,25 @@ describe(".replicateM_(num, parsers)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const parser = generateParser(consumed, success, vals, states, errs);
       const repParser = replicateM_(2, parser);
-      assertParser(repParser);
+      expect(repParser).to.be.a.parser;
       const res = repParser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
           ),
           undefined,
           new State(
@@ -309,7 +306,7 @@ describe(".replicateM_(num, parsers)", () => {
         )
       )).to.be.true;
     }
-    // esuc, cerr
+    // esucc, cfail
     {
       const consumed = [false, true];
       const success = [true, false];
@@ -323,30 +320,30 @@ describe(".replicateM_(num, parsers)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const parser = generateParser(consumed, success, vals, states, errs);
       const repParser = replicateM_(2, parser);
-      assertParser(repParser);
+      expect(repParser).to.be.a.parser;
       const res = repParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
           )
         )
       )).to.be.true;
     }
-    // esuc, esuc
+    // esucc, esucc
     {
       const consumed = [false, false];
       const success = [true, true];
@@ -366,27 +363,27 @@ describe(".replicateM_(num, parsers)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const parser = generateParser(consumed, success, vals, states, errs);
       const repParser = replicateM_(2, parser);
-      assertParser(repParser);
+      expect(repParser).to.be.a.parser;
       const res = repParser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(
-          new ParseError(
+        Result.esucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
             ]
           ),
           undefined,
@@ -399,7 +396,7 @@ describe(".replicateM_(num, parsers)", () => {
         )
       )).to.be.true;
     }
-    // esuc, eerr
+    // esucc, efail
     {
       const consumed = [false, false];
       const success = [true, false];
@@ -413,54 +410,54 @@ describe(".replicateM_(num, parsers)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const parser = generateParser(consumed, success, vals, states, errs);
       const repParser = replicateM_(2, parser);
-      assertParser(repParser);
+      expect(repParser).to.be.a.parser;
       const res = repParser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
             ]
           )
         )
       )).to.be.true;
     }
-    // eerr
+    // efail
     {
       const consumed = [false];
       const success = [false];
       const vals = [];
       const states = [];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
       ];
       const parser = generateParser(consumed, success, vals, states, errs);
       const repParser = replicateM_(2, parser);
-      assertParser(repParser);
+      expect(repParser).to.be.a.parser;
       const res = repParser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
           )
         )
       )).to.be.true;

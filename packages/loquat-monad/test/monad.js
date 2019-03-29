@@ -1,7 +1,3 @@
-/*
- * loquat-monad test / monad
- */
-
 "use strict";
 
 describe("monad", () => {

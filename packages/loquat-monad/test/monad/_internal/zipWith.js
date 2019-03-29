@@ -1,13 +1,8 @@
-/*
- * loquat-monad test / monad._internal.zipWith()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const zipWith = _monad._internal.zipWith;
+const { zipWith } = _monad._internal;
 
 describe(".zipWith(func, arrA, arrB)", () => {
   it("should zip two arrays `arrA' and `arrB' with a function `func'", () => {

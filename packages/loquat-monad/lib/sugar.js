@@ -1,20 +1,14 @@
-/*
- * loquat-monad / sugar.js
- */
-
-/**
- * @module sugar
- */
-
 "use strict";
 
-module.exports = (_core, _monad) => {
-  const forever = _monad.forever;
-  const discard = _monad.discard;
-  const join    = _monad.join;
-  const when    = _monad.when;
-  const unless  = _monad.unless;
-  const mfilter = _monad.mfilter;
+module.exports = (_core, { _monad }) => {
+  const {
+    forever,
+    discard,
+    join,
+    when,
+    unless,
+    mfilter,
+  } = _monad;
 
   return Object.freeze({
     forever() {

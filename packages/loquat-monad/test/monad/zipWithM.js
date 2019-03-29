@@ -1,23 +1,20 @@
-/*
- * loquat-monad test / monad.zipWithM()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const zipWithM = _monad.zipWithM;
+const { zipWithM } = _monad;
 
 describe(".zipWithM(func, arrA, arrB)", () => {
   it("should return a parser that zips arrays with `func' and runs the resultant parsers"
@@ -33,7 +30,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
     );
 
     function generateFunc(consumed, success, vals, states, errs) {
-      return (i, v) => new Parser(state => {
+      return (i, v) => new StrictParser(state => {
         expect(State.equal(state, i === 0 ? initState : states[i - 1])).to.be.true;
         expect(v).to.equal(vals[i]);
         const _consumed = consumed[i];
@@ -49,15 +46,15 @@ describe(".zipWithM(func, arrA, arrB)", () => {
     {
       const func = generateFunc([], [], [], [], []);
       const parser = zipWithM(func, [], []);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(ParseError.unknown(initState.pos), [], initState),
+        Result.esucc(ParseError.unknown(initState.pos), [], initState),
         arrayEqual
       )).to.be.true;
     }
-    // csuc, csuc
+    // csucc, csucc
     {
       const consumed = [true, true];
       const success = [true, true];
@@ -77,25 +74,25 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const func = generateFunc(consumed, success, vals, states, errs);
       const parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
           ),
           ["nyan", "cat"],
           new State(
@@ -108,7 +105,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         arrayEqual
       )).to.be.true;
     }
-    // csuc, cerr
+    // csucc, cfail
     {
       const consumed = [true, true];
       const success = [true, false];
@@ -122,31 +119,31 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 3),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const func = generateFunc(consumed, success, vals, states, errs);
       const parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // csuc, esuc
+    // csucc, esucc
     {
       const consumed = [true, false];
       const success = [true, true];
@@ -166,27 +163,27 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const func = generateFunc(consumed, success, vals, states, errs);
       const parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
             ]
           ),
           ["nyan", "cat"],
@@ -200,7 +197,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         arrayEqual
       )).to.be.true;
     }
-    // csuc, eerr
+    // csucc, efail
     {
       const consumed = [true, false];
       const success = [true, false];
@@ -214,61 +211,61 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const func = generateFunc(consumed, success, vals, states, errs);
       const parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
             ]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // cerr
+    // cfail
     {
       const consumed = [true];
       const success = [false];
       const vals = ["nyan", "cat"];
       const states = [];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
       ];
       const func = generateFunc(consumed, success, vals, states, errs);
       const parser = zipWithM(func, [0], ["nyan", "cat"]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // esuc, csuc
+    // esucc, csucc
     {
       const consumed = [false, true];
       const success = [true, true];
@@ -288,25 +285,25 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const func = generateFunc(consumed, success, vals, states, errs);
       const parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
           ),
           ["nyan", "cat"],
           new State(
@@ -319,7 +316,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         arrayEqual
       )).to.be.true;
     }
-    // esuc, cerr
+    // esucc, cfail
     {
       const consumed = [false, true];
       const success = [true, false];
@@ -333,31 +330,31 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 2),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const func = generateFunc(consumed, success, vals, states, errs);
       const parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // esuc, esuc
+    // esucc, esucc
     {
       const consumed = [false, false];
       const success = [true, true];
@@ -377,27 +374,27 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const func = generateFunc(consumed, success, vals, states, errs);
       const parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(
-          new ParseError(
+        Result.esucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
             ]
           ),
           ["nyan", "cat"],
@@ -411,7 +408,7 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         arrayEqual
       )).to.be.true;
     }
-    // esuc, eerr
+    // esucc, efail
     {
       const consumed = [false, false];
       const success = [true, false];
@@ -425,55 +422,55 @@ describe(".zipWithM(func, arrA, arrB)", () => {
         ),
       ];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
       const func = generateFunc(consumed, success, vals, states, errs);
       const parser = zipWithM(func, [0, 1], ["nyan", "cat"]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testA"),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "testB"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
             ]
           )
         ),
         arrayEqual
       )).to.be.true;
     }
-    // eerr
+    // efail
     {
       const consumed = [false];
       const success = [false];
       const vals = ["nyan", "cat"];
       const states = [];
       const errs = [
-        new ParseError(
+        new StrictParseError(
           new SourcePos("foobar", 1, 1),
-          [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+          [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
       ];
       const func = generateFunc(consumed, success, vals, states, errs);
       const parser = zipWithM(func, [0], ["nyan", "cat"]);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
           )
         ),
         arrayEqual

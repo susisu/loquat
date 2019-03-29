@@ -1,23 +1,19 @@
-/*
- * loquat-monad test / monad.discard()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const discard = _monad.discard;
+const { discard } = _monad;
 
 describe(".discard(parser)", () => {
   it("should return a parser that runs `parser' and discards the resultant value", () => {
@@ -27,7 +23,7 @@ describe(".discard(parser)", () => {
       new SourcePos("foobar", 1, 1),
       "none"
     );
-    // csuc
+    // csucc
     {
       const finalState = new State(
         new Config({ tabWidth: 8 }),
@@ -35,41 +31,41 @@ describe(".discard(parser)", () => {
         new SourcePos("foobar", 1, 2),
         "some"
       );
-      const err = new ParseError(
+      const err = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.csuc(err, "nyancat", finalState);
+        return Result.csucc(err, "nyancat", finalState);
       });
       const voidParser = discard(parser);
-      assertParser(voidParser);
+      expect(voidParser).to.be.a.parser;
       const res = voidParser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(err, undefined, finalState)
+        Result.csucc(err, undefined, finalState)
       )).to.be.true;
     }
-    // cerr
+    // cfail
     {
-      const err = new ParseError(
+      const err = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.cerr(err);
+        return Result.cfail(err);
       });
       const voidParser = discard(parser);
-      assertParser(voidParser);
+      expect(voidParser).to.be.a.parser;
       const res = voidParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(err)
+        Result.cfail(err)
       )).to.be.true;
     }
-    // esuc
+    // esucc
     {
       const finalState = new State(
         new Config({ tabWidth: 8 }),
@@ -77,38 +73,38 @@ describe(".discard(parser)", () => {
         new SourcePos("foobar", 1, 1),
         "some"
       );
-      const err = new ParseError(
+      const err = new StrictParseError(
         new SourcePos("foobar", 1, 1),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.esuc(err, "nyancat", finalState);
+        return Result.esucc(err, "nyancat", finalState);
       });
       const voidParser = discard(parser);
-      assertParser(voidParser);
+      expect(voidParser).to.be.a.parser;
       const res = voidParser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(err, undefined, finalState)
+        Result.esucc(err, undefined, finalState)
       )).to.be.true;
     }
-    // eerr
+    // efail
     {
-      const err = new ParseError(
+      const err = new StrictParseError(
         new SourcePos("foobar", 1, 1),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.eerr(err);
+        return Result.efail(err);
       });
       const voidParser = discard(parser);
-      assertParser(voidParser);
+      expect(voidParser).to.be.a.parser;
       const res = voidParser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(err)
+        Result.efail(err)
       )).to.be.true;
     }
   });

@@ -1,23 +1,20 @@
-/*
- * loquat-monad test / monad.when()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const when = _monad.when;
+const { when } = _monad;
 
 describe(".when(cond, parser)", () => {
   it("should return a parser that runs `parser' only when `cond' is `true'", () => {
@@ -27,7 +24,7 @@ describe(".when(cond, parser)", () => {
       new SourcePos("foobar", 1, 1),
       "none"
     );
-    // true, csuc
+    // true, csucc
     {
       const finalState = new State(
         new Config({ tabWidth: 8 }),
@@ -35,43 +32,43 @@ describe(".when(cond, parser)", () => {
         new SourcePos("foobar", 1, 2),
         "some"
       );
-      const err = new ParseError(
+      const err = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.csuc(err, "nyancat", finalState);
+        return Result.csucc(err, "nyancat", finalState);
       });
 
       const condParser = when(true, parser);
-      assertParser(condParser);
+      expect(condParser).to.be.a.parser;
       const res = condParser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(err, "nyancat", finalState)
+        Result.csucc(err, "nyancat", finalState)
       )).to.be.true;
     }
-    // true, cerr
+    // true, cfail
     {
-      const err = new ParseError(
+      const err = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.cerr(err);
+        return Result.cfail(err);
       });
 
       const condParser = when(true, parser);
-      assertParser(condParser);
+      expect(condParser).to.be.a.parser;
       const res = condParser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(err)
+        Result.cfail(err)
       )).to.be.true;
     }
-    // true, esuc
+    // true, esucc
     {
       const finalState = new State(
         new Config({ tabWidth: 8 }),
@@ -79,52 +76,52 @@ describe(".when(cond, parser)", () => {
         new SourcePos("foobar", 1, 1),
         "some"
       );
-      const err = new ParseError(
+      const err = new StrictParseError(
         new SourcePos("foobar", 1, 1),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.esuc(err, "nyancat", finalState);
+        return Result.esucc(err, "nyancat", finalState);
       });
 
       const condParser = when(true, parser);
-      assertParser(condParser);
+      expect(condParser).to.be.a.parser;
       const res = condParser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(err, "nyancat", finalState)
+        Result.esucc(err, "nyancat", finalState)
       )).to.be.true;
     }
-    // true, eerr
+    // true, efail
     {
-      const err = new ParseError(
+      const err = new StrictParseError(
         new SourcePos("foobar", 1, 1),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
-      const parser = new Parser(state => {
+      const parser = new StrictParser(state => {
         expect(State.equal(state, initState)).to.be.true;
-        return Result.eerr(err);
+        return Result.efail(err);
       });
 
       const condParser = when(true, parser);
-      assertParser(condParser);
+      expect(condParser).to.be.a.parser;
       const res = condParser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(err)
+        Result.efail(err)
       )).to.be.true;
     }
     // false
     {
-      const parser = new Parser(() => { throw new Error("unexpected call"); });
+      const parser = new StrictParser(() => { throw new Error("unexpected call"); });
 
       const condParser = when(false, parser);
-      assertParser(condParser);
+      expect(condParser).to.be.a.parser;
       const res = condParser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(ParseError.unknown(initState.pos), undefined, initState)
+        Result.esucc(ParseError.unknown(initState.pos), undefined, initState)
       )).to.be.true;
     }
   });

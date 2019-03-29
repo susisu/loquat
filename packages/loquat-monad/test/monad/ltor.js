@@ -1,23 +1,20 @@
-/*
- * loquat-monad test / monad.ltor()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const ltor = _monad.ltor;
+const { ltor } = _monad;
 
 describe(".ltor(funA, funcB)", () => {
   it("should return composed function (like a pipe from left to right) of `funcA' and"
@@ -28,7 +25,7 @@ describe(".ltor(funA, funcB)", () => {
       new SourcePos("foobar", 1, 1),
       "none"
     );
-    // csuc, csuc
+    // csucc, csucc
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -36,15 +33,15 @@ describe(".ltor(funA, funcB)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
         expect(val).to.equal("nyan");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, initState)).to.be.true;
-          return Result.csuc(errA, "cat", stateA);
+          return Result.csucc(errA, "cat", stateA);
         });
       };
 
@@ -54,29 +51,29 @@ describe(".ltor(funA, funcB)", () => {
         new SourcePos("foobar", 1, 3),
         "someB"
       );
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 3),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
         expect(val).to.equal("cat");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, stateA)).to.be.true;
-          return Result.csuc(errB, "NYANCAT", stateB);
+          return Result.csucc(errB, "NYANCAT", stateB);
         });
       };
 
       const func = ltor(funcA, funcB);
       expect(func).to.be.a("function");
       const parser = func("nyan");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(errB, "NYANCAT", stateB)
+        Result.csucc(errB, "NYANCAT", stateB)
       )).to.be.true;
     }
-    // csuc, cerr
+    // csucc, cfail
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -84,41 +81,41 @@ describe(".ltor(funA, funcB)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
         expect(val).to.equal("nyan");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, initState)).to.be.true;
-          return Result.csuc(errA, "cat", stateA);
+          return Result.csucc(errA, "cat", stateA);
         });
       };
 
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 3),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
         expect(val).to.equal("cat");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, stateA)).to.be.true;
-          return Result.cerr(errB);
+          return Result.cfail(errB);
         });
       };
 
       const func = ltor(funcA, funcB);
       expect(func).to.be.a("function");
       const parser = func("nyan");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(errB)
+        Result.cfail(errB)
       )).to.be.true;
     }
-    // csuc, esuc
+    // csucc, esucc
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -126,15 +123,15 @@ describe(".ltor(funA, funcB)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
         expect(val).to.equal("nyan");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, initState)).to.be.true;
-          return Result.csuc(errA, "cat", stateA);
+          return Result.csucc(errA, "cat", stateA);
         });
       };
 
@@ -144,29 +141,29 @@ describe(".ltor(funA, funcB)", () => {
         new SourcePos("foobar", 1, 2),
         "someB"
       );
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
         expect(val).to.equal("cat");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, stateA)).to.be.true;
-          return Result.esuc(errB, "NYANCAT", stateB);
+          return Result.esucc(errB, "NYANCAT", stateB);
         });
       };
 
       const func = ltor(funcA, funcB);
       expect(func).to.be.a("function");
       const parser = func("nyan");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(ParseError.merge(errA, errB), "NYANCAT", stateB)
+        Result.csucc(ParseError.merge(errA, errB), "NYANCAT", stateB)
       )).to.be.true;
     }
-    // csuc, eerr
+    // csucc, efail
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -174,51 +171,51 @@ describe(".ltor(funA, funcB)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
         expect(val).to.equal("nyan");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, initState)).to.be.true;
-          return Result.csuc(errA, "cat", stateA);
+          return Result.csucc(errA, "cat", stateA);
         });
       };
 
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
         expect(val).to.equal("cat");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, stateA)).to.be.true;
-          return Result.eerr(errB);
+          return Result.efail(errB);
         });
       };
 
       const func = ltor(funcA, funcB);
       expect(func).to.be.a("function");
       const parser = func("nyan");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(ParseError.merge(errA, errB))
+        Result.cfail(ParseError.merge(errA, errB))
       )).to.be.true;
     }
-    // cerr, *
+    // cfail, *
     {
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
         expect(val).to.equal("nyan");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, initState)).to.be.true;
-          return Result.cerr(errA);
+          return Result.cfail(errA);
         });
       };
 
@@ -227,14 +224,14 @@ describe(".ltor(funA, funcB)", () => {
       const func = ltor(funcA, funcB);
       expect(func).to.be.a("function");
       const parser = func("nyan");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(errA)
+        Result.cfail(errA)
       )).to.be.true;
     }
-    // esuc, csuc
+    // esucc, csucc
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -242,15 +239,15 @@ describe(".ltor(funA, funcB)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
         expect(val).to.equal("nyan");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, initState)).to.be.true;
-          return Result.esuc(errA, "cat", stateA);
+          return Result.esucc(errA, "cat", stateA);
         });
       };
 
@@ -260,29 +257,29 @@ describe(".ltor(funA, funcB)", () => {
         new SourcePos("foobar", 1, 3),
         "someB"
       );
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 3),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
         expect(val).to.equal("cat");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, stateA)).to.be.true;
-          return Result.csuc(errB, "NYANCAT", stateB);
+          return Result.csucc(errB, "NYANCAT", stateB);
         });
       };
 
       const func = ltor(funcA, funcB);
       expect(func).to.be.a("function");
       const parser = func("nyan");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(errB, "NYANCAT", stateB)
+        Result.csucc(errB, "NYANCAT", stateB)
       )).to.be.true;
     }
-    // esuc, cerr
+    // esucc, cfail
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -290,41 +287,41 @@ describe(".ltor(funA, funcB)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
         expect(val).to.equal("nyan");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, initState)).to.be.true;
-          return Result.esuc(errA, "cat", stateA);
+          return Result.esucc(errA, "cat", stateA);
         });
       };
 
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 3),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
         expect(val).to.equal("cat");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, stateA)).to.be.true;
-          return Result.cerr(errB);
+          return Result.cfail(errB);
         });
       };
 
       const func = ltor(funcA, funcB);
       expect(func).to.be.a("function");
       const parser = func("nyan");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(errB)
+        Result.cfail(errB)
       )).to.be.true;
     }
-    // esuc, esuc
+    // esucc, esucc
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -332,15 +329,15 @@ describe(".ltor(funA, funcB)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
         expect(val).to.equal("nyan");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, initState)).to.be.true;
-          return Result.esuc(errA, "cat", stateA);
+          return Result.esucc(errA, "cat", stateA);
         });
       };
 
@@ -350,29 +347,29 @@ describe(".ltor(funA, funcB)", () => {
         new SourcePos("foobar", 1, 2),
         "someB"
       );
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
         expect(val).to.equal("cat");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, stateA)).to.be.true;
-          return Result.esuc(errB, "NYANCAT", stateB);
+          return Result.esucc(errB, "NYANCAT", stateB);
         });
       };
 
       const func = ltor(funcA, funcB);
       expect(func).to.be.a("function");
       const parser = func("nyan");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(ParseError.merge(errA, errB), "NYANCAT", stateB)
+        Result.esucc(ParseError.merge(errA, errB), "NYANCAT", stateB)
       )).to.be.true;
     }
-    // esuc, eerr
+    // esucc, efail
     {
       const stateA = new State(
         new Config({ tabWidth: 8 }),
@@ -380,51 +377,51 @@ describe(".ltor(funA, funcB)", () => {
         new SourcePos("foobar", 1, 2),
         "someA"
       );
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
         expect(val).to.equal("nyan");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, initState)).to.be.true;
-          return Result.esuc(errA, "cat", stateA);
+          return Result.esucc(errA, "cat", stateA);
         });
       };
 
-      const errB = new ParseError(
+      const errB = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
         expect(val).to.equal("cat");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, stateA)).to.be.true;
-          return Result.eerr(errB);
+          return Result.efail(errB);
         });
       };
 
       const func = ltor(funcA, funcB);
       expect(func).to.be.a("function");
       const parser = func("nyan");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(ParseError.merge(errA, errB))
+        Result.efail(ParseError.merge(errA, errB))
       )).to.be.true;
     }
-    // eerr, *
+    // efail, *
     {
-      const errA = new ParseError(
+      const errA = new StrictParseError(
         new SourcePos("foobar", 1, 2),
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
         expect(val).to.equal("nyan");
-        return new Parser(state => {
+        return new StrictParser(state => {
           expect(State.equal(state, initState)).to.be.true;
-          return Result.eerr(errA);
+          return Result.efail(errA);
         });
       };
 
@@ -433,11 +430,11 @@ describe(".ltor(funA, funcB)", () => {
       const func = ltor(funcA, funcB);
       expect(func).to.be.a("function");
       const parser = func("nyan");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(errA)
+        Result.efail(errA)
       )).to.be.true;
     }
   });

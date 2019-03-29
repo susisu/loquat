@@ -1,25 +1,21 @@
-/*
- * loquat-monad / monad.js
- */
-
-/**
- * @module monad
- */
-
 "use strict";
 
-module.exports = (_core, _prim) => {
-  const ParseError = _core.ParseError;
-  const Result     = _core.Result;
-  const Parser     = _core.Parser;
+module.exports = (_core, { _prim }) => {
+  const {
+    ParseError,
+    Result,
+    StrictParser,
+  } = _core;
 
-  const map      = _prim.map;
-  const pure     = _prim.pure;
-  const bind     = _prim.bind;
-  const then     = _prim.then;
-  const tailRecM = _prim.tailRecM;
-  const mzero    = _prim.mzero;
-  const mplus    = _prim.mplus;
+  const {
+    map,
+    pure,
+    bind,
+    then,
+    tailRecM,
+    mzero,
+    mplus,
+  } = _prim;
 
   /**
      * @function module:monad.forever
@@ -187,7 +183,7 @@ module.exports = (_core, _prim) => {
      * @returns {AbstractParser}
      */
   function sequence(parsers) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const accum = [];
       let currentState = state;
       let currentErr = ParseError.unknown(state.pos);
@@ -210,14 +206,14 @@ module.exports = (_core, _prim) => {
             return res;
           } else {
             return consumed
-                            ? Result.cerr(ParseError.merge(currentErr, res.err))
-                            : Result.eerr(ParseError.merge(currentErr, res.err));
+                            ? Result.cfail(ParseError.merge(currentErr, res.err))
+                            : Result.efail(ParseError.merge(currentErr, res.err));
           }
         }
       }
       return consumed
-                ? Result.csuc(currentErr, accum, currentState)
-                : Result.esuc(currentErr, accum, currentState);
+                ? Result.csucc(currentErr, accum, currentState)
+                : Result.esucc(currentErr, accum, currentState);
     });
   }
 
@@ -283,7 +279,7 @@ module.exports = (_core, _prim) => {
      * @returns {AbstractParser}
      */
   function filterM(test, arr) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       const accum = [];
       let currentState = state;
       let currentErr = ParseError.unknown(state.pos);
@@ -311,14 +307,14 @@ module.exports = (_core, _prim) => {
             return res;
           } else {
             return consumed
-                            ? Result.cerr(ParseError.merge(currentErr, res.err))
-                            : Result.eerr(ParseError.merge(currentErr, res.err));
+                            ? Result.cfail(ParseError.merge(currentErr, res.err))
+                            : Result.efail(ParseError.merge(currentErr, res.err));
           }
         }
       }
       return consumed
-                ? Result.csuc(currentErr, accum, currentState)
-                : Result.esuc(currentErr, accum, currentState);
+                ? Result.csucc(currentErr, accum, currentState)
+                : Result.esucc(currentErr, accum, currentState);
     });
   }
 
@@ -373,7 +369,7 @@ module.exports = (_core, _prim) => {
      * @returns {AbstractParser}
      */
   function foldM(func, initVal, arr) {
-    return new Parser(state => {
+    return new StrictParser(state => {
       let accum = initVal;
       let currentState = state;
       let currentErr = ParseError.unknown(state.pos);
@@ -397,14 +393,14 @@ module.exports = (_core, _prim) => {
             return res;
           } else {
             return consumed
-                            ? Result.cerr(ParseError.merge(currentErr, res.err))
-                            : Result.eerr(ParseError.merge(currentErr, res.err));
+                            ? Result.cfail(ParseError.merge(currentErr, res.err))
+                            : Result.efail(ParseError.merge(currentErr, res.err));
           }
         }
       }
       return consumed
-                ? Result.csuc(currentErr, accum, currentState)
-                : Result.esuc(currentErr, accum, currentState);
+                ? Result.csucc(currentErr, accum, currentState)
+                : Result.esucc(currentErr, accum, currentState);
     });
   }
 
