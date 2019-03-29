@@ -84,11 +84,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.skipMany1
-     * @static
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * skipMany1: [S, U, A](parser: Parser[S, U, A]) => Parser[S, U, undefined]
+   */
   function skipMany1(parser) {
     return then(parser, skipMany(parser));
   }
