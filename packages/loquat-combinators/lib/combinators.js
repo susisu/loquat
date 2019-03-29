@@ -54,17 +54,18 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.between
-     * @static
-     * @param {AbstractParser} open
-     * @param {AbstractParser} close
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * between: [S, U, Open, Close, A](
+   *   open: Parser[S, U, Open],
+   *   close: Parser[S, U, Close],
+   *   parser: Parser[S, U, A]
+   * ) => Parser[S, U, A]
+   */
   function between(open, close, parser) {
-    return then(open,
+    return then(
+      open,
       bind(parser, val =>
-        then(close,
+        then(
+          close,
           pure(val)
         )
       )
