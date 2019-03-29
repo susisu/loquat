@@ -506,14 +506,13 @@ module.exports = (_core, { _prim }) => {
   const eof = label(notFollowedBy(anyToken), "end of input");
 
   /**
-     * @function module:combinators.reduceManyTill
-     * @static
-     * @param {AbstractParser} parser
-     * @param {AbstractParser} end
-     * @param {function} callback
-     * @param {*} initVal
-     * @returns {AbstractParser}
-     */
+   * reduceManyTill: [S, U, A, End, B](
+   *   parser: Parser[S, U, A],
+   *   end: Parser[S, U, End],
+   *   callback: (B, A) => B,
+   *   initVal: B
+   * ) => Parser[S, U, B]
+   */
   function reduceManyTill(parser, end, callback, initVal) {
     return new StrictParser(state => {
       let accum = initVal;
