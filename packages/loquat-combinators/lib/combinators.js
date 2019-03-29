@@ -118,12 +118,11 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.sepEndBy
-     * @static
-     * @param {AbstractParser} parser
-     * @param {AbstractParser} sep
-     * @returns {AbstractParser}
-     */
+   * sepEndBy: [S, U, A, Sep](
+   *   parser: Parser[S, U, A],
+   *   sep: Parser[S, U, Sep]
+   * ) => Parser[S, U, Array[A]]
+   */
   function sepEndBy(parser, sep) {
     return new StrictParser(state => {
       const accum = [];
