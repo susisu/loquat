@@ -362,13 +362,12 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.chainr
-     * @static
-     * @param {AbstractParser} term
-     * @param {AbstractParser} op
-     * @param {*} defaultVal
-     * @returns {AbstractParser}
-     */
+   * chainr: [S, U, A](
+   *   term: Parser[S, U, A],
+   *   op: Parser[S, U, (A, A) => A],
+   *   defaultVal: A
+   * ) => Parser[S, U, A]
+   */
   function chainr(term, op, defaultVal) {
     return mplus(
       chainr1(term, op),
