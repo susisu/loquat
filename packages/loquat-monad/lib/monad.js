@@ -1,32 +1,16 @@
 "use strict";
 
 module.exports = (_core, { _prim }) => {
-  const {
-    ParseError,
-    Result,
-    StrictParser,
-  } = _core;
+  const { ParseError, Result, StrictParser } = _core;
 
-  const {
-    map,
-    pure,
-    bind,
-    then,
-    tailRecM,
-    mzero,
-    mplus,
-  } = _prim;
+  const { map, pure, bind, then, tailRecM, mzero, mplus } = _prim;
 
   /**
-     * @function module:monad.forever
-     * @static
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * forever: [S, U, A, B](parser: Parser[S, U, A]) => Parser[S, U, B]
+   */
   function forever(parser) {
-    return tailRecM(
-      undefined,
-      () => map(parser, () => ({ done: false, value: undefined }))
+    return tailRecM(undefined, x =>
+      map(parser, y => ({ done: false, value: undefined }))
     );
   }
 
