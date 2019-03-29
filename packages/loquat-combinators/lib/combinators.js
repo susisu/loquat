@@ -618,12 +618,11 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.skipManyTill
-     * @static
-     * @param {AbstractParser} parser
-     * @param {AbstractParser} end
-     * @returns {AbstractParser}
-     */
+   * skipManyTill: [S, U, A, End](
+   *   parser: Parser[S, U, A],
+   *   end: Parser[S, U, End]
+   * ) => Parser[S, U, undefined]
+   */
   function skipManyTill(parser, end) {
     return reduceManyTill(parser, end, accum => accum, undefined);
   }
