@@ -223,12 +223,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.count
-     * @static
-     * @param {number} num
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * count: [S, U, A](num: int, parser: Parser[S, U, A]) => Parser[S, U, Array[A]]
+   */
   function count(num, parser) {
     if (num <= 0) {
       return map(pure(undefined), () => []);
