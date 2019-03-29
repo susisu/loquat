@@ -563,12 +563,11 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.manyTill
-     * @static
-     * @param {AbstractParser} parser
-     * @param {AbstractParser} end
-     * @returns {AbstractParser}
-     */
+   * manyTill: [S, U, A, End](
+   *   parser: Parser[S, U, A],
+   *   end: Parser[S, U, End]
+   * ) => Parser[S, U, Array[A]]
+   */
   function manyTill(parser, end) {
     return new StrictParser(state => {
       const accum = [];

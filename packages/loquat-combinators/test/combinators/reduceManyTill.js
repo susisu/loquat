@@ -16,8 +16,8 @@ const {
 const { reduceManyTill } = _combinators;
 
 describe("reduceManyTill", () => {
-  it("should return a parser that parses zero or more tokens accepted by `parser' until `end'"
-    + " succeeds, and reduces the resultant values by a function `callback'", () => {
+  it("should create a parser that parses zero or more tokens until the end and reduces the result"
+    + " values by the given function", () => {
     const initState = new State(
       new Config(),
       "input",
