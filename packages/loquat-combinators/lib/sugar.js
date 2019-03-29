@@ -43,8 +43,8 @@ module.exports = (_core, { _prim, _combinators }) => {
     },
     skipMany1(parser) {
       return isParser(parser)
-                ? left(this, skipMany1(parser))
-                : skipMany1(this);
+        ? left(this, skipMany1(parser))
+        : skipMany1(this);
     },
     sepBy(sep) {
       return sepBy(this, sep);
@@ -69,8 +69,8 @@ module.exports = (_core, { _prim, _combinators }) => {
     },
     notFollowedBy(parser) {
       return isParser(parser)
-                ? tryParse(left(this, notFollowedBy(parser)))
-                : notFollowedBy(this);
+        ? tryParse(left(this, notFollowedBy(parser)))
+        : notFollowedBy(this);
     },
     reduceManyTill(end, callback, initVal) {
       return reduceManyTill(this, end, callback, initVal);
@@ -80,8 +80,8 @@ module.exports = (_core, { _prim, _combinators }) => {
     },
     skipManyTill(parser, end) {
       return isParser(end)
-                ? left(this, skipManyTill(parser, end))
-                : skipManyTill(this, parser);
+        ? left(this, skipManyTill(parser, end))
+        : skipManyTill(this, parser);
     },
   });
 };

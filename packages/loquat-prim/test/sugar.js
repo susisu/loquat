@@ -374,12 +374,11 @@ describe("sugar", () => {
     // skipMany
     {
       expect(_sugar.skipMany).to.be.a("function");
-      const parser = _sugar.skipMany.call(self);
+      const parser = _sugar.skipMany.call(self, createDummyParser());
       expect(parser).to.be.a.parser;
     }
     {
-      expect(_sugar.skipMany).to.be.a("function");
-      const parser = _sugar.skipMany.call(self, createDummyParser());
+      const parser = _sugar.skipMany.call(self);
       expect(parser).to.be.a.parser;
     }
   });
