@@ -91,16 +91,15 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:combinators.sepBy
-     * @static
-     * @param {AbstractParser} parser
-     * @param {AbstractParser} sep
-     * @returns {AbstractParser}
-     */
+   * sepBy: [S, U, A, Sep](
+   *   parser: Parser[S, U, A],
+   *   sep: Parser[S, U, Sep]
+   * ) => Parser[S, U, Array[A]]
+   */
   function sepBy(parser, sep) {
     return mplus(
       sepBy1(parser, sep),
-      map(pure(undefined), () => [])
+      map(pure(undefined), x => [])
     );
   }
 
