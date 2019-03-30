@@ -278,13 +278,12 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.zipWithM_
-     * @static
-     * @param {function} func
-     * @param {Array} arrA
-     * @param {Array} arrB
-     * @returns {AbstractParser}
-     */
+   * zipWithM: [S, U, A, B, C](
+   *   func: (A, B) => Parser[S, U, C],
+   *   arrA: Array[A],
+   *   arrB: Array[B]
+   * ) => Parser[S, U, undefined]
+   */
   function zipWithM_(func, arrA, arrB) {
     return sequence_(zipWith(func, arrA, arrB));
   }

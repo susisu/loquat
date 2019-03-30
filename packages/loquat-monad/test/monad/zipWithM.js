@@ -19,7 +19,7 @@ const { zipWithM } = _monad;
 
 describe("zipWithM", () => {
   it("should create a parser that zips two arrays with the given binary function, and runs the"
-    + " result parsers sequentially", () => {
+    + " returned parsers sequentially", () => {
     const initState = new State(
       new Config(),
       "input",
