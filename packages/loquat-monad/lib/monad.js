@@ -357,11 +357,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.guard
-     * @static
-     * @param {boolean} cond
-     * @returns {AbstractParser}
-     */
+   * guard: [S, U, A](cond: boolean) => Parser[S, U, A]
+   */
   function guard(cond) {
     return cond ? pure(undefined) : mzero;
   }
