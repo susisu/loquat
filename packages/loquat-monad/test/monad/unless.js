@@ -103,7 +103,7 @@ describe("unless", () => {
     }
     // true
     {
-      const parser = new StrictParser(() => {
+      const parser = new StrictParser(state => {
         assert.fail("expect function to not be called");
       });
 
