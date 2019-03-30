@@ -36,12 +36,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.unless
-     * @static
-     * @param {boolean} cond
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * unless: [S, U, A](cond: boolean, parser: Parser[S, U, A]) => Parser[S, U, undefined]
+   */
   function unless(cond, parser) {
     return cond ? pure(undefined) : parser;
   }
