@@ -191,7 +191,7 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-   * mapM: [S, U, A, B](func: A => Parser[S, U, B], arr: Array[A]) => Parser[S, U, undefined]
+   * mapM_: [S, U, A, B](func: A => Parser[S, U, B], arr: Array[A]) => Parser[S, U, undefined]
    */
   function mapM_(func, arr) {
     return sequence_(arr.map(elem => func(elem)));
@@ -205,12 +205,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.forM_
-     * @static
-     * @param {Array} arr
-     * @param {function} func
-     * @returns {AbstractParser}
-     */
+   * forM_: [S, U, A, B](arr: Array[A], func: A => Parser[S, U, B]) => Parser[S, U, undefined]
+   */
   function forM_(arr, func) {
     return mapM_(func, arr);
   }
