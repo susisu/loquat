@@ -212,12 +212,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.filterM
-     * @static
-     * @param {function} test
-     * @param {Array} arr
-     * @returns {AbstractParser}
-     */
+   * filterM: [S, U, A](test: A => Parser[S, U, boolean], arr: Array[A]) => Parser[S, U, Array[A]]
+   */
   function filterM(test, arr) {
     return new StrictParser(state => {
       const accum = [];
@@ -247,14 +243,14 @@ module.exports = (_core, { _prim }) => {
             return res;
           } else {
             return consumed
-                            ? Result.cfail(ParseError.merge(currentErr, res.err))
-                            : Result.efail(ParseError.merge(currentErr, res.err));
+              ? Result.cfail(ParseError.merge(currentErr, res.err))
+              : Result.efail(ParseError.merge(currentErr, res.err));
           }
         }
       }
       return consumed
-                ? Result.csucc(currentErr, accum, currentState)
-                : Result.esucc(currentErr, accum, currentState);
+        ? Result.csucc(currentErr, accum, currentState)
+        : Result.esucc(currentErr, accum, currentState);
     });
   }
 
