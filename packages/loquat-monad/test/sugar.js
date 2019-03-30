@@ -1,47 +1,53 @@
 "use strict";
 
-const { expect }   = require("chai");
+const { expect } = require("chai");
 
-const { StrictParser } = _core;
+const { createDummyParser } = _test.helper;
 
 describe("sugar", () => {
   it("should contain parser extension methods", () => {
-    expect(_sugar.forever).to.be.a("function");
-    expect(_sugar.forever.call(
-      new StrictParser(() => {})
-    )).to.be.a.parser;
-
-    expect(_sugar.discard).to.be.a("function");
-    expect(_sugar.discard.call(
-      new StrictParser(() => {})
-    )).to.be.a.parser;
-
-    expect(_sugar.void).to.be.a("function");
-    expect(_sugar.void.call(
-      new StrictParser(() => {})
-    )).to.be.a.parser;
-
-    expect(_sugar.join).to.be.a("function");
-    expect(_sugar.join.call(
-      new StrictParser(() => {})
-    )).to.be.a.parser;
-
-    expect(_sugar.when).to.be.a("function");
-    expect(_sugar.when.call(
-      new StrictParser(() => {}),
-      true
-    )).to.be.a.parser;
-
-    expect(_sugar.unless).to.be.a("function");
-    expect(_sugar.unless.call(
-      new StrictParser(() => {}),
-      false
-    )).to.be.a.parser;
-
-    expect(_sugar.filter).to.be.a("function");
-    expect(_sugar.filter.call(
-      new StrictParser(() => {}),
-      () => {}
-    )).to.be.a.parser;
+    const self = createDummyParser();
+    // forever
+    {
+      expect(_sugar.forever).to.be.a("function");
+      const parser = _sugar.forever.call(self);
+      expect(parser).to.be.a.parser;
+    }
+    // discard
+    {
+      expect(_sugar.discard).to.be.a("function");
+      const parser = _sugar.discard.call(self);
+      expect(parser).to.be.a.parser;
+    }
+    // void
+    {
+      expect(_sugar.void).to.be.a("function");
+      const parser = _sugar.void.call(self);
+      expect(parser).to.be.a.parser;
+    }
+    // join
+    {
+      expect(_sugar.join).to.be.a("function");
+      const parser = _sugar.join.call(self);
+      expect(parser).to.be.a.parser;
+    }
+    // when
+    {
+      expect(_sugar.when).to.be.a("function");
+      const parser = _sugar.when.call(self, true);
+      expect(parser).to.be.a.parser;
+    }
+    // unless
+    {
+      expect(_sugar.unless).to.be.a("function");
+      const parser = _sugar.unless.call(self, false);
+      expect(parser).to.be.a.parser;
+    }
+    // filter
+    {
+      expect(_sugar.filter).to.be.a("function");
+      const parser = _sugar.filter.call(self, val => true);
+      expect(parser).to.be.a.parser;
+    }
   });
 });
