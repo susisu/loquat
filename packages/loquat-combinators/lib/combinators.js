@@ -2,7 +2,6 @@
 
 module.exports = (_core, { _prim }) => {
   const { show, ParseError, Result, StrictParser } = _core;
-
   const {
     map,
     pure,

@@ -12,7 +12,6 @@ module.exports = (_core, { _prim }) => {
     StrictParser,
     uncons,
   } = _core;
-
   const { pure, bind, label, reduceMany, skipMany } = _prim;
 
   /**
