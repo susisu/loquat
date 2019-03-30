@@ -198,12 +198,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.forM
-     * @static
-     * @param {Array} arr
-     * @param {function} func
-     * @returns {AbstractParser}
-     */
+   * forM: [S, U, A, B](arr: Array[A], func: A => Parser[S, U, B]) => Parser[S, U, Array[B]]
+   */
   function forM(arr, func) {
     return mapM(func, arr);
   }

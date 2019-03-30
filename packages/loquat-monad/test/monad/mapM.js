@@ -26,7 +26,6 @@ describe("mapM", () => {
       new SourcePos("main", 0, 1, 1),
       "none"
     );
-
     function generateFunc(success, consumed, vals, states, errs) {
       return i => new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(i === 0 ? initState : states[i - 1]);
