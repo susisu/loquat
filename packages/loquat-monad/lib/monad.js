@@ -332,13 +332,12 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.foldM_
-     * @static
-     * @param {function} func
-     * @param {*} initVal
-     * @param {Array} arr
-     * @returns {AbstractParser}
-     */
+   * foldM_: [S, U, A, B](
+   *   func: (A, B) => Parser[S, U, A],
+   *   initVal: A,
+   *   arr: Array[B]
+   * ) => Parser[S, U, undefined]
+   */
   function foldM_(func, initVal, arr) {
     return then(foldM(func, initVal, arr), pure(undefined));
   }

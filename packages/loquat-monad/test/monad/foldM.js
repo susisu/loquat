@@ -27,18 +27,20 @@ describe("foldM", () => {
     );
     const initVal = "xyz";
     function generateFunc(success, consumed, vals, states, errs) {
-      return (acc, i) => new StrictParser(state => {
+      return (acc, i) => {
         expect(acc).to.equal(initVal + vals.slice(0, i).join(""));
-        expect(state).to.be.an.equalStateTo(i === 0 ? initState : states[i - 1]);
-        const _success  = success[i];
-        const _consumed = consumed[i];
-        const _val      = acc + vals[i];
-        const _state    = states[i];
-        const _err      = errs[i];
-        return _success
+        return new StrictParser(state => {
+          expect(state).to.be.an.equalStateTo(i === 0 ? initState : states[i - 1]);
+          const _success  = success[i];
+          const _consumed = consumed[i];
+          const _val      = acc + vals[i];
+          const _state    = states[i];
+          const _err      = errs[i];
+          return _success
           ? Result.succ(_consumed, _err, _val, _state)
           : Result.fail(_consumed, _err);
-      });
+        });
+      };
     }
 
     // empty
