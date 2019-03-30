@@ -139,11 +139,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.sequence
-     * @static
-     * @param {Array.<AbstractParser>} parsers
-     * @returns {AbstractParser}
-     */
+   * sequence: [S, U, A](parsers: Array[Parser[S, U, A]]) => Parser[S, U, Array[A]]
+   */
   function sequence(parsers) {
     return new StrictParser(state => {
       const accum = [];
@@ -168,14 +165,14 @@ module.exports = (_core, { _prim }) => {
             return res;
           } else {
             return consumed
-                            ? Result.cfail(ParseError.merge(currentErr, res.err))
-                            : Result.efail(ParseError.merge(currentErr, res.err));
+              ? Result.cfail(ParseError.merge(currentErr, res.err))
+              : Result.efail(ParseError.merge(currentErr, res.err));
           }
         }
       }
       return consumed
-                ? Result.csucc(currentErr, accum, currentState)
-                : Result.esucc(currentErr, accum, currentState);
+        ? Result.csucc(currentErr, accum, currentState)
+        : Result.esucc(currentErr, accum, currentState);
     });
   }
 
