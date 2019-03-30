@@ -364,11 +364,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.msum
-     * @static
-     * @param {Array.<AbstractParser>} parsers
-     * @returns {AbstractParser}
-     */
+   * msum: [S, U, A](parsers: Array[Parser[S, U, A]]) => Parser[S, U, A]
+   */
   function msum(parsers) {
     return parsers.reduceRight((accum, parser) => mplus(parser, accum), mzero);
   }
