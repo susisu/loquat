@@ -119,12 +119,11 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.ltor
-     * @static
-     * @param {function} funcA
-     * @param {function} funcB
-     * @returns {function}
-     */
+   * ltor: [S, U, A, B, C](
+   *   funcA: A => Parser[S, U, B],
+   *   funcB: B => Parser[S, U, C]
+   * ) => A => Parser[S, U, C]
+   */
   function ltor(funcA, funcB) {
     return val => bind(funcA(val), funcB);
   }
