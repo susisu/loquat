@@ -15,11 +15,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.discard
-     * @static
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * discard: [S, U, A](parser: Parser[S, U, A]) => Parser[S, U, undefined]
+   */
   function discard(parser) {
     return map(parser, () => undefined);
   }

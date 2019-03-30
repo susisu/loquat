@@ -15,97 +15,85 @@ const {
 
 const { discard } = _monad;
 
-describe(".discard(parser)", () => {
-  it("should return a parser that runs `parser' and discards the resultant value", () => {
+describe("discard", () => {
+  it("should create a parser that discards the return value of the given parser", () => {
     const initState = new State(
-      new Config({ tabWidth: 8 }),
+      new Config(),
       "input",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "none"
     );
     // csucc
     {
       const finalState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "rest",
-        new SourcePos("foobar", 1, 2),
+        new SourcePos("main", 1, 1, 2),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("foobar", 1, 2),
+        new SourcePos("main", 1, 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parser = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.csucc(err, "nyancat", finalState);
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(err, "foo", finalState);
       });
       const voidParser = discard(parser);
       expect(voidParser).to.be.a.parser;
       const res = voidParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csucc(err, undefined, finalState)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.csucc(err, undefined, finalState));
     }
     // cfail
     {
       const err = new StrictParseError(
-        new SourcePos("foobar", 1, 2),
+        new SourcePos("main", 1, 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parser = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
+        expect(state).to.be.an.equalStateTo(initState);
         return Result.cfail(err);
       });
       const voidParser = discard(parser);
       expect(voidParser).to.be.a.parser;
       const res = voidParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.cfail(err)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.cfail(err));
     }
     // esucc
     {
       const finalState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "rest",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parser = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.esucc(err, "nyancat", finalState);
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(err, "foo", finalState);
       });
       const voidParser = discard(parser);
       expect(voidParser).to.be.a.parser;
       const res = voidParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.esucc(err, undefined, finalState)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.esucc(err, undefined, finalState));
     }
     // efail
     {
       const err = new StrictParseError(
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parser = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
+        expect(state).to.be.an.equalStateTo(initState);
         return Result.efail(err);
       });
       const voidParser = discard(parser);
       expect(voidParser).to.be.a.parser;
       const res = voidParser.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(err)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.efail(err));
     }
   });
 });
