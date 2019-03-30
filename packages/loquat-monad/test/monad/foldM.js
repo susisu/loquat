@@ -25,8 +25,10 @@ describe("foldM", () => {
       new SourcePos("main", 0, 1, 1),
       "none"
     );
+    const initVal = "xyz";
     function generateFunc(success, consumed, vals, states, errs) {
       return (acc, i) => new StrictParser(state => {
+        expect(acc).to.equal(initVal + vals.slice(0, i).join(""));
         expect(state).to.be.an.equalStateTo(i === 0 ? initState : states[i - 1]);
         const _success  = success[i];
         const _consumed = consumed[i];
@@ -42,7 +44,7 @@ describe("foldM", () => {
     // empty
     {
       const func = generateFunc([], [], [], [], []);
-      const parser = foldM(func, "xyz", []);
+      const parser = foldM(func, initVal, []);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
@@ -81,7 +83,7 @@ describe("foldM", () => {
         ),
       ];
       const func = generateFunc(success, consumed, vals, states, errs);
-      const parser = foldM(func, "xyz", [0, 1]);
+      const parser = foldM(func, initVal, [0, 1]);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
@@ -122,7 +124,7 @@ describe("foldM", () => {
         ),
       ];
       const func = generateFunc(success, consumed, vals, states, errs);
-      const parser = foldM(func, "xyz", [0, 1]);
+      const parser = foldM(func, initVal, [0, 1]);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
@@ -162,7 +164,7 @@ describe("foldM", () => {
         ),
       ];
       const func = generateFunc(success, consumed, vals, states, errs);
-      const parser = foldM(func, "xyz", [0, 1]);
+      const parser = foldM(func, initVal, [0, 1]);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
@@ -206,7 +208,7 @@ describe("foldM", () => {
         ),
       ];
       const func = generateFunc(success, consumed, vals, states, errs);
-      const parser = foldM(func, "xyz", [0, 1]);
+      const parser = foldM(func, initVal, [0, 1]);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
@@ -232,7 +234,7 @@ describe("foldM", () => {
         ),
       ];
       const func = generateFunc(success, consumed, vals, states, errs);
-      const parser = foldM(func, "xyz", [0]);
+      const parser = foldM(func, initVal, [0]);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
@@ -272,7 +274,7 @@ describe("foldM", () => {
         ),
       ];
       const func = generateFunc(success, consumed, vals, states, errs);
-      const parser = foldM(func, "xyz", [0, 1]);
+      const parser = foldM(func, initVal, [0, 1]);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
@@ -313,7 +315,7 @@ describe("foldM", () => {
         ),
       ];
       const func = generateFunc(success, consumed, vals, states, errs);
-      const parser = foldM(func, "xyz", [0, 1]);
+      const parser = foldM(func, initVal, [0, 1]);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
@@ -353,7 +355,7 @@ describe("foldM", () => {
         ),
       ];
       const func = generateFunc(success, consumed, vals, states, errs);
-      const parser = foldM(func, "xyz", [0, 1]);
+      const parser = foldM(func, initVal, [0, 1]);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
@@ -397,7 +399,7 @@ describe("foldM", () => {
         ),
       ];
       const func = generateFunc(success, consumed, vals, states, errs);
-      const parser = foldM(func, "xyz", [0, 1]);
+      const parser = foldM(func, initVal, [0, 1]);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
@@ -423,7 +425,7 @@ describe("foldM", () => {
         ),
       ];
       const func = generateFunc(success, consumed, vals, states, errs);
-      const parser = foldM(func, "xyz", [0]);
+      const parser = foldM(func, initVal, [0]);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
