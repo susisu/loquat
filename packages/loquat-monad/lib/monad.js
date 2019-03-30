@@ -215,14 +215,75 @@ module.exports = (_core, { _prim }) => {
    * mapM: [S, U, A, B](func: A => Parser[S, U, B], arr: Array[A]) => Parser[S, U, Array[B]]
    */
   function mapM(func, arr) {
-    return sequence(arr.map(elem => func(elem)));
+    return new StrictParser(state => {
+      const accum = [];
+      let currentState = state;
+      let currentErr = ParseError.unknown(state.pos);
+      let consumed = false;
+      for (const elem of arr) {
+        const parser = func(elem);
+        const res = parser.run(currentState);
+        if (res.success) {
+          if (res.consumed) {
+            consumed = true;
+            accum.push(res.val);
+            currentState = res.state;
+            currentErr = res.err;
+          } else {
+            accum.push(res.val);
+            currentState = res.state;
+            currentErr = ParseError.merge(currentErr, res.err);
+          }
+        } else {
+          if (res.consumed) {
+            return res;
+          } else {
+            return consumed
+              ? Result.cfail(ParseError.merge(currentErr, res.err))
+              : Result.efail(ParseError.merge(currentErr, res.err));
+          }
+        }
+      }
+      return consumed
+        ? Result.csucc(currentErr, accum, currentState)
+        : Result.esucc(currentErr, accum, currentState);
+    });
   }
 
   /**
    * mapM_: [S, U, A, B](func: A => Parser[S, U, B], arr: Array[A]) => Parser[S, U, undefined]
    */
   function mapM_(func, arr) {
-    return sequence_(arr.map(elem => func(elem)));
+    return new StrictParser(state => {
+      let currentState = state;
+      let currentErr = ParseError.unknown(state.pos);
+      let consumed = false;
+      for (const elem of arr) {
+        const parser = func(elem);
+        const res = parser.run(currentState);
+        if (res.success) {
+          if (res.consumed) {
+            consumed = true;
+            currentState = res.state;
+            currentErr = res.err;
+          } else {
+            currentState = res.state;
+            currentErr = ParseError.merge(currentErr, res.err);
+          }
+        } else {
+          if (res.consumed) {
+            return res;
+          } else {
+            return consumed
+              ? Result.cfail(ParseError.merge(currentErr, res.err))
+              : Result.efail(ParseError.merge(currentErr, res.err));
+          }
+        }
+      }
+      return consumed
+        ? Result.csucc(currentErr, undefined, currentState)
+        : Result.esucc(currentErr, undefined, currentState);
+    });
   }
 
   /**
@@ -283,18 +344,6 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-   * zipWith: [A, B, C](func: (A, B) => C, arrA: Array[A], arrB: Array[B]) => Array[C]
-   */
-  function zipWith(func, arrA, arrB) {
-    const res = [];
-    const len = Math.min(arrA.length, arrB.length);
-    for (let i = 0; i < len; i++) {
-      res.push(func(arrA[i], arrB[i]));
-    }
-    return res;
-  }
-
-  /**
    * zipWithM: [S, U, A, B, C](
    *   func: (A, B) => Parser[S, U, C],
    *   arrA: Array[A],
@@ -302,7 +351,40 @@ module.exports = (_core, { _prim }) => {
    * ) => Parser[S, U, Array[C]]
    */
   function zipWithM(func, arrA, arrB) {
-    return sequence(zipWith(func, arrA, arrB));
+    return new StrictParser(state => {
+      const accum = [];
+      let currentState = state;
+      let currentErr = ParseError.unknown(state.pos);
+      let consumed = false;
+      const len = Math.min(arrA.length, arrB.length);
+      for (let i = 0; i < len; i++) {
+        const parser = func(arrA[i], arrB[i]);
+        const res = parser.run(currentState);
+        if (res.success) {
+          if (res.consumed) {
+            consumed = true;
+            accum.push(res.val);
+            currentState = res.state;
+            currentErr = res.err;
+          } else {
+            accum.push(res.val);
+            currentState = res.state;
+            currentErr = ParseError.merge(currentErr, res.err);
+          }
+        } else {
+          if (res.consumed) {
+            return res;
+          } else {
+            return consumed
+              ? Result.cfail(ParseError.merge(currentErr, res.err))
+              : Result.efail(ParseError.merge(currentErr, res.err));
+          }
+        }
+      }
+      return consumed
+        ? Result.csucc(currentErr, accum, currentState)
+        : Result.esucc(currentErr, accum, currentState);
+    });
   }
 
   /**
@@ -313,7 +395,37 @@ module.exports = (_core, { _prim }) => {
    * ) => Parser[S, U, undefined]
    */
   function zipWithM_(func, arrA, arrB) {
-    return sequence_(zipWith(func, arrA, arrB));
+    return new StrictParser(state => {
+      let currentState = state;
+      let currentErr = ParseError.unknown(state.pos);
+      let consumed = false;
+      const len = Math.min(arrA.length, arrB.length);
+      for (let i = 0; i < len; i++) {
+        const parser = func(arrA[i], arrB[i]);
+        const res = parser.run(currentState);
+        if (res.success) {
+          if (res.consumed) {
+            consumed = true;
+            currentState = res.state;
+            currentErr = res.err;
+          } else {
+            currentState = res.state;
+            currentErr = ParseError.merge(currentErr, res.err);
+          }
+        } else {
+          if (res.consumed) {
+            return res;
+          } else {
+            return consumed
+              ? Result.cfail(ParseError.merge(currentErr, res.err))
+              : Result.efail(ParseError.merge(currentErr, res.err));
+          }
+        }
+      }
+      return consumed
+        ? Result.csucc(currentErr, undefined, currentState)
+        : Result.esucc(currentErr, undefined, currentState);
+    });
   }
 
   /**
@@ -374,14 +486,73 @@ module.exports = (_core, { _prim }) => {
    * replicateM: [S, U, A](num: int, parser: Parser[S, U, A]) => Parser[S, U, Array[A]]
    */
   function replicateM(num, parser) {
-    return sequence(new Array(num).fill(parser));
+    return new StrictParser(state => {
+      const accum = [];
+      let currentState = state;
+      let currentErr = ParseError.unknown(state.pos);
+      let consumed = false;
+      for (let i = 0; i < num; i++) {
+        const res = parser.run(currentState);
+        if (res.success) {
+          if (res.consumed) {
+            consumed = true;
+            accum.push(res.val);
+            currentState = res.state;
+            currentErr = res.err;
+          } else {
+            accum.push(res.val);
+            currentState = res.state;
+            currentErr = ParseError.merge(currentErr, res.err);
+          }
+        } else {
+          if (res.consumed) {
+            return res;
+          } else {
+            return consumed
+              ? Result.cfail(ParseError.merge(currentErr, res.err))
+              : Result.efail(ParseError.merge(currentErr, res.err));
+          }
+        }
+      }
+      return consumed
+        ? Result.csucc(currentErr, accum, currentState)
+        : Result.esucc(currentErr, accum, currentState);
+    });
   }
 
   /**
    * replicateM_: [S, U, A](num: int, parser: Parser[S, U, A]) => Parser[S, U, undefined]
    */
   function replicateM_(num, parser) {
-    return sequence_(new Array(num).fill(parser));
+    return new StrictParser(state => {
+      let currentState = state;
+      let currentErr = ParseError.unknown(state.pos);
+      let consumed = false;
+      for (let i = 0; i < num; i++) {
+        const res = parser.run(currentState);
+        if (res.success) {
+          if (res.consumed) {
+            consumed = true;
+            currentState = res.state;
+            currentErr = res.err;
+          } else {
+            currentState = res.state;
+            currentErr = ParseError.merge(currentErr, res.err);
+          }
+        } else {
+          if (res.consumed) {
+            return res;
+          } else {
+            return consumed
+              ? Result.cfail(ParseError.merge(currentErr, res.err))
+              : Result.efail(ParseError.merge(currentErr, res.err));
+          }
+        }
+      }
+      return consumed
+        ? Result.csucc(currentErr, undefined, currentState)
+        : Result.esucc(currentErr, undefined, currentState);
+    });
   }
 
   /**
@@ -434,8 +605,5 @@ module.exports = (_core, { _prim }) => {
     guard,
     msum,
     mfilter,
-    _internal: {
-      zipWith,
-    },
   });
 };

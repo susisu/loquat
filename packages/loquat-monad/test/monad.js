@@ -29,5 +29,4 @@ describe("monad", () => {
   require("./monad/guard.js");
   require("./monad/msum.js");
   require("./monad/mfilter.js");
-  require("./monad/_internal.js");
 });
