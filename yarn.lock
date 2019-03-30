@@ -3906,6 +3906,11 @@ loquat-prim@^2.0.0, loquat-prim@~2.0.0:
   resolved "https://registry.yarnpkg.com/loquat-prim/-/loquat-prim-2.0.1.tgz#b3c021f1abfc9a9a9184985cbef3cf0ea1a6e678"
   integrity sha1-s8Ah8av8mpqRhJhcvvPPDqGm5ng=
 
+loquat-qo@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/loquat-qo/-/loquat-qo-2.0.0.tgz#064cf86a10e10e3cad71514788d6d847ccc7c6dd"
+  integrity sha1-Bkz4ahDhDjytcVFHiNbYR8zHxt0=
+
 loud-rejection@^1.0.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/loud-rejection/-/loud-rejection-1.6.0.tgz#5b46f80147edee578870f086d04821cf998e551f"
