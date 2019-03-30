@@ -1,10 +1,14 @@
-/*
- * loquat-qo test
- */
-
 "use strict";
 
-global._core = require("loquat-core")();
-global._qo   = require("./lib/qo.js")(_core);
+const chai = require("chai");
+
+const _core = require("loquat-core")();
+
+const _qo = require("./lib/qo.js")(_core);
+
+const _test = require("loquat-test")(_core);
+
+Object.assign(global, { _core, _qo, _test });
+chai.use(_test.plugin);
 
 require("./test/qo.js");

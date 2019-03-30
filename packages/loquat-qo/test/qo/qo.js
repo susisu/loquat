@@ -1,683 +1,618 @@
-/*
- * loquat-qo test / qo.qo()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect, assert } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const qo = _qo.qo;
+const { qo } = _qo;
 
-describe(".qo(genFunc)", () => {
-    it("should create a parser from generator that yields parsers", () => {
-        const initState = new State(
-            new Config({ tabWidth: 8 }),
-            "input",
-            new SourcePos("foobar", 1, 1),
-            "none"
-        );
-        // empty
-        {
-            const parser = qo(function* () {});
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.esuc(
-                    ParseError.unknown(initState.pos.setColumn(1)),
-                    undefined,
-                    initState
-                )
-            )).to.be.true;
-        }
-        // just return
-        {
-            const parser = qo(function* () { return "nyancat"; });
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.esuc(
-                    ParseError.unknown(initState.pos.setColumn(1)),
-                    "nyancat",
-                    initState
-                )
-            )).to.be.true;
-        }
-        // csuc, csuc
-        {
-            const stateA = new State(
-                new Config({ tabWidth: 8 }),
-                "restA",
-                new SourcePos("foobar", 1, 2),
-                "someA"
-            );
-            const errA = new ParseError(
-                new SourcePos("foobar", 1, 2),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-            );
-            const parserA = new Parser(state => {
-                expect(State.equal(state, initState));
-                return Result.csuc(errA, "nyan", stateA);
-            });
+describe("qo", () => {
+  it("should create a parser from a generator that yields parsers", () => {
+    const initState = new State(
+      new Config(),
+      "input",
+      new SourcePos("main", 0, 1, 1),
+      "none"
+    );
+    // empty
+    {
+      const parser = qo(function* () {});
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.esucc(
+        ParseError.unknown(initState.pos.setColumn(1)),
+        undefined,
+        initState
+      ));
+    }
+    // just return
+    {
+      const parser = qo(function* () {
+        return "foo";
+      });
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.esucc(
+        ParseError.unknown(initState.pos.setColumn(1)),
+        "foo",
+        initState
+      ));
+    }
+    // csucc, csucc
+    {
+      const stateA = new State(
+        new Config(),
+        "restA",
+        new SourcePos("main", 1, 1, 2),
+        "someA"
+      );
+      const errA = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(errA, "foo", stateA);
+      });
 
-            const stateB = new State(
-                new Config({ tabWidth: 8 }),
-                "restB",
-                new SourcePos("foobar", 1, 3),
-                "someB"
-            );
-            const errB = new ParseError(
-                new SourcePos("foobar", 1, 3),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
-            );
-            const parserB = new Parser(state => {
-                expect(State.equal(state, stateA));
-                return Result.csuc(errB, "cat", stateB);
-            });
+      const stateB = new State(
+        new Config(),
+        "restB",
+        new SourcePos("main", 2, 1, 3),
+        "someB"
+      );
+      const errB = new StrictParseError(
+        new SourcePos("main", 2, 1, 3),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
+      );
+      const parserB = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(stateA);
+        return Result.csucc(errB, "bar", stateB);
+      });
 
-            const parser = qo(function* () {
-                const resA = yield parserA;
-                expect(resA).to.equal("nyan");
-                const resB = yield parserB;
-                expect(resB).to.equal("cat");
-                return "hello";
-            });
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.csuc(errB, "hello", stateB)
-            )).to.be.true;
-        }
-        // csuc, cerr
-        {
-            const stateA = new State(
-                new Config({ tabWidth: 8 }),
-                "restA",
-                new SourcePos("foobar", 1, 2),
-                "someA"
-            );
-            const errA = new ParseError(
-                new SourcePos("foobar", 1, 2),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-            );
-            const parserA = new Parser(state => {
-                expect(State.equal(state, initState));
-                return Result.csuc(errA, "nyan", stateA);
-            });
+      const parser = qo(function* () {
+        const resA = yield parserA;
+        expect(resA).to.equal("foo");
+        const resB = yield parserB;
+        expect(resB).to.equal("bar");
+        return "baz";
+      });
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.csucc(errB, "baz", stateB));
+    }
+    // csucc, cfail
+    {
+      const stateA = new State(
+        new Config(),
+        "restA",
+        new SourcePos("main", 1, 1, 2),
+        "someA"
+      );
+      const errA = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(errA, "foo", stateA);
+      });
 
-            const errB = new ParseError(
-                new SourcePos("foobar", 1, 3),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
-            );
-            const parserB = new Parser(state => {
-                expect(State.equal(state, stateA));
-                return Result.cerr(errB);
-            });
+      const errB = new StrictParseError(
+        new SourcePos("main", 2, 1, 3),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
+      );
+      const parserB = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(stateA);
+        return Result.cfail(errB);
+      });
 
-            const parser = qo(function* () {
-                const resA = yield parserA;
-                expect(resA).to.equal("nyan");
-                yield parserB;
-                throw new Error("this should not be thrown");
-            });
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.cerr(errB)
-            )).to.be.true;
-        }
-        // csuc, esuc
-        {
-            const stateA = new State(
-                new Config({ tabWidth: 8 }),
-                "restA",
-                new SourcePos("foobar", 1, 2),
-                "someA"
-            );
-            const errA = new ParseError(
-                new SourcePos("foobar", 1, 2),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-            );
-            const parserA = new Parser(state => {
-                expect(State.equal(state, initState));
-                return Result.csuc(errA, "nyan", stateA);
-            });
+      const parser = qo(function* () {
+        const resA = yield parserA;
+        expect(resA).to.equal("foo");
+        yield parserB;
+        assert.fail("expect to be unreachable");
+      });
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.cfail(errB));
+    }
+    // csucc, esucc
+    {
+      const stateA = new State(
+        new Config(),
+        "restA",
+        new SourcePos("main", 1, 1, 2),
+        "someA"
+      );
+      const errA = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(errA, "foo", stateA);
+      });
 
-            const stateB = new State(
-                new Config({ tabWidth: 8 }),
-                "restB",
-                new SourcePos("foobar", 1, 2),
-                "someB"
-            );
-            const errB = new ParseError(
-                new SourcePos("foobar", 1, 2),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
-            );
-            const parserB = new Parser(state => {
-                expect(State.equal(state, stateA));
-                return Result.esuc(errB, "cat", stateB);
-            });
+      const stateB = new State(
+        new Config(),
+        "restB",
+        new SourcePos("main", 1, 1, 2),
+        "someB"
+      );
+      const errB = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
+      );
+      const parserB = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(stateA);
+        return Result.esucc(errB, "bar", stateB);
+      });
 
-            const parser = qo(function* () {
-                const resA = yield parserA;
-                expect(resA).to.equal("nyan");
-                const resB = yield parserB;
-                expect(resB).to.equal("cat");
-                return "hello";
-            });
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.csuc(ParseError.merge(errA, errB), "hello", stateB)
-            )).to.be.true;
-        }
-        // csuc, eerr
-        {
-            const stateA = new State(
-                new Config({ tabWidth: 8 }),
-                "restA",
-                new SourcePos("foobar", 1, 2),
-                "someA"
-            );
-            const errA = new ParseError(
-                new SourcePos("foobar", 1, 2),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-            );
-            const parserA = new Parser(state => {
-                expect(State.equal(state, initState));
-                return Result.csuc(errA, "nyan", stateA);
-            });
+      const parser = qo(function* () {
+        const resA = yield parserA;
+        expect(resA).to.equal("foo");
+        const resB = yield parserB;
+        expect(resB).to.equal("bar");
+        return "baz";
+      });
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.csucc(ParseError.merge(errA, errB), "baz", stateB));
+    }
+    // csucc, efail
+    {
+      const stateA = new State(
+        new Config(),
+        "restA",
+        new SourcePos("main", 1, 1, 2),
+        "someA"
+      );
+      const errA = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(errA, "foo", stateA);
+      });
 
-            const errB = new ParseError(
-                new SourcePos("foobar", 1, 2),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
-            );
-            const parserB = new Parser(state => {
-                expect(State.equal(state, stateA));
-                return Result.eerr(errB);
-            });
+      const errB = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
+      );
+      const parserB = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(stateA);
+        return Result.efail(errB);
+      });
 
-            const parser = qo(function* () {
-                const resA = yield parserA;
-                expect(resA).to.equal("nyan");
-                yield parserB;
-                throw new Error("this should not be thrown");
-            });
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.cerr(ParseError.merge(errA, errB))
-            )).to.be.true;
-        }
-        // cerr, *
-        {
-            const errA = new ParseError(
-                new SourcePos("foobar", 1, 2),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-            );
-            const parserA = new Parser(state => {
-                expect(State.equal(state, initState));
-                return Result.cerr(errA);
-            });
+      const parser = qo(function* () {
+        const resA = yield parserA;
+        expect(resA).to.equal("foo");
+        yield parserB;
+        assert.fail("expect to be unreachable");
+      });
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.cfail(ParseError.merge(errA, errB)));
+    }
+    // cfail, *
+    {
+      const errA = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.cfail(errA);
+      });
 
-            const parserB = new Parser(() => { throw new Error("unexpected call"); });
+      const parserB = new StrictParser(state => assert.fail("expect function to not be called"));
 
-            const parser = qo(function* () {
-                yield parserA;
-                yield parserB;
-            });
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.cerr(errA)
-            )).to.be.true;
-        }
-        // esuc, csuc
-        {
-            const stateA = new State(
-                new Config({ tabWidth: 8 }),
-                "restA",
-                new SourcePos("foobar", 1, 1),
-                "someA"
-            );
-            const errA = new ParseError(
-                new SourcePos("foobar", 1, 1),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-            );
-            const parserA = new Parser(state => {
-                expect(State.equal(state, initState));
-                return Result.esuc(errA, "nyan", stateA);
-            });
+      const parser = qo(function* () {
+        yield parserA;
+        yield parserB;
+      });
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.cfail(errA));
+    }
+    // esucc, csucc
+    {
+      const stateA = new State(
+        new Config(),
+        "restA",
+        new SourcePos("main", 0, 1, 1),
+        "someA"
+      );
+      const errA = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(errA, "foo", stateA);
+      });
 
-            const stateB = new State(
-                new Config({ tabWidth: 8 }),
-                "restB",
-                new SourcePos("foobar", 1, 2),
-                "someB"
-            );
-            const errB = new ParseError(
-                new SourcePos("foobar", 1, 2),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
-            );
-            const parserB = new Parser(state => {
-                expect(State.equal(state, stateA));
-                return Result.csuc(errB, "cat", stateB);
-            });
+      const stateB = new State(
+        new Config(),
+        "restB",
+        new SourcePos("main", 1, 1, 2),
+        "someB"
+      );
+      const errB = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
+      );
+      const parserB = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(stateA);
+        return Result.csucc(errB, "bar", stateB);
+      });
 
-            const parser = qo(function* () {
-                const resA = yield parserA;
-                expect(resA).to.equal("nyan");
-                const resB = yield parserB;
-                expect(resB).to.equal("cat");
-                return "hello";
-            });
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.csuc(errB, "hello", stateB)
-            )).to.be.true;
-        }
-        // esuc, cerr
-        {
-            const stateA = new State(
-                new Config({ tabWidth: 8 }),
-                "restA",
-                new SourcePos("foobar", 1, 1),
-                "someA"
-            );
-            const errA = new ParseError(
-                new SourcePos("foobar", 1, 1),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-            );
-            const parserA = new Parser(state => {
-                expect(State.equal(state, initState));
-                return Result.esuc(errA, "nyan", stateA);
-            });
+      const parser = qo(function* () {
+        const resA = yield parserA;
+        expect(resA).to.equal("foo");
+        const resB = yield parserB;
+        expect(resB).to.equal("bar");
+        return "baz";
+      });
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.csucc(errB, "baz", stateB));
+    }
+    // esucc, cfail
+    {
+      const stateA = new State(
+        new Config(),
+        "restA",
+        new SourcePos("main", 0, 1, 1),
+        "someA"
+      );
+      const errA = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(errA, "foo", stateA);
+      });
 
-            const errB = new ParseError(
-                new SourcePos("foobar", 1, 2),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
-            );
-            const parserB = new Parser(state => {
-                expect(State.equal(state, stateA));
-                return Result.cerr(errB);
-            });
+      const errB = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
+      );
+      const parserB = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(stateA);
+        return Result.cfail(errB);
+      });
 
-            const parser = qo(function* () {
-                const resA = yield parserA;
-                expect(resA).to.equal("nyan");
-                yield parserB;
-                throw new Error("this should not be thrown");
-            });
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.cerr(errB)
-            )).to.be.true;
-        }
-        // esuc, esuc
-        {
-            const stateA = new State(
-                new Config({ tabWidth: 8 }),
-                "restA",
-                new SourcePos("foobar", 1, 1),
-                "someA"
-            );
-            const errA = new ParseError(
-                new SourcePos("foobar", 1, 1),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-            );
-            const parserA = new Parser(state => {
-                expect(State.equal(state, initState));
-                return Result.esuc(errA, "nyan", stateA);
-            });
+      const parser = qo(function* () {
+        const resA = yield parserA;
+        expect(resA).to.equal("foo");
+        yield parserB;
+        assert.fail("expect to be unreachable");
+      });
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.cfail(errB));
+    }
+    // esucc, esucc
+    {
+      const stateA = new State(
+        new Config(),
+        "restA",
+        new SourcePos("main", 0, 1, 1),
+        "someA"
+      );
+      const errA = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(errA, "foo", stateA);
+      });
 
-            const stateB = new State(
-                new Config({ tabWidth: 8 }),
-                "restB",
-                new SourcePos("foobar", 1, 1),
-                "someB"
-            );
-            const errB = new ParseError(
-                new SourcePos("foobar", 1, 1),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
-            );
-            const parserB = new Parser(state => {
-                expect(State.equal(state, stateA));
-                return Result.esuc(errB, "cat", stateB);
-            });
+      const stateB = new State(
+        new Config(),
+        "restB",
+        new SourcePos("main", 0, 1, 1),
+        "someB"
+      );
+      const errB = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
+      );
+      const parserB = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(stateA);
+        return Result.esucc(errB, "bar", stateB);
+      });
 
-            const parser = qo(function* () {
-                const resA = yield parserA;
-                expect(resA).to.equal("nyan");
-                const resB = yield parserB;
-                expect(resB).to.equal("cat");
-                return "hello";
-            });
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.esuc(ParseError.merge(errA, errB), "hello", stateB)
-            )).to.be.true;
-        }
-        // esuc, eerr
-        {
-            const stateA = new State(
-                new Config({ tabWidth: 8 }),
-                "restA",
-                new SourcePos("foobar", 1, 1),
-                "someA"
-            );
-            const errA = new ParseError(
-                new SourcePos("foobar", 1, 1),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-            );
-            const parserA = new Parser(state => {
-                expect(State.equal(state, initState));
-                return Result.esuc(errA, "nyan", stateA);
-            });
+      const parser = qo(function* () {
+        const resA = yield parserA;
+        expect(resA).to.equal("foo");
+        const resB = yield parserB;
+        expect(resB).to.equal("bar");
+        return "baz";
+      });
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.esucc(ParseError.merge(errA, errB), "baz", stateB));
+    }
+    // esucc, efail
+    {
+      const stateA = new State(
+        new Config(),
+        "restA",
+        new SourcePos("main", 0, 1, 1),
+        "someA"
+      );
+      const errA = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(errA, "foo", stateA);
+      });
 
-            const errB = new ParseError(
-                new SourcePos("foobar", 1, 1),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testB")]
-            );
-            const parserB = new Parser(state => {
-                expect(State.equal(state, stateA));
-                return Result.eerr(errB);
-            });
+      const errB = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
+      );
+      const parserB = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(stateA);
+        return Result.efail(errB);
+      });
 
-            const parser = qo(function* () {
-                const resA = yield parserA;
-                expect(resA).to.equal("nyan");
-                yield parserB;
-                throw new Error("this should not be thrown");
-            });
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.eerr(ParseError.merge(errA, errB))
-            )).to.be.true;
-        }
-        // eerr, *
-        {
-            const errA = new ParseError(
-                new SourcePos("foobar", 1, 1),
-                [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-            );
-            const parserA = new Parser(state => {
-                expect(State.equal(state, initState));
-                return Result.eerr(errA);
-            });
+      const parser = qo(function* () {
+        const resA = yield parserA;
+        expect(resA).to.equal("foo");
+        yield parserB;
+        assert.fail("expect to be unreachable");
+      });
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.efail(ParseError.merge(errA, errB)));
+    }
+    // efail, *
+    {
+      const errA = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.efail(errA);
+      });
 
-            const parserB = new Parser(() => { throw new Error("unexpected call"); });
+      const parserB = new StrictParser(state => assert.fail("expect function to not be called"));
 
-            const parser = qo(function* () {
-                yield parserA;
-                yield parserB;
-            });
-            assertParser(parser);
-            const res = parser.run(initState);
-            expect(Result.equal(
-                res,
-                Result.eerr(errA)
-            )).to.be.true;
-        }
-    });
+      const parser = qo(function* () {
+        yield parserA;
+        yield parserB;
+      });
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.efail(errA));
+    }
+  });
 
-    it("should run parser thrown by the generator, and always treat the result as failed", () => {
-        const initState = new State(
-            new Config({ tabWidth: 8 }),
-            "input",
-            new SourcePos("foobar", 1, 1),
-            "none"
-        );
-        // csuc
-        {
-            {
-                const stateA = new State(
-                    new Config({ tabWidth: 8 }),
-                    "restA",
-                    new SourcePos("foobar", 1, 2),
-                    "someA"
-                );
-                const errA = new ParseError(
-                    new SourcePos("foobar", 1, 2),
-                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-                );
-                const parserA = new Parser(state => {
-                    expect(State.equal(state, initState));
-                    return Result.csuc(errA, "nyan", stateA);
-                });
-                const parser = qo(function* () {
-                    throw parserA;
-                });
-                const res = parser.run(initState);
-                expect(Result.equal(
-                    res,
-                    Result.cerr(errA)
-                )).to.be.true;
-            }
-            {
-                const stateA = new State(
-                    new Config({ tabWidth: 8 }),
-                    "restA",
-                    new SourcePos("foobar", 1, 2),
-                    "someA"
-                );
-                const errA = new ParseError(
-                    new SourcePos("foobar", 1, 2),
-                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-                );
-                const parserA = new Parser(state => {
-                    expect(State.equal(state, initState));
-                    return Result.csuc(errA, "nyan", stateA);
-                });
-                const dummy = new Parser(state =>
-                    Result.esuc(ParseError.unknown(state.pos), undefined, state)
-                );
-                const parser = qo(function* () {
-                    yield dummy;
-                    throw parserA;
-                });
-                const res = parser.run(initState);
-                expect(Result.equal(
-                    res,
-                    Result.cerr(errA)
-                )).to.be.true;
-            }
-        }
-        // cerr
-        {
-            {
-                const errA = new ParseError(
-                    new SourcePos("foobar", 1, 2),
-                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-                );
-                const parserA = new Parser(state => {
-                    expect(State.equal(state, initState));
-                    return Result.cerr(errA);
-                });
-                const parser = qo(function* () {
-                    throw parserA;
-                });
-                const res = parser.run(initState);
-                expect(Result.equal(
-                    res,
-                    Result.cerr(errA)
-                )).to.be.true;
-            }
-            {
-                const errA = new ParseError(
-                    new SourcePos("foobar", 1, 2),
-                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-                );
-                const parserA = new Parser(state => {
-                    expect(State.equal(state, initState));
-                    return Result.cerr(errA);
-                });
-                const dummy = new Parser(state =>
-                    Result.esuc(ParseError.unknown(state.pos), undefined, state)
-                );
-                const parser = qo(function* () {
-                    yield dummy;
-                    throw parserA;
-                });
-                const res = parser.run(initState);
-                expect(Result.equal(
-                    res,
-                    Result.cerr(errA)
-                )).to.be.true;
-            }
-        }
-        // esuc
-        {
-            {
-                const stateA = new State(
-                    new Config({ tabWidth: 8 }),
-                    "restA",
-                    new SourcePos("foobar", 1, 1),
-                    "someA"
-                );
-                const errA = new ParseError(
-                    new SourcePos("foobar", 1, 1),
-                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-                );
-                const parserA = new Parser(state => {
-                    expect(State.equal(state, initState));
-                    return Result.esuc(errA, "nyan", stateA);
-                });
-                const parser = qo(function* () {
-                    throw parserA;
-                });
-                const res = parser.run(initState);
-                expect(Result.equal(
-                    res,
-                    Result.eerr(errA)
-                )).to.be.true;
-            }
-            {
-                const stateA = new State(
-                    new Config({ tabWidth: 8 }),
-                    "restA",
-                    new SourcePos("foobar", 1, 1),
-                    "someA"
-                );
-                const errA = new ParseError(
-                    new SourcePos("foobar", 1, 1),
-                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-                );
-                const parserA = new Parser(state => {
-                    expect(State.equal(state, initState));
-                    return Result.esuc(errA, "nyan", stateA);
-                });
-                const dummy = new Parser(state =>
-                    Result.esuc(ParseError.unknown(state.pos), undefined, state)
-                );
-                const parser = qo(function* () {
-                    yield dummy;
-                    throw parserA;
-                });
-                const res = parser.run(initState);
-                expect(Result.equal(
-                    res,
-                    Result.eerr(errA)
-                )).to.be.true;
-            }
-        }
-        // eerr
-        {
-            {
-                const errA = new ParseError(
-                    new SourcePos("foobar", 1, 1),
-                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-                );
-                const parserA = new Parser(state => {
-                    expect(State.equal(state, initState));
-                    return Result.eerr(errA);
-                });
-                const parser = qo(function* () {
-                    throw parserA;
-                });
-                const res = parser.run(initState);
-                expect(Result.equal(
-                    res,
-                    Result.eerr(errA)
-                )).to.be.true;
-            }
-            {
-                const errA = new ParseError(
-                    new SourcePos("foobar", 1, 1),
-                    [new ErrorMessage(ErrorMessageType.MESSAGE, "testA")]
-                );
-                const parserA = new Parser(state => {
-                    expect(State.equal(state, initState));
-                    return Result.eerr(errA);
-                });
-                const dummy = new Parser(state =>
-                    Result.esuc(ParseError.unknown(state.pos), undefined, state)
-                );
-                const parser = qo(function* () {
-                    yield dummy;
-                    throw parserA;
-                });
-                const res = parser.run(initState);
-                expect(Result.equal(
-                    res,
-                    Result.eerr(errA)
-                )).to.be.true;
-            }
-        }
-    });
+  it("should run a parser if thrown by the generator, and always fails even if it succeeds", () => {
+    const initState = new State(
+      new Config(),
+      "input",
+      new SourcePos("main", 0, 1, 1),
+      "none"
+    );
+    // csucc
+    {
+      const stateA = new State(
+        new Config(),
+        "restA",
+        new SourcePos("main", 1, 1, 2),
+        "someA"
+      );
+      const errA = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(errA, "foo", stateA);
+      });
+      const parser = qo(function* () {
+        throw parserA;
+      });
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.cfail(errA));
+    }
+    {
+      const stateA = new State(
+        new Config(),
+        "restA",
+        new SourcePos("main", 1, 1, 2),
+        "someA"
+      );
+      const errA = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(errA, "foo", stateA);
+      });
+      const dummy = new StrictParser(state =>
+        Result.esucc(ParseError.unknown(state.pos), undefined, state)
+      );
+      const parser = qo(function* () {
+        yield dummy;
+        throw parserA;
+      });
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.cfail(errA));
+    }
+    // cfail
+    {
+      const errA = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.cfail(errA);
+      });
+      const parser = qo(function* () {
+        throw parserA;
+      });
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.cfail(errA));
+    }
+    {
+      const errA = new StrictParseError(
+        new SourcePos("main", 1, 1, 2),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.cfail(errA);
+      });
+      const dummy = new StrictParser(state =>
+        Result.esucc(ParseError.unknown(state.pos), undefined, state)
+      );
+      const parser = qo(function* () {
+        yield dummy;
+        throw parserA;
+      });
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.cfail(errA));
+    }
+    // esucc
+    {
+      const stateA = new State(
+        new Config(),
+        "restA",
+        new SourcePos("main", 0, 1, 1),
+        "someA"
+      );
+      const errA = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(errA, "foo", stateA);
+      });
+      const parser = qo(function* () {
+        throw parserA;
+      });
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.efail(errA));
+    }
+    {
+      const stateA = new State(
+        new Config(),
+        "restA",
+        new SourcePos("main", 0, 1, 1),
+        "someA"
+      );
+      const errA = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(errA, "foo", stateA);
+      });
+      const dummy = new StrictParser(state =>
+        Result.esucc(ParseError.unknown(state.pos), undefined, state)
+      );
+      const parser = qo(function* () {
+        yield dummy;
+        throw parserA;
+      });
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.efail(errA));
+    }
+    // efail
+    {
+      const errA = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.efail(errA);
+      });
+      const parser = qo(function* () {
+        throw parserA;
+      });
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.efail(errA));
+    }
+    {
+      const errA = new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
+      );
+      const parserA = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.efail(errA);
+      });
+      const dummy = new StrictParser(state =>
+        Result.esucc(ParseError.unknown(state.pos), undefined, state)
+      );
+      const parser = qo(function* () {
+        yield dummy;
+        throw parserA;
+      });
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.efail(errA));
+    }
+  });
 
-    it("should rethrow error thrown by the generator if it is not a parser", () => {
-        {
-            const initState = new State(
-                new Config({ tabWidth: 8 }),
-                "input",
-                new SourcePos("foobar", 1, 1),
-                "none"
-            );
-            const parser = qo(function* () {
-                throw new Error("test");
-            });
-            expect(() => { parser.run(initState); }).to.throw(Error, /test/);
-        }
-        {
-            const initState = new State(
-                new Config({ tabWidth: 8 }),
-                "input",
-                new SourcePos("foobar", 1, 1),
-                "none"
-            );
-            const dummy = new Parser(state =>
-                Result.esuc(ParseError.unknown(state.pos), undefined, state)
-            );
-            const parser = qo(function* () {
-                yield dummy;
-                throw new Error("test");
-            });
-            expect(() => { parser.run(initState); }).to.throw(Error, /test/);
-        }
-    });
+  it("should rethrow non-parser values thrown by the generator", () => {
+    {
+      const initState = new State(
+        new Config(),
+        "input",
+        new SourcePos("main", 0, 1, 1),
+        "none"
+      );
+      const parser = qo(function* () {
+        throw new Error("test");
+      });
+      expect(() => {
+        parser.run(initState);
+      }).to.throw(Error, /test/);
+    }
+    {
+      const initState = new State(
+        new Config(),
+        "input",
+        new SourcePos("main", 0, 1, 1),
+        "none"
+      );
+      const dummy = new StrictParser(state =>
+        Result.esucc(ParseError.unknown(state.pos), undefined, state)
+      );
+      const parser = qo(function* () {
+        yield dummy;
+        throw new Error("test");
+      });
+      expect(() => {
+        parser.run(initState);
+      }).to.throw(Error, /test/);
+    }
+  });
 });

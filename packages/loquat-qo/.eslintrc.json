@@ -17,7 +17,8 @@
       },
       "rules": {
         "no-new": "off",
-        "no-unused-expressions": "off"
+        "no-unused-expressions": "off",
+        "require-yield": "off"
       }
     }
   ]
