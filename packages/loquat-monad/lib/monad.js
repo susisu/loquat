@@ -289,13 +289,12 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.foldM
-     * @static
-     * @param {function} func
-     * @param {*} initVal
-     * @param {Array} arr
-     * @returns {AbstractParser}
-     */
+   * foldM: [S, U, A, B](
+   *   func: (A, B) => Parser[S, U, A],
+   *   initVal: A,
+   *   arr: Array[B]
+   * ) => Parser[S, U, A]
+   */
   function foldM(func, initVal, arr) {
     return new StrictParser(state => {
       let accum = initVal;
@@ -321,14 +320,14 @@ module.exports = (_core, { _prim }) => {
             return res;
           } else {
             return consumed
-                            ? Result.cfail(ParseError.merge(currentErr, res.err))
-                            : Result.efail(ParseError.merge(currentErr, res.err));
+              ? Result.cfail(ParseError.merge(currentErr, res.err))
+              : Result.efail(ParseError.merge(currentErr, res.err));
           }
         }
       }
       return consumed
-                ? Result.csucc(currentErr, accum, currentState)
-                : Result.esucc(currentErr, accum, currentState);
+        ? Result.csucc(currentErr, accum, currentState)
+        : Result.esucc(currentErr, accum, currentState);
     });
   }
 
