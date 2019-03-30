@@ -1,6 +1,6 @@
 "use strict";
 
-const { expect } = require("chai");
+const { expect, assert } = require("chai");
 
 const {
   SourcePos,
@@ -15,142 +15,124 @@ const {
 
 const { mfilter } = _monad;
 
-describe(".mfilter(test, parser)", () => {
-  it("returns a parser that runs `parser' and calls `test' with its resultant value,"
-        + " then only succeeds when `test' returns `true'", () => {
+describe("mfilter", () => {
+  it("should create a parser that runs the given parser and tests the result with a function, and"
+    + " only succeds when it passed", () => {
     const initState = new State(
-      new Config({ tabWidth: 8 }),
+      new Config(),
       "input",
-      new SourcePos("foobar", 1, 1),
+      new SourcePos("main", 0, 1, 1),
       "none"
     );
     // csucc
     {
       const finalState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "rest",
-        new SourcePos("foobar", 1, 2),
+        new SourcePos("main", 1, 1, 2),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("foobar", 1, 2),
+        new SourcePos("main", 1, 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parser = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.csucc(err, "nyancat", finalState);
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(err, "foo", finalState);
       });
-            // true
+      // true
       {
         const test = val => {
-          expect(val).to.equal("nyancat");
+          expect(val).to.equal("foo");
           return true;
         };
         const filtered = mfilter(test, parser);
         expect(filtered).to.be.a.parser;
         const res = filtered.run(initState);
-        expect(Result.equal(
-          res,
-          Result.csucc(err, "nyancat", finalState)
-        )).to.be.true;
+        expect(res).to.be.an.equalResultTo(Result.csucc(err, "foo", finalState));
       }
       // false
       {
         const test = val => {
-          expect(val).to.equal("nyancat");
+          expect(val).to.equal("foo");
           return false;
         };
         const filtered = mfilter(test, parser);
         expect(filtered).to.be.a.parser;
         const res = filtered.run(initState);
-        expect(Result.equal(
-          res,
-          Result.cfail(err)
-        )).to.be.true;
+        expect(res).to.be.an.equalResultTo(Result.cfail(err));
       }
     }
     // cfail
     {
       const err = new StrictParseError(
-        new SourcePos("foobar", 1, 2),
+        new SourcePos("main", 1, 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parser = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
+        expect(state).to.be.an.equalStateTo(initState);
         return Result.cfail(err);
       });
-      const test = () => { throw new Error("unexpected call"); };
+      const test = val => assert.fail("expect function to not be called");
       const filtered = mfilter(test, parser);
       expect(filtered).to.be.a.parser;
       const res = filtered.run(initState);
-      expect(Result.equal(
-        res,
-        Result.cfail(err)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.cfail(err));
     }
     // esucc
     {
       const finalState = new State(
-        new Config({ tabWidth: 8 }),
+        new Config(),
         "rest",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parser = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.esucc(err, "nyancat", finalState);
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(err, "foo", finalState);
       });
-            // true
+      // true
       {
         const test = val => {
-          expect(val).to.equal("nyancat");
+          expect(val).to.equal("foo");
           return true;
         };
         const filtered = mfilter(test, parser);
         expect(filtered).to.be.a.parser;
         const res = filtered.run(initState);
-        expect(Result.equal(
-          res,
-          Result.esucc(err, "nyancat", finalState)
-        )).to.be.true;
+        expect(res).to.be.an.equalResultTo(Result.esucc(err, "foo", finalState));
       }
       // false
       {
         const test = val => {
-          expect(val).to.equal("nyancat");
+          expect(val).to.equal("foo");
           return false;
         };
         const filtered = mfilter(test, parser);
         expect(filtered).to.be.a.parser;
         const res = filtered.run(initState);
-        expect(Result.equal(
-          res,
-          Result.efail(err)
-        )).to.be.true;
+        expect(res).to.be.an.equalResultTo(Result.efail(err));
       }
     }
     // efail
     {
       const err = new StrictParseError(
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parser = new StrictParser(state => {
-        expect(State.equal(state, initState)).to.be.true;
+        expect(state).to.be.an.equalStateTo(initState);
         return Result.efail(err);
       });
-      const test = () => { throw new Error("unexpected call"); };
+      const test = val => assert.fail("expect function to not be called");
       const filtered = mfilter(test, parser);
       expect(filtered).to.be.a.parser;
       const res = filtered.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(err)
-      )).to.be.true;
+      expect(res).to.be.an.equalResultTo(Result.efail(err));
     }
   });
 });

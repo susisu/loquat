@@ -371,12 +371,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.mfilter
-     * @static
-     * @param {function} test
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * mfilter: [S, U, A](test: A => boolean, parser: Parser[S, U, A]) => Parser[S, U, A]
+   */
   function mfilter(test, parser) {
     return bind(parser, val => test(val) ? pure(val) : mzero);
   }
