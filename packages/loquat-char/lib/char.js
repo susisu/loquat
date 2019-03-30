@@ -13,7 +13,7 @@ module.exports = (_core, { _prim }) => {
     uncons,
   } = _core;
 
-  const { map, pure, bind, label, reduceMany, skipMany } = _prim;
+  const { pure, bind, label, reduceMany, skipMany } = _prim;
 
   /**
    * type char = string
@@ -246,20 +246,70 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
+   * makeAnchoredRegexp: (re: RegExp) => RegExp
+   */
+  function makeAnchoredRegexp(re) {
+    const flags = (re.ignoreCase ? "i" : "")
+      + (re.multiline ? "m" : "")
+      + (re.unicode ? "u" : "");
+    return new RegExp(`^(?:${re.source})`, flags);
+  }
+
+  /**
    * regexp: [U](re: RegExp, groupId?: int) => Parser[string, U, string]
    */
   function regexp(re, groupId = 0) {
-    return map(regexpPrim(re), match => match[groupId]);
+    const anchored = makeAnchoredRegexp(re);
+    const expectStr = show(re);
+    return new StrictParser(state => {
+      if (typeof state.input !== "string") {
+        throw new Error("`regexp` is only applicable to string input");
+      }
+      if (anchored.unicode !== state.config.unicode) {
+        throw new Error(
+          "unicode flag does not match; "
+            + (state.config.unicode ? "add `/.../u` to fix" : "remove `/.../u` to fix")
+        );
+      }
+      const match = anchored.exec(state.input);
+      if (match) {
+        const str = match[0];
+        const val = match[groupId];
+        if (str.length === 0) {
+          return Result.esucc(
+            ParseError.unknown(state.pos),
+            val,
+            state
+          );
+        } else {
+          const newPos = state.pos.addString(str, state.config.tabWidth, state.config.unicode);
+          return Result.csucc(
+            ParseError.unknown(newPos),
+            val,
+            new State(
+              state.config,
+              state.input.substr(str.length),
+              newPos,
+              state.userState
+            )
+          );
+        }
+      } else {
+        return Result.efail(
+          new StrictParseError(
+            state.pos,
+            [ErrorMessage.create(ErrorMessageType.EXPECT, expectStr)]
+          )
+        );
+      }
+    });
   }
 
   /**
    * regexpPrim: [U](re: RegExp) => Parser[string, U, Array[string]]
    */
   function regexpPrim(re) {
-    const flags = (re.ignoreCase ? "i" : "")
-      + (re.multiline ? "m" : "")
-      + (re.unicode ? "u" : "");
-    const anchored = new RegExp(`^(?:${re.source})`, flags);
+    const anchored = makeAnchoredRegexp(re);
     const expectStr = show(re);
     return new StrictParser(state => {
       if (typeof state.input !== "string") {
@@ -326,5 +376,8 @@ module.exports = (_core, { _prim }) => {
     manyChars1,
     regexp,
     regexpPrim,
+    _internal: {
+      makeAnchoredRegexp,
+    },
   });
 };

@@ -22,4 +22,5 @@ describe("char", () => {
   require("./char/manyChars1.js");
   require("./char/regexp.js");
   require("./char/regexpPrim.js");
+  require("./char/_internal.js");
 });
