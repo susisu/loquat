@@ -3,7 +3,7 @@
 module.exports = (_core, { _prim }) => {
   const { ParseError, Result, StrictParser } = _core;
 
-  const { map, pure, bind, then, tailRecM, mzero, mplus } = _prim;
+  const { map, pure, bind, then, tailRecM, mzero } = _prim;
 
   /**
    * forever: [S, U, A, B](parser: Parser[S, U, A]) => Parser[S, U, B]
@@ -566,7 +566,24 @@ module.exports = (_core, { _prim }) => {
    * msum: [S, U, A](parsers: Array[Parser[S, U, A]]) => Parser[S, U, A]
    */
   function msum(parsers) {
-    return parsers.reduceRight((accum, parser) => mplus(parser, accum), mzero);
+    return new StrictParser(state => {
+      let currentErr = ParseError.unknown(state.pos);
+      for (const parser of parsers) {
+        const res = parser.run(state);
+        if (res.success) {
+          return res.consumed
+            ? res
+            : Result.esucc(ParseError.merge(currentErr, res.err), res.val, res.state);
+        } else {
+          if (res.consumed) {
+            return res;
+          } else {
+            currentErr = ParseError.merge(currentErr, res.err);
+          }
+        }
+      }
+      return Result.efail(currentErr);
+    });
   }
 
   /**

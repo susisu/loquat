@@ -8,7 +8,6 @@ module.exports = (_core, { _prim }) => {
     pure,
     bind,
     then,
-    mzero,
     mplus,
     label,
     unexpected,
@@ -22,7 +21,24 @@ module.exports = (_core, { _prim }) => {
    * choice: [S, U, A](parsers: Array[Parser[S, U, A]]) => Parser[S, U, A]
    */
   function choice(parsers) {
-    return parsers.reduceRight((accum, parser) => mplus(parser, accum), mzero);
+    return new StrictParser(state => {
+      let currentErr = ParseError.unknown(state.pos);
+      for (const parser of parsers) {
+        const res = parser.run(state);
+        if (res.success) {
+          return res.consumed
+            ? res
+            : Result.esucc(ParseError.merge(currentErr, res.err), res.val, res.state);
+        } else {
+          if (res.consumed) {
+            return res;
+          } else {
+            currentErr = ParseError.merge(currentErr, res.err);
+          }
+        }
+      }
+      return Result.efail(currentErr);
+    });
   }
 
   /**
