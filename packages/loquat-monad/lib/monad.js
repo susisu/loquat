@@ -9,8 +9,8 @@ module.exports = (_core, { _prim }) => {
    * forever: [S, U, A, B](parser: Parser[S, U, A]) => Parser[S, U, B]
    */
   function forever(parser) {
-    return tailRecM(undefined, x =>
-      map(parser, y => ({ done: false, value: undefined }))
+    return tailRecM(undefined, acc =>
+      map(parser, val => ({ done: false, value: undefined }))
     );
   }
 
@@ -18,15 +18,12 @@ module.exports = (_core, { _prim }) => {
    * discard: [S, U, A](parser: Parser[S, U, A]) => Parser[S, U, undefined]
    */
   function discard(parser) {
-    return map(parser, () => undefined);
+    return map(parser, val => undefined);
   }
 
   /**
-     * @function module:monad.join
-     * @static
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * join: [S, U, A](parser: Parser[S, U, Parser[S, U, A]]) => Parser[S, U, A]
+   */
   function join(parser) {
     return bind(parser, val => val);
   }
