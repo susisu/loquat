@@ -151,11 +151,7 @@ describe("ltor", () => {
       const parser = func("foo");
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.merge(errA, errB),
-        "baz",
-        stateB
-      ));
+      expect(res).to.be.an.equalResultTo(Result.csucc(ParseError.merge(errA, errB), "baz", stateB));
     }
     // csucc, efail
     {
@@ -348,11 +344,7 @@ describe("ltor", () => {
       const parser = func("foo");
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
-      expect(res).to.be.an.equalResultTo(Result.esucc(
-        ParseError.merge(errA, errB),
-        "baz",
-        stateB
-      ));
+      expect(res).to.be.an.equalResultTo(Result.esucc(ParseError.merge(errA, errB), "baz", stateB));
     }
     // esucc, efail
     {

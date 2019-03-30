@@ -129,12 +129,11 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.rtol
-     * @static
-     * @param {function} funcA
-     * @param {function} funcB
-     * @returns {function}
-     */
+   * rtol: [S, U, A, B, C](
+   *   funcA: B => Parser[S, U, C],
+   *   funcB: A => Parser[S, U, B]
+   * ) => A => Parser[S, U, C]
+   */
   function rtol(funcA, funcB) {
     return val => bind(funcB(val), funcA);
   }
