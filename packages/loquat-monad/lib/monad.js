@@ -177,11 +177,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.sequence
-     * @static
-     * @param {Array.<AbstractParser>} parsers
-     * @returns {AbstractParser}
-     */
+   * sequence_: [S, U, A](parsers: Array[Parser[S, U, A]]) => Parser[S, U, undefined]
+   */
   function sequence_(parsers) {
     return parsers.reduceRight((accum, parser) => then(parser, accum), pure(undefined));
   }
