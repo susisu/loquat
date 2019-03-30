@@ -255,14 +255,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.zipWith
-     * @private
-     * @static
-     * @param {function} func
-     * @param {Array} arrA
-     * @param {Array} arrB
-     * @returns {*}
-     */
+   * zipWith: [A, B, C](func: (A, B) => C, arrA: Array[A], arrB: Array[B]) => Array[C]
+   */
   function zipWith(func, arrA, arrB) {
     const res = [];
     const len = Math.min(arrA.length, arrB.length);
@@ -273,13 +267,12 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.zipWithM
-     * @static
-     * @param {function} func
-     * @param {Array} arrA
-     * @param {Array} arrB
-     * @returns {AbstractParser}
-     */
+   * zipWithM: [S, U, A, B, C](
+   *   func: (A, B) => Parser[S, U, C],
+   *   arrA: Array[A],
+   *   arrB: Array[B]
+   * ) => Parser[S, U, Array[C]]
+   */
   function zipWithM(func, arrA, arrB) {
     return sequence(zipWith(func, arrA, arrB));
   }

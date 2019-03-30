@@ -1,14 +1,14 @@
 "use strict";
 
-const { expect } = require("chai");
+const { expect, assert } = require("chai");
 
 const { zipWith } = _monad._internal;
 
-describe(".zipWith(func, arrA, arrB)", () => {
-  it("should zip two arrays `arrA' and `arrB' with a function `func'", () => {
+describe("zipWith", () => {
+  it("should zip two arrays with the given binary function", () => {
     {
       const arr = zipWith(
-        () => { throw new Error("unexpected call"); },
+        (x, y) => assert.fail("expect function to not be called"),
         [],
         []
       );
@@ -24,7 +24,7 @@ describe(".zipWith(func, arrA, arrB)", () => {
     }
     {
       const arr = zipWith(
-        () => { throw new Error("unexpected call"); },
+        (x, y) => assert.fail("expect function to not be called"),
         [1, 2, 3],
         []
       );
@@ -32,7 +32,7 @@ describe(".zipWith(func, arrA, arrB)", () => {
     }
     {
       const arr = zipWith(
-        () => { throw new Error("unexpected call"); },
+        (x, y) => assert.fail("expect function to not be called"),
         [],
         [1, 2, 3]
       );

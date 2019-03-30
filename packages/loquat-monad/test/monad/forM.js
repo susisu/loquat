@@ -35,8 +35,8 @@ describe("forM", () => {
         const _state    = states[i];
         const _err      = errs[i];
         return _success
-      ? Result.succ(_consumed, _err, _val, _state)
-      : Result.fail(_consumed, _err);
+          ? Result.succ(_consumed, _err, _val, _state)
+          : Result.fail(_consumed, _err);
       });
     }
 
