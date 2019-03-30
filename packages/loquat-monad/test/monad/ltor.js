@@ -206,9 +206,7 @@ describe("ltor", () => {
         });
       };
 
-      const funcB = val => {
-        assert.fail("expect function to not be called");
-      };
+      const funcB = val => assert.fail("expect function to not be called");
 
       const func = ltor(funcA, funcB);
       expect(func).to.be.a("function");
@@ -399,9 +397,7 @@ describe("ltor", () => {
         });
       };
 
-      const funcB = val => {
-        assert.fail("expect function to not be called");
-      };
+      const funcB = val => assert.fail("expect function to not be called");
 
       const func = ltor(funcA, funcB);
       expect(func).to.be.a("function");

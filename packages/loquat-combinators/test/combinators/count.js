@@ -44,9 +44,7 @@ describe("count", () => {
 
     // empty
     {
-      const parser = new StrictParser(state => {
-        assert.fail("expect function to not be called");
-      });
+      const parser = new StrictParser(state => assert.fail("expect function to not be called"));
       const repParser = count(0, parser);
       expect(repParser).to.be.a.parser;
       const res = repParser.run(initState);

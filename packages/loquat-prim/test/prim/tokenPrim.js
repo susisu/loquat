@@ -31,9 +31,7 @@ describe("tokenPrim", () => {
           expect(config).to.be.an.equalConfigTo(initState.config);
           return { empty: false, value: "foo" };
         },
-        x => {
-          assert.fail("expect function to not be called");
-        },
+        x => assert.fail("expect function to not be called"),
         (pos, x, xs, config) => {
           expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(x).to.equal("A");
@@ -78,9 +76,7 @@ describe("tokenPrim", () => {
           expect(config).to.be.an.equalConfigTo(initState.config);
           return { empty: false, value: "nyancat" };
         },
-        x => {
-          assert.fail("expect function to not be called");
-        },
+        x => assert.fail("expect function to not be called"),
         (pos, x, xs, config) => {
           expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(x).to.equal("A");
@@ -121,12 +117,8 @@ describe("tokenPrim", () => {
           expect(x).to.equal("A");
           return "foo";
         },
-        (pos, x, xs, config) => {
-          assert.fail("expect function to not be called");
-        },
-        (userState, pos, x, xs, config) => {
-          assert.fail("expect function to not be called");
-        }
+        (pos, x, xs, config) => assert.fail("expect function to not be called"),
+        (userState, pos, x, xs, config) => assert.fail("expect function to not be called")
       );
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
@@ -147,18 +139,10 @@ describe("tokenPrim", () => {
         "none"
       );
       const parser = tokenPrim(
-        (x, config) => {
-          assert.fail("expect function to not be called");
-        },
-        x => {
-          assert.fail("expect function to not be called");
-        },
-        (pos, x, xs, config) => {
-          assert.fail("expect function to not be called");
-        },
-        (userState, pos, x, xs, config) => {
-          assert.fail("expect function to not be called");
-        }
+        (x, config) => assert.fail("expect function to not be called"),
+        x => assert.fail("expect function to not be called"),
+        (pos, x, xs, config) => assert.fail("expect function to not be called"),
+        (userState, pos, x, xs, config) => assert.fail("expect function to not be called")
       );
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
@@ -187,9 +171,7 @@ describe("tokenPrim", () => {
           expect(config).to.be.an.equalConfigTo(initState.config);
           return { empty: false, value: "foo" };
         },
-        x => {
-          assert.fail("expect function to not be called");
-        },
+        x => assert.fail("expect function to not be called"),
         (pos, x, xs, config) => {
           expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(x).to.equal("\uD83C");
@@ -234,9 +216,7 @@ describe("tokenPrim", () => {
           expect(config).to.be.an.equalConfigTo(initState.config);
           return { empty: false, value: "foo" };
         },
-        x => {
-          assert.fail("expect function to not be called");
-        },
+        x => assert.fail("expect function to not be called"),
         (pos, x, xs, config) => {
           expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(x).to.equal("\uD83C\uDF63");

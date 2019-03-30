@@ -74,9 +74,7 @@ describe("satisfy", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const parser = satisfy((char, config) => {
-        assert.fail("expect function to not be called");
-      });
+      const parser = satisfy((char, config) => assert.fail("expect function to not be called"));
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(

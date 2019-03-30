@@ -144,9 +144,7 @@ describe("liftM3", () => {
         expect(state).to.be.an.equalStateTo(stateA);
         return Result.cfail(errB);
       });
-      const parserC = new StrictParser(state => {
-        assert.fail("expect function to not be called");
-      });
+      const parserC = new StrictParser(state => assert.fail("expect function to not be called"));
       const parser = liftedFunc(parserA, parserB, parserC);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
@@ -244,9 +242,7 @@ describe("liftM3", () => {
         expect(state).to.be.an.equalStateTo(stateA);
         return Result.efail(errB);
       });
-      const parserC = new StrictParser(state => {
-        assert.fail("expect function to not be called");
-      });
+      const parserC = new StrictParser(state => assert.fail("expect function to not be called"));
       const parser = liftedFunc(parserA, parserB, parserC);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
@@ -258,12 +254,8 @@ describe("liftM3", () => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.cfail(errA);
       });
-      const parserB = new StrictParser(state => {
-        assert.fail("expect function to not be called");
-      });
-      const parserC = new StrictParser(state => {
-        assert.fail("expect function to not be called");
-      });
+      const parserB = new StrictParser(state => assert.fail("expect function to not be called"));
+      const parserC = new StrictParser(state => assert.fail("expect function to not be called"));
       const parser = liftedFunc(parserA, parserB, parserC);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
@@ -355,9 +347,7 @@ describe("liftM3", () => {
         expect(state).to.be.an.equalStateTo(stateA);
         return Result.cfail(errB);
       });
-      const parserC = new StrictParser(state => {
-        assert.fail("expect function to not be called");
-      });
+      const parserC = new StrictParser(state => assert.fail("expect function to not be called"));
       const parser = liftedFunc(parserA, parserB, parserC);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
@@ -455,9 +445,7 @@ describe("liftM3", () => {
         expect(state).to.be.an.equalStateTo(stateA);
         return Result.efail(errB);
       });
-      const parserC = new StrictParser(state => {
-        assert.fail("expect function to not be called");
-      });
+      const parserC = new StrictParser(state => assert.fail("expect function to not be called"));
       const parser = liftedFunc(parserA, parserB, parserC);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
@@ -469,12 +457,8 @@ describe("liftM3", () => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.efail(errA);
       });
-      const parserB = new StrictParser(state => {
-        assert.fail("expect function to not be called");
-      });
-      const parserC = new StrictParser(state => {
-        assert.fail("expect function to not be called");
-      });
+      const parserB = new StrictParser(state => assert.fail("expect function to not be called"));
+      const parserC = new StrictParser(state => assert.fail("expect function to not be called"));
       const parser = liftedFunc(parserA, parserB, parserC);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);

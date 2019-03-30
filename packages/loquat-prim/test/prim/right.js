@@ -111,9 +111,7 @@ describe("right", () => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.cfail(errA);
       });
-      const parserB = new StrictParser(() => {
-        assert.fail("expect function to not be called");
-      });
+      const parserB = new StrictParser(state => assert.fail("expect function to not be called"));
       const composed = right(parserA, parserB);
       expect(composed).to.be.a.parser;
       const res = composed.run(initState);
@@ -185,9 +183,7 @@ describe("right", () => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.efail(errA);
       });
-      const parserB = new StrictParser(() => {
-        assert.fail("expect function to not be called");
-      });
+      const parserB = new StrictParser(state => assert.fail("expect function to not be called"));
       const composed = right(parserA, parserB);
       expect(composed).to.be.a.parser;
       const res = composed.run(initState);

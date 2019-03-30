@@ -188,9 +188,7 @@ describe("sequence", () => {
         return Result.cfail(errA);
       });
 
-      const parserB = new StrictParser(state => {
-        assert.fail("expect function to not be called");
-      });
+      const parserB = new StrictParser(state => assert.fail("expect function to not be called"));
 
       const parser = sequence([parserA, parserB]);
       expect(parser).to.be.a.parser;
@@ -350,9 +348,7 @@ describe("sequence", () => {
         return Result.efail(errA);
       });
 
-      const parserB = new StrictParser(state => {
-        assert.fail("expect function to not be called");
-      });
+      const parserB = new StrictParser(state => assert.fail("expect function to not be called"));
 
       const parser = sequence([parserA, parserB]);
       expect(parser).to.be.a.parser;
