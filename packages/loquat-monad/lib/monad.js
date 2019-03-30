@@ -29,12 +29,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.when
-     * @static
-     * @param {boolean} cond
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * when: [S, U, A](cond: boolean, parser: Parser[S, U, A]) => Parser[S, U, undefined]
+   */
   function when(cond, parser) {
     return cond ? parser : pure(undefined);
   }
