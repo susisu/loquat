@@ -80,11 +80,10 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.liftM4
-     * @static
-     * @param {function} func
-     * @returns {function}
-     */
+   * liftM3: [S, U, A, B, C, D, E](
+   *   func: (A, B, C, D) => E
+   * ) => (Parser[S, U, A], Parser[S, U, B], Parser[S, U, C], Parser[S, U, D]) => Parser[S, U, E]
+   */
   function liftM4(func) {
     return (parserA, parserB, parserC, parserD) =>
       bind(parserA, valA =>
