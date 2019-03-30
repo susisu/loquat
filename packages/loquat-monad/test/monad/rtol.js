@@ -17,7 +17,7 @@ const {
 const { rtol } = _monad;
 
 describe("rtol", () => {
-  it("should compose functions from values to parsers, from right to to", () => {
+  it("should compose functions from values to parsers, from right to left", () => {
     const initState = new State(
       new Config(),
       "input",
