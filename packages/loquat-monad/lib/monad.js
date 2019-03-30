@@ -80,7 +80,7 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-   * liftM3: [S, U, A, B, C, D, E](
+   * liftM4: [S, U, A, B, C, D, E](
    *   func: (A, B, C, D) => E
    * ) => (Parser[S, U, A], Parser[S, U, B], Parser[S, U, C], Parser[S, U, D]) => Parser[S, U, E]
    */
@@ -98,11 +98,11 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.liftM5
-     * @static
-     * @param {function} func
-     * @returns {function}
-     */
+   * liftM5: [S, U, A, B, C, D, E, F](
+   *   func: (A, B, C, D, E) => F
+   * ) => (Parser[S, U, A], Parser[S, U, B], Parser[S, U, C], Parser[S, U, D], Parser[S, U, E])
+   *   => Parser[S, U, E]
+   */
   function liftM5(func) {
     return (parserA, parserB, parserC, parserD, parserE) =>
       bind(parserA, valA =>
