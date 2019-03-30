@@ -180,7 +180,35 @@ module.exports = (_core, { _prim }) => {
    * sequence_: [S, U, A](parsers: Array[Parser[S, U, A]]) => Parser[S, U, undefined]
    */
   function sequence_(parsers) {
-    return parsers.reduceRight((accum, parser) => then(parser, accum), pure(undefined));
+    return new StrictParser(state => {
+      let currentState = state;
+      let currentErr = ParseError.unknown(state.pos);
+      let consumed = false;
+      for (const parser of parsers) {
+        const res = parser.run(currentState);
+        if (res.success) {
+          if (res.consumed) {
+            consumed = true;
+            currentState = res.state;
+            currentErr = res.err;
+          } else {
+            currentState = res.state;
+            currentErr = ParseError.merge(currentErr, res.err);
+          }
+        } else {
+          if (res.consumed) {
+            return res;
+          } else {
+            return consumed
+              ? Result.cfail(ParseError.merge(currentErr, res.err))
+              : Result.efail(ParseError.merge(currentErr, res.err));
+          }
+        }
+      }
+      return consumed
+        ? Result.csucc(currentErr, undefined, currentState)
+        : Result.esucc(currentErr, undefined, currentState);
+    });
   }
 
   /**
