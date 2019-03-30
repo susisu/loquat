@@ -350,12 +350,8 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-     * @function module:monad.replicateM_
-     * @static
-     * @param {number} num
-     * @param {AbstractParser} parser
-     * @returns {AbstractParser}
-     */
+   * replicateM_: [S, U, A](num: int, parser: Parser[S, U, A]) => Parser[S, U, undefined]
+   */
   function replicateM_(num, parser) {
     return sequence_(new Array(num).fill(parser));
   }
