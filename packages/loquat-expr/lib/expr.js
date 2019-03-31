@@ -6,13 +6,16 @@ module.exports = (_core, { _prim, _combinators }) => {
   const { choice } = _combinators;
 
   /**
-     * @constant {Object} module:expr.OperatorType
-     * @description The `OperatorType` object has string constants describing operator types:
-     * - `OperatorType.INFIX = "infix"`
-     * - `OperatorType.PREFIX = "prefix"`
-     * - `OperatorType.POSTFIX = "postifx"`
-     * @static
-     */
+   * type OperatorType = "infix" \/ "prefix" \/ "postfix"
+   */
+
+  /**
+   * object OperatorType {
+   *   INFIX: "infix"
+   *   PREFIX: "prefix"
+   *   POSTFIX: "postfix"
+   * }
+   */
   const OperatorType = Object.freeze({
     INFIX  : "infix",
     PREFIX : "prefix",
@@ -20,14 +23,16 @@ module.exports = (_core, { _prim, _combinators }) => {
   });
 
   /**
-     * @constant {Object} module:expr.OperatorAssoc
-     * @description The `OperatorAssoc` object has string constants describing operator
-     * associativities:
-     * - `OperatorAssoc.NONE = "none"`
-     * - `OperatorAssoc.LEFT = "left"`
-     * - `OperatorAssoc.RIGHT = "right"`
-     * @static
-     */
+   * type OperatorAssoc = "none" \/ "left" \/ "right"
+   */
+
+  /**
+   * object OperatorAssoc {
+   *   NONE: "none"
+   *   LEFT: "left"
+   *   RIGHT: "right"
+   * }
+   */
   const OperatorAssoc = Object.freeze({
     NONE : "none",
     LEFT : "left",
@@ -35,51 +40,33 @@ module.exports = (_core, { _prim, _combinators }) => {
   });
 
   /**
-     * @static
-     */
+   * class Operator[S, U, A](type: OperatorType, parser: Parser[S, U, any], assoc?: OperatorAssoc)
+   *
+   * FIXME
+   */
   class Operator {
-    /**
-         * @param {string} type
-         * @param {AbstractParser} parser
-         * @param {(string|undefined)} [assoc=undefined]
-         */
     constructor(type, parser, assoc) {
       this._type   = type;
       this._parser = parser;
       this._assoc  = assoc;
     }
 
-    /**
-         * @readonly
-         * @type {string}
-         */
     get type() {
       return this._type;
     }
 
-    /**
-         * @readonly
-         * @type {AbstractParser}
-         */
     get parser() {
       return this._parser;
     }
 
-    /**
-         * @readonly
-         * @type {(string|undefined)}
-         */
     get assoc() {
       return this._assoc;
     }
   }
 
   /**
-     * @private
-     * @param {AbstractParser} term
-     * @param {Array.<Operator>} ops
-     * @returns {AbstractParser}
-     */
+   * makeParser: [S, U, A](term: Parser[S, U, A], ops: Array[Operator[S, U, A]]) => Parser[S, U, A]
+   */
   function makeParser(term, ops) {
     // collect operators
     const nonAssoc   = [];
@@ -190,6 +177,7 @@ module.exports = (_core, { _prim, _combinators }) => {
               return opRes;
             } else {
               const ambRes = mplus(ambiguousLeft, ambiguousNon).run(initState); // always efail
+              // assert(!ambRes.success && !ambRes.consumed);
               const err = ParseError.merge(ParseError.merge(currentErr, opRes.err), ambRes.err);
               let resVal = x;
               if (vals.length > 0) {
@@ -200,8 +188,8 @@ module.exports = (_core, { _prim, _combinators }) => {
                 resVal = operations[0](resVal, currentVal);
               }
               return consumed
-                                ? Result.csucc(err, resVal, initState)
-                                : Result.esucc(err, resVal, initState);
+                ? Result.csucc(err, resVal, initState)
+                : Result.esucc(err, resVal, initState);
             }
           }
 
@@ -225,6 +213,7 @@ module.exports = (_core, { _prim, _combinators }) => {
                 return Result.cfail(ParseError.merge(currentErr, termRes.err));
               } else {
                 const ambRes = mplus(ambiguousLeft, ambiguousNon).run(initState); // always efail
+                // assert(!ambRes.success && !ambRes.consumed);
                 const err = ParseError.merge(ParseError.merge(currentErr, termRes.err), ambRes.err);
                 let resVal = x;
                 if (vals.length > 0) {
@@ -235,8 +224,8 @@ module.exports = (_core, { _prim, _combinators }) => {
                   resVal = operations[0](resVal, currentVal);
                 }
                 return consumed
-                                    ? Result.csucc(err, resVal, initState)
-                                    : Result.esucc(err, resVal, initState);
+                  ? Result.csucc(err, resVal, initState)
+                  : Result.esucc(err, resVal, initState);
               }
             }
           }
@@ -283,10 +272,11 @@ module.exports = (_core, { _prim, _combinators }) => {
               return opRes;
             } else {
               const ambRes = mplus(ambiguousRight, ambiguousNon).run(initState); // always efail
+              // assert(!ambRes.success && !ambRes.consumed);
               const err = ParseError.merge(ParseError.merge(currentErr, opRes.err), ambRes.err);
               return consumed
-                                ? Result.csucc(err, currentVal, initState)
-                                : Result.esucc(err, currentVal, initState);
+                ? Result.csucc(err, currentVal, initState)
+                : Result.esucc(err, currentVal, initState);
             }
           }
 
@@ -310,10 +300,11 @@ module.exports = (_core, { _prim, _combinators }) => {
                 return Result.cfail(ParseError.merge(currentErr, termRes.err));
               } else {
                 const ambRes = mplus(ambiguousRight, ambiguousNon).run(initState); // always efail
+                // assert(!ambRes.success && !ambRes.consumed);
                 const err = ParseError.merge(ParseError.merge(currentErr, termRes.err), ambRes.err);
                 return consumed
-                                    ? Result.csucc(err, currentVal, initState)
-                                    : Result.esucc(err, currentVal, initState);
+                  ? Result.csucc(err, currentVal, initState)
+                  : Result.esucc(err, currentVal, initState);
               }
             }
           }
@@ -326,7 +317,10 @@ module.exports = (_core, { _prim, _combinators }) => {
       return bind(nassocOp, f =>
         bind(termP, y =>
           mplus(
-            mplus(mplus(ambiguousRight, ambiguousLeft), ambiguousNon),
+            mplus(
+              mplus(ambiguousRight, ambiguousLeft),
+              ambiguousNon
+            ),
             pure(f(x, y))
           )
         )
@@ -336,7 +330,10 @@ module.exports = (_core, { _prim, _combinators }) => {
     return bind(termP, x =>
       label(
         mplus(
-          mplus(mplus(rassocP(x), lassocP(x)), nassocP(x)),
+          mplus(
+            mplus(rassocP(x), lassocP(x)),
+            nassocP(x)
+          ),
           pure(x)
         ),
         "operator"
@@ -345,12 +342,11 @@ module.exports = (_core, { _prim, _combinators }) => {
   }
 
   /**
-     * @function module:expr.buildExpressionParser
-     * @static
-     * @param {Array.<Array.<Operator>>} opTable
-     * @param {AbstractParser} atom
-     * @returns {AbstractParser}
-     */
+   * buildExpressionParser: [S, U, A](
+   *   opTable: Array[Array[Operator[S, U, A]]],
+   *   atom: Parser[S, U, A]
+   * ) => Parser[S, U, A]
+   */
   function buildExpressionParser(opTable, atom) {
     return opTable.reduce(makeParser, atom);
   }
