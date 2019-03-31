@@ -6,6 +6,7 @@
 
 module.exports = (_core, opts = {}) => {
   const _prim = require("loquat-prim")(_core);
+
   const _char = require("./lib/char.js")(_core, { _prim });
 
   if (opts.sugar) {

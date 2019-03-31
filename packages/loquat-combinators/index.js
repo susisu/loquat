@@ -5,7 +5,8 @@
 "use strict";
 
 module.exports = (_core, opts = {}) => {
-  const _prim        = require("loquat-prim")(_core);
+  const _prim = require("loquat-prim")(_core);
+
   const _combinators = require("./lib/combinators.js")(_core, { _prim });
 
   if (opts.sugar) {
