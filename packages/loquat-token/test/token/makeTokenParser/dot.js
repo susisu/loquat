@@ -22,61 +22,61 @@ const LanguageDef = _language.LanguageDef;
 const makeTokenParser = _token.makeTokenParser;
 
 describe(".dot", () => {
-    it("should parse a dot", () => {
-        const def = new LanguageDef({});
-        const tp = makeTokenParser(def);
-        const dot = tp.dot;
-        assertParser(dot);
-        // csuc
-        {
-            const initState = new State(
-                new Config({ tabWidth: 8 }),
-                ". ABC",
-                new SourcePos("foobar", 1, 1),
-                "none"
-            );
-            const res = dot.run(initState);
-            expect(Result.equal(
-                res,
-                Result.csuc(
-                    new ParseError(
-                        new SourcePos("foobar", 1, 3),
-                        [
-                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                            new ErrorMessage(ErrorMessageType.EXPECT, "")
-                        ]
-                    ),
-                    ".",
-                    new State(
-                        new Config({ tabWidth: 8 }),
-                        "ABC",
-                        new SourcePos("foobar", 1, 3),
-                        "none"
-                    )
-                )
-            )).to.be.true;
-        }
-        // eerr
-        {
-            const initState = new State(
-                new Config({ tabWidth: 8 }),
-                "ABC",
-                new SourcePos("foobar", 1, 1),
-                "none"
-            );
-            const res = dot.run(initState);
-            expect(Result.equal(
-                res,
-                Result.eerr(
-                    new ParseError(
-                        new SourcePos("foobar", 1, 1),
-                        [
-                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                            new ErrorMessage(ErrorMessageType.EXPECT, show("."))
-                        ]
-                    )
-                )
-            )).to.be.true;
-        }
-    });
+  it("should parse a dot", () => {
+    const def = new LanguageDef({});
+    const tp = makeTokenParser(def);
+    const dot = tp.dot;
+    assertParser(dot);
+    // csuc
+    {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        ". ABC",
+        new SourcePos("foobar", 1, 1),
+        "none"
+      );
+      const res = dot.run(initState);
+      expect(Result.equal(
+        res,
+        Result.csuc(
+          new ParseError(
+            new SourcePos("foobar", 1, 3),
+            [
+              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+            ]
+          ),
+          ".",
+          new State(
+            new Config({ tabWidth: 8 }),
+            "ABC",
+            new SourcePos("foobar", 1, 3),
+            "none"
+          )
+        )
+      )).to.be.true;
+    }
+    // eerr
+    {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        "ABC",
+        new SourcePos("foobar", 1, 1),
+        "none"
+      );
+      const res = dot.run(initState);
+      expect(Result.equal(
+        res,
+        Result.eerr(
+          new ParseError(
+            new SourcePos("foobar", 1, 1),
+            [
+              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+              new ErrorMessage(ErrorMessageType.EXPECT, show(".")),
+            ]
+          )
+        )
+      )).to.be.true;
+    }
+  });
 });

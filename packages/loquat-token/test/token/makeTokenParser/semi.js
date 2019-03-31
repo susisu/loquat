@@ -22,61 +22,61 @@ const LanguageDef = _language.LanguageDef;
 const makeTokenParser = _token.makeTokenParser;
 
 describe(".semi", () => {
-    it("should parse a semicolon", () => {
-        const def = new LanguageDef({});
-        const tp = makeTokenParser(def);
-        const semi = tp.semi;
-        assertParser(semi);
-        // csuc
-        {
-            const initState = new State(
-                new Config({ tabWidth: 8 }),
-                "; ABC",
-                new SourcePos("foobar", 1, 1),
-                "none"
-            );
-            const res = semi.run(initState);
-            expect(Result.equal(
-                res,
-                Result.csuc(
-                    new ParseError(
-                        new SourcePos("foobar", 1, 3),
-                        [
-                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                            new ErrorMessage(ErrorMessageType.EXPECT, "")
-                        ]
-                    ),
-                    ";",
-                    new State(
-                        new Config({ tabWidth: 8 }),
-                        "ABC",
-                        new SourcePos("foobar", 1, 3),
-                        "none"
-                    )
-                )
-            )).to.be.true;
-        }
-        // eerr
-        {
-            const initState = new State(
-                new Config({ tabWidth: 8 }),
-                "ABC",
-                new SourcePos("foobar", 1, 1),
-                "none"
-            );
-            const res = semi.run(initState);
-            expect(Result.equal(
-                res,
-                Result.eerr(
-                    new ParseError(
-                        new SourcePos("foobar", 1, 1),
-                        [
-                            new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                            new ErrorMessage(ErrorMessageType.EXPECT, show(";"))
-                        ]
-                    )
-                )
-            )).to.be.true;
-        }
-    });
+  it("should parse a semicolon", () => {
+    const def = new LanguageDef({});
+    const tp = makeTokenParser(def);
+    const semi = tp.semi;
+    assertParser(semi);
+    // csuc
+    {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        "; ABC",
+        new SourcePos("foobar", 1, 1),
+        "none"
+      );
+      const res = semi.run(initState);
+      expect(Result.equal(
+        res,
+        Result.csuc(
+          new ParseError(
+            new SourcePos("foobar", 1, 3),
+            [
+              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+            ]
+          ),
+          ";",
+          new State(
+            new Config({ tabWidth: 8 }),
+            "ABC",
+            new SourcePos("foobar", 1, 3),
+            "none"
+          )
+        )
+      )).to.be.true;
+    }
+    // eerr
+    {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        "ABC",
+        new SourcePos("foobar", 1, 1),
+        "none"
+      );
+      const res = semi.run(initState);
+      expect(Result.equal(
+        res,
+        Result.eerr(
+          new ParseError(
+            new SourcePos("foobar", 1, 1),
+            [
+              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+              new ErrorMessage(ErrorMessageType.EXPECT, show(";")),
+            ]
+          )
+        )
+      )).to.be.true;
+    }
+  });
 });
