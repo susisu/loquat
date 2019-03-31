@@ -1,7 +1,3 @@
-/*
- * loquat-expr test / expr.Operator
- */
-
 "use strict";
 
 describe(".Operator", () => {

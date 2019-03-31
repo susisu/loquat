@@ -1,7 +1,3 @@
-/*
- * loquat-expr test / expr
- */
-
 "use strict";
 
 describe("expr", () => {

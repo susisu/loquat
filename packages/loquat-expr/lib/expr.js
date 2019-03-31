@@ -1,27 +1,9 @@
-/*
- * loquat-expr / expr.js
- */
-
-/**
- * @module expr
- */
-
 "use strict";
 
-module.exports = (_core, _prim, _combinators) => {
-  const ParseError = _core.ParseError;
-  const Result     = _core.Result;
-  const Parser     = _core.Parser;
-
-  const pure     = _prim.pure;
-  const bind     = _prim.bind;
-  const then     = _prim.then;
-  const fail     = _prim.fail;
-  const mplus    = _prim.mplus;
-  const label    = _prim.label;
-  const tryParse = _prim.tryParse;
-
-  const choice = _combinators.choice;
+module.exports = (_core, { _prim, _combinators }) => {
+  const { ParseError, Result, StrictParser } = _core;
+  const { pure, bind, then, fail, mplus, label, tryParse } = _prim;
+  const { choice } = _combinators;
 
   /**
      * @constant {Object} module:expr.OperatorType
@@ -140,7 +122,7 @@ module.exports = (_core, _prim, _combinators) => {
     const prefixOp  = label(choice(prefix), "");
     const postfixOp = label(choice(postfix), "");
 
-    // warn ambiguity (always eerr)
+    // warn ambiguity (always efail)
     function ambiguous(assoc, parser) {
       return tryParse(
         then(parser, fail(`ambiguous use of a ${assoc} associative operator`))
@@ -182,7 +164,7 @@ module.exports = (_core, _prim, _combinators) => {
     }
 
     function rassocP1(x) {
-      return new Parser(state => {
+      return new StrictParser(state => {
         const vals = [];
         const operations = [];
         let currentState = state;
@@ -207,7 +189,7 @@ module.exports = (_core, _prim, _combinators) => {
             if (opRes.consumed) {
               return opRes;
             } else {
-              const ambRes = mplus(ambiguousLeft, ambiguousNon).run(initState); // always eerr
+              const ambRes = mplus(ambiguousLeft, ambiguousNon).run(initState); // always efail
               const err = ParseError.merge(ParseError.merge(currentErr, opRes.err), ambRes.err);
               let resVal = x;
               if (vals.length > 0) {
@@ -218,8 +200,8 @@ module.exports = (_core, _prim, _combinators) => {
                 resVal = operations[0](resVal, currentVal);
               }
               return consumed
-                                ? Result.csuc(err, resVal, initState)
-                                : Result.esuc(err, resVal, initState);
+                                ? Result.csucc(err, resVal, initState)
+                                : Result.esucc(err, resVal, initState);
             }
           }
 
@@ -240,9 +222,9 @@ module.exports = (_core, _prim, _combinators) => {
               return termRes;
             } else {
               if (opRes.consumed) {
-                return Result.cerr(ParseError.merge(currentErr, termRes.err));
+                return Result.cfail(ParseError.merge(currentErr, termRes.err));
               } else {
-                const ambRes = mplus(ambiguousLeft, ambiguousNon).run(initState); // always eerr
+                const ambRes = mplus(ambiguousLeft, ambiguousNon).run(initState); // always efail
                 const err = ParseError.merge(ParseError.merge(currentErr, termRes.err), ambRes.err);
                 let resVal = x;
                 if (vals.length > 0) {
@@ -253,8 +235,8 @@ module.exports = (_core, _prim, _combinators) => {
                   resVal = operations[0](resVal, currentVal);
                 }
                 return consumed
-                                    ? Result.csuc(err, resVal, initState)
-                                    : Result.esuc(err, resVal, initState);
+                                    ? Result.csucc(err, resVal, initState)
+                                    : Result.esucc(err, resVal, initState);
               }
             }
           }
@@ -275,7 +257,7 @@ module.exports = (_core, _prim, _combinators) => {
     }
 
     function lassocP1(x) {
-      return new Parser(state => {
+      return new StrictParser(state => {
         let currentVal = x;
         let currentOperation;
         let currentState = state;
@@ -300,11 +282,11 @@ module.exports = (_core, _prim, _combinators) => {
             if (opRes.consumed) {
               return opRes;
             } else {
-              const ambRes = mplus(ambiguousRight, ambiguousNon).run(initState); // always eerr
+              const ambRes = mplus(ambiguousRight, ambiguousNon).run(initState); // always efail
               const err = ParseError.merge(ParseError.merge(currentErr, opRes.err), ambRes.err);
               return consumed
-                                ? Result.csuc(err, currentVal, initState)
-                                : Result.esuc(err, currentVal, initState);
+                                ? Result.csucc(err, currentVal, initState)
+                                : Result.esucc(err, currentVal, initState);
             }
           }
 
@@ -325,13 +307,13 @@ module.exports = (_core, _prim, _combinators) => {
               return termRes;
             } else {
               if (opRes.consumed) {
-                return Result.cerr(ParseError.merge(currentErr, termRes.err));
+                return Result.cfail(ParseError.merge(currentErr, termRes.err));
               } else {
-                const ambRes = mplus(ambiguousRight, ambiguousNon).run(initState); // always eerr
+                const ambRes = mplus(ambiguousRight, ambiguousNon).run(initState); // always efail
                 const err = ParseError.merge(ParseError.merge(currentErr, termRes.err), ambRes.err);
                 return consumed
-                                    ? Result.csuc(err, currentVal, initState)
-                                    : Result.esuc(err, currentVal, initState);
+                                    ? Result.csucc(err, currentVal, initState)
+                                    : Result.esucc(err, currentVal, initState);
               }
             }
           }

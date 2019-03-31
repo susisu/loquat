@@ -1,23 +1,20 @@
-/*
- * loquat-expr test / expr.Operator constructor()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const Parser = _core.Parser;
+const { StrictParser } = _core;
 
-const OperatorType  = _expr.OperatorType;
-const OperatorAssoc = _expr.OperatorAssoc;
-const Operator      = _expr.Operator;
+const {
+  OperatorType,
+  OperatorAssoc,
+  Operator,
+} = _expr;
 
 describe("constructor(type, parser, assoc)", () => {
   it("should create a new `Operator' instance", () => {
     // infix operator
     {
-      const parser = new Parser(() => {});
+      const parser = new StrictParser(() => {});
       const op = new Operator(OperatorType.INFIX, parser, OperatorAssoc.NONE);
       expect(op.type).to.equal(OperatorType.INFIX);
       expect(op.parser).to.equal(parser);
@@ -25,14 +22,14 @@ describe("constructor(type, parser, assoc)", () => {
     }
     // prefix operator
     {
-      const parser = new Parser(() => {});
+      const parser = new StrictParser(() => {});
       const op = new Operator(OperatorType.PREFIX, parser);
       expect(op.type).to.equal(OperatorType.PREFIX);
       expect(op.parser).to.equal(parser);
     }
     // postfix operator
     {
-      const parser = new Parser(() => {});
+      const parser = new StrictParser(() => {});
       const op = new Operator(OperatorType.POSTFIX, parser);
       expect(op.type).to.equal(OperatorType.POSTFIX);
       expect(op.parser).to.equal(parser);

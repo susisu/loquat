@@ -1,42 +1,40 @@
-/*
- * loquat-expr test / expr.buildExpressionParser()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const SourcePos        = _core.SourcePos;
-const ErrorMessage     = _core.ErrorMessage;
-const ErrorMessageType = _core.ErrorMessageType;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  SourcePos,
+  ErrorMessage,
+  ErrorMessageType,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const OperatorType          = _expr.OperatorType;
-const OperatorAssoc         = _expr.OperatorAssoc;
-const Operator              = _expr.Operator;
-const buildExpressionParser = _expr.buildExpressionParser;
+const {
+  OperatorType,
+  OperatorAssoc,
+  Operator,
+  buildExpressionParser,
+} = _expr;
 
 describe(".buildExpressionParser(opTable, atom)", () => {
   function genP(chars, val) {
-    const csuc = chars[0];
-    const cerr = chars[1];
-    const esuc = chars[2];
-    const eerr = chars[3];
-    return new Parser(state => {
+    const csucc = chars[0];
+    const cfail = chars[1];
+    const esucc = chars[2];
+    const efail = chars[3];
+    return new StrictParser(state => {
       switch (state.input[0]) {
-      case csuc:
+      case csucc:
       {
         const newPos = state.pos.setColumn(state.pos.column + 1);
-        return Result.csuc(
-          new ParseError(
+        return Result.csucc(
+          new StrictParseError(
             newPos,
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "csuc")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc")]
           ),
           val,
           new State(
@@ -47,18 +45,18 @@ describe(".buildExpressionParser(opTable, atom)", () => {
           )
         );
       }
-      case cerr:
-        return Result.cerr(
-          new ParseError(
+      case cfail:
+        return Result.cfail(
+          new StrictParseError(
             state.pos.setColumn(state.pos.column + 1),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "cerr")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail")]
           )
         );
-      case esuc:
-        return Result.esuc(
-          new ParseError(
+      case esucc:
+        return Result.esucc(
+          new StrictParseError(
             state.pos,
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "esuc")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc")]
           ),
           val,
           new State(
@@ -68,12 +66,12 @@ describe(".buildExpressionParser(opTable, atom)", () => {
             "some"
           )
         );
-      case eerr:
+      case efail:
       default:
-        return Result.eerr(
-          new ParseError(
+        return Result.efail(
+          new StrictParseError(
             state.pos,
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "eerr")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "efail")]
           )
         );
       }
@@ -112,8 +110,8 @@ describe(".buildExpressionParser(opTable, atom)", () => {
 
     it("should return a parser that is identical to `atom'", () => {
       const parser = buildExpressionParser(opTable, atom);
-      assertParser(parser);
-      // csuc
+      expect(parser).to.be.a.parser;
+      // csucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -124,10 +122,10 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
-              [new ErrorMessage(ErrorMessageType.MESSAGE, "csuc")]
+              [ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc")]
             ),
             "X",
             new State(
@@ -139,7 +137,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
           )
         )).to.be.true;
       }
-      // cerr
+      // cfail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -150,15 +148,15 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
-              [new ErrorMessage(ErrorMessageType.MESSAGE, "cerr")]
+              [ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail")]
             )
           )
         )).to.be.true;
       }
-      // esuc
+      // esucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -169,10 +167,10 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
-              [new ErrorMessage(ErrorMessageType.MESSAGE, "esuc")]
+              [ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc")]
             ),
             "X",
             new State(
@@ -184,7 +182,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
           )
         )).to.be.true;
       }
-      // eerr
+      // efail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -195,10 +193,10 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.eerr(
-            new ParseError(
+          Result.efail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
-              [new ErrorMessage(ErrorMessageType.MESSAGE, "eerr")]
+              [ErrorMessage.create(ErrorMessageType.MESSAGE, "efail")]
             )
           )
         )).to.be.true;
@@ -213,8 +211,8 @@ describe(".buildExpressionParser(opTable, atom)", () => {
 
     it("should return an expression parser that applies the operator to value", () => {
       const parser = buildExpressionParser(opTable, atom);
-      assertParser(parser);
-      // csuc
+      expect(parser).to.be.a.parser;
+      // csucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -225,13 +223,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),       // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // postfix
               ]
             ),
             "(+X)",
@@ -244,7 +242,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
           )
         )).to.be.true;
       }
-      // cerr
+      // cfail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -255,17 +253,17 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "cerr"), // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // prefix
               ]
             )
           )
         )).to.be.true;
       }
-      // esuc
+      // esucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -276,14 +274,14 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // prefix
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),       // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // prefix
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // postfix
               ]
             ),
             "(+X)",
@@ -296,7 +294,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
           )
         )).to.be.true;
       }
-      // eerr
+      // efail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -307,13 +305,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.eerr(
-            new ParseError(
+          Result.efail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"), // prefix
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),  // term
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"), // prefix
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),  // term
               ]
             )
           )
@@ -329,8 +327,8 @@ describe(".buildExpressionParser(opTable, atom)", () => {
 
     it("should return an expression parser that applies the operator to value", () => {
       const parser = buildExpressionParser(opTable, atom);
-      assertParser(parser);
-      // csuc
+      expect(parser).to.be.a.parser;
+      // csucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -341,11 +339,11 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // postfix
               ]
             ),
             "(X+)",
@@ -358,7 +356,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
           )
         )).to.be.true;
       }
-      // cerr
+      // cfail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -369,17 +367,17 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "cerr"), // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // postfix
               ]
             )
           )
         )).to.be.true;
       }
-      // esuc
+      // esucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -390,14 +388,14 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // term
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // postfix
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // postfix
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             "(X+)",
@@ -410,7 +408,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
           )
         )).to.be.true;
       }
-      // eerr
+      // efail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -421,14 +419,14 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // term
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"), // postfix
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"), // postfix
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             "X",
@@ -451,8 +449,8 @@ describe(".buildExpressionParser(opTable, atom)", () => {
 
     it("should return an expression parser that applies the operator to operands", () => {
       const parser = buildExpressionParser(opTable, atom);
-      assertParser(parser);
-      // csuc
+      expect(parser).to.be.a.parser;
+      // csucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -463,15 +461,15 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // infix
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),  // infix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infix
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),  // infix
               ]
             ),
             "(X+X)",
@@ -484,7 +482,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
           )
         )).to.be.true;
       }
-      // cerr
+      // cfail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -495,17 +493,17 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "cerr"), // infix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // infix
               ]
             )
           )
         )).to.be.true;
       }
-      // esuc
+      // esucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -516,29 +514,29 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                new ErrorMessage(
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                ErrorMessage.create(
                   ErrorMessageType.MESSAGE,
                   "ambiguous use of a non associative operator"
                 ),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
-                new ErrorMessage(
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixl
+                ErrorMessage.create(
                   ErrorMessageType.MESSAGE,
                   "ambiguous use of a non associative operator"
                 ),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infix
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infix
-                new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infix
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // infix
+                ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
               ]
             ),
             "(X+X)",
@@ -551,7 +549,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
           )
         )).to.be.true;
       }
-      // eerr
+      // efail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -562,17 +560,17 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixr
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixl
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infix
-                new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // infixr
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // infixl
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // infix
+                ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
               ]
             ),
             "X",
@@ -596,33 +594,33 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                new ErrorMessage(
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                ErrorMessage.create(
                   ErrorMessageType.MESSAGE,
                   "ambiguous use of a non associative operator"
                 ),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
-                new ErrorMessage(
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixl
+                ErrorMessage.create(
                   ErrorMessageType.MESSAGE,
                   "ambiguous use of a non associative operator"
                 ),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infix
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infix
-                new ErrorMessage(
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infix
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infix
+                ErrorMessage.create(
                   ErrorMessageType.MESSAGE,
                   "ambiguous use of a non associative operator"
                 ),
-                new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
+                ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
               ]
             ),
             "(X+X)",
@@ -645,9 +643,9 @@ describe(".buildExpressionParser(opTable, atom)", () => {
 
     it("should return an expression parser that applies the operator to operands", () => {
       const parser = buildExpressionParser(opTable, atom);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       // 1 operator
-      // csuc
+      // csucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -658,15 +656,15 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // infixl
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),  // infixl
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixl
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),  // infixl
               ]
             ),
             "(X+X)",
@@ -679,7 +677,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
           )
         )).to.be.true;
       }
-      // cerr
+      // cfail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -690,17 +688,17 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "cerr"), // infixl
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // infixl
               ]
             )
           )
         )).to.be.true;
       }
-      // esuc
+      // esucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -711,24 +709,24 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                new ErrorMessage(
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                ErrorMessage.create(
                   ErrorMessageType.MESSAGE,
                   "ambiguous use of a left associative operator"
                 ),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixl
-                new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixl
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // infixl
+                ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
               ]
             ),
             "(X+X)",
@@ -741,7 +739,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
           )
         )).to.be.true;
       }
-      // eerr
+      // efail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -752,16 +750,16 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixl
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixr
-                new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // infixl
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // infixr
+                ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
               ]
             ),
             "X",
@@ -775,7 +773,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         )).to.be.true;
       }
       // 2 operators
-      // csuc
+      // csucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -786,13 +784,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 3),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),  // infixl
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),  // infixl
               ]
             ),
             "((X+X)+X)",
@@ -815,11 +813,11 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 3),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "cerr"), // term
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // term
               ]
             )
           )
@@ -835,15 +833,15 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // infixl
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),  // infixl
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixl
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),  // infixl
               ]
             ),
             "((X+X)+X)",
@@ -866,19 +864,19 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // infixl
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),  // term
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixl
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),  // term
               ]
             )
           )
         )).to.be.true;
       }
-      // cerr
+      // cfail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -889,17 +887,17 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "cerr"), // infixl
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // infixl
               ]
             )
           )
         )).to.be.true;
       }
-      // esuc
+      // esucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -910,13 +908,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),  // infixl
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),  // infixl
               ]
             ),
             "((X+X)+X)",
@@ -939,11 +937,11 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "cerr"), // term
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // term
               ]
             )
           )
@@ -959,28 +957,28 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                new ErrorMessage(
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                ErrorMessage.create(
                   ErrorMessageType.MESSAGE,
                   "ambiguous use of a left associative operator"
                 ),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixl
-                new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixl
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixl
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // infixl
+                ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
               ]
             ),
             "((X+X)+X)",
@@ -1003,26 +1001,26 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                new ErrorMessage(
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                ErrorMessage.create(
                   ErrorMessageType.MESSAGE,
                   "ambiguous use of a left associative operator"
                 ),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixl
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixl
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
               ]
             ),
             "(X+X)",
@@ -1035,7 +1033,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
           )
         )).to.be.true;
       }
-      // eerr
+      // efail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -1046,24 +1044,24 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                new ErrorMessage(
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                ErrorMessage.create(
                   ErrorMessageType.MESSAGE,
                   "ambiguous use of a left associative operator"
                 ),
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixl
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixl
-                new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixl
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // infixl
+                ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
               ]
             ),
             "(X+X)",
@@ -1087,17 +1085,17 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // infixl
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // infixl
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),  // term
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixl
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // infixl
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),  // term
               ]
             ),
             "((X+X)+X)",
@@ -1120,9 +1118,9 @@ describe(".buildExpressionParser(opTable, atom)", () => {
 
     it("should return an expression parser that applies the operator to operands", () => {
       const parser = buildExpressionParser(opTable, atom);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       // 1 operator
-      // csuc
+      // csucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -1133,15 +1131,15 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // infixr
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),  // infixr
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixr
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),  // infixr
               ]
             ),
             "(X+X)",
@@ -1154,7 +1152,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
           )
         )).to.be.true;
       }
-      // cerr
+      // cfail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -1165,17 +1163,17 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "cerr"), // infixr
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // infixr
               ]
             )
           )
         )).to.be.true;
       }
-      // esuc
+      // esucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -1186,19 +1184,19 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixr
-                new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // infixr
+                ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
               ]
             ),
             "(X+X)",
@@ -1211,7 +1209,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
           )
         )).to.be.true;
       }
-      // eerr
+      // efail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -1222,16 +1220,16 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixr
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixl
-                new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // infixr
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // infixl
+                ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
               ]
             ),
             "X",
@@ -1245,7 +1243,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         )).to.be.true;
       }
       // 2 operators
-      // csuc
+      // csucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -1256,13 +1254,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 3),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),  // infixr
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),  // infixr
               ]
             ),
             "(X+(X+X))",
@@ -1285,11 +1283,11 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 3),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "cerr"), // term
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // term
               ]
             )
           )
@@ -1305,15 +1303,15 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // infixr
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),  // infixr
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixr
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),  // infixr
               ]
             ),
             "(X+(X+X))",
@@ -1336,19 +1334,19 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // infixr
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),  // term
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixr
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),  // term
               ]
             )
           )
         )).to.be.true;
       }
-      // cerr
+      // cfail
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -1359,17 +1357,17 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "cerr"), // infixr
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // infixr
               ]
             )
           )
         )).to.be.true;
       }
-      // esuc
+      // esucc
       {
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -1380,13 +1378,13 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),  // infixr
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),  // infixr
               ]
             ),
             "(X+(X+X))",
@@ -1409,11 +1407,11 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "cerr"), // term
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // term
               ]
             )
           )
@@ -1429,23 +1427,23 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixr
-                new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // infixr
+                ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
               ]
             ),
             "(X+(X+X))",
@@ -1468,21 +1466,21 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
               ]
             ),
             "(X+X)",
@@ -1506,27 +1504,27 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // infixr
-                new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // infixr
+                ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
               ]
             ),
             "(X+(X+(X+X)))",
@@ -1549,17 +1547,17 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 2),
               [
-                new ErrorMessage(ErrorMessageType.MESSAGE, "csuc"), // infixr
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"), // infixr
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),  // term
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixr
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // infixr
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),  // term
               ]
             ),
             "(X+(X+X))",
@@ -1583,29 +1581,29 @@ describe(".buildExpressionParser(opTable, atom)", () => {
         const res = parser.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("foobar", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),        // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // term
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // postfix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),   // infixr
-                // new ErrorMessage(ErrorMessageType.EXPECT, ""),     // prefix
-                new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),   // term
-                new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),        // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // postfix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // infixr
+                // ErrorMessage.create(ErrorMessageType.EXPECT, ""),     // prefix
+                ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),   // term
+                ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
               ]
             ),
             "(X+(X+(X+X)))",
@@ -1631,7 +1629,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
 
     it("should return an expression parser that does not parse operators hierarchically", () => {
       const parser = buildExpressionParser(opTable, atom);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "E*E&Ee",
@@ -1641,30 +1639,30 @@ describe(".buildExpressionParser(opTable, atom)", () => {
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(
-          new ParseError(
+        Result.esucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),         // prefix
-              new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),    // term
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),         // postfix
-              new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),    // infixr
-              new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),
-              new ErrorMessage(
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // prefix
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),    // term
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // postfix
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),    // infixr
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),
+              ErrorMessage.create(
                 ErrorMessageType.MESSAGE,
                 "ambiguous use of a left associative operator"
               ),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),    // infixl
-              // new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-              new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),    // term
-              // new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-              new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),    // infixl
-              new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),    // infixr
-              new ErrorMessage(
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),    // infixl
+              // ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),    // term
+              // ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // postfix
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),    // infixl
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),    // infixr
+              ErrorMessage.create(
                 ErrorMessageType.MESSAGE,
                 "ambiguous use of a right associative operator"
               ),
-              new ErrorMessage(ErrorMessageType.EXPECT, "operator"),  // label
+              ErrorMessage.create(ErrorMessageType.EXPECT, "operator"),  // label
             ]
           ),
           "(X+X)",
@@ -1687,7 +1685,7 @@ describe(".buildExpressionParser(opTable, atom)", () => {
 
     it("should return an expression parser that parses operators hierarchically", () => {
       const parser = buildExpressionParser(opTable, atom);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "E*E&Ee",
@@ -1697,34 +1695,34 @@ describe(".buildExpressionParser(opTable, atom)", () => {
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(
-          new ParseError(
+        Result.esucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),         // prefix
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),         // prefix
-              new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),    // term
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),         // postfix
-              new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),    // infixr
-              new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),    // infixl
-              new ErrorMessage(ErrorMessageType.EXPECT, "operator"), // label
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),         // postfix
-              new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),    // infixr
-              new ErrorMessage(
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // prefix
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // prefix
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),    // term
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // postfix
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),    // infixr
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),    // infixl
+              ErrorMessage.create(ErrorMessageType.EXPECT, "operator"), // label
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // postfix
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),    // infixr
+              ErrorMessage.create(
                 ErrorMessageType.MESSAGE,
                 "ambiguous use of a left associative operator"
               ),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),    // infixl
-              // new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-              new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),    // term
-              // new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-              new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),    // infixr
-              // new ErrorMessage(ErrorMessageType.EXPECT, ""),      // prefix
-              new ErrorMessage(ErrorMessageType.MESSAGE, "esuc"),    // term
-              // new ErrorMessage(ErrorMessageType.EXPECT, ""),      // postfix
-              new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),    // infixr
-              new ErrorMessage(ErrorMessageType.MESSAGE, "eerr"),    // infixl
-              new ErrorMessage(ErrorMessageType.EXPECT, "operator"),  // label
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),    // infixl
+              // ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),    // term
+              // ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // postfix
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),    // infixr
+              // ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // prefix
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),    // term
+              // ErrorMessage.create(ErrorMessageType.EXPECT, ""),      // postfix
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),    // infixr
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"),    // infixl
+              ErrorMessage.create(ErrorMessageType.EXPECT, "operator"),  // label
             ]
           ),
           "(X+(X|X))",
@@ -1741,18 +1739,18 @@ describe(".buildExpressionParser(opTable, atom)", () => {
 
   it("should throw an Error if an operator in `opTable' has unknown operator type", () => {
     const opTable = [
-      [new Operator("__unknown_type__", new Parser(() => {}))],
+      [new Operator("__unknown_type__", new StrictParser(() => {}))],
     ];
-    const atom = new Parser(() => {});
+    const atom = new StrictParser(() => {});
     expect(() => { buildExpressionParser(opTable, atom); }).to.throw(Error, /operator/);
   });
 
   it("should throw an Error if an infix operator in `opTable' has unknown operator"
     + " associativity", () => {
     const opTable = [
-      [new Operator(OperatorType.INFIX, new Parser(() => {}), "__unknown_assoc__")],
+      [new Operator(OperatorType.INFIX, new StrictParser(() => {}), "__unknown_assoc__")],
     ];
-    const atom = new Parser(() => {});
+    const atom = new StrictParser(() => {});
     expect(() => { buildExpressionParser(opTable, atom); }).to.throw(Error, /operator/);
   });
 });
