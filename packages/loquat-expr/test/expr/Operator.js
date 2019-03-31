@@ -5,5 +5,5 @@
 "use strict";
 
 describe(".Operator", () => {
-    require("./Operator/constructor.js");
+  require("./Operator/constructor.js");
 });

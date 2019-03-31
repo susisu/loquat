@@ -5,6 +5,6 @@
 "use strict";
 
 describe("expr", () => {
-    require("./expr/Operator.js");
-    require("./expr/buildExpressionParser.js");
+  require("./expr/Operator.js");
+  require("./expr/buildExpressionParser.js");
 });
