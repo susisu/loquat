@@ -13,7 +13,7 @@ const {
   StrictParser,
 } = _core;
 
-const { OperatorType, OperatorAssoc, Operator, buildExpressionParser } = _expr;
+const { OperatorAssoc, Operator, buildExpressionParser } = _expr;
 
 const { createDummyParser } = _test.helper;
 
@@ -78,19 +78,19 @@ describe("buildExpressionParser", () => {
   }
 
   function infixOp(chars, symbol) {
-    return new Operator(OperatorType.INFIX, genInfixP(chars, symbol), OperatorAssoc.NONE);
+    return Operator.infix(genInfixP(chars, symbol), OperatorAssoc.NONE);
   }
   function infixlOp(chars, symbol) {
-    return new Operator(OperatorType.INFIX, genInfixP(chars, symbol), OperatorAssoc.LEFT);
+    return Operator.infix(genInfixP(chars, symbol), OperatorAssoc.LEFT);
   }
   function infixrOp(chars, symbol) {
-    return new Operator(OperatorType.INFIX, genInfixP(chars, symbol), OperatorAssoc.RIGHT);
+    return Operator.infix(genInfixP(chars, symbol), OperatorAssoc.RIGHT);
   }
   function prefixOp(chars, symbol) {
-    return new Operator(OperatorType.PREFIX, genPrefixP(chars, symbol));
+    return Operator.prefix(genPrefixP(chars, symbol));
   }
   function postfixOp(chars, symbol) {
-    return new Operator(OperatorType.POSTFIX, genPostfixP(chars, symbol));
+    return Operator.postfix(genPostfixP(chars, symbol));
   }
 
   const atom = genP("CcEe", "X");
@@ -1579,21 +1579,21 @@ describe("buildExpressionParser", () => {
 
   it("should throw Error if an operator in the table has unknown type", () => {
     const opTable = [
-      [new Operator("__unknown_type__", createDummyParser())],
+      [{ type: "__unknown_type__", parser: createDummyParser() }],
     ];
     const atom = createDummyParser();
     expect(() => {
       buildExpressionParser(opTable, atom);
-    }).to.throw(Error, /operator/);
+    }).to.throw(Error, /unknown operator type/);
   });
 
   it("should throw Error if an infix operator in the table has an unknown associativity", () => {
     const opTable = [
-      [new Operator(OperatorType.INFIX, createDummyParser(), "__unknown_assoc__")],
+      [Operator.infix(createDummyParser(), "__unknown_assoc__")],
     ];
     const atom = createDummyParser();
     expect(() => {
       buildExpressionParser(opTable, atom);
-    }).to.throw(Error, /operator/);
+    }).to.throw(Error, /unknown operator associativity/);
   });
 });

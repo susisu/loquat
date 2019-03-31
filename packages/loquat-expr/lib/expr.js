@@ -40,29 +40,55 @@ module.exports = (_core, { _prim, _combinators }) => {
   });
 
   /**
-   * class Operator[S, U, A](type: OperatorType, parser: Parser[S, U, any], assoc?: OperatorAssoc)
-   *
-   * FIXME
+   * type InfixOperator[S, U, A] = {
+   *   type: "infix",
+   *   parser: Parser[S, U, (A, A) => A],
+   *   assoc: OperatorAssoc,
+   * }
    */
-  class Operator {
-    constructor(type, parser, assoc) {
-      this._type   = type;
-      this._parser = parser;
-      this._assoc  = assoc;
-    }
 
-    get type() {
-      return this._type;
-    }
+  /**
+   * type PrefixOperator[S, U, A] = {
+   *   type: "prefix",
+   *   parser: Parser[S, U, A => A],
+   * }
+   */
 
-    get parser() {
-      return this._parser;
-    }
+  /**
+   * type PostfixOperator[S, U, A] = {
+   *   type: "postfix",
+   *   parser: Parser[S, U, A => A],
+   * }
+   */
 
-    get assoc() {
-      return this._assoc;
-    }
-  }
+  /**
+   * type Operator[S, U, A] =
+   *      InfixOperator[S, U, A]
+   *   \/ PrefixOperator[S, U, A]
+   *   \/ PostfixOperator[S, U, A]
+   */
+
+  /**
+   * object Operator {
+   *   infix: [S, U, A](
+   *     parser: Parser[S, U, (A, A) => A],
+   *     assoc: OperatorAssoc
+   *   ) => InfixOperator[S, U, A]
+   *   prefix: [S, U, A](parser: Parser[S, U, A => A]) => PrefixOperator[S, U, A]
+   *   postfix: [S, U, A](parser: Parser[S, U, A => A]) => PostfixOperator[S, U, A]
+   * }
+   */
+  const Operator = Object.freeze({
+    infix(parser, assoc) {
+      return { type: OperatorType.INFIX, parser, assoc };
+    },
+    prefix(parser) {
+      return { type: OperatorType.PREFIX, parser };
+    },
+    postfix(parser) {
+      return { type: OperatorType.POSTFIX, parser };
+    },
+  });
 
   /**
    * makeParser: [S, U, A](term: Parser[S, U, A], ops: Array[Operator[S, U, A]]) => Parser[S, U, A]
