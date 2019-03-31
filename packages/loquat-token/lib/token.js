@@ -1,52 +1,45 @@
-/*
- * loquat-token / token.js
- */
-
-/**
- * @module token
- */
-
 "use strict";
 
-module.exports = (_core, _prim, _char, _combinators) => {
-  const show         = _core.show;
-  const unconsString = _core.unconsString;
-  const isParser     = _core.isParser;
-
-  const map        = _prim.map;
-  const pure       = _prim.pure;
-  const bind       = _prim.bind;
-  const then       = _prim.then;
-  const tailRecM   = _prim.tailRecM;
-  const ftailRecM  = _prim.ftailRecM;
-  const mplus      = _prim.mplus;
-  const label      = _prim.label;
-  const unexpected = _prim.unexpected;
-  const tryParse   = _prim.tryParse;
-  const skipMany   = _prim.skipMany;
-  const getConfig  = _prim.getConfig;
-
-  const string     = _char.string;
-  const satisfy    = _char.satisfy;
-  const oneOf      = _char.oneOf;
-  const noneOf     = _char.noneOf;
-  const char       = _char.char;
-  const space      = _char.space;
-  const upper      = _char.upper;
-  const digit      = _char.digit;
-  const octDigit   = _char.octDigit;
-  const hexDigit   = _char.hexDigit;
-  const manyChars  = _char.manyChars;
-  const manyChars1 = _char.manyChars1;
-
-  const choice        = _combinators.choice;
-  const option        = _combinators.option;
-  const between       = _combinators.between;
-  const many1         = _combinators.many1;
-  const skipMany1     = _combinators.skipMany1;
-  const sepBy         = _combinators.sepBy;
-  const sepBy1        = _combinators.sepBy1;
-  const notFollowedBy = _combinators.notFollowedBy;
+module.exports = (_core, { _prim, _char, _combinators }) => {
+  const { show, unconsString, isParser } = _core;
+  const {
+    map,
+    pure,
+    bind,
+    then,
+    tailRecM,
+    ftailRecM,
+    mplus,
+    label,
+    unexpected,
+    tryParse,
+    skipMany,
+    getConfig,
+  } = _prim;
+  const {
+    string,
+    satisfy,
+    oneOf,
+    noneOf,
+    char,
+    space,
+    upper,
+    digit,
+    octDigit,
+    hexDigit,
+    manyChars,
+    manyChars1,
+  } = _char;
+  const {
+    choice,
+    option,
+    between,
+    many1,
+    skipMany1,
+    sepBy,
+    sepBy1,
+    notFollowedBy,
+  } = _combinators;
 
   /*
      * white space

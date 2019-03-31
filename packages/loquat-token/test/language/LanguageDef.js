@@ -1,7 +1,3 @@
-/*
- * loquat-token test / language.LanguageDef
- */
-
 "use strict";
 
 describe(".LanguageDef", () => {

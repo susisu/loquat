@@ -1,26 +1,21 @@
-/*
- * loquat-token test / token.makeTokenParser().lexeme()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show             = _core.show;
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const LanguageDef = _language.LanguageDef;
-
-const makeTokenParser = _token.makeTokenParser;
+const { LanguageDef } = _language;
+const { makeTokenParser } = _token;
 
 describe(".lexeme(parser)", () => {
   it("should return a parser that skips trailing spaces and comments", () => {
@@ -33,7 +28,7 @@ describe(".lexeme(parser)", () => {
     const tp = makeTokenParser(def);
     const lexeme = tp.lexeme;
     expect(lexeme).to.be.a("function");
-    // csuc
+    // csucc
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -41,12 +36,12 @@ describe(".lexeme(parser)", () => {
         new SourcePos("foobar", 1, 1),
         "none"
       );
-      const p = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.csuc(
-          new ParseError(
+      const p = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           ),
           "nyancat",
           new State(
@@ -58,18 +53,18 @@ describe(".lexeme(parser)", () => {
         );
       });
       const parser = lexeme(p);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 5, 9),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "nyancat",
@@ -82,7 +77,7 @@ describe(".lexeme(parser)", () => {
         )
       )).to.be.true;
     }
-    // cerr
+    // cfail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -90,29 +85,29 @@ describe(".lexeme(parser)", () => {
         new SourcePos("foobar", 1, 1),
         "none"
       );
-      const p = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.cerr(
-          new ParseError(
+      const p = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           )
         );
       });
       const parser = lexeme(p);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           )
         )
       )).to.be.true;
     }
-    // esuc
+    // esucc
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -120,12 +115,12 @@ describe(".lexeme(parser)", () => {
         new SourcePos("foobar", 1, 1),
         "none"
       );
-      const p = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.esuc(
-          new ParseError(
+      const p = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.esucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           ),
           "nyancat",
           new State(
@@ -137,18 +132,18 @@ describe(".lexeme(parser)", () => {
         );
       });
       const parser = lexeme(p);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 5, 9),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "nyancat",
@@ -161,7 +156,7 @@ describe(".lexeme(parser)", () => {
         )
       )).to.be.true;
     }
-    // eerr
+    // efail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -169,24 +164,24 @@ describe(".lexeme(parser)", () => {
         new SourcePos("foobar", 1, 1),
         "none"
       );
-      const p = new Parser(state => {
-        expect(State.equal(state, initState)).to.be.true;
-        return Result.eerr(
-          new ParseError(
+      const p = new StrictParser(state => {
+        expect(state).to.be.an.equalStateTo(initState);
+        return Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           )
         );
       });
       const parser = lexeme(p);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           )
         )
       )).to.be.true;

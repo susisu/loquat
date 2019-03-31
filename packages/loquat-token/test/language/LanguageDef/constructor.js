@@ -1,15 +1,10 @@
-/*
- * loquat-token test / language.LanguageDef constructor()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const Parser = _core.Parser;
+const { StrictParser } = _core;
 
-const LanguageDef = _language.LanguageDef;
+const { LanguageDef } = _language;
 
 describe("constructor(obj)", () => {
   it("should create a new `LanguageDef' instance", () => {
@@ -45,10 +40,10 @@ describe("constructor(obj)", () => {
     }
     // fully specified object
     {
-      const idStart  = new Parser(() => {});
-      const idLetter = new Parser(() => {});
-      const opStart  = new Parser(() => {});
-      const opLetter = new Parser(() => {});
+      const idStart  = new StrictParser(() => {});
+      const idLetter = new StrictParser(() => {});
+      const opStart  = new StrictParser(() => {});
+      const opLetter = new StrictParser(() => {});
       const def = new LanguageDef({
         commentStart  : "/*",
         commentEnd    : "*/",

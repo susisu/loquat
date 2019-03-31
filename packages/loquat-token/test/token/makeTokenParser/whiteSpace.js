@@ -1,25 +1,20 @@
-/*
- * loquat-token test / token.makeTokenParser().whiteSpace
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show             = _core.show;
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const LanguageDef = _language.LanguageDef;
-
-const makeTokenParser = _token.makeTokenParser;
+const { LanguageDef } = _language;
+const { makeTokenParser } = _token;
 
 describe(".whiteSpace", () => {
   context("when none of one-line and multi-line comments are given", () => {
@@ -48,7 +43,7 @@ describe(".whiteSpace", () => {
       for (const def of defs) {
         const tp = makeTokenParser(def);
         const whiteSpace = tp.whiteSpace;
-        assertParser(whiteSpace);
+        expect(whiteSpace).to.be.a.parser;
         // no white space
         {
           const initState = new State(
@@ -60,12 +55,12 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.esuc(
-              new ParseError(
+            Result.esucc(
+              new StrictParseError(
                 new SourcePos("test", 1, 1),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -88,12 +83,12 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.esuc(
-              new ParseError(
+            Result.esucc(
+              new StrictParseError(
                 new SourcePos("test", 1, 1),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -117,12 +112,12 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.csuc(
-              new ParseError(
+            Result.csucc(
+              new StrictParseError(
                 new SourcePos("test", 2, 9),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -145,12 +140,12 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.csuc(
-              new ParseError(
+            Result.csucc(
+              new StrictParseError(
                 new SourcePos("test", 2, 9),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -195,7 +190,7 @@ describe(".whiteSpace", () => {
       for (const def of defs) {
         const tp = makeTokenParser(def);
         const whiteSpace = tp.whiteSpace;
-        assertParser(whiteSpace);
+        expect(whiteSpace).to.be.a.parser;
         // no spaces and comments
         {
           const initState = new State(
@@ -207,13 +202,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.esuc(
-              new ParseError(
+            Result.esucc(
+              new StrictParseError(
                 new SourcePos("test", 1, 1),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -236,13 +231,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.esuc(
-              new ParseError(
+            Result.esucc(
+              new StrictParseError(
                 new SourcePos("test", 1, 1),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -265,13 +260,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.esuc(
-              new ParseError(
+            Result.esucc(
+              new StrictParseError(
                 new SourcePos("test", 1, 1),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -295,13 +290,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.csuc(
-              new ParseError(
+            Result.csucc(
+              new StrictParseError(
                 new SourcePos("test", 4, 9),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -324,13 +319,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.csuc(
-              new ParseError(
+            Result.csucc(
+              new StrictParseError(
                 new SourcePos("test", 4, 9),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -353,13 +348,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.csuc(
-              new ParseError(
+            Result.csucc(
+              new StrictParseError(
                 new SourcePos("test", 4, 9),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -383,13 +378,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.csuc(
-              new ParseError(
+            Result.csucc(
+              new StrictParseError(
                 new SourcePos("test", 1, 11),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -412,13 +407,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.csuc(
-              new ParseError(
+            Result.csucc(
+              new StrictParseError(
                 new SourcePos("test", 1, 3),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -454,7 +449,7 @@ describe(".whiteSpace", () => {
       for (const def of defs) {
         const tp = makeTokenParser(def);
         const whiteSpace = tp.whiteSpace;
-        assertParser(whiteSpace);
+        expect(whiteSpace).to.be.a.parser;
         // no spaces and comments
         {
           const initState = new State(
@@ -466,13 +461,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.esuc(
-              new ParseError(
+            Result.esucc(
+              new StrictParseError(
                 new SourcePos("test", 1, 1),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -495,13 +490,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.esuc(
-              new ParseError(
+            Result.esucc(
+              new StrictParseError(
                 new SourcePos("test", 1, 1),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -524,13 +519,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.esuc(
-              new ParseError(
+            Result.esucc(
+              new StrictParseError(
                 new SourcePos("test", 1, 1),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -554,13 +549,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.csuc(
-              new ParseError(
+            Result.csucc(
+              new StrictParseError(
                 new SourcePos("test", 4, 9),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -583,13 +578,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.csuc(
-              new ParseError(
+            Result.csucc(
+              new StrictParseError(
                 new SourcePos("test", 4, 9),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -612,13 +607,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.csuc(
-              new ParseError(
+            Result.csucc(
+              new StrictParseError(
                 new SourcePos("test", 4, 9),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -642,15 +637,15 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.cerr(
-              new ParseError(
+            Result.cfail(
+              new StrictParseError(
                 new SourcePos("test", 2, 4),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.EXPECT, "end of comment"),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, "end of comment"),
                 ]
               )
             )
@@ -666,14 +661,14 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.cerr(
-              new ParseError(
+            Result.cfail(
+              new StrictParseError(
                 new SourcePos("test", 1, 3),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.EXPECT, "end of comment"),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, "end of comment"),
                 ]
               )
             )
@@ -686,7 +681,7 @@ describe(".whiteSpace", () => {
       for (const def of defs) {
         const tp = makeTokenParser(def);
         const whiteSpace = tp.whiteSpace;
-        assertParser(whiteSpace);
+        expect(whiteSpace).to.be.a.parser;
         const initState = new State(
           new Config({ tabWidth: 8 }),
           "/*\n/* nyan\ncat */\n*/\nABC",
@@ -696,13 +691,13 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("test", 4, 1),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("*")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("*")),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("*")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("*")),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -737,7 +732,7 @@ describe(".whiteSpace", () => {
       for (const def of defs) {
         const tp = makeTokenParser(def);
         const whiteSpace = tp.whiteSpace;
-        assertParser(whiteSpace);
+        expect(whiteSpace).to.be.a.parser;
         // no spaces and comments
         {
           const initState = new State(
@@ -749,13 +744,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.esuc(
-              new ParseError(
+            Result.esucc(
+              new StrictParseError(
                 new SourcePos("test", 1, 1),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -778,13 +773,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.esuc(
-              new ParseError(
+            Result.esucc(
+              new StrictParseError(
                 new SourcePos("test", 1, 1),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -807,13 +802,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.esuc(
-              new ParseError(
+            Result.esucc(
+              new StrictParseError(
                 new SourcePos("test", 1, 1),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -837,13 +832,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.csuc(
-              new ParseError(
+            Result.csucc(
+              new StrictParseError(
                 new SourcePos("test", 4, 9),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -866,13 +861,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.csuc(
-              new ParseError(
+            Result.csucc(
+              new StrictParseError(
                 new SourcePos("test", 4, 9),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -895,13 +890,13 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.csuc(
-              new ParseError(
+            Result.csucc(
+              new StrictParseError(
                 new SourcePos("test", 4, 9),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, ""),
                 ]
               ),
               undefined,
@@ -925,16 +920,16 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.cerr(
-              new ParseError(
+            Result.cfail(
+              new StrictParseError(
                 new SourcePos("test", 2, 4),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.EXPECT, "end of comment"),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, "end of comment"),
                 ]
               )
             )
@@ -950,15 +945,15 @@ describe(".whiteSpace", () => {
           const res = whiteSpace.run(initState);
           expect(Result.equal(
             res,
-            Result.cerr(
-              new ParseError(
+            Result.cfail(
+              new StrictParseError(
                 new SourcePos("test", 1, 3),
                 [
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                  new ErrorMessage(ErrorMessageType.EXPECT, "end of comment"),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                  ErrorMessage.create(ErrorMessageType.EXPECT, "end of comment"),
                 ]
               )
             )
@@ -971,7 +966,7 @@ describe(".whiteSpace", () => {
       for (const def of defs) {
         const tp = makeTokenParser(def);
         const whiteSpace = tp.whiteSpace;
-        assertParser(whiteSpace);
+        expect(whiteSpace).to.be.a.parser;
         const initState = new State(
           new Config({ tabWidth: 8 }),
           "{-\n{- nyan\ncat -}\n-}\nABC",
@@ -981,13 +976,13 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("test", 5, 1),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1015,7 +1010,7 @@ describe(".whiteSpace", () => {
     it("should skip spaces and multi-line comments", () => {
       const tp = makeTokenParser(def);
       const whiteSpace = tp.whiteSpace;
-      assertParser(whiteSpace);
+      expect(whiteSpace).to.be.a.parser;
       // no spaces and comments
       {
         const initState = new State(
@@ -1027,14 +1022,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("test", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1057,14 +1052,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("test", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1087,14 +1082,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("test", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1118,14 +1113,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("test", 5, 9),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1148,14 +1143,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("test", 5, 9),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("/")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1178,14 +1173,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("test", 5, 9),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1209,14 +1204,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("test", 1, 11),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1239,14 +1234,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("test", 1, 3),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1270,15 +1265,15 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("test", 2, 4),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.EXPECT, "end of comment"),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.EXPECT, "end of comment"),
               ]
             )
           )
@@ -1294,14 +1289,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("test", 1, 3),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.EXPECT, "end of comment"),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.EXPECT, "end of comment"),
               ]
             )
           )
@@ -1312,7 +1307,7 @@ describe(".whiteSpace", () => {
     it("should not allow nested comments", () => {
       const tp = makeTokenParser(def);
       const whiteSpace = tp.whiteSpace;
-      assertParser(whiteSpace);
+      expect(whiteSpace).to.be.a.parser;
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "/*\n/* nyan\ncat */\n*/\nABC",
@@ -1322,14 +1317,14 @@ describe(".whiteSpace", () => {
       const res = whiteSpace.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("test", 4, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("*")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("*")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("*")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("*")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("*")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("*")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           undefined,
@@ -1356,7 +1351,7 @@ describe(".whiteSpace", () => {
     it("should skip spaces and comments", () => {
       const tp = makeTokenParser(def);
       const whiteSpace = tp.whiteSpace;
-      assertParser(whiteSpace);
+      expect(whiteSpace).to.be.a.parser;
       // no spaces and comments
       {
         const initState = new State(
@@ -1368,14 +1363,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("test", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1398,14 +1393,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("test", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("-")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("-")),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("-")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("-")),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1428,14 +1423,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("test", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1458,14 +1453,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.esuc(
-            new ParseError(
+          Result.esucc(
+            new StrictParseError(
               new SourcePos("test", 1, 1),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1489,14 +1484,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("test", 5, 9),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1519,14 +1514,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("test", 5, 9),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("-")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("-")),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("-")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("-")),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1549,14 +1544,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("test", 5, 9),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("{")),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1579,14 +1574,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("test", 5, 9),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1610,14 +1605,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("test", 1, 11),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1640,14 +1635,14 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.csuc(
-            new ParseError(
+          Result.csucc(
+            new StrictParseError(
               new SourcePos("test", 1, 3),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.EXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.EXPECT, ""),
               ]
             ),
             undefined,
@@ -1671,16 +1666,16 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("test", 2, 4),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.EXPECT, "end of comment"),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.EXPECT, "end of comment"),
               ]
             )
           )
@@ -1696,15 +1691,15 @@ describe(".whiteSpace", () => {
         const res = whiteSpace.run(initState);
         expect(Result.equal(
           res,
-          Result.cerr(
-            new ParseError(
+          Result.cfail(
+            new StrictParseError(
               new SourcePos("test", 1, 3),
               [
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""),
-                new ErrorMessage(ErrorMessageType.EXPECT, "end of comment"),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
+                ErrorMessage.create(ErrorMessageType.EXPECT, "end of comment"),
               ]
             )
           )
@@ -1715,7 +1710,7 @@ describe(".whiteSpace", () => {
     it("should allow nested comments", () => {
       const tp = makeTokenParser(def);
       const whiteSpace = tp.whiteSpace;
-      assertParser(whiteSpace);
+      expect(whiteSpace).to.be.a.parser;
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "{-\n{- nyan\ncat -}\n-}\nABC",
@@ -1725,14 +1720,14 @@ describe(".whiteSpace", () => {
       const res = whiteSpace.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("test", 5, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           undefined,

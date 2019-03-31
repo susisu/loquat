@@ -1,34 +1,29 @@
-/*
- * loquat-token test / token.makeTokenParser().stringLiteral
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show               = _core.show;
-const SourcePos          = _core.SourcePos;
-const ErrorMessageType   = _core.ErrorMessageType;
-const ErrorMessage       = _core.ErrorMessage;
-const AbstractParseError = _core.AbstractParseError;
-const ParseError         = _core.ParseError;
-const Config             = _core.Config;
-const State              = _core.State;
-const Result             = _core.Result;
-const assertParser       = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const LanguageDef = _language.LanguageDef;
-
-const makeTokenParser = _token.makeTokenParser;
+const { LanguageDef } = _language;
+const { makeTokenParser } = _token;
 
 describe(".stringLiteral", () => {
   it("should parse a character literal", () => {
     const def = new LanguageDef({});
     const tp = makeTokenParser(def);
     const stringLiteral = tp.stringLiteral;
-    assertParser(stringLiteral);
-    // csuc
+    expect(stringLiteral).to.be.a.parser;
+    // csucc
     // empty
     {
       const initState = new State(
@@ -40,12 +35,12 @@ describe(".stringLiteral", () => {
       const res = stringLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "",
@@ -69,12 +64,12 @@ describe(".stringLiteral", () => {
       const res = stringLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 7),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "ABC",
@@ -98,12 +93,12 @@ describe(".stringLiteral", () => {
       const res = stringLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 2, 5),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "ABC",
@@ -126,12 +121,12 @@ describe(".stringLiteral", () => {
       const res = stringLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 8),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "ABC",
@@ -154,12 +149,12 @@ describe(".stringLiteral", () => {
       const res = stringLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 26),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "AB\n\n\n\n\u0000\u0008C",
@@ -172,7 +167,7 @@ describe(".stringLiteral", () => {
         )
       )).to.be.true;
     }
-    // cerr
+    // cfail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -183,15 +178,15 @@ describe(".stringLiteral", () => {
       const res = stringLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 5),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""), // letter
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""), // escape
-              new ErrorMessage(ErrorMessageType.EXPECT, "string character"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, ""), // end
-              new ErrorMessage(ErrorMessageType.EXPECT, "end of string"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""), // letter
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""), // escape
+              ErrorMessage.create(ErrorMessageType.EXPECT, "string character"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""), // end
+              ErrorMessage.create(ErrorMessageType.EXPECT, "end of string"),
             ]
           )
         )
@@ -207,15 +202,15 @@ describe(".stringLiteral", () => {
       const res = stringLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("\n")), // letter
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("\n")), // escape
-              new ErrorMessage(ErrorMessageType.EXPECT, "string character"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("\n")), // end
-              new ErrorMessage(ErrorMessageType.EXPECT, "end of string"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("\n")), // letter
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("\n")), // escape
+              ErrorMessage.create(ErrorMessageType.EXPECT, "string character"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("\n")), // end
+              ErrorMessage.create(ErrorMessageType.EXPECT, "end of string"),
             ]
           )
         )
@@ -231,14 +226,14 @@ describe(".stringLiteral", () => {
       const res = stringLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 4),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "space"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "end of string gap"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "space"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "end of string gap"),
             ]
           )
         )
@@ -255,7 +250,7 @@ describe(".stringLiteral", () => {
       expect(res).to.be.an.instanceOf(Result);
       expect(res.consumed).to.be.true;
       expect(res.success).to.be.false;
-      expect(res.err).to.be.an.instanceOf(AbstractParseError);
+      expect(res.err).to.be.an.instanceOf(ParseError);
       expect(SourcePos.equal(
         res.err.pos,
         new SourcePos("foobar", 1, 3)
@@ -283,12 +278,12 @@ describe(".stringLiteral", () => {
       const res = stringLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 4),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "octal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
             ]
           )
         )
@@ -304,12 +299,12 @@ describe(".stringLiteral", () => {
       const res = stringLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 4),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "hexadecimal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
             ]
           )
         )
@@ -325,18 +320,18 @@ describe(".stringLiteral", () => {
       const res = stringLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 4),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("?")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "uppercase letter"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("?")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "uppercase letter"),
             ]
           )
         )
       )).to.be.true;
     }
-    // eerr
+    // efail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -347,12 +342,12 @@ describe(".stringLiteral", () => {
       const res = stringLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "literal string"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "literal string"),
             ]
           )
         )

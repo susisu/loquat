@@ -1,25 +1,20 @@
-/*
- * loquat-token test / token.makeTokenParser().naturalOrFloat
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show             = _core.show;
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const LanguageDef = _language.LanguageDef;
-
-const makeTokenParser = _token.makeTokenParser;
+const { LanguageDef } = _language;
+const { makeTokenParser } = _token;
 
 const EPS = 1e-15;
 
@@ -42,8 +37,8 @@ describe(".naturalOrFloat", () => {
     const def = new LanguageDef({});
     const tp = makeTokenParser(def);
     const naturalOrFloat = tp.naturalOrFloat;
-    assertParser(naturalOrFloat);
-    // csuc
+    expect(naturalOrFloat).to.be.a.parser;
+    // csucc
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -54,14 +49,14 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 9),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show(".")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "hexadecimal digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show(".")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(".")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(".")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           { type: "natural", value: 0xABCDEF },
@@ -85,14 +80,14 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 11),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show(".")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "octal digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show(".")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(".")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(".")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           { type: "natural", value: 2739128 }, // 0o12345670
@@ -116,18 +111,18 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 12),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "fraction"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "exponent"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "fraction"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "exponent"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           { type: "natural", value: 1234567890 },
@@ -151,14 +146,14 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 15),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           { type: "float", value: 9876.5432e-10 },
@@ -182,14 +177,14 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 11),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           { type: "float", value: 0.5432e-10 },
@@ -213,20 +208,20 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // hexadecimal
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // octal
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // decimal
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "fraction"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "exponent"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // hexadecimal
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // octal
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // decimal
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "fraction"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "exponent"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           { type: "natural", value: 0 },
@@ -250,18 +245,18 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 11),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "fraction"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "exponent"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "fraction"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "exponent"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           { type: "natural", value: 1234567890 },
@@ -285,12 +280,12 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 15),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           { type: "float", value: 9876.5432e-10 },
@@ -304,7 +299,7 @@ describe(".naturalOrFloat", () => {
         objEqual
       )).to.be.true;
     }
-    // cerr
+    // cfail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -315,12 +310,12 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "hexadecimal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
             ]
           )
         ),
@@ -337,12 +332,12 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "octal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
             ]
           )
         ),
@@ -359,12 +354,12 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "fraction"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "fraction"),
             ]
           )
         ),
@@ -381,16 +376,16 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, show("-")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, show("+")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "exponent"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, show("-")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, show("+")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "exponent"),
             ]
           )
         ),
@@ -407,12 +402,12 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 4),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "exponent"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "exponent"),
             ]
           )
         ),
@@ -429,12 +424,12 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 5),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "fraction"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "fraction"),
             ]
           )
         ),
@@ -451,16 +446,16 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 5),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, show("-")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, show("+")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "exponent"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, show("-")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, show("+")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "exponent"),
             ]
           )
         ),
@@ -477,19 +472,19 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 6),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "exponent"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "exponent"),
             ]
           )
         ),
         objEqual
       )).to.be.true;
     }
-    // eerr
+    // efail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -500,13 +495,13 @@ describe(".naturalOrFloat", () => {
       const res = naturalOrFloat.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // 0
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // decimal
-              new ErrorMessage(ErrorMessageType.EXPECT, "number"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // 0
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // decimal
+              ErrorMessage.create(ErrorMessageType.EXPECT, "number"),
             ]
           )
         ),

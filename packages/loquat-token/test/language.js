@@ -1,7 +1,3 @@
-/*
- * loquat-token test / language
- */
-
 "use strict";
 
 describe("language", () => {

@@ -1,26 +1,21 @@
-/*
- * loquat-token test / token.makeTokenParser().parens()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show             = _core.show;
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+} = _core;
 
-const LanguageDef = _language.LanguageDef;
-
-const makeTokenParser = _token.makeTokenParser;
+const { LanguageDef } = _language;
+const { makeTokenParser } = _token;
 
 describe(".parens(parser)", () => {
   it("should return a parser that parses token between parens", () => {
@@ -28,7 +23,7 @@ describe(".parens(parser)", () => {
     const tp = makeTokenParser(def);
     const parens = tp.parens;
     expect(parens).to.be.a("function");
-    // csuc
+    // csucc
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -36,7 +31,7 @@ describe(".parens(parser)", () => {
         new SourcePos("foobar", 1, 1),
         "none"
       );
-      const p = new Parser(state => {
+      const p = new StrictParser(state => {
         expect(State.equal(
           state,
           new State(
@@ -46,10 +41,10 @@ describe(".parens(parser)", () => {
             "none"
           )
         )).to.be.true;
-        return Result.csuc(
-          new ParseError(
+        return Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 7),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           ),
           "nyancat",
           new State(
@@ -61,16 +56,16 @@ describe(".parens(parser)", () => {
         );
       });
       const parser = parens(p);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 9),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "nyancat",
@@ -83,7 +78,7 @@ describe(".parens(parser)", () => {
         )
       )).to.be.true;
     }
-    // cerr
+    // cfail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -91,7 +86,7 @@ describe(".parens(parser)", () => {
         new SourcePos("foobar", 1, 1),
         "none"
       );
-      const p = new Parser(state => {
+      const p = new StrictParser(state => {
         expect(State.equal(
           state,
           new State(
@@ -101,27 +96,27 @@ describe(".parens(parser)", () => {
             "none"
           )
         )).to.be.true;
-        return Result.cerr(
-          new ParseError(
+        return Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 7),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           )
         );
       });
       const parser = parens(p);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 7),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           )
         )
       )).to.be.true;
     }
-    // esuc
+    // esucc
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -129,7 +124,7 @@ describe(".parens(parser)", () => {
         new SourcePos("foobar", 1, 1),
         "none"
       );
-      const p = new Parser(state => {
+      const p = new StrictParser(state => {
         expect(State.equal(
           state,
           new State(
@@ -139,10 +134,10 @@ describe(".parens(parser)", () => {
             "none"
           )
         )).to.be.true;
-        return Result.esuc(
-          new ParseError(
+        return Result.esucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           ),
           "nyancat",
           new State(
@@ -154,16 +149,16 @@ describe(".parens(parser)", () => {
         );
       });
       const parser = parens(p);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 5),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "nyancat",
@@ -176,7 +171,7 @@ describe(".parens(parser)", () => {
         )
       )).to.be.true;
     }
-    // eerr
+    // efail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -184,7 +179,7 @@ describe(".parens(parser)", () => {
         new SourcePos("foobar", 1, 1),
         "none"
       );
-      const p = new Parser(state => {
+      const p = new StrictParser(state => {
         expect(State.equal(
           state,
           new State(
@@ -194,25 +189,25 @@ describe(".parens(parser)", () => {
             "none"
           )
         )).to.be.true;
-        return Result.eerr(
-          new ParseError(
+        return Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           )
         );
       });
       const parser = parens(p);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "test"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
             ]
           )
         )
@@ -226,18 +221,18 @@ describe(".parens(parser)", () => {
         new SourcePos("foobar", 1, 1),
         "none"
       );
-      const p = new Parser(() => { throw new Error("unexpected call"); });
+      const p = new StrictParser(() => { throw new Error("unexpected call"); });
       const parser = parens(p);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-              new ErrorMessage(ErrorMessageType.EXPECT, show("(")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, show("(")),
             ]
           )
         )
@@ -251,7 +246,7 @@ describe(".parens(parser)", () => {
         new SourcePos("foobar", 1, 1),
         "none"
       );
-      const p = new Parser(state => {
+      const p = new StrictParser(state => {
         expect(State.equal(
           state,
           new State(
@@ -261,10 +256,10 @@ describe(".parens(parser)", () => {
             "none"
           )
         )).to.be.true;
-        return Result.csuc(
-          new ParseError(
+        return Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 7),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "test")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           ),
           "nyancat",
           new State(
@@ -276,17 +271,17 @@ describe(".parens(parser)", () => {
         );
       });
       const parser = parens(p);
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 7),
             [
-              new ErrorMessage(ErrorMessageType.MESSAGE, "test"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, show(")")),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, show(")")),
             ]
           )
         )

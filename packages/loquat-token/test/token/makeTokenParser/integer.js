@@ -1,33 +1,28 @@
-/*
- * loquat-token test / token.makeTokenParser().integer
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show             = _core.show;
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const LanguageDef = _language.LanguageDef;
-
-const makeTokenParser = _token.makeTokenParser;
+const { LanguageDef } = _language;
+const { makeTokenParser } = _token;
 
 describe(".integer", () => {
   it("should parse an integer", () => {
     const def = new LanguageDef({});
     const tp = makeTokenParser(def);
     const integer = tp.integer;
-    assertParser(integer);
-    // csuc
+    expect(integer).to.be.a.parser;
+    // csucc
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -38,16 +33,16 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           0,
@@ -70,16 +65,16 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           0,
@@ -102,16 +97,16 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           -0,
@@ -134,14 +129,14 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 11),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "hexadecimal digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           0x90ABCDEF,
@@ -164,14 +159,14 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 12),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "hexadecimal digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           0x90ABCDEF,
@@ -194,14 +189,14 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 12),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "hexadecimal digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           -0x90ABCDEF,
@@ -224,14 +219,14 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 11),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "octal digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           2739128, // 0o12345670
@@ -254,14 +249,14 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 12),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "octal digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           2739128, // 0o12345670
@@ -284,14 +279,14 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 12),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "octal digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           -2739128, // -0o12345670
@@ -314,14 +309,14 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 12),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           1234567890,
@@ -344,14 +339,14 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 13),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           +1234567890,
@@ -374,14 +369,14 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 13),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           -1234567890,
@@ -404,14 +399,14 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 11),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           1234567890,
@@ -434,12 +429,12 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 14),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           1234567890,
@@ -462,12 +457,12 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 14),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           -1234567890,
@@ -480,7 +475,7 @@ describe(".integer", () => {
         )
       )).to.be.true;
     }
-    // cerr
+    // cfail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -491,12 +486,12 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "hexadecimal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
             ]
           )
         )
@@ -512,12 +507,12 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "octal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
             ]
           )
         )
@@ -533,16 +528,16 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // lexeme
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // 0
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // decimal
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // lexeme
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // 0
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // decimal
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
             ]
           )
         )
@@ -558,22 +553,22 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // lexeme
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // 0
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // decimal
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // lexeme
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // 0
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // decimal
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
             ]
           )
         )
       )).to.be.true;
     }
-    // eerr
+    // efail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -584,16 +579,16 @@ describe(".integer", () => {
       const res = integer.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // -
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // +
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // lexeme
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // 0
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // decimal
-              new ErrorMessage(ErrorMessageType.EXPECT, "integer"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // -
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // +
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // lexeme
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // 0
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // decimal
+              ErrorMessage.create(ErrorMessageType.EXPECT, "integer"),
             ]
           )
         )

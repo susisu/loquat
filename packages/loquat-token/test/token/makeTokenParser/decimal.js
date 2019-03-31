@@ -1,33 +1,28 @@
-/*
- * loquat-token test / token.makeTokenParser().decimal
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show             = _core.show;
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const LanguageDef = _language.LanguageDef;
-
-const makeTokenParser = _token.makeTokenParser;
+const { LanguageDef } = _language;
+const { makeTokenParser } = _token;
 
 describe(".decimal", () => {
   it("should parse decimal digits and return an integer", () => {
     const def = new LanguageDef({});
     const tp = makeTokenParser(def);
     const decimal = tp.decimal;
-    assertParser(decimal);
-    // csuc
+    expect(decimal).to.be.a.parser;
+    // csucc
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -38,12 +33,12 @@ describe(".decimal", () => {
       const res = decimal.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 11),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
             ]
           ),
           1234567890,
@@ -66,12 +61,12 @@ describe(".decimal", () => {
       const res = decimal.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 11),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show(" ")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(" ")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
             ]
           ),
           1234567890,
@@ -84,7 +79,7 @@ describe(".decimal", () => {
         )
       )).to.be.true;
     }
-    // eerr
+    // efail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -95,12 +90,12 @@ describe(".decimal", () => {
       const res = decimal.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
             ]
           )
         )

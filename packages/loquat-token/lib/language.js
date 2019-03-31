@@ -1,20 +1,6 @@
-/*
- * loquat-token / language.js
- */
-
-/**
- * @module language
- */
-
 "use strict";
 
 module.exports = () => {
-  function end() {
-    return Object.freeze({
-      LanguageDef,
-    });
-  }
-
   /**
      * @static
      */
@@ -23,17 +9,17 @@ module.exports = () => {
          * @param {Object} [obj = {}]
          */
     constructor(obj = {}) {
-      this.commentStart    = obj.commentStart;
-      this.commentEnd      = obj.commentEnd;
-      this.commentLine     = obj.commentLine;
-      this.nestedComments  = obj.nestedComments === undefined ? true : obj.nestedComments;
-      this.idStart         = obj.idStart;
-      this.idLetter        = obj.idLetter;
-      this.opStart         = obj.opStart;
-      this.opLetter        = obj.opLetter;
-      this.reservedIds     = obj.reservedIds;
-      this.reservedOps     = obj.reservedOps;
-      this.caseSensitive   = obj.caseSensitive === undefined ? true : obj.caseSensitive;
+      this.commentStart   = obj.commentStart;
+      this.commentEnd     = obj.commentEnd;
+      this.commentLine    = obj.commentLine;
+      this.nestedComments = obj.nestedComments === undefined ? true : obj.nestedComments;
+      this.idStart        = obj.idStart;
+      this.idLetter       = obj.idLetter;
+      this.opStart        = obj.opStart;
+      this.opLetter       = obj.opLetter;
+      this.reservedIds    = obj.reservedIds;
+      this.reservedOps    = obj.reservedOps;
+      this.caseSensitive  = obj.caseSensitive === undefined ? true : obj.caseSensitive;
     }
 
     /**
@@ -56,5 +42,7 @@ module.exports = () => {
     }
   }
 
-  return end();
+  return Object.freeze({
+    LanguageDef,
+  });
 };

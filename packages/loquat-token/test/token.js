@@ -1,7 +1,3 @@
-/*
- * loquat-token test / token
- */
-
 "use strict";
 
 describe("token", () => {

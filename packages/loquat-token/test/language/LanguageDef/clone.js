@@ -1,15 +1,10 @@
-/*
- * loquat-token test / language.LanguageDef#clone()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const Parser = _core.Parser;
+const { StrictParser } = _core;
 
-const LanguageDef = _language.LanguageDef;
+const { LanguageDef } = _language;
 
 describe("#clone()", () => {
   it("should create a copy of the language definition object", () => {
@@ -18,10 +13,10 @@ describe("#clone()", () => {
       commentEnd    : "*/",
       commentLine   : "//",
       nestedComments: false,
-      idStart       : new Parser(() => {}),
-      idLetter      : new Parser(() => {}),
-      opStart       : new Parser(() => {}),
-      opLetter      : new Parser(() => {}),
+      idStart       : new StrictParser(() => {}),
+      idLetter      : new StrictParser(() => {}),
+      opStart       : new StrictParser(() => {}),
+      opLetter      : new StrictParser(() => {}),
       reservedIds   : ["var", "if", "else", "while"],
       reservedOps   : ["+", "-", "*", "/"],
       caseSensitive : false,

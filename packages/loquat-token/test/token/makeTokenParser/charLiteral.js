@@ -1,34 +1,29 @@
-/*
- * loquat-token test / token.makeTokenParser().charLiteral
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show               = _core.show;
-const SourcePos          = _core.SourcePos;
-const ErrorMessageType   = _core.ErrorMessageType;
-const ErrorMessage       = _core.ErrorMessage;
-const AbstractParseError = _core.AbstractParseError;
-const ParseError         = _core.ParseError;
-const Config             = _core.Config;
-const State              = _core.State;
-const Result             = _core.Result;
-const assertParser       = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  ParseError,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const LanguageDef = _language.LanguageDef;
-
-const makeTokenParser = _token.makeTokenParser;
+const { LanguageDef } = _language;
+const { makeTokenParser } = _token;
 
 describe(".charLiteral", () => {
   it("should parse a character literal", () => {
     const def = new LanguageDef({});
     const tp = makeTokenParser(def);
     const charLiteral = tp.charLiteral;
-    assertParser(charLiteral);
-    // csuc
+    expect(charLiteral).to.be.a.parser;
+    // csucc
     // letter
     {
       const initState = new State(
@@ -40,12 +35,12 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 5),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "A",
@@ -69,12 +64,12 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 5),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "\n",
@@ -97,12 +92,12 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 6),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "\n",
@@ -125,12 +120,12 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 7),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "\n",
@@ -153,12 +148,12 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 6),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "\n",
@@ -181,12 +176,12 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 6),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "\n",
@@ -209,12 +204,12 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 7),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "\u0000",
@@ -237,12 +232,12 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 6),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "\u0008",
@@ -255,7 +250,7 @@ describe(".charLiteral", () => {
         )
       )).to.be.true;
     }
-    // cerr
+    // cfail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -266,12 +261,12 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("Y")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "end of character"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("Y")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "end of character"),
             ]
           )
         )
@@ -287,13 +282,13 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("'")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("'")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "literal character"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("'")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("'")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "literal character"),
             ]
           )
         )
@@ -309,13 +304,13 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 2),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("\n")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("\n")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "literal character"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("\n")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("\n")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "literal character"),
             ]
           )
         )
@@ -332,7 +327,7 @@ describe(".charLiteral", () => {
       expect(res).to.be.an.instanceOf(Result);
       expect(res.consumed).to.be.true;
       expect(res.success).to.be.false;
-      expect(res.err).to.be.an.instanceOf(AbstractParseError);
+      expect(res.err).to.be.an.instanceOf(ParseError);
       expect(SourcePos.equal(
         res.err.pos,
         new SourcePos("foobar", 1, 3)
@@ -360,12 +355,12 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 4),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "octal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
             ]
           )
         )
@@ -381,12 +376,12 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 4),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "hexadecimal digit"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
             ]
           )
         )
@@ -402,18 +397,18 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 4),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("?")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "uppercase letter"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("?")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "uppercase letter"),
             ]
           )
         )
       )).to.be.true;
     }
-    // eerr
+    // efail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -424,12 +419,12 @@ describe(".charLiteral", () => {
       const res = charLiteral.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, "character"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, "character"),
             ]
           )
         )

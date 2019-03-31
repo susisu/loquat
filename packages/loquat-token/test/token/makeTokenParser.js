@@ -1,18 +1,11 @@
-/*
- * loquat-token test / token.makeTokenParser()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const Parser       = _core.Parser;
-const assertParser = _core.assertParser;
+const { StrictParser } = _core;
 
-const LanguageDef = _language.LanguageDef;
-
-const makeTokenParser = _token.makeTokenParser;
+const { LanguageDef } = _language;
+const { makeTokenParser } = _token;
 
 describe(".makeTokenParser(def)", () => {
   it("should return an object containing token parsers defined by `def'", () => {
@@ -21,7 +14,7 @@ describe(".makeTokenParser(def)", () => {
       const def = new LanguageDef({});
       const tp = makeTokenParser(def);
       // white space
-      assertParser(tp.whiteSpace);
+      expect(tp.whiteSpace).to.be.a.parser;
       expect(tp.lexeme).to.be.a("function");
       expect(tp.symbol).to.be.a("function");
       // symbols
@@ -29,26 +22,26 @@ describe(".makeTokenParser(def)", () => {
       expect(tp.braces).to.be.a("function");
       expect(tp.angles).to.be.a("function");
       expect(tp.brackets).to.be.a("function");
-      assertParser(tp.semi);
-      assertParser(tp.comma);
-      assertParser(tp.colon);
-      assertParser(tp.dot);
+      expect(tp.semi).to.be.a.parser;
+      expect(tp.comma).to.be.a.parser;
+      expect(tp.colon).to.be.a.parser;
+      expect(tp.dot).to.be.a.parser;
       expect(tp.semiSep).to.be.a("function");
       expect(tp.semiSep1).to.be.a("function");
       expect(tp.commaSep).to.be.a("function");
       expect(tp.commaSep1).to.be.a("function");
       // number literals
-      assertParser(tp.decimal);
-      assertParser(tp.hexadecimal);
-      assertParser(tp.octal);
-      assertParser(tp.decimal);
-      assertParser(tp.natural);
-      assertParser(tp.integer);
-      assertParser(tp.float);
-      assertParser(tp.naturalOrFloat);
+      expect(tp.decimal).to.be.a.parser;
+      expect(tp.hexadecimal).to.be.a.parser;
+      expect(tp.octal).to.be.a.parser;
+      expect(tp.decimal).to.be.a.parser;
+      expect(tp.natural).to.be.a.parser;
+      expect(tp.integer).to.be.a.parser;
+      expect(tp.float).to.be.a.parser;
+      expect(tp.naturalOrFloat).to.be.a.parser;
       // character / string literals
-      assertParser(tp.charLiteral);
-      assertParser(tp.stringLiteral);
+      expect(tp.charLiteral).to.be.a.parser;
+      expect(tp.stringLiteral).to.be.a.parser;
       // identifier
       expect(tp.identifier).to.be.undefined;
       expect(tp.reserved).to.be.undefined;
@@ -63,17 +56,17 @@ describe(".makeTokenParser(def)", () => {
         commentEnd    : "-}",
         commentLine   : "--",
         nestedComments: true,
-        idStart       : new Parser(() => {}),
-        idLetter      : new Parser(() => {}),
-        opStart       : new Parser(() => {}),
-        opLetter      : new Parser(() => {}),
+        idStart       : new StrictParser(() => {}),
+        idLetter      : new StrictParser(() => {}),
+        opStart       : new StrictParser(() => {}),
+        opLetter      : new StrictParser(() => {}),
         reservedIds   : ["if", "then", "else", "let", "in", "do"],
         reservedOps   : ["=", "->", "<-"],
         caseSensitive : true,
       });
       const tp = makeTokenParser(def);
       // white space
-      assertParser(tp.whiteSpace);
+      expect(tp.whiteSpace).to.be.a.parser;
       expect(tp.lexeme).to.be.a("function");
       expect(tp.symbol).to.be.a("function");
       // symbols
@@ -81,31 +74,31 @@ describe(".makeTokenParser(def)", () => {
       expect(tp.braces).to.be.a("function");
       expect(tp.angles).to.be.a("function");
       expect(tp.brackets).to.be.a("function");
-      assertParser(tp.semi);
-      assertParser(tp.comma);
-      assertParser(tp.colon);
-      assertParser(tp.dot);
+      expect(tp.semi).to.be.a.parser;
+      expect(tp.comma).to.be.a.parser;
+      expect(tp.colon).to.be.a.parser;
+      expect(tp.dot).to.be.a.parser;
       expect(tp.semiSep).to.be.a("function");
       expect(tp.semiSep1).to.be.a("function");
       expect(tp.commaSep).to.be.a("function");
       expect(tp.commaSep1).to.be.a("function");
       // number literals
-      assertParser(tp.decimal);
-      assertParser(tp.hexadecimal);
-      assertParser(tp.octal);
-      assertParser(tp.decimal);
-      assertParser(tp.natural);
-      assertParser(tp.integer);
-      assertParser(tp.float);
-      assertParser(tp.naturalOrFloat);
+      expect(tp.decimal).to.be.a.parser;
+      expect(tp.hexadecimal).to.be.a.parser;
+      expect(tp.octal).to.be.a.parser;
+      expect(tp.decimal).to.be.a.parser;
+      expect(tp.natural).to.be.a.parser;
+      expect(tp.integer).to.be.a.parser;
+      expect(tp.float).to.be.a.parser;
+      expect(tp.naturalOrFloat).to.be.a.parser;
       // character / string literals
-      assertParser(tp.charLiteral);
-      assertParser(tp.stringLiteral);
+      expect(tp.charLiteral).to.be.a.parser;
+      expect(tp.stringLiteral).to.be.a.parser;
       // identifier
-      assertParser(tp.identifier);
+      expect(tp.identifier).to.be.a.parser;
       expect(tp.reserved).to.be.a("function");
       // operator
-      assertParser(tp.operator);
+      expect(tp.operator).to.be.a.parser;
       expect(tp.reservedOp).to.be.a("function");
     }
   });

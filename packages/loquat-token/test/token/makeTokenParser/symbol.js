@@ -1,25 +1,20 @@
-/*
- * loquat-token test / token.makeTokenParser().symbol()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show             = _core.show;
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const assertParser     = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+} = _core;
 
-const LanguageDef = _language.LanguageDef;
-
-const makeTokenParser = _token.makeTokenParser;
+const { LanguageDef } = _language;
+const { makeTokenParser } = _token;
 
 describe(".symbol(name)", () => {
   it("should return a parser that parses string `name' and skips trailing spaces and"
@@ -33,7 +28,7 @@ describe(".symbol(name)", () => {
     const tp = makeTokenParser(def);
     const symbol = tp.symbol;
     expect(symbol).to.be.a("function");
-    // csuc
+    // csucc
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -42,18 +37,18 @@ describe(".symbol(name)", () => {
         "none"
       );
       const parser = symbol("AB");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 3),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "AB",
@@ -74,18 +69,18 @@ describe(".symbol(name)", () => {
         "none"
       );
       const parser = symbol("AB");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 5, 9),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
           ),
           "AB",
@@ -98,7 +93,7 @@ describe(".symbol(name)", () => {
         )
       )).to.be.true;
     }
-    // cerr
+    // cfail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -107,22 +102,22 @@ describe(".symbol(name)", () => {
         "none"
       );
       const parser = symbol("AD");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("B")),
-              new ErrorMessage(ErrorMessageType.EXPECT, show("AD")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("B")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, show("AD")),
             ]
           )
         )
       )).to.be.true;
     }
-    // eerr
+    // efail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -131,16 +126,16 @@ describe(".symbol(name)", () => {
         "none"
       );
       const parser = symbol("DE");
-      assertParser(parser);
+      expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.eerr(
-          new ParseError(
+        Result.efail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-              new ErrorMessage(ErrorMessageType.EXPECT, show("DE")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, show("DE")),
             ]
           )
         )

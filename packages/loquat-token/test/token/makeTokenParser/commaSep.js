@@ -1,45 +1,40 @@
-/*
- * loquat-token test / token.makeTokenParser().commaSep()
- */
-
 "use strict";
 
-const chai = require("chai");
-const expect = chai.expect;
+const { expect } = require("chai");
 
-const show             = _core.show;
-const uncons           = _core.uncons;
-const SourcePos        = _core.SourcePos;
-const ErrorMessageType = _core.ErrorMessageType;
-const ErrorMessage     = _core.ErrorMessage;
-const ParseError       = _core.ParseError;
-const Config           = _core.Config;
-const State            = _core.State;
-const Result           = _core.Result;
-const Parser           = _core.Parser;
-const assertParser     = _core.assertParser;
+const {
+  show,
+  SourcePos,
+  ErrorMessageType,
+  ErrorMessage,
+  StrictParseError,
+  Config,
+  State,
+  Result,
+  StrictParser,
+  uncons,
+} = _core;
 
-const LanguageDef = _language.LanguageDef;
+const { LanguageDef } = _language;
+const { makeTokenParser } = _token;
 
-const makeTokenParser = _token.makeTokenParser;
-
-const p = new Parser(state => {
+const p = new StrictParser(state => {
   const u = uncons(state.input);
   if (u.empty) {
-    return Result.eerr(
-      new ParseError(
+    return Result.efail(
+      new StrictParseError(
         state.pos,
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "e")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "e")]
       )
     );
   }
   switch (u.head) {
   case "C": {
     const newPos = state.pos.addChar(u.head);
-    return Result.csuc(
-      new ParseError(
+    return Result.csucc(
+      new StrictParseError(
         newPos,
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "C")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "C")]
       ),
       u.head,
       new State(
@@ -52,18 +47,18 @@ const p = new Parser(state => {
   }
   case "c": {
     const newPos = state.pos.addChar(u.head);
-    return Result.cerr(
-      new ParseError(
+    return Result.cfail(
+      new StrictParseError(
         newPos,
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "c")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "c")]
       )
     );
   }
   case "E":
-    return Result.esuc(
-      new ParseError(
+    return Result.esucc(
+      new StrictParseError(
         state.pos,
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "E")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "E")]
       ),
       u.head,
       new State(
@@ -75,10 +70,10 @@ const p = new Parser(state => {
     );
   case "e":
   default:
-    return Result.eerr(
-      new ParseError(
+    return Result.efail(
+      new StrictParseError(
         state.pos,
-        [new ErrorMessage(ErrorMessageType.MESSAGE, "e")]
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "e")]
       )
     );
   }
@@ -93,7 +88,7 @@ describe(".commaSep(parser)", () => {
     const commaSep = tp.commaSep;
     expect(commaSep).to.be.a("function");
     const parser = commaSep(p);
-    assertParser(parser);
+    expect(parser).to.be.a.parser;
     // empty
     {
       const initState = new State(
@@ -105,10 +100,10 @@ describe(".commaSep(parser)", () => {
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.esuc(
-          new ParseError(
+        Result.esucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 1),
-            [new ErrorMessage(ErrorMessageType.MESSAGE, "e")]
+            [ErrorMessage.create(ErrorMessageType.MESSAGE, "e")]
           ),
           [],
           initState
@@ -127,12 +122,12 @@ describe(".commaSep(parser)", () => {
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.csuc(
-          new ParseError(
+        Result.csucc(
+          new StrictParseError(
             new SourcePos("foobar", 1, 8),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, show(",")),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, show(",")),
             ]
           ),
           ["C", "C", "C"],
@@ -156,13 +151,13 @@ describe(".commaSep(parser)", () => {
       const res = parser.run(initState);
       expect(Result.equal(
         res,
-        Result.cerr(
-          new ParseError(
+        Result.cfail(
+          new StrictParseError(
             new SourcePos("foobar", 1, 10),
             [
-              new ErrorMessage(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
-              new ErrorMessage(ErrorMessageType.EXPECT, ""),
-              new ErrorMessage(ErrorMessageType.MESSAGE, "e"),
+              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
+              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
+              ErrorMessage.create(ErrorMessageType.MESSAGE, "e"),
             ]
           )
         ),
