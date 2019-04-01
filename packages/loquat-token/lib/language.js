@@ -2,12 +2,38 @@
 
 module.exports = () => {
   /**
-     * @static
-     */
+   * type LanguageDefObject[S, U] = {
+   *   val commentStart?: string
+   *   val commentEnd?: string
+   *   val commentLine?: string
+   *   val nestedComments?: boolean
+   *   val idStart?: Parser[S, U, char]
+   *   val idLetter?: Parser[S, U, char]
+   *   val opStart?: Parser[S, U, char]
+   *   val opLetter?: Parser[S, U, char]
+   *   val reservedIds?: Array[string]
+   *   val reservedOps?: Array[string]
+   *   val caseSensitive?: boolean
+   * }
+   */
+
+  /**
+   * class LanguageDef[S, U](obj?: LanguageDefObject[S, U]) {
+   *   val commentStart: string \/ undefined
+   *   val commentEnd: string \/ undefined
+   *   val commentLine: string \/ undefined
+   *   val nestedComments: boolean
+   *   val idStart: Parser[S, U, char] \/ undefined
+   *   val idLetter: Parser[S, U, char] \/ undefined
+   *   val opStart: Parser[S, U, char] \/ undefined
+   *   val opLetter: Parser[S, U, char] \/ undefined
+   *   val reservedIds: Array[string] \/ undefined
+   *   val reservedOps: Array[string] \/ undefined
+   *   val caseSensitive: boolean
+   *   def clone(): LanguageDef[S, U]
+   * }
+   */
   class LanguageDef {
-    /**
-         * @param {Object} [obj = {}]
-         */
     constructor(obj = {}) {
       this.commentStart   = obj.commentStart;
       this.commentEnd     = obj.commentEnd;
@@ -22,9 +48,6 @@ module.exports = () => {
       this.caseSensitive  = obj.caseSensitive === undefined ? true : obj.caseSensitive;
     }
 
-    /**
-         * @returns {module:language.LanguageDef}
-         */
     clone() {
       return new LanguageDef({
         commentStart  : this.commentStart,

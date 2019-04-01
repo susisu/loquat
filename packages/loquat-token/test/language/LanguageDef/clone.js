@@ -2,21 +2,21 @@
 
 const { expect } = require("chai");
 
-const { StrictParser } = _core;
-
 const { LanguageDef } = _language;
 
-describe("#clone()", () => {
+const { createDummyParser } = _test.helper;
+
+describe("#clone", () => {
   it("should create a copy of the language definition object", () => {
     const def = new LanguageDef({
       commentStart  : "/*",
       commentEnd    : "*/",
       commentLine   : "//",
       nestedComments: false,
-      idStart       : new StrictParser(() => {}),
-      idLetter      : new StrictParser(() => {}),
-      opStart       : new StrictParser(() => {}),
-      opLetter      : new StrictParser(() => {}),
+      idStart       : createDummyParser(),
+      idLetter      : createDummyParser(),
+      opStart       : createDummyParser(),
+      opLetter      : createDummyParser(),
       reservedIds   : ["var", "if", "else", "while"],
       reservedOps   : ["+", "-", "*", "/"],
       caseSensitive : false,

@@ -2,12 +2,12 @@
 
 const { expect } = require("chai");
 
-const { StrictParser } = _core;
-
 const { LanguageDef } = _language;
 
-describe("constructor(obj)", () => {
-  it("should create a new `LanguageDef' instance", () => {
+const { createDummyParser } = _test.helper;
+
+describe(".constructor", () => {
+  it("should create a new `LanguageDef` instance", () => {
     // use default parameter
     {
       const def = new LanguageDef();
@@ -40,10 +40,10 @@ describe("constructor(obj)", () => {
     }
     // fully specified object
     {
-      const idStart  = new StrictParser(() => {});
-      const idLetter = new StrictParser(() => {});
-      const opStart  = new StrictParser(() => {});
-      const opLetter = new StrictParser(() => {});
+      const idStart  = createDummyParser();
+      const idLetter = createDummyParser();
+      const opStart  = createDummyParser();
+      const opLetter = createDummyParser();
       const def = new LanguageDef({
         commentStart  : "/*",
         commentEnd    : "*/",
