@@ -42,8 +42,8 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
   } = _combinators;
 
   /*
-     * white space
-     */
+   * white spaces
+   */
   const spaceChars  = new Set(" \f\n\r\t\v");
   const simpleSpace = skipMany1(satisfy(char => spaceChars.has(char)));
 
@@ -51,7 +51,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     return then(
       tryParse(string(commentLine)),
       then(
-        skipMany(satisfy(char => char !== "\n")),
+        skipMany(satisfy((char, _) => char !== "\n")),
         pure(undefined)
       )
     );
@@ -61,7 +61,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     const commentStartEnd = commentStart + commentEnd;
     const inCommentMulti = tailRecM(
       undefined,
-      () => label(
+      _ => label(
         mplus(
           then(
             tryParse(string(commentEnd)),
@@ -70,15 +70,15 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
           mplus(
             // FIXME
             // eslint-disable-next-line no-use-before-define
-            map(comment, () => ({ done: false, value: undefined })),
+            map(comment, _ => ({ done: false, value: undefined })),
             mplus(
               map(
                 skipMany1(noneOf(commentStartEnd)),
-                () => ({ done: false, value: undefined })
+                _ => ({ done: false, value: undefined })
               ),
               map(
                 oneOf(commentStartEnd),
-                () => ({ done: false, value: undefined })
+                _ => ({ done: false, value: undefined })
               )
             )
           )
@@ -88,7 +88,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     );
     const inCommentSingle = tailRecM(
       undefined,
-      () => label(
+      _ => label(
         mplus(
           then(
             tryParse(string(commentEnd)),
@@ -97,11 +97,11 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
           mplus(
             map(
               skipMany1(noneOf(commentStartEnd)),
-              () => ({ done: false, value: undefined })
+              _ => ({ done: false, value: undefined })
             ),
             map(
               oneOf(commentStartEnd),
-              () => ({ done: false, value: undefined })
+              _ => ({ done: false, value: undefined })
             )
           )
         ),
@@ -407,29 +407,29 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     const tp = {};
 
     /*
-         * white space
-         */
+     * white space
+     */
     const noOneLineComment = def.commentLine === "" || def.commentLine === undefined;
     const noMultiLineComment = def.commentStart === "" || def.commentEnd === ""
-            || def.commentStart === undefined || def.commentEnd === undefined;
+      || def.commentStart === undefined || def.commentEnd === undefined;
     const whiteSpace = skipMany(label(
-              noOneLineComment && noMultiLineComment ? simpleSpace
-            : noOneLineComment ? mplus(
-              simpleSpace,
+        noOneLineComment && noMultiLineComment ? simpleSpace
+          : noOneLineComment ? mplus(
+            simpleSpace,
+            multiLineComment(def.commentStart, def.commentEnd, def.nestedComments)
+          )
+          : noMultiLineComment ? mplus(
+            simpleSpace,
+            oneLineComment(def.commentLine)
+          )
+          : mplus(
+            simpleSpace,
+            mplus(
+              oneLineComment(def.commentLine),
               multiLineComment(def.commentStart, def.commentEnd, def.nestedComments)
             )
-            : noMultiLineComment ? mplus(
-              simpleSpace,
-              oneLineComment(def.commentLine)
-            )
-            : mplus(
-              simpleSpace,
-              mplus(
-                oneLineComment(def.commentLine),
-                multiLineComment(def.commentStart, def.commentEnd, def.nestedComments)
-              )
-            ),
-              ""
+          ),
+        ""
     ));
 
     function lexeme(parser) {
