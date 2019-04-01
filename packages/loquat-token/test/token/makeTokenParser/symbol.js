@@ -87,6 +87,35 @@ describe("symbol", () => {
         )
       ));
     }
+    {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        "{- nyan\ncat -}\n \f\r\v{----}\n-- foobar\n\tABC",
+        new SourcePos("main", 0, 1, 1),
+        "none"
+      );
+      const parser = symbol("");
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        new StrictParseError(
+          new SourcePos("main", 37, 5, 9),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+            ErrorMessage.create(ErrorMessageType.EXPECT, ""),
+          ]
+        ),
+        "",
+        new State(
+          new Config({ tabWidth: 8 }),
+          "ABC",
+          new SourcePos("main", 37, 5, 9),
+          "none"
+        )
+      ));
+    }
     // cfail
     {
       const initState = new State(
@@ -105,6 +134,36 @@ describe("symbol", () => {
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("B")),
             ErrorMessage.create(ErrorMessageType.EXPECT, show("AD")),
           ]
+        )
+      ));
+    }
+    // esucc
+    {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        "ABC",
+        new SourcePos("main", 0, 1, 1),
+        "none"
+      );
+      const parser = symbol("");
+      expect(parser).to.be.a.parser;
+      const res = parser.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.esucc(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+            ErrorMessage.create(ErrorMessageType.EXPECT, ""),
+          ]
+        ),
+        "",
+        new State(
+          new Config({ tabWidth: 8 }),
+          "ABC",
+          new SourcePos("main", 0, 1, 1),
+          "none"
         )
       ));
     }
