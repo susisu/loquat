@@ -6,14 +6,14 @@ module.exports = () => {
 
   /**
    * class SourcePos(name: string, index:int, line: int, column: int) {
-   *   static init(name: string): SourcePos
-   *   static compare(posA: SoucePos, posB: SoucePos): int
-   *   toString(): string
-   *   setName(name: string): SourcePos
-   *   setLine(line: int): SoucePos
-   *   setColumn(column: int): SourcePos
-   *   addChar(char: string, tabWidth: int): SoucePos
-   *   addString(str: string, tabWidth: int, unicode: bool): SoucePos
+   *   static init(name: string): SourcePos;
+   *   static compare(posA: SoucePos, posB: SoucePos): int;
+   *   toString(): string;
+   *   setName(name: string): SourcePos;
+   *   setLine(line: int): SoucePos;
+   *   setColumn(column: int): SourcePos;
+   *   addChar(char: string, tabWidth: int): SoucePos;
+   *   addString(str: string, tabWidth: int, unicode: bool): SoucePos;
    * }
    *
    * `SourcePos` represents a position in input.

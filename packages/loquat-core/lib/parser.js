@@ -12,10 +12,10 @@ module.exports = ({ _pos }) => {
 
   /**
    * class Config(opts?: ConfigOptions) {
-   *  tabWidth: int
-   *  unicode: boolean
-   *  setTabWidth(tabWidth: int): Config
-   *  setUnicode(unicode: boolean): Config
+   *  tabWidth: int;
+   *  unicode: boolean;
+   *  setTabWidth(tabWidth: int): Config;
+   *  setUnicode(unicode: boolean): Config;
    * }
    */
   class Config {
@@ -53,10 +53,10 @@ module.exports = ({ _pos }) => {
 
   /**
    * class State[S, U](config: Config, input: S, pos: SourcePos, userState: U) {
-   *   setConfig(config: Config): State[S, U]
-   *   setInput(input: S): State[S, U]
-   *   setPosition(pos: SourcePos): State[S, U]
-   *   setUserState(userState: U): State[S, U]
+   *   setConfig(config: Config): State[S, U];
+   *   setInput(input: S): State[S, U];
+   *   setPosition(pos: SourcePos): State[S, U];
+   *   setUserState(userState: U): State[S, U];
    * }
    */
   class State {
@@ -149,12 +149,12 @@ module.exports = ({ _pos }) => {
    *     err: Parser,
    *     val: A,
    *     state: State[S, U]
-   *   ) => Success[S, U, A]
+   *   ) => Success[S, U, A];
    *   fail: (consumed: boolean, err: Parser) => Failure
-   *   csucc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A]
-   *   cfail: (err: Parser) => Failure
-   *   esucc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A]
-   *   efail: (err: Parser) => Failure
+   *   csucc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A];
+   *   cfail: (err: Parser) => Failure;
+   *   esucc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A];
+   *   efail: (err: Parser) => Failure;
    * }
    */
   const Result = Object.freeze({
@@ -212,8 +212,8 @@ module.exports = ({ _pos }) => {
 
   /**
    * object ParserType {
-   *   STRICT: "strict"
-   *   LAZY: "lazy"
+   *   STRICT: "strict";
+   *   LAZY: "lazy";
    * }
    */
   const ParserType = Object.freeze({
@@ -228,9 +228,9 @@ module.exports = ({ _pos }) => {
 
   /**
    * trait Parser[S, U, A] {
-   *   [parserTypeKey]: ParserType
-   *   run(state: State[S, U, A]): Result[S, U, A]
-   *   parse(name: string, input: S, userState: U, opts: ConfigOptions): ParseResult[A]
+   *   [parserTypeKey]: ParserType;
+   *   run(state: State[S, U, A]): Result[S, U, A];
+   *   parse(name: string, input: S, userState: U, opts: ConfigOptions): ParseResult[A];
    * }
    */
   class Parser {
@@ -257,7 +257,7 @@ module.exports = ({ _pos }) => {
 
   /**
    * class StrictParser[S, U, A](func: ParserFunc[S, U, A]) extends Parser[S, U, A] {
-   *   [parserTypeKey]: "strict"
+   *   [parserTypeKey]: "strict";
    * }
    */
   class StrictParser extends Parser {
@@ -275,8 +275,8 @@ module.exports = ({ _pos }) => {
 
   /**
    * class LazyParser[S, U, A](thunk: () => Parser[S, U, A]) extends Parser[S, U, A] {
-   *   [parserTypeKey]: "lazy"
-   *   eval(): StrictParser[S, U, A]
+   *   [parserTypeKey]: "lazy";
+   *   eval(): StrictParser[S, U, A];
    * }
    */
   class LazyParser extends Parser {
@@ -332,7 +332,8 @@ module.exports = ({ _pos }) => {
   }
 
   /**
-   * type ParseResult[A] = { success: true, value: A }
+   * type ParseResult[A] =
+   *      { success: true, value: A }
    *   \/ { success: false, error: ParseError }
    */
 

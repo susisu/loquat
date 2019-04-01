@@ -3,34 +3,34 @@
 module.exports = () => {
   /**
    * type LanguageDefObject[S, U] = {
-   *   val commentStart?: string
-   *   val commentEnd?: string
-   *   val commentLine?: string
-   *   val nestedComments?: boolean
-   *   val idStart?: Parser[S, U, char]
-   *   val idLetter?: Parser[S, U, char]
-   *   val opStart?: Parser[S, U, char]
-   *   val opLetter?: Parser[S, U, char]
-   *   val reservedIds?: Array[string]
-   *   val reservedOps?: Array[string]
-   *   val caseSensitive?: boolean
+   *   commentStart?: string,
+   *   commentEnd?: string,
+   *   commentLine?: string,
+   *   nestedComments?: boolean,
+   *   idStart?: Parser[S, U, char],
+   *   idLetter?: Parser[S, U, char],
+   *   opStart?: Parser[S, U, char],
+   *   opLetter?: Parser[S, U, char],
+   *   reservedIds?: Array[string],
+   *   reservedOps?: Array[string],
+   *   caseSensitive?: boolean,
    * }
    */
 
   /**
    * class LanguageDef[S, U](obj?: LanguageDefObject[S, U]) {
-   *   val commentStart: string \/ undefined
-   *   val commentEnd: string \/ undefined
-   *   val commentLine: string \/ undefined
-   *   val nestedComments: boolean
-   *   val idStart: Parser[S, U, char] \/ undefined
-   *   val idLetter: Parser[S, U, char] \/ undefined
-   *   val opStart: Parser[S, U, char] \/ undefined
-   *   val opLetter: Parser[S, U, char] \/ undefined
-   *   val reservedIds: Array[string] \/ undefined
-   *   val reservedOps: Array[string] \/ undefined
-   *   val caseSensitive: boolean
-   *   def clone(): LanguageDef[S, U]
+   *   commentStart: string \/ undefined;
+   *   commentEnd: string \/ undefined;
+   *   commentLine: string \/ undefined;
+   *   nestedComments: boolean;
+   *   idStart: Parser[S, U, char] \/ undefined;
+   *   idLetter: Parser[S, U, char] \/ undefined;
+   *   opStart: Parser[S, U, char] \/ undefined;
+   *   opLetter: Parser[S, U, char] \/ undefined;
+   *   reservedIds: Array[string] \/ undefined;
+   *   reservedOps: Array[string] \/ undefined;
+   *   caseSensitive: boolean;
+   *   clone(): LanguageDef[S, U];
    * }
    */
   class LanguageDef {

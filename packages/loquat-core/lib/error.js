@@ -9,10 +9,10 @@ module.exports = ({ _pos }) => {
 
   /**
    * object ErrorMessageType {
-   *   SYSTEM_UNEXPECT: "systemUnexpect"
-   *   UNEXPECT: "unexpect"
-   *   EXPECT: "expect"
-   *   MESSAGE: "message"
+   *   SYSTEM_UNEXPECT: "systemUnexpect";
+   *   UNEXPECT: "unexpect";
+   *   EXPECT: "expect";
+   *   MESSAGE: "message";
    * }
    */
   const ErrorMessageType = Object.freeze({
@@ -28,8 +28,8 @@ module.exports = ({ _pos }) => {
 
   /**
    * object ErrorMessage {
-   *   create: (type: ErrorMessageType, str: string) => ErrorMessage
-   *   messagesToString: (msgs: Array[ErrorMessage]) => string
+   *   create: (type: ErrorMessageType, str: string) => ErrorMessage;
+   *   messagesToString: (msgs: Array[ErrorMessage]) => string;
    * }
    */
   const ErrorMessage = Object.freeze({
@@ -122,8 +122,8 @@ module.exports = ({ _pos }) => {
 
   /**
    * object ParseErrorType {
-   *   STRICT: "strict"
-   *   LAZY: "lazy"
+   *   STRICT: "strict";
+   *   LAZY: "lazy";
    * }
    */
   const ParseErrorType = Object.freeze({
@@ -138,22 +138,22 @@ module.exports = ({ _pos }) => {
 
   /**
    * object ParseError {
-   *   unknown(pos: SourcePos): StrictParseError
-   *   merge(errA: StrictParseError, errB: StrictParseError): ParseError
+   *   unknown(pos: SourcePos): StrictParseError;
+   *   merge(errA: StrictParseError, errB: StrictParseError): ParseError;
    * }
    */
 
   /**
    * trait ParseError {
-   *   [parseErrorTypeKey]: ParseErrorType
-   *   pos: SourcePos
-   *   msgs: Array[ErrorMessage]
-   *   toString(): string
-   *   isUnknown(): boolean
-   *   setPosition(pos: SourcePos): ParseError
-   *   setMessages(msgs: Array[ErrorMessage]): ParseError
-   *   addMessages(msgs: Array[ErrorMessage]): ParseError
-   *   setSpecificTypeMessages(type: ErrorMessageType, strs: Array[string]): ParseError
+   *   [parseErrorTypeKey]: ParseErrorType;
+   *   pos: SourcePos;
+   *   msgs: Array[ErrorMessage];
+   *   toString(): string;
+   *   isUnknown(): boolean;
+   *   setPosition(pos: SourcePos): ParseError;
+   *   setMessages(msgs: Array[ErrorMessage]): ParseError;
+   *   addMessages(msgs: Array[ErrorMessage]): ParseError;
+   *   setSpecificTypeMessages(type: ErrorMessageType, strs: Array[string]): ParseError;
    * }
    */
   class ParseError {
@@ -221,8 +221,8 @@ module.exports = ({ _pos }) => {
 
   /**
    * class StrictParseError(pos: SourcePos, msgs: Array[ErrorMessage]) extends ParseError {
-   *   [parseErrorTypeKey]: "strict"
-   *}
+   *   [parseErrorTypeKey]: "strict";
+    *}
    */
   class StrictParseError extends ParseError {
     constructor(pos, msgs) {
@@ -307,10 +307,10 @@ module.exports = ({ _pos }) => {
 
   /**
    * class LazyParseError(thunk: () => ParseError) extends ParseError {
-   *   [parseErrorTypeKey]: "lazy"
-   *   pos: SourcePos,
-   *   msgs: Array[ErrorMessage]
-   *   eval(): StrictParseError
+   *   [parseErrorTypeKey]: "lazy";
+   *   pos: SourcePos,;
+   *   msgs: Array[ErrorMessage];
+   *   eval(): StrictParseError;
    * }
    */
   class LazyParseError extends ParseError {

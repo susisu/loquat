@@ -9,8 +9,8 @@ module.exports = ({ _utils }) => {
 
   /**
    * trait Stream[S <: Stream[S]] { self: S =>
-   *   type Token
-   *   def uncons(config: Config): UnconsResult[Token, S]
+   *   type Token;
+   *   def uncons(config: Config): UnconsResult[Token, S];
    * }
    *
    * `Stream[S]` abstracts input for parsers.
@@ -25,8 +25,8 @@ module.exports = ({ _utils }) => {
    *
    * ```
    * class ImplicitStringStream(str: String) extends Stream[ImplicitStringStream] {
-   *   type Token = string
-   *   def uncons(config: Config): UnconsResult[Token, ImplicitStringStream]
+   *   type Token = string;
+   *   uncons(config: Config): UnconsResult[Token, ImplicitStringStream];
    * }
    * ```
    *
@@ -34,8 +34,8 @@ module.exports = ({ _utils }) => {
    *
    * ```
    * class ImplicitArrayStream[T](arr: Array[T]) extends Stream[ImplicitArrayStream[T]] {
-   *   type Token = T
-   *   def uncons(config: Config): UnconsResult[Token, ImplicitArrayStream[T]]
+   *   type Token = T;
+   *   uncons(config: Config): UnconsResult[Token, ImplicitArrayStream[T]];
    * }
    * ```
    *
@@ -63,7 +63,7 @@ module.exports = ({ _utils }) => {
 
   /**
    * class ArrayStream[T](arr: Array[T], index: int) extends Stream[ArrayStream[T]] {
-   *   type Token = T
+   *   type Token = T;
    * }
    *
    * `ArrayStream[T]` provides an efficient `Stream[S]` implementation for arrays.

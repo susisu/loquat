@@ -11,9 +11,9 @@ module.exports = (_core, { _prim, _combinators }) => {
 
   /**
    * object OperatorType {
-   *   INFIX: "infix"
-   *   PREFIX: "prefix"
-   *   POSTFIX: "postfix"
+   *   INFIX: "infix";
+   *   PREFIX: "prefix";
+   *   POSTFIX: "postfix";
    * }
    */
   const OperatorType = Object.freeze({
@@ -28,9 +28,9 @@ module.exports = (_core, { _prim, _combinators }) => {
 
   /**
    * object OperatorAssoc {
-   *   NONE: "none"
-   *   LEFT: "left"
-   *   RIGHT: "right"
+   *   NONE: "none";
+   *   LEFT: "left";
+   *   RIGHT: "right";
    * }
    */
   const OperatorAssoc = Object.freeze({
@@ -73,9 +73,9 @@ module.exports = (_core, { _prim, _combinators }) => {
    *   infix: [S, U, A](
    *     parser: Parser[S, U, (A, A) => A],
    *     assoc: OperatorAssoc
-   *   ) => InfixOperator[S, U, A]
-   *   prefix: [S, U, A](parser: Parser[S, U, A => A]) => PrefixOperator[S, U, A]
-   *   postfix: [S, U, A](parser: Parser[S, U, A => A]) => PostfixOperator[S, U, A]
+   *   ) => InfixOperator[S, U, A];
+   *   prefix: [S, U, A](parser: Parser[S, U, A => A]) => PrefixOperator[S, U, A];
+   *   postfix: [S, U, A](parser: Parser[S, U, A => A]) => PostfixOperator[S, U, A];
    * }
    */
   const Operator = Object.freeze({
