@@ -43,7 +43,7 @@ describe("replicateM_", () => {
 
     // empty
     {
-      const parser = new StrictParser(state => assert.fail("expect function to not be called"));
+      const parser = new StrictParser(_ => assert.fail("expect function to not be called"));
       const repParser = replicateM_(0, parser);
       expect(repParser).to.be.a.parser;
       const res = repParser.run(initState);

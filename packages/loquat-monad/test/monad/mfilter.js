@@ -73,7 +73,7 @@ describe("mfilter", () => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.cfail(err);
       });
-      const test = val => assert.fail("expect function to not be called");
+      const test = _ => assert.fail("expect function to not be called");
       const filtered = mfilter(test, parser);
       expect(filtered).to.be.a.parser;
       const res = filtered.run(initState);
@@ -128,7 +128,7 @@ describe("mfilter", () => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.efail(err);
       });
-      const test = val => assert.fail("expect function to not be called");
+      const test = _ => assert.fail("expect function to not be called");
       const filtered = mfilter(test, parser);
       expect(filtered).to.be.a.parser;
       const res = filtered.run(initState);

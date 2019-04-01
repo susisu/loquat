@@ -206,7 +206,7 @@ describe("rtol", () => {
         });
       };
 
-      const funcB = val => assert.fail("expect function to not be called");
+      const funcB = _ => assert.fail("expect function to not be called");
 
       const func = rtol(funcB, funcA);
       expect(func).to.be.a("function");
@@ -397,7 +397,7 @@ describe("rtol", () => {
         });
       };
 
-      const funcB = val => assert.fail("expect function to not be called");
+      const funcB = _ => assert.fail("expect function to not be called");
 
       const func = rtol(funcB, funcA);
       expect(func).to.be.a("function");

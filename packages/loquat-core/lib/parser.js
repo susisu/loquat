@@ -173,7 +173,7 @@ module.exports = ({ _pos }) => {
     /**
      * Result.fail: (consumed: boolean, err: Parser) => Failure
      */
-    fail(consumed, err, val, state) {
+    fail(consumed, err) {
       return { success: false, consumed, err };
     },
 

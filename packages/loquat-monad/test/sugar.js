@@ -46,7 +46,7 @@ describe("sugar", () => {
     // filter
     {
       expect(_sugar.filter).to.be.a("function");
-      const parser = _sugar.filter.call(self, val => true);
+      const parser = _sugar.filter.call(self, _ => true);
       expect(parser).to.be.a.parser;
     }
   });

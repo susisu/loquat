@@ -250,7 +250,7 @@ describe("between", () => {
         return Result.cfail(errP);
       });
 
-      const close = new StrictParser(state => assert.fail("expect function to not be called"));
+      const close = new StrictParser(_ => assert.fail("expect function to not be called"));
 
       const parser = between(open, close, p);
       expect(parser).to.be.a.parser;
@@ -485,7 +485,7 @@ describe("between", () => {
         return Result.efail(errP);
       });
 
-      const close = new StrictParser(state => assert.fail("expect function to not be called"));
+      const close = new StrictParser(_ => assert.fail("expect function to not be called"));
 
       const parser = between(open, close, p);
       expect(parser).to.be.a.parser;
@@ -503,9 +503,9 @@ describe("between", () => {
         return Result.cfail(errO);
       });
 
-      const p = new StrictParser(state => assert.fail("expect function to not be called"));
+      const p = new StrictParser(_ => assert.fail("expect function to not be called"));
 
-      const close = new StrictParser(state => assert.fail("expect function to not be called"));
+      const close = new StrictParser(_ => assert.fail("expect function to not be called"));
 
       const parser = between(open, close, p);
       expect(parser).to.be.a.parser;
@@ -734,7 +734,7 @@ describe("between", () => {
         return Result.cfail(errP);
       });
 
-      const close = new StrictParser(state => assert.fail("expect function to not be called"));
+      const close = new StrictParser(_ => assert.fail("expect function to not be called"));
 
       const parser = between(open, close, p);
       expect(parser).to.be.a.parser;
@@ -969,7 +969,7 @@ describe("between", () => {
         return Result.efail(errP);
       });
 
-      const close = new StrictParser(state => assert.fail("expect function to not be called"));
+      const close = new StrictParser(_ => assert.fail("expect function to not be called"));
 
       const parser = between(open, close, p);
       expect(parser).to.be.a.parser;
@@ -987,9 +987,9 @@ describe("between", () => {
         return Result.efail(errO);
       });
 
-      const p = new StrictParser(state => assert.fail("expect function to not be called"));
+      const p = new StrictParser(_ => assert.fail("expect function to not be called"));
 
-      const close = new StrictParser(state => assert.fail("expect function to not be called"));
+      const close = new StrictParser(_ => assert.fail("expect function to not be called"));
 
       const parser = between(open, close, p);
       expect(parser).to.be.a.parser;

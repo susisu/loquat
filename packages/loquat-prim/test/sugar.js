@@ -58,7 +58,7 @@ describe("sugar", () => {
     // bind
     {
       expect(_sugar.bind).to.be.a("function");
-      const parser = _sugar.bind.call(self, x => createDummyParser());
+      const parser = _sugar.bind.call(self, _ => createDummyParser());
       expect(parser).to.be.a.parser;
     }
     // and
@@ -362,7 +362,7 @@ describe("sugar", () => {
     // reduceMany
     {
       expect(_sugar.reduceMany).to.be.a("function");
-      const parser = _sugar.reduceMany.call(self, (accum, x) => accum, "foo");
+      const parser = _sugar.reduceMany.call(self, (accum, _) => accum, "foo");
       expect(parser).to.be.a.parser;
     }
     // many

@@ -31,7 +31,7 @@ describe("token", () => {
           expect(config).to.be.an.equalConfigTo(initState.config);
           return { empty: false, value: "foo" };
         },
-        x => assert.fail("expect function to not be called"),
+        _ => assert.fail("expect function to not be called"),
         (x, config) => {
           expect(x).to.equal("B");
           expect(config).to.be.an.equalConfigTo(initState.config);
@@ -65,7 +65,7 @@ describe("token", () => {
           expect(config).to.be.an.equalConfigTo(initState.config);
           return { empty: false, value: "foo" };
         },
-        x => assert.fail("expect function to not be called"),
+        _ => assert.fail("expect function to not be called"),
         (x, config) => {
           expect(x).to.equal("A");
           expect(config).to.be.an.equalConfigTo(initState.config);
@@ -125,9 +125,9 @@ describe("token", () => {
         "none"
       );
       const parser = token(
-        (x, config) => assert.fail("expect function to not be called"),
-        x => assert.fail("expect function to not be called"),
-        (x, config) => assert.fail("expect function to not be called")
+        (_, _config) => assert.fail("expect function to not be called"),
+        _ => assert.fail("expect function to not be called"),
+        (_, _config) => assert.fail("expect function to not be called")
       );
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
@@ -155,7 +155,7 @@ describe("token", () => {
           expect(config).to.be.an.equalConfigTo(initState.config);
           return { empty: false, value: "foo" };
         },
-        x => assert.fail("expect function to not be called"),
+        _ => assert.fail("expect function to not be called"),
         (x, config) => {
           expect(x).to.equal("\uDF63");
           expect(config).to.be.an.equalConfigTo(initState.config);
@@ -189,7 +189,7 @@ describe("token", () => {
           expect(config).to.be.an.equalConfigTo(initState.config);
           return { empty: false, value: "foo" };
         },
-        x => assert.fail("expect function to not be called"),
+        _ => assert.fail("expect function to not be called"),
         (x, config) => {
           expect(x).to.equal("\uD83C\uDF64");
           expect(config).to.be.an.equalConfigTo(initState.config);

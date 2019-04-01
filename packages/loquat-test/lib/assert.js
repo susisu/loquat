@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = ({ _core, _aux }) => (chai, utils) => {
+module.exports = ({ _core, _aux }) => chai => {
   const { Assertion } = chai;
 
   Assertion.addMethod("equalPositionTo", function (exp) {

@@ -217,7 +217,7 @@ describe("qo", () => {
         return Result.cfail(errA);
       });
 
-      const parserB = new StrictParser(state => assert.fail("expect function to not be called"));
+      const parserB = new StrictParser(_ => assert.fail("expect function to not be called"));
 
       const parser = qo(function* () {
         yield parserA;
@@ -396,7 +396,7 @@ describe("qo", () => {
         return Result.efail(errA);
       });
 
-      const parserB = new StrictParser(state => assert.fail("expect function to not be called"));
+      const parserB = new StrictParser(_ => assert.fail("expect function to not be called"));
 
       const parser = qo(function* () {
         yield parserA;

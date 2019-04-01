@@ -123,7 +123,7 @@ describe("bind", () => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.cfail(errA);
       });
-      const func = val => assert.fail("expect function to not be called");
+      const func = _ => assert.fail("expect function to not be called");
       const binded = bind(parser, func);
       expect(binded).to.be.a.parser;
       const res = binded.run(initState);
@@ -207,7 +207,7 @@ describe("bind", () => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.efail(errA);
       });
-      const func = val => assert.fail("expect function to not be called");
+      const func = _ => assert.fail("expect function to not be called");
       const binded = bind(parser, func);
       expect(binded).to.be.a.parser;
       const res = binded.run(initState);

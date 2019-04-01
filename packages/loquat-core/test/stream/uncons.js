@@ -75,7 +75,7 @@ describe("uncons", () => {
     it("should return a result containing the first token and the rest", () => {
       const config = new Config({ tabWidth: 4, unicode: true });
       const tail = {
-        uncons: config => ({ empty: true }),
+        uncons: _ => ({ empty: true }),
       };
       const stream = {
         uncons: config => {

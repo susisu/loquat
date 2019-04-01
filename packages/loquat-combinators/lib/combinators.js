@@ -57,7 +57,7 @@ module.exports = (_core, { _prim }) => {
   function optionMaybe(parser) {
     return mplus(
       map(parser, val => ({ empty: false, value: val })),
-      map(pure(undefined), () => ({ empty: true }))
+      map(pure(undefined), _ => ({ empty: true }))
     );
   }
 
@@ -114,7 +114,7 @@ module.exports = (_core, { _prim }) => {
   function sepBy(parser, sep) {
     return mplus(
       sepBy1(parser, sep),
-      map(pure(undefined), x => [])
+      map(pure(undefined), _ => [])
     );
   }
 
@@ -492,9 +492,9 @@ module.exports = (_core, { _prim }) => {
    * anyToken: [S <: Stream[S], U]Parser[S, U, S#Token]
    */
   const anyToken = tokenPrim(
-    (token, config) => ({ empty: false, value: token }),
+    (token, _) => ({ empty: false, value: token }),
     show,
-    (pos, token, rest, config) => pos
+    (pos, _token, _rest, _config) => pos
   );
 
   /**

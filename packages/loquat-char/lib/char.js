@@ -154,13 +154,13 @@ module.exports = (_core, { _prim }) => {
    * char: [S <: CharacterStream[S], U](expectChar: char) => Parser[S, U, char]
    */
   function char(expectChar) {
-    return label(satisfy((char, config) => char === expectChar), show(expectChar));
+    return label(satisfy((char, _) => char === expectChar), show(expectChar));
   }
 
   /**
    * anyChar: [S <: CharacterStream[S], U]Parser[S, U, char]
    */
-  const anyChar = satisfy((char, config) => true);
+  const anyChar = satisfy((_, _config) => true);
 
   const spaceChars    = new Set(" \f\n\r\t\v");
   const upperChars    = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
@@ -174,7 +174,7 @@ module.exports = (_core, { _prim }) => {
   /**
    * space: [S <: CharacterStream[S], U]Parser[S, U, char]
    */
-  const space = label(satisfy((char, config) => spaceChars.has(char)), "space");
+  const space = label(satisfy((char, _config) => spaceChars.has(char)), "space");
 
   /**
    * spaces: [S <: CharacterStream[S], U]Parser[S, U, undefined]
@@ -194,37 +194,37 @@ module.exports = (_core, { _prim }) => {
   /**
    * upper: [S <: CharacterStream[S], U]Parser[S, U, char]
    */
-  const upper = label(satisfy((char, config) => upperChars.has(char)), "uppercase letter");
+  const upper = label(satisfy((char, _config) => upperChars.has(char)), "uppercase letter");
 
   /**
    * lower: [S <: CharacterStream[S], U]Parser[S, U, char]
    */
-  const lower = label(satisfy((char, config) => lowerChars.has(char)), "lowercase letter");
+  const lower = label(satisfy((char, _config) => lowerChars.has(char)), "lowercase letter");
 
   /**
    * letter: [S <: CharacterStream[S], U]Parser[S, U, char]
    */
-  const letter = label(satisfy((char, config) => letterChars.has(char)), "letter");
+  const letter = label(satisfy((char, _config) => letterChars.has(char)), "letter");
 
   /**
    * digit: [S <: CharacterStream[S], U]Parser[S, U, char]
    */
-  const digit = label(satisfy((char, config) => digitChars.has(char)), "digit");
+  const digit = label(satisfy((char, _config) => digitChars.has(char)), "digit");
 
   /**
    * alphaNum: [S <: CharacterStream[S], U]Parser[S, U, char]
    */
-  const alphaNum = label(satisfy((char, config) => alphaNumChars.has(char)), "letter or digit");
+  const alphaNum = label(satisfy((char, _config) => alphaNumChars.has(char)), "letter or digit");
 
   /**
    * octDigit: [S <: CharacterStream[S], U]Parser[S, U, char]
    */
-  const octDigit = label(satisfy((char, config) => octDigitChars.has(char)), "octal digit");
+  const octDigit = label(satisfy((char, _config) => octDigitChars.has(char)), "octal digit");
 
   /**
    * hexDigit: [S <: CharacterStream[S], U]Parser[S, U, char]
    */
-  const hexDigit = label(satisfy((char, config) => hexDigitChars.has(char)), "hexadecimal digit");
+  const hexDigit = label(satisfy((char, _config) => hexDigitChars.has(char)), "hexadecimal digit");
 
   /**
    * manyChars: [S, U](parser: Parser[S, U, char]) => Parser[S, U, string]

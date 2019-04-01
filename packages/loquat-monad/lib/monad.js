@@ -8,8 +8,8 @@ module.exports = (_core, { _prim }) => {
    * forever: [S, U, A, B](parser: Parser[S, U, A]) => Parser[S, U, B]
    */
   function forever(parser) {
-    return tailRecM(undefined, acc =>
-      map(parser, val => ({ done: false, value: undefined }))
+    return tailRecM(undefined, _ =>
+      map(parser, _ => ({ done: false, value: undefined }))
     );
   }
 
@@ -17,7 +17,7 @@ module.exports = (_core, { _prim }) => {
    * discard: [S, U, A](parser: Parser[S, U, A]) => Parser[S, U, undefined]
    */
   function discard(parser) {
-    return map(parser, val => undefined);
+    return map(parser, _ => undefined);
   }
 
   /**

@@ -85,7 +85,7 @@ module.exports = ({ _utils }) => {
     /**
      * ArrayStream[T]#uncons(config: Config): UnconsResult[T, ArrayStream[T]]
      */
-    uncons(config) {
+    uncons(_config) {
       return this._index >= this._arr.length
         ? { empty: true }
         : {

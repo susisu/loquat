@@ -57,7 +57,7 @@ describe("msum", () => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.csucc(errA, "foo", stateA);
       });
-      const parserB = new StrictParser(state => assert.fail("expect function to not be called"));
+      const parserB = new StrictParser(_ => assert.fail("expect function to not be called"));
       const parser = msum([parserA, parserB]);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
@@ -73,7 +73,7 @@ describe("msum", () => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.cfail(errA);
       });
-      const parserB = new StrictParser(state => assert.fail("expect function to not be called"));
+      const parserB = new StrictParser(_ => assert.fail("expect function to not be called"));
       const parser = msum([parserA, parserB]);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
