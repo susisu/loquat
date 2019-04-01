@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = (_core, { _prim, _char, _combinators }) => {
-  const { show, unconsString, isParser } = _core;
+  const { show, unconsString, lazy, isParser } = _core;
   const {
     map,
     pure,
@@ -41,12 +41,22 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     notFollowedBy,
   } = _combinators;
 
+  function constant(x) {
+    return _ => x;
+  }
+
   /*
    * white spaces
    */
-  const spaceChars  = new Set(" \f\n\r\t\v");
-  const simpleSpace = skipMany1(satisfy(char => spaceChars.has(char)));
 
+  /** spaceChars: Set[char] */
+  const spaceChars = new Set(" \f\n\r\t\v");
+  /** simpleSpace: [S <: CharacterStream[S], U]Parser[S, U, undefined] */
+  const simpleSpace = skipMany1(satisfy((char, _) => spaceChars.has(char)));
+
+  /**
+   * oneLineComment: [S <: CharacterStream[S], U](commentLine: string) => Parser[S, U, undefined]
+   */
   function oneLineComment(commentLine) {
     return then(
       tryParse(string(commentLine)),
@@ -57,19 +67,32 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     );
   }
 
+  /**
+   * multiLineComment: [S <: CharacterStream[S], U](
+   *   commentStart: string,
+   *   commentEnd: string,
+   *   nestedComments: boolean
+   * ) => Parser[S, U, undefined]
+   */
   function multiLineComment(commentStart, commentEnd, nestedComments) {
+    /** comment: Parser[S, U, undefined] */
+    const comment = lazy(() =>
+      then(
+        tryParse(string(commentStart)),
+        inComment // eslint-disable-line no-use-before-define
+      )
+    );
     const commentStartEnd = commentStart + commentEnd;
+    /** inCommentMulti: Parser[S, U, undefined] */
     const inCommentMulti = tailRecM(
       undefined,
-      _ => label(
+      constant(label(
         mplus(
           then(
             tryParse(string(commentEnd)),
             pure({ done: true, value: undefined })
           ),
           mplus(
-            // FIXME
-            // eslint-disable-next-line no-use-before-define
             map(comment, _ => ({ done: false, value: undefined })),
             mplus(
               map(
@@ -84,11 +107,12 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
           )
         ),
         "end of comment"
-      )
+      ))
     );
+    /** inCommentSingle: Parser[S, U, undefined] */
     const inCommentSingle = tailRecM(
       undefined,
-      _ => label(
+      constant(label(
         mplus(
           then(
             tryParse(string(commentEnd)),
@@ -106,13 +130,10 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
           )
         ),
         "end of comment"
-      )
+      ))
     );
+    /** inComment: Parser[S, U, undefined] */
     const inComment = nestedComments ? inCommentMulti : inCommentSingle;
-    const comment = then(
-      tryParse(string(commentStart)),
-      inComment
-    );
     return comment;
   }
 
