@@ -2,13 +2,13 @@
 
 const { expect } = require("chai");
 
-const { StrictParser } = _core;
-
 const { LanguageDef } = _language;
 const { makeTokenParser } = _token;
 
-describe(".makeTokenParser(def)", () => {
-  it("should return an object containing token parsers defined by `def'", () => {
+const { createDummyParser } = _test.helper;
+
+describe("makeTokenParser", () => {
+  it("should create an object containing token parsers defined by the definition", () => {
     // empty (default) definition (no identifier / operator)
     {
       const def = new LanguageDef({});
@@ -56,10 +56,10 @@ describe(".makeTokenParser(def)", () => {
         commentEnd    : "-}",
         commentLine   : "--",
         nestedComments: true,
-        idStart       : new StrictParser(() => {}),
-        idLetter      : new StrictParser(() => {}),
-        opStart       : new StrictParser(() => {}),
-        opLetter      : new StrictParser(() => {}),
+        idStart       : createDummyParser(),
+        idLetter      : createDummyParser(),
+        opStart       : createDummyParser(),
+        opLetter      : createDummyParser(),
         reservedIds   : ["if", "then", "else", "let", "in", "do"],
         reservedOps   : ["=", "->", "<-"],
         caseSensitive : true,

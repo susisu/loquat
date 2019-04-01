@@ -362,11 +362,47 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
   }
 
   /**
-     * @function module:token.makeTokenParser
-     * @static
-     * @param {module:language.LanguageDef} def
-     * @returns {Object}
-     */
+   * type NaturalOrFloat =
+   *      { val type: "natural", val value: int }
+   *   \/ { val type: "float", val value: float }
+   */
+
+  /**
+   * type TokenParser[S, U] = {
+   *   val whiteSpace: Parser[S, U, undefined],
+   *   val lexeme: [A](parser: Parser[S, U, A]) => Parser[S, U, A],
+   *   val symbol: (name: string) => Parser[S, U, string],
+   *   val parens: [A](parser: Parser[S, U, A]) => Parser[S, U, A],
+   *   val braces: [A](parser: Parser[S, U, A]) => Parser[S, U, A],
+   *   val angles: [A](parser: Parser[S, U, A]) => Parser[S, U, A],
+   *   val brackets: [A](parser: Parser[S, U, A]) => Parser[S, U, A],
+   *   val semi: Parser[S, U, string],
+   *   val comma: Parser[S, U, string],
+   *   val colon: Parser[S, U, string],
+   *   val dot: Parser[S, U, string],
+   *   val semiSep: [A](parser: Parser[S, U, A]) => Parser[S, U, Array[A]],
+   *   val semiSep1: [A](parser: Parser[S, U, A]) => Parser[S, U, Array[A]],
+   *   val commaSep: [A](parser: Parser[S, U, A]) => Parser[S, U, Array[A]],
+   *   val commaSep1: [A](parser: Parser[S, U, A]) => Parser[S, U, Array[A]],
+   *   val decimal: Parser[S, U, int],
+   *   val hexadecimal: Parser[S, U, int],
+   *   val octal: Parser[S, U, int],
+   *   val natural: Parser[S, U, int],
+   *   val integer: Parser[S, U, int],
+   *   val float: Parser[S, U, float],
+   *   val naturalOrFloat: Parser[S, U, number],
+   *   val charLiteral: Parser[S, U, char],
+   *   val stringLiteral: Parser[S, U, string],
+   *   val identifier: Parser[S, U, string],
+   *   val reserved: (name: string) => Parser[S, U, undefined],
+   *   val operator: Parser[S, U, string],
+   *   val reservedOp: (name: string) => Parser[S, U, undefined],
+   * }
+   */
+
+  /**
+   * makeTokenParser: [S <: CharacterStream[S], U](def: LanguageDef[S, U]) => TokenParser[S, U]
+   */
   function makeTokenParser(def) {
     const tp = {};
 
