@@ -457,14 +457,16 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     function lexeme(parser) {
       return bind(parser, x => then(whiteSpace, pure(x)));
     }
-
+    /** symbol: (name: string) => Parser[S, U, string] */
     function symbol(name) {
       return lexeme(string(name));
     }
 
-    tp.whiteSpace = whiteSpace;
-    tp.lexeme     = lexeme;
-    tp.symbol     = symbol;
+    Object.assign(tp, {
+      whiteSpace,
+      lexeme,
+      symbol,
+    });
 
     /*
          * symbols
