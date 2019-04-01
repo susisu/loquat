@@ -453,7 +453,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
           ),
         ""
     ));
-    /** lexeme: (parser: Parser[S, U, A]) => Parser[S, U, A] */
+    /** lexeme: [A](parser: Parser[S, U, A]) => Parser[S, U, A] */
     function lexeme(parser) {
       return bind(parser, x => then(whiteSpace, pure(x)));
     }
@@ -469,29 +469,37 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     });
 
     /*
-         * symbols
-         */
-    const lparen   = symbol("(");
-    const rparen   = symbol(")");
-    const lbrace   = symbol("{");
-    const rbrace   = symbol("}");
-    const langle   = symbol("<");
-    const rangle   = symbol(">");
-    const lbracket = symbol("[");
-    const rbracket = symbol("]");
-
+     * symbols
+     */
+    /** lparen: Parser[S, U, string] */
+    const lparen = symbol("(");
+    /** rparen: Parser[S, U, string] */
+    const rparen = symbol(")");
+    /** parens: [A](parser: Parser[S, U, A]) => Parser[S, U, A] */
     function parens(parser) {
       return between(lparen, rparen, parser);
     }
 
+    /** lbrace: Parser[S, U, string] */
+    const lbrace = symbol("{");
+    /** rbrace: Parser[S, U, string] */
+    const rbrace = symbol("}");
     function braces(parser) {
       return between(lbrace, rbrace, parser);
     }
 
+    /** langle: Parser[S, U, string] */
+    const langle = symbol("<");
+    /** rangle: Parser[S, U, string] */
+    const rangle = symbol(">");
     function angles(parser) {
       return between(langle, rangle, parser);
     }
 
+    /** lbracket: Parser[S, U, string] */
+    const lbracket = symbol("[");
+    /** rbracket: Parser[S, U, string] */
+    const rbracket = symbol("]");
     function brackets(parser) {
       return between(lbracket, rbracket, parser);
     }
