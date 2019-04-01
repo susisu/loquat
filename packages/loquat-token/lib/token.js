@@ -433,6 +433,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     const noOneLineComment = def.commentLine === "" || def.commentLine === undefined;
     const noMultiLineComment = def.commentStart === "" || def.commentEnd === ""
       || def.commentStart === undefined || def.commentEnd === undefined;
+    /** whiteSpace: Parser[S, U, undefined]*/
     const whiteSpace = skipMany(label(
         noOneLineComment && noMultiLineComment ? simpleSpace
           : noOneLineComment ? mplus(
@@ -452,7 +453,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
           ),
         ""
     ));
-
+    /** lexeme: (parser: Parser[S, U, A]) => Parser[S, U, A] */
     function lexeme(parser) {
       return bind(parser, x => then(whiteSpace, pure(x)));
     }
