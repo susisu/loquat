@@ -16,8 +16,8 @@ const {
 const { LanguageDef } = _language;
 const { makeTokenParser } = _token;
 
-describe(".colon", () => {
-  it("should parse a colon", () => {
+describe("colon", () => {
+  it("should be a parser that parsea a colon", () => {
     const def = new LanguageDef({});
     const tp = makeTokenParser(def);
     const colon = tp.colon;
@@ -27,51 +27,70 @@ describe(".colon", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         ": ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = colon.run(initState);
-      expect(Result.equal(
-        res,
-        Result.csucc(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 3),
-            [
-              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-              ErrorMessage.create(ErrorMessageType.EXPECT, ""),
-            ]
-          ),
-          ":",
-          new State(
-            new Config({ tabWidth: 8 }),
-            "ABC",
-            new SourcePos("foobar", 1, 3),
-            "none"
-          )
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        new StrictParseError(
+          new SourcePos("main", 2, 1, 3),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+            ErrorMessage.create(ErrorMessageType.EXPECT, ""),
+          ]
+        ),
+        ":",
+        new State(
+          new Config({ tabWidth: 8 }),
+          "ABC",
+          new SourcePos("main", 2, 1, 3),
+          "none"
         )
-      )).to.be.true;
+      ));
+    }
+    {
+      const initState = new State(
+        new Config({ tabWidth: 8 }),
+        ":ABC",
+        new SourcePos("main", 0, 1, 1),
+        "none"
+      );
+      const res = colon.run(initState);
+      expect(res).to.be.an.equalResultTo(Result.csucc(
+        new StrictParseError(
+          new SourcePos("main", 1, 1, 2),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+            ErrorMessage.create(ErrorMessageType.EXPECT, ""),
+          ]
+        ),
+        ":",
+        new State(
+          new Config({ tabWidth: 8 }),
+          "ABC",
+          new SourcePos("main", 1, 1, 2),
+          "none"
+        )
+      ));
     }
     // efail
     {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "ABC",
-        new SourcePos("foobar", 1, 1),
+        new SourcePos("main", 0, 1, 1),
         "none"
       );
       const res = colon.run(initState);
-      expect(Result.equal(
-        res,
-        Result.efail(
-          new StrictParseError(
-            new SourcePos("foobar", 1, 1),
-            [
-              ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
-              ErrorMessage.create(ErrorMessageType.EXPECT, show(":")),
-            ]
-          )
+      expect(res).to.be.an.equalResultTo(Result.efail(
+        new StrictParseError(
+          new SourcePos("main", 0, 1, 1),
+          [
+            ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
+            ErrorMessage.create(ErrorMessageType.EXPECT, show(":")),
+          ]
         )
-      )).to.be.true;
+      ));
     }
   });
 });

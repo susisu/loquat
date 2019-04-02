@@ -508,10 +508,14 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       return between(lbracket, rbracket, parser);
     }
 
-    const semi  = symbol(";");
+    /** semi: Parser[S, U, string] */
+    const semi = symbol(";");
+    /** comma: Parser[S, U, string] */
     const comma = symbol(",");
+    /** colon: Parser[S, U, string] */
     const colon = symbol(":");
-    const dot   = symbol(".");
+    /** dot: Parser[S, U, string] */
+    const dot = symbol(".");
 
     function semiSep(parser) {
       return sepBy(parser, semi);
