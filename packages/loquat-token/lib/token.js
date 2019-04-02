@@ -252,8 +252,8 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
   );
 
   /*
-     * character / string literals
-     */
+   * character / string literals
+   */
   const escMap = {
     "a" : "\u0007",
     "b" : "\b",
@@ -302,11 +302,13 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     "ESC": "\u001b",
     "DEL": "\u007f",
   };
+  /** charEsc: [S <: CharacterStream[S], U]Parser[S, U, char] */
   const charEsc = choice(
     Object.keys(escMap).sort().map(c =>
       then(char(c), pure(escMap[c]))
     )
   );
+  /** charNum: [S <: CharacterStream[S], U]Parser[S, U, char] */
   const charNum = bind(
     mplus(
       decimal,
@@ -317,6 +319,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     ),
     code => pure(String.fromCharCode(code))
   );
+  /** charAscii: [S <: CharacterStream[S], U]Parser[S, U, char] */
   const charAscii = choice(
     Object.keys(asciiMap).sort().map(asc =>
       tryParse(
@@ -324,6 +327,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       )
     )
   );
+  /** charControl: [S <: CharacterStream[S], U]Parser[S, U, char] */
   const charControl = then(
     char("^"),
     bind(upper, code =>
@@ -332,23 +336,31 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       )
     )
   );
+  /** escapeCode: [S <: CharacterStream[S], U]Parser[S, U, char] */
   const escapeCode = label(
     mplus(charEsc, mplus(charNum, mplus(charAscii, charControl))),
     "escape code"
   );
-  const charLetter = satisfy(c => c !== "'" && c !== "\\" && c > "\u001a");
+  /** charLetter: [S <: CharacterStream[S], U]Parser[S, U, char] */
+  const charLetter = satisfy((c, _) => c !== "'" && c !== "\\" && c > "\u001a");
+  /** charEscape: [S <: CharacterStream[S], U]Parser[S, U, char] */
   const charEscape = then(char("\\"), escapeCode);
+  /** characterChar: [S <: CharacterStream[S], U]Parser[S, U, char] */
   const characterChar = label(
     mplus(charLetter, charEscape),
     "literal character"
   );
 
-  const stringLetter = satisfy(c => c !== "\"" && c !== "\\" && c > "\u001a");
+  /** stringLetter: [S <: CharacterStream[S], U]Parser[S, U, char] */
+  const stringLetter = satisfy((c, _) => c !== "\"" && c !== "\\" && c > "\u001a");
+  /** escapeGap: [S <: CharacterStream[S], U]Parser[S, U, char] */
   const escapeGap = then(
     many1(space),
     label(char("\\"), "end of string gap")
   );
+  /** escapeEmpty: [S <: CharacterStream[S], U]Parser[S, U, char] */
   const escapeEmpty = char("&");
+  /** stringEscape: [S <: CharacterStream[S], U]Parser[S, U, char] */
   const stringEscape = then(
     char("\\"),
     mplus(
@@ -359,6 +371,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       )
     )
   );
+  /** stringChar: [S <: CharacterStream[S], U]Parser[S, U, char] */
   const stringChar = label(
     mplus(stringLetter, stringEscape),
     "string character"
@@ -595,8 +608,9 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     });
 
     /*
-         * character / string literals
-         */
+     * character / string literals
+     */
+    /** charLiteral: Parser[S, U, char] */
     const charLiteral = label(
       lexeme(
         between(
@@ -607,6 +621,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       ),
       "character"
     );
+    /** stringLiteral: Parser[S, U, string] */
     const stringLiteral = label(
       lexeme(
         between(
@@ -618,8 +633,10 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       "literal string"
     );
 
-    tp.charLiteral   = charLiteral;
-    tp.stringLiteral = stringLiteral;
+    Object.assign(tp, {
+      charLiteral,
+      stringLiteral,
+    });
 
     /*
          * identifier
