@@ -61,7 +61,7 @@ describe("operator", () => {
   const opLetter = genCharParser(/[+\-*/%=<>:]/);
 
   it("should be a parser that parses an operator", () => {
-    const def = new LanguageDef({
+    const def = LanguageDef.create({
       opStart : opStart,
       opLetter: opLetter,
     });
@@ -115,7 +115,7 @@ describe("operator", () => {
 
   it("should not accept any reserved operator", () => {
     {
-      const def = new LanguageDef({
+      const def = LanguageDef.create({
         opStart    : opStart,
         opLetter   : opLetter,
         reservedOps: [],
@@ -148,7 +148,7 @@ describe("operator", () => {
       ));
     }
     {
-      const def = new LanguageDef({
+      const def = LanguageDef.create({
         opStart    : opStart,
         opLetter   : opLetter,
         reservedOps: ["=", "->", "<-"],

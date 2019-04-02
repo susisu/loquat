@@ -19,7 +19,7 @@ const { makeTokenParser } = _token;
 
 describe("brackets", () => {
   it("should create a parser that parses tokens between brackets", () => {
-    const def = new LanguageDef({});
+    const def = LanguageDef.create({});
     const tp = makeTokenParser(def);
     const brackets = tp.brackets;
     expect(brackets).to.be.a("function");

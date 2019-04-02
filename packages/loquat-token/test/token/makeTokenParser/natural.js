@@ -18,7 +18,7 @@ const { makeTokenParser } = _token;
 
 describe("natural", () => {
   it("should be a parser that parses a natural number (zero or positive integer)", () => {
-    const def = new LanguageDef({});
+    const def = LanguageDef.create({});
     const tp = makeTokenParser(def);
     const natural = tp.natural;
     expect(natural).to.be.a.parser;

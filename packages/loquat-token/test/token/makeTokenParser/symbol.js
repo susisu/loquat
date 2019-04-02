@@ -19,7 +19,7 @@ const { makeTokenParser } = _token;
 describe("symbol", () => {
   it("should create a parser that parses the given string, and skips trailing spaces and"
     + " comments", () => {
-    const def = new LanguageDef({
+    const def = LanguageDef.create({
       commentLine   : "--",
       commentStart  : "{-",
       commentEnd    : "-}",

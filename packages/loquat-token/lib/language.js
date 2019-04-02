@@ -18,7 +18,7 @@ module.exports = () => {
    */
 
   /**
-   * class LanguageDef[S, U](obj?: LanguageDefObject[S, U]) {
+   * type LanguageDef[S, U] = {
    *   commentStart: string \/ undefined;
    *   commentEnd: string \/ undefined;
    *   commentLine: string \/ undefined;
@@ -30,40 +30,31 @@ module.exports = () => {
    *   reservedIds: Array[string] \/ undefined;
    *   reservedOps: Array[string] \/ undefined;
    *   caseSensitive: boolean;
-   *   clone(): LanguageDef[S, U];
    * }
    */
-  class LanguageDef {
-    constructor(obj = {}) {
-      this.commentStart   = obj.commentStart;
-      this.commentEnd     = obj.commentEnd;
-      this.commentLine    = obj.commentLine;
-      this.nestedComments = obj.nestedComments === undefined ? true : obj.nestedComments;
-      this.idStart        = obj.idStart;
-      this.idLetter       = obj.idLetter;
-      this.opStart        = obj.opStart;
-      this.opLetter       = obj.opLetter;
-      this.reservedIds    = obj.reservedIds;
-      this.reservedOps    = obj.reservedOps;
-      this.caseSensitive  = obj.caseSensitive === undefined ? true : obj.caseSensitive;
-    }
 
-    clone() {
-      return new LanguageDef({
-        commentStart  : this.commentStart,
-        commentEnd    : this.commentEnd,
-        commentLine   : this.commentLine,
-        nestedComments: this.nestedComments,
-        idStart       : this.idStart,
-        idLetter      : this.idLetter,
-        opStart       : this.opStart,
-        opLetter      : this.opLetter,
-        reservedIds   : this.reservedIds,
-        reservedOps   : this.reservedOps,
-        caseSensitive : this.caseSensitive,
-      });
-    }
-  }
+  /**
+   * object LanguageDef {
+   *   create: [S, U](obj?: LanguageDefObject[S, U]) => LanguageDef[S, U]
+   * }
+   */
+  const LanguageDef = Object.freeze({
+    create(obj = {}) {
+      return {
+        commentStart  : obj.commentStart,
+        commentEnd    : obj.commentEnd,
+        commentLine   : obj.commentLine,
+        nestedComments: obj.nestedComments === undefined ? true : obj.nestedComments,
+        idStart       : obj.idStart,
+        idLetter      : obj.idLetter,
+        opStart       : obj.opStart,
+        opLetter      : obj.opLetter,
+        reservedIds   : obj.reservedIds,
+        reservedOps   : obj.reservedOps,
+        caseSensitive : obj.caseSensitive === undefined ? true : obj.caseSensitive,
+      };
+    },
+  });
 
   return Object.freeze({
     LanguageDef,

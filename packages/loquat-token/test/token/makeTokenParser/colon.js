@@ -18,7 +18,7 @@ const { makeTokenParser } = _token;
 
 describe("colon", () => {
   it("should be a parser that parsea a colon", () => {
-    const def = new LanguageDef({});
+    const def = LanguageDef.create({});
     const tp = makeTokenParser(def);
     const colon = tp.colon;
     expect(colon).to.be.a.parser;

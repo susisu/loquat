@@ -72,7 +72,7 @@ describe("semiSep", () => {
   });
 
   it("should create a parser that parses zero or more tokens separated by semicolons", () => {
-    const def = new LanguageDef({});
+    const def = LanguageDef.create({});
     const tp = makeTokenParser(def);
     const semiSep = tp.semiSep;
     expect(semiSep).to.be.a("function");

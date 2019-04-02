@@ -6,11 +6,11 @@ const { LanguageDef } = _language;
 
 const { createDummyParser } = _test.helper;
 
-describe(".constructor", () => {
-  it("should create a new `LanguageDef` instance", () => {
+describe("create", () => {
+  it("should create a new language definition object", () => {
     // use default parameter
     {
-      const def = new LanguageDef();
+      const def = LanguageDef.create();
       expect(def.commentStart).to.be.undefined;
       expect(def.commentEnd).to.be.undefined;
       expect(def.commentLine).to.be.undefined;
@@ -25,7 +25,7 @@ describe(".constructor", () => {
     }
     // empty object
     {
-      const def = new LanguageDef({});
+      const def = LanguageDef.create({});
       expect(def.commentStart).to.be.undefined;
       expect(def.commentEnd).to.be.undefined;
       expect(def.commentLine).to.be.undefined;
@@ -44,7 +44,7 @@ describe(".constructor", () => {
       const idLetter = createDummyParser();
       const opStart  = createDummyParser();
       const opLetter = createDummyParser();
-      const def = new LanguageDef({
+      const def = LanguageDef.create({
         commentStart  : "/*",
         commentEnd    : "*/",
         commentLine   : "//",

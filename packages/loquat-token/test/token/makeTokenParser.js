@@ -11,7 +11,7 @@ describe("makeTokenParser", () => {
   it("should create an object containing token parsers defined by the definition", () => {
     // empty (default) definition (no identifier / operator)
     {
-      const def = new LanguageDef({});
+      const def = LanguageDef.create({});
       const tp = makeTokenParser(def);
       // white space
       expect(tp.whiteSpace).to.be.a.parser;
@@ -51,7 +51,7 @@ describe("makeTokenParser", () => {
     }
     // definition with identifier and operator
     {
-      const def = new LanguageDef({
+      const def = LanguageDef.create({
         commentStart  : "{-",
         commentEnd    : "-}",
         commentLine   : "--",

@@ -61,7 +61,7 @@ describe("reservedOp", () => {
   const opLetter = genCharParser(/[+\-*/%=<>:]/);
 
   it("should create a parser that parses the given reserved operator", () => {
-    const def = new LanguageDef({
+    const def = LanguageDef.create({
       opStart : opStart,
       opLetter: opLetter,
     });

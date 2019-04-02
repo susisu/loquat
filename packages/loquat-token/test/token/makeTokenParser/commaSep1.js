@@ -72,7 +72,7 @@ describe("commaSep1", () => {
   });
 
   it("should create a parser that parses one or more tokens separated by commas", () => {
-    const def = new LanguageDef({});
+    const def = LanguageDef.create({});
     const tp = makeTokenParser(def);
     const commaSep1 = tp.commaSep1;
     expect(commaSep1).to.be.a("function");

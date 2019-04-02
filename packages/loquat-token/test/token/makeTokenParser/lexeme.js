@@ -19,7 +19,7 @@ const { makeTokenParser } = _token;
 
 describe("lexeme", () => {
   it("should create a parser that skips trailing spaces and comments", () => {
-    const def = new LanguageDef({
+    const def = LanguageDef.create({
       commentLine   : "--",
       commentStart  : "{-",
       commentEnd    : "-}",

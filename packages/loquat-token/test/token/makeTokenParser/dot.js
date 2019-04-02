@@ -18,7 +18,7 @@ const { makeTokenParser } = _token;
 
 describe("dot", () => {
   it("should be a parser that parses a dot", () => {
-    const def = new LanguageDef({});
+    const def = LanguageDef.create({});
     const tp = makeTokenParser(def);
     const dot = tp.dot;
     expect(dot).to.be.a.parser;

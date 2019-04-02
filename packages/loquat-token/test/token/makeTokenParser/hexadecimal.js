@@ -19,7 +19,7 @@ const { makeTokenParser } = _token;
 describe("hexadecimal", () => {
   it("should be a parser that parses hexadecimal digits after a character X/x and returns an parsed"
     + " integer", () => {
-    const def = new LanguageDef({});
+    const def = LanguageDef.create({});
     const tp = makeTokenParser(def);
     const hexadecimal = tp.hexadecimal;
     expect(hexadecimal).to.be.a.parser;

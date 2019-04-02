@@ -19,7 +19,7 @@ const { makeTokenParser } = _token;
 
 describe("stringLiteral", () => {
   it("should be a parser that parses a string literal", () => {
-    const def = new LanguageDef({});
+    const def = LanguageDef.create({});
     const tp = makeTokenParser(def);
     const stringLiteral = tp.stringLiteral;
     expect(stringLiteral).to.be.a.parser;

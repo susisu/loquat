@@ -57,7 +57,7 @@ describe("identifier", () => {
 
   context("caseSensitive = true", () => {
     it("should be a parser that parses an identifier", () => {
-      const def = new LanguageDef({
+      const def = LanguageDef.create({
         idStart      : idStart,
         idLetter     : idLetter,
         caseSensitive: true,
@@ -112,7 +112,7 @@ describe("identifier", () => {
 
     it("should not accept any reserved word", () => {
       {
-        const def = new LanguageDef({
+        const def = LanguageDef.create({
           idStart      : idStart,
           idLetter     : idLetter,
           reservedIds  : [],
@@ -173,7 +173,7 @@ describe("identifier", () => {
         }
       }
       {
-        const def = new LanguageDef({
+        const def = LanguageDef.create({
           idStart      : idStart,
           idLetter     : idLetter,
           reservedIds  : ["if", "then", "else", "let", "in", "do"],
@@ -231,7 +231,7 @@ describe("identifier", () => {
 
   context("caseSensitive = false", () => {
     it("should be a parser that parses an identifier", () => {
-      const def = new LanguageDef({
+      const def = LanguageDef.create({
         idStart      : idStart,
         idLetter     : idLetter,
         caseSensitive: false,
@@ -286,7 +286,7 @@ describe("identifier", () => {
 
     it("should not accept any reserved word", () => {
       {
-        const def = new LanguageDef({
+        const def = LanguageDef.create({
           idStart      : idStart,
           idLetter     : idLetter,
           reservedIds  : [],
@@ -347,7 +347,7 @@ describe("identifier", () => {
         }
       }
       {
-        const def = new LanguageDef({
+        const def = LanguageDef.create({
           idStart      : idStart,
           idLetter     : idLetter,
           reservedIds  : ["if", "then", "else", "let", "in", "do"],

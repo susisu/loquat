@@ -21,13 +21,13 @@ describe("whiteSpace", () => {
     const defs = [
       {
         testName: "not specified; nestedComments = false",
-        def     : new LanguageDef({
+        def     : LanguageDef.create({
           nestedComments: false,
         }),
       },
       {
         testName: "empty strings specified; nestedComments = false",
-        def     : new LanguageDef({
+        def     : LanguageDef.create({
           commentLine   : "",
           commentStart  : "",
           commentEnd    : "",
@@ -36,13 +36,13 @@ describe("whiteSpace", () => {
       },
       {
         testName: "not specified; nestedComments = true",
-        def     : new LanguageDef({
+        def     : LanguageDef.create({
           nestedComments: true,
         }),
       },
       {
         testName: "empty strings specified; nestedComments = true",
-        def     : new LanguageDef({
+        def     : LanguageDef.create({
           commentLine   : "",
           commentStart  : "",
           commentEnd    : "",
@@ -165,14 +165,14 @@ describe("whiteSpace", () => {
     const defs = [
       {
         testName: "no multi specified; nestedComments = false",
-        def     : new LanguageDef({
+        def     : LanguageDef.create({
           commentLine   : "//",
           nestedComments: false,
         }),
       },
       {
         testName: "empty multi specified; nestedComments = false",
-        def     : new LanguageDef({
+        def     : LanguageDef.create({
           commentLine   : "//",
           commentStart  : "",
           commentEnd    : "",
@@ -181,14 +181,14 @@ describe("whiteSpace", () => {
       },
       {
         testName: "no multi specified; nestedComments = true",
-        def     : new LanguageDef({
+        def     : LanguageDef.create({
           commentLine   : "//",
           nestedComments: true,
         }),
       },
       {
         testName: "empty multi specified; nestedComments = true",
-        def     : new LanguageDef({
+        def     : LanguageDef.create({
           commentLine   : "//",
           commentStart  : "",
           commentEnd    : "",
@@ -421,7 +421,7 @@ describe("whiteSpace", () => {
     const defs = [
       {
         testName: "no single specified",
-        def     : new LanguageDef({
+        def     : LanguageDef.create({
           commentStart  : "/*",
           commentEnd    : "*/",
           nestedComments: false,
@@ -429,7 +429,7 @@ describe("whiteSpace", () => {
       },
       {
         testName: "empty single specified",
-        def     : new LanguageDef({
+        def     : LanguageDef.create({
           commentLine   : "",
           commentStart  : "/*",
           commentEnd    : "*/",
@@ -681,7 +681,7 @@ describe("whiteSpace", () => {
     const defs = [
       {
         testName: "no single specified",
-        def     : new LanguageDef({
+        def     : LanguageDef.create({
           commentStart  : "{-",
           commentEnd    : "-}",
           nestedComments: true,
@@ -689,7 +689,7 @@ describe("whiteSpace", () => {
       },
       {
         testName: "empty single specified",
-        def     : new LanguageDef({
+        def     : LanguageDef.create({
           commentLine   : "",
           commentStart  : "{-",
           commentEnd    : "-}",
@@ -941,7 +941,7 @@ describe("whiteSpace", () => {
 
   context("when both one-line and multi-line comments are specified without allowing nested"
     + " comments", () => {
-    const def = new LanguageDef({
+    const def = LanguageDef.create({
       commentLine   : "//",
       commentStart  : "/*",
       commentEnd    : "*/",
@@ -1249,7 +1249,7 @@ describe("whiteSpace", () => {
 
   context("when both one-line and multi-line comments are specified with allowing nested"
     + " comments", () => {
-    const def = new LanguageDef({
+    const def = LanguageDef.create({
       commentLine   : "--",
       commentStart  : "{-",
       commentEnd    : "-}",

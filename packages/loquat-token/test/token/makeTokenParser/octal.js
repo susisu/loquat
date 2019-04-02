@@ -19,7 +19,7 @@ const { makeTokenParser } = _token;
 describe("octal", () => {
   it("should be a parser that parses octal digits after a character O/o and returns an parsed"
     + " integer", () => {
-    const def = new LanguageDef({});
+    const def = LanguageDef.create({});
     const tp = makeTokenParser(def);
     const octal = tp.octal;
     expect(octal).to.be.a.parser;

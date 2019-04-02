@@ -61,7 +61,7 @@ describe("reserved", () => {
   const idLetter = genCharParser(/[0-9A-Za-z]/);
 
   context("caseSensitive = true", () => {
-    const def = new LanguageDef({
+    const def = LanguageDef.create({
       idStart      : idStart,
       idLetter     : idLetter,
       caseSensitive: true,
@@ -230,7 +230,7 @@ describe("reserved", () => {
   });
 
   context("caseSensitive = false", () => {
-    const def = new LanguageDef({
+    const def = LanguageDef.create({
       idStart      : idStart,
       idLetter     : idLetter,
       caseSensitive: false,
