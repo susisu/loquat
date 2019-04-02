@@ -38,12 +38,7 @@ describe("reserved", () => {
               [ErrorMessage.create(ErrorMessageType.MESSAGE, "C")]
             ),
             unconsed.head,
-            new State(
-              state.config,
-              unconsed.tail,
-              newPos,
-              state.userState
-            )
+            new State(state.config, unconsed.tail, newPos, state.userState)
           );
         } else {
           return Result.efail(
@@ -423,5 +418,28 @@ describe("reserved", () => {
         ));
       }
     });
+  });
+
+  it("should always fails without consumption if either or both of idStart or idLetter is not"
+    + " specified", () => {
+    const def = LanguageDef.create();
+    const tp = makeTokenParser(def);
+    const reserved = tp.reserved;
+    expect(reserved).to.be.a("function");
+    const parser = reserved("nyancat");
+    expect(parser).to.be.a.parser;
+    const initState = new State(
+      new Config({ tabWidth: 8 }),
+      "XYZ",
+      new SourcePos("main", 0, 1, 1),
+      "none"
+    );
+    const res = parser.run(initState);
+    expect(res).to.be.an.equalResultTo(Result.efail(
+      new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "identifier parser(s) not specified")]
+      )
+    ));
   });
 });

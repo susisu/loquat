@@ -395,4 +395,25 @@ describe("identifier", () => {
       }
     });
   });
+
+  it("should always fails without consumption if either or both of idStart or idLetter is not"
+    + " specified", () => {
+    const def = LanguageDef.create();
+    const tp = makeTokenParser(def);
+    const identifier = tp.identifier;
+    expect(identifier).to.be.a.parser;
+    const initState = new State(
+      new Config({ tabWidth: 8 }),
+      "XYZ",
+      new SourcePos("main", 0, 1, 1),
+      "none"
+    );
+    const res = identifier.run(initState);
+    expect(res).to.be.an.equalResultTo(Result.efail(
+      new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "identifier parser(s) not specified")]
+      )
+    ));
+  });
 });

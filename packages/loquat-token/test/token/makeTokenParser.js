@@ -43,11 +43,11 @@ describe("makeTokenParser", () => {
       expect(tp.charLiteral).to.be.a.parser;
       expect(tp.stringLiteral).to.be.a.parser;
       // identifier
-      expect(tp.identifier).to.be.undefined;
-      expect(tp.reserved).to.be.undefined;
+      expect(tp.identifier).to.be.a.parser;
+      expect(tp.reserved).to.be.a("function");
       // operator
-      expect(tp.operator).to.be.undefined;
-      expect(tp.reservedOp).to.be.undefined;
+      expect(tp.operator).to.be.a.parser;
+      expect(tp.reservedOp).to.be.a("function");
     }
     // definition with identifier and operator
     {

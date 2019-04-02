@@ -38,12 +38,7 @@ describe("reservedOp", () => {
               [ErrorMessage.create(ErrorMessageType.MESSAGE, "C")]
             ),
             unconsed.head,
-            new State(
-              state.config,
-              unconsed.tail,
-              newPos,
-              state.userState
-            )
+            new State(state.config, unconsed.tail, newPos, state.userState)
           );
         } else {
           return Result.efail(
@@ -150,5 +145,28 @@ describe("reservedOp", () => {
         )
       ));
     }
+  });
+
+  it("should always fails without consumption if either or both of opStart or opLetter is not"
+    + " specified", () => {
+    const def = LanguageDef.create();
+    const tp = makeTokenParser(def);
+    const reservedOp = tp.reservedOp;
+    expect(reservedOp).to.be.a("function");
+    const parser = reservedOp("->");
+    expect(parser).to.be.a.parser;
+    const initState = new State(
+      new Config({ tabWidth: 8 }),
+      "XYZ",
+      new SourcePos("main", 0, 1, 1),
+      "none"
+    );
+    const res = parser.run(initState);
+    expect(res).to.be.an.equalResultTo(Result.efail(
+      new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "operator parser(s) not specified")]
+      )
+    ));
   });
 });

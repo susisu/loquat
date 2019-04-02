@@ -38,12 +38,7 @@ describe("operator", () => {
               [ErrorMessage.create(ErrorMessageType.MESSAGE, "C")]
             ),
             unconsed.head,
-            new State(
-              state.config,
-              unconsed.tail,
-              newPos,
-              state.userState
-            )
+            new State(state.config, unconsed.tail, newPos, state.userState)
           );
         } else {
           return Result.efail(
@@ -173,5 +168,26 @@ describe("operator", () => {
         )
       ));
     }
+  });
+
+  it("should always fails without consumption if either or both of opStart or opLetter is not"
+    + " specified", () => {
+    const def = LanguageDef.create();
+    const tp = makeTokenParser(def);
+    const operator = tp.operator;
+    expect(operator).to.be.a.parser;
+    const initState = new State(
+      new Config({ tabWidth: 8 }),
+      "XYZ",
+      new SourcePos("main", 0, 1, 1),
+      "none"
+    );
+    const res = operator.run(initState);
+    expect(res).to.be.an.equalResultTo(Result.efail(
+      new StrictParseError(
+        new SourcePos("main", 0, 1, 1),
+        [ErrorMessage.create(ErrorMessageType.MESSAGE, "operator parser(s) not specified")]
+      )
+    ));
   });
 });

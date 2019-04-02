@@ -7,6 +7,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     pure,
     bind,
     then,
+    fail,
     tailRecM,
     ftailRecM,
     mplus,
@@ -676,6 +677,11 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
         identifier,
         reserved,
       });
+    } else {
+      Object.assign(tp, {
+        identifier: fail("identifier parser(s) not specified"),
+        reserved  : _ => fail("identifier parser(s) not specified"),
+      });
     }
 
     /*
@@ -723,6 +729,11 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       Object.assign(tp, {
         operator,
         reservedOp,
+      });
+    } else {
+      Object.assign(tp, {
+        operator  : fail("operator parser(s) not specified"),
+        reservedOp: _ => fail("operator parser(s) not specified"),
       });
     }
 
