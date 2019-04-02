@@ -73,8 +73,7 @@ describe("semiSep1", () => {
 
   it("should create a parser that parses one or more tokens separated by semicolons", () => {
     const def = LanguageDef.create({});
-    const tp = makeTokenParser(def);
-    const semiSep1 = tp.semiSep1;
+    const { semiSep1 } = makeTokenParser(def);
     expect(semiSep1).to.be.a("function");
     const parser = semiSep1(p);
     expect(parser).to.be.a.parser;

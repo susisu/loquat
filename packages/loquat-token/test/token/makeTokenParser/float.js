@@ -27,8 +27,7 @@ describe("float", () => {
 
   it("should be a parser that parses a floating-point number", () => {
     const def = LanguageDef.create({});
-    const tp = makeTokenParser(def);
-    const float = tp.float;
+    const { float } = makeTokenParser(def);
     expect(float).to.be.a.parser;
     // csucc
     {

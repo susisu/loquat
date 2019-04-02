@@ -60,8 +60,7 @@ describe("reservedOp", () => {
       opStart : opStart,
       opLetter: opLetter,
     });
-    const tp = makeTokenParser(def);
-    const reservedOp = tp.reservedOp;
+    const { reservedOp } = makeTokenParser(def);
     expect(reservedOp).to.be.a("function");
     const parser = reservedOp("->");
     expect(parser).to.be.a.parser;
@@ -150,8 +149,7 @@ describe("reservedOp", () => {
   it("should always fails without consumption if either or both of opStart or opLetter is not"
     + " specified", () => {
     const def = LanguageDef.create();
-    const tp = makeTokenParser(def);
-    const reservedOp = tp.reservedOp;
+    const { reservedOp } = makeTokenParser(def);
     expect(reservedOp).to.be.a("function");
     const parser = reservedOp("->");
     expect(parser).to.be.a.parser;

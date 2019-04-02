@@ -20,8 +20,7 @@ const { makeTokenParser } = _token;
 describe("parens", () => {
   it("should create a parser that parses tokens between parens", () => {
     const def = LanguageDef.create({});
-    const tp = makeTokenParser(def);
-    const parens = tp.parens;
+    const { parens } = makeTokenParser(def);
     expect(parens).to.be.a("function");
     // csucc
     {

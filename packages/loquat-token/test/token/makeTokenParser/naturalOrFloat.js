@@ -33,8 +33,7 @@ describe("naturalOrFloat", () => {
   it("should be a parser that pases a natural number or a floating-point number and returns an"
     + " object contains the parsed value and its type", () => {
     const def = LanguageDef.create({});
-    const tp = makeTokenParser(def);
-    const naturalOrFloat = tp.naturalOrFloat;
+    const { naturalOrFloat } = makeTokenParser(def);
     expect(naturalOrFloat).to.be.a.parser;
     // csucc
     {

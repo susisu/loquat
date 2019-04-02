@@ -20,8 +20,7 @@ describe("hexadecimal", () => {
   it("should be a parser that parses hexadecimal digits after a character X/x and returns an parsed"
     + " integer", () => {
     const def = LanguageDef.create({});
-    const tp = makeTokenParser(def);
-    const hexadecimal = tp.hexadecimal;
+    const { hexadecimal } = makeTokenParser(def);
     expect(hexadecimal).to.be.a.parser;
     // csucc
     {

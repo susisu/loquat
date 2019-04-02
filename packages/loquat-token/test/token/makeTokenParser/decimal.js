@@ -19,8 +19,7 @@ const { makeTokenParser } = _token;
 describe("decimal", () => {
   it("should be a parser that parses decimal digits and returns an parsed integer", () => {
     const def = LanguageDef.create({});
-    const tp = makeTokenParser(def);
-    const decimal = tp.decimal;
+    const { decimal } = makeTokenParser(def);
     expect(decimal).to.be.a.parser;
     // csucc
     {

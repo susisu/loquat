@@ -52,8 +52,7 @@ describe("whiteSpace", () => {
     ];
     for (const { testName, def } of defs) {
       it(`should skip simple white space characters: ${testName}`, () => {
-        const tp = makeTokenParser(def);
-        const whiteSpace = tp.whiteSpace;
+        const { whiteSpace } = makeTokenParser(def);
         expect(whiteSpace).to.be.a.parser;
         // no white spaces
         {
@@ -199,8 +198,7 @@ describe("whiteSpace", () => {
 
     for (const { testName, def } of defs) {
       it(`should skip spaces and one-line comment: ${testName}`, () => {
-        const tp = makeTokenParser(def);
-        const whiteSpace = tp.whiteSpace;
+        const { whiteSpace } = makeTokenParser(def);
         expect(whiteSpace).to.be.a.parser;
         // no spaces and comments
         {
@@ -440,8 +438,7 @@ describe("whiteSpace", () => {
 
     for (const { testName, def } of defs) {
       it(`should skip spaces and multi-line comments: ${testName}`, () => {
-        const tp = makeTokenParser(def);
-        const whiteSpace = tp.whiteSpace;
+        const { whiteSpace } = makeTokenParser(def);
         expect(whiteSpace).to.be.a.parser;
         // no spaces and comments
         {
@@ -646,8 +643,7 @@ describe("whiteSpace", () => {
       });
 
       it(`should not allow nested comments: ${testName}`, () => {
-        const tp = makeTokenParser(def);
-        const whiteSpace = tp.whiteSpace;
+        const { whiteSpace } = makeTokenParser(def);
         expect(whiteSpace).to.be.a.parser;
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -700,8 +696,7 @@ describe("whiteSpace", () => {
 
     for (const { testName, def } of defs) {
       it(`should skip spaces and multi-line comments: ${testName}`, () => {
-        const tp = makeTokenParser(def);
-        const whiteSpace = tp.whiteSpace;
+        const { whiteSpace } = makeTokenParser(def);
         expect(whiteSpace).to.be.a.parser;
         // no spaces and comments
         {
@@ -908,8 +903,7 @@ describe("whiteSpace", () => {
       });
 
       it(`should allow nested comments: ${testName}`, () => {
-        const tp = makeTokenParser(def);
-        const whiteSpace = tp.whiteSpace;
+        const { whiteSpace } = makeTokenParser(def);
         expect(whiteSpace).to.be.a.parser;
         const initState = new State(
           new Config({ tabWidth: 8 }),
@@ -949,8 +943,7 @@ describe("whiteSpace", () => {
     });
 
     it("should skip spaces and multi-line comments", () => {
-      const tp = makeTokenParser(def);
-      const whiteSpace = tp.whiteSpace;
+      const { whiteSpace } = makeTokenParser(def);
       expect(whiteSpace).to.be.a.parser;
       // no spaces and comments
       {
@@ -1216,8 +1209,7 @@ describe("whiteSpace", () => {
     });
 
     it("should not allow nested comments", () => {
-      const tp = makeTokenParser(def);
-      const whiteSpace = tp.whiteSpace;
+      const { whiteSpace } = makeTokenParser(def);
       expect(whiteSpace).to.be.a.parser;
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -1257,8 +1249,7 @@ describe("whiteSpace", () => {
     });
 
     it("should skip spaces and comments", () => {
-      const tp = makeTokenParser(def);
-      const whiteSpace = tp.whiteSpace;
+      const { whiteSpace } = makeTokenParser(def);
       expect(whiteSpace).to.be.a.parser;
       // no spaces and comments
       {
@@ -1580,8 +1571,7 @@ describe("whiteSpace", () => {
     });
 
     it("should allow nested comments", () => {
-      const tp = makeTokenParser(def);
-      const whiteSpace = tp.whiteSpace;
+      const { whiteSpace } = makeTokenParser(def);
       expect(whiteSpace).to.be.a.parser;
       const initState = new State(
         new Config({ tabWidth: 8 }),

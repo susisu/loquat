@@ -19,8 +19,7 @@ const { makeTokenParser } = _token;
 describe("integer", () => {
   it("should be a parser that parses an integer", () => {
     const def = LanguageDef.create({});
-    const tp = makeTokenParser(def);
-    const integer = tp.integer;
+    const { integer } = makeTokenParser(def);
     expect(integer).to.be.a.parser;
     // csucc
     {

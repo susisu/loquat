@@ -60,8 +60,7 @@ describe("operator", () => {
       opStart : opStart,
       opLetter: opLetter,
     });
-    const tp = makeTokenParser(def);
-    const operator = tp.operator;
+    const { operator } = makeTokenParser(def);
     expect(operator).to.be.a.parser;
     {
       const initState = new State(
@@ -115,8 +114,7 @@ describe("operator", () => {
         opLetter   : opLetter,
         reservedOps: [],
       });
-      const tp = makeTokenParser(def);
-      const operator = tp.operator;
+      const { operator } = makeTokenParser(def);
       expect(operator).to.be.a.parser;
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -148,8 +146,7 @@ describe("operator", () => {
         opLetter   : opLetter,
         reservedOps: ["=", "->", "<-"],
       });
-      const tp = makeTokenParser(def);
-      const operator = tp.operator;
+      const { operator } = makeTokenParser(def);
       expect(operator).to.be.a.parser;
       const initState = new State(
         new Config({ tabWidth: 8 }),
@@ -173,8 +170,7 @@ describe("operator", () => {
   it("should always fails without consumption if either or both of opStart or opLetter is not"
     + " specified", () => {
     const def = LanguageDef.create();
-    const tp = makeTokenParser(def);
-    const operator = tp.operator;
+    const { operator } = makeTokenParser(def);
     expect(operator).to.be.a.parser;
     const initState = new State(
       new Config({ tabWidth: 8 }),

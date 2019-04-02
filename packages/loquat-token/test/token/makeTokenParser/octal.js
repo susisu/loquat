@@ -20,8 +20,7 @@ describe("octal", () => {
   it("should be a parser that parses octal digits after a character O/o and returns an parsed"
     + " integer", () => {
     const def = LanguageDef.create({});
-    const tp = makeTokenParser(def);
-    const octal = tp.octal;
+    const { octal } = makeTokenParser(def);
     expect(octal).to.be.a.parser;
     // csucc
     {

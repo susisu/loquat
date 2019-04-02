@@ -19,8 +19,7 @@ const { makeTokenParser } = _token;
 describe("semi", () => {
   it("should be a parser that parses a semicolon", () => {
     const def = LanguageDef.create({});
-    const tp = makeTokenParser(def);
-    const semi = tp.semi;
+    const { semi } = makeTokenParser(def);
     expect(semi).to.be.a.parser;
     // csucc
     {

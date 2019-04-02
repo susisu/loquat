@@ -25,8 +25,7 @@ describe("lexeme", () => {
       commentEnd    : "-}",
       nestedComments: true,
     });
-    const tp = makeTokenParser(def);
-    const lexeme = tp.lexeme;
+    const { lexeme } = makeTokenParser(def);
     expect(lexeme).to.be.a("function");
     // csucc
     {

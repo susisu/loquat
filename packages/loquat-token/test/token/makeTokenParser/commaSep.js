@@ -73,8 +73,7 @@ describe("commaSep", () => {
 
   it("should create a parser that parses zero or more tokens separated by commas", () => {
     const def = LanguageDef.create({});
-    const tp = makeTokenParser(def);
-    const commaSep = tp.commaSep;
+    const { commaSep } = makeTokenParser(def);
     expect(commaSep).to.be.a("function");
     const parser = commaSep(p);
     expect(parser).to.be.a.parser;

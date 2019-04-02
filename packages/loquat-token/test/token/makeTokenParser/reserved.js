@@ -61,8 +61,7 @@ describe("reserved", () => {
       idLetter     : idLetter,
       caseSensitive: true,
     });
-    const tp = makeTokenParser(def);
-    const reserved = tp.reserved;
+    const { reserved } = makeTokenParser(def);
 
     it("should create a parser that parses the given reserved word", () => {
       expect(reserved).to.be.a("function");
@@ -230,8 +229,7 @@ describe("reserved", () => {
       idLetter     : idLetter,
       caseSensitive: false,
     });
-    const tp = makeTokenParser(def);
-    const reserved = tp.reserved;
+    const { reserved } = makeTokenParser(def);
 
     it("should create a parser that parses the given reserved word with ignoring case", () => {
       expect(reserved).to.be.a("function");
@@ -423,8 +421,7 @@ describe("reserved", () => {
   it("should always fails without consumption if either or both of idStart or idLetter is not"
     + " specified", () => {
     const def = LanguageDef.create();
-    const tp = makeTokenParser(def);
-    const reserved = tp.reserved;
+    const { reserved } = makeTokenParser(def);
     expect(reserved).to.be.a("function");
     const parser = reserved("nyancat");
     expect(parser).to.be.a.parser;

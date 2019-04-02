@@ -62,8 +62,7 @@ describe("identifier", () => {
         idLetter     : idLetter,
         caseSensitive: true,
       });
-      const tp = makeTokenParser(def);
-      const identifier = tp.identifier;
+      const { identifier } = makeTokenParser(def);
       expect(identifier).to.be.a.parser;
       {
         const initState = new State(
@@ -118,8 +117,7 @@ describe("identifier", () => {
           reservedIds  : [],
           caseSensitive: true,
         });
-        const tp = makeTokenParser(def);
-        const identifier = tp.identifier;
+        const { identifier } = makeTokenParser(def);
         expect(identifier).to.be.a.parser;
         {
           const initState = new State(
@@ -179,8 +177,7 @@ describe("identifier", () => {
           reservedIds  : ["if", "then", "else", "let", "in", "do"],
           caseSensitive: true,
         });
-        const tp = makeTokenParser(def);
-        const identifier = tp.identifier;
+        const { identifier } = makeTokenParser(def);
         expect(identifier).to.be.a.parser;
         {
           const initState = new State(
@@ -236,8 +233,7 @@ describe("identifier", () => {
         idLetter     : idLetter,
         caseSensitive: false,
       });
-      const tp = makeTokenParser(def);
-      const identifier = tp.identifier;
+      const { identifier } = makeTokenParser(def);
       expect(identifier).to.be.a.parser;
       {
         const initState = new State(
@@ -292,8 +288,7 @@ describe("identifier", () => {
           reservedIds  : [],
           caseSensitive: false,
         });
-        const tp = makeTokenParser(def);
-        const identifier = tp.identifier;
+        const { identifier } = makeTokenParser(def);
         expect(identifier).to.be.a.parser;
         {
           const initState = new State(
@@ -353,8 +348,7 @@ describe("identifier", () => {
           reservedIds  : ["if", "then", "else", "let", "in", "do"],
           caseSensitive: false,
         });
-        const tp = makeTokenParser(def);
-        const identifier = tp.identifier;
+        const { identifier } = makeTokenParser(def);
         expect(identifier).to.be.a.parser;
         {
           const initState = new State(
@@ -399,8 +393,7 @@ describe("identifier", () => {
   it("should always fails without consumption if either or both of idStart or idLetter is not"
     + " specified", () => {
     const def = LanguageDef.create();
-    const tp = makeTokenParser(def);
-    const identifier = tp.identifier;
+    const { identifier } = makeTokenParser(def);
     expect(identifier).to.be.a.parser;
     const initState = new State(
       new Config({ tabWidth: 8 }),

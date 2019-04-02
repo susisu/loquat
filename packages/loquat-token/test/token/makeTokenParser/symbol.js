@@ -25,8 +25,7 @@ describe("symbol", () => {
       commentEnd    : "-}",
       nestedComments: true,
     });
-    const tp = makeTokenParser(def);
-    const symbol = tp.symbol;
+    const { symbol } = makeTokenParser(def);
     expect(symbol).to.be.a("function");
     // csucc
     {

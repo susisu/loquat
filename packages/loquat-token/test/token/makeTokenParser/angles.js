@@ -20,8 +20,7 @@ const { makeTokenParser } = _token;
 describe("angles", () => {
   it("should create a parser that parses tokens between angles", () => {
     const def = LanguageDef.create({});
-    const tp = makeTokenParser(def);
-    const angles = tp.angles;
+    const { angles } = makeTokenParser(def);
     expect(angles).to.be.a("function");
     // csucc
     {

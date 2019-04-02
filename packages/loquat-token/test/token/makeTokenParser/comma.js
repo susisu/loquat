@@ -19,8 +19,7 @@ const { makeTokenParser } = _token;
 describe("comma", () => {
   it("should be a parser that parses a comma", () => {
     const def = LanguageDef.create({});
-    const tp = makeTokenParser(def);
-    const comma = tp.comma;
+    const { comma } = makeTokenParser(def);
     expect(comma).to.be.a.parser;
     // csucc
     {
