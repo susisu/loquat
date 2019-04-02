@@ -1,6 +1,6 @@
 "use strict";
 
-const { expect } = require("chai");
+const { expect, assert } = require("chai");
 
 const {
   show,
@@ -197,7 +197,7 @@ describe("braces", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const p = new StrictParser(() => { throw new Error("unexpected call"); });
+      const p = new StrictParser(state => assert.fail("expect function to not be called"));
       const parser = braces(p);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
