@@ -517,34 +517,37 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     /** dot: Parser[S, U, string] */
     const dot = symbol(".");
 
+    /** semiSep: (parser: Parser[S, U, A]) => Parser[S, U, Array[A]] */
     function semiSep(parser) {
       return sepBy(parser, semi);
     }
-
+    /** semiSep1: (parser: Parser[S, U, A]) => Parser[S, U, Array[A]] */
     function semiSep1(parser) {
       return sepBy1(parser, semi);
     }
-
+    /** commaSep: (parser: Parser[S, U, A]) => Parser[S, U, Array[A]] */
     function commaSep(parser) {
       return sepBy(parser, comma);
     }
-
+    /** commaSep1: (parser: Parser[S, U, A]) => Parser[S, U, Array[A]] */
     function commaSep1(parser) {
       return sepBy1(parser, comma);
     }
 
-    tp.parens    = parens;
-    tp.braces    = braces;
-    tp.angles    = angles;
-    tp.brackets  = brackets;
-    tp.semi      = semi;
-    tp.comma     = comma;
-    tp.colon     = colon;
-    tp.dot       = dot;
-    tp.semiSep   = semiSep;
-    tp.semiSep1  = semiSep1;
-    tp.commaSep  = commaSep;
-    tp.commaSep1 = commaSep1;
+    Object.assign(tp, {
+      parens,
+      braces,
+      angles,
+      brackets,
+      semi,
+      comma,
+      colon,
+      dot,
+      semiSep,
+      semiSep1,
+      commaSep,
+      commaSep1,
+    });
 
     /*
          * number literals
