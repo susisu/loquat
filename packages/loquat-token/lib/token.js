@@ -139,16 +139,21 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
   }
 
   /*
-     * number literals
-     */
+   * number literals
+   */
+  /** number: [S, U](base: int, baseDigit: Parser[S, U, char]) => Parser[S, U, int] */
   function number(base, baseDigit) {
     return bind(manyChars1(baseDigit), digits => pure(parseInt(digits, base)));
   }
-  const decimal     = number(10, digit);
+  /** decimal: [S <: CharacterStream[S], U]Parser[S, U, int] */
+  const decimal = number(10, digit);
+  /** hexadecimal: [S <: CharacterStream[S], U]Parser[S, U, int] */
   const hexadecimal = then(oneOf("Xx"), number(16, hexDigit));
-  const octal       = then(oneOf("Oo"), number(8, octDigit));
+  /** octal: [S <: CharacterStream[S], U]Parser[S, U, int] */
+  const octal = then(oneOf("Oo"), number(8, octDigit));
 
   // natural
+  /** zeroNumber: [S <: CharacterStream[S], U]Parser[S, U, int] */
   const zeroNumber = label(
     then(
       char("0"),
@@ -156,9 +161,11 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     ),
     ""
   );
+  /** nat: [S <: CharacterStream[S], U]Parser[S, U, int] */
   const nat = mplus(zeroNumber, decimal);
 
   // integer
+  /** [S <: CharacterStream[S], U]Parser[S, U, int => int] */
   const sign = mplus(
     then(char("-"), pure(x => -x)),
     mplus(
@@ -168,7 +175,9 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
   );
 
   // float
+  /** signChar: [S <: CharacterStream[S], U]Parser[S, U, string] */
   const signChar = mplus(char("-"), mplus(char("+"), pure("")));
+  /** fraction: [S <: CharacterStream[S], U]Parser[S, U, string] */
   const fraction = label(
     then(
       char("."),
@@ -178,6 +187,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     ),
     "fraction"
   );
+  /** exponent: [S <: CharacterStream[S], U]Parser[S, U, string] */
   const exponent = label(
     then(
       oneOf("Ee"),
@@ -189,6 +199,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     ),
     "exponent"
   );
+  /** fractExponent: [S <: CharacterStream[S], U](nat: string) => Parser[S, U, float] */
   function fractExponent(nat) {
     return mplus(
       bind(fraction, fract =>
@@ -201,17 +212,27 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       )
     );
   }
+  /** floating: [S <: CharacterStream[S], U]Parser[S, U, float] */
   const floating = bind(manyChars1(digit), fractExponent);
 
   // natural or float
+  /**
+   * type NaturalOrFloat =
+   *      { type: "natural", value: int }
+   *   \/ { type: "float", value: float }
+   */
+
+  /** fractFloat: [S <: CharacterStream[S], U](nat: string) => Parser[S, U, NaturalOrFloat] */
   function fractFloat(nat) {
     return bind(fractExponent(nat), f =>
       pure({ type: "float", value: f })
     );
   }
+  /** decimalFloat: [S <: CharacterStream[S], U]Parser[S, U, NaturalOrFloat] */
   const decimalFloat = bind(manyChars1(digit), nat =>
     option({ type: "natural", value: parseInt(nat, 10) }, fractFloat(nat))
   );
+  /** zeroNumFloat: [S <: CharacterStream[S], U] Parser[S, U, NaturalOrFloat] */
   const zeroNumFloat = mplus(
     bind(mplus(hexadecimal, octal), n =>
       pure({ type: "natural", value: n })
@@ -224,6 +245,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       )
     )
   );
+  /** natFloat: [S <: CharacterStream[S], U]Parser[S, U, NaturalOrFloat] */
   const natFloat = mplus(
     then(char("0"), zeroNumFloat),
     decimalFloat
@@ -382,12 +404,6 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       return then(walk(str), pure(str));
     });
   }
-
-  /**
-   * type NaturalOrFloat =
-   *      { type: "natural", value: int }
-   *   \/ { type: "float", value: float }
-   */
 
   /**
    * type TokenParser[S, U] = {
@@ -550,26 +566,33 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     });
 
     /*
-         * number literals
-         */
+     * number literals
+     */
+    /** int: Parser[S, U, int] */
     const int = bind(lexeme(sign), f =>
       bind(nat, n =>
         pure(f(n))
       )
     );
 
-    const natural        = label(lexeme(nat), "natural");
-    const integer        = label(lexeme(int), "integer");
-    const float          = label(lexeme(floating), "float");
+    /** natural: Parser[S, U, int] */
+    const natural = label(lexeme(nat), "natural");
+    /** integer: Parser[S, U, int] */
+    const integer = label(lexeme(int), "integer");
+    /** float: Parser[S, U, float] */
+    const float = label(lexeme(floating), "float");
+    /** naturalOrFloat: Parser[S, U, NaturalOrFloat] */
     const naturalOrFloat = label(lexeme(natFloat), "number");
 
-    tp.decimal        = decimal;
-    tp.hexadecimal    = hexadecimal;
-    tp.octal          = octal;
-    tp.natural        = natural;
-    tp.integer        = integer;
-    tp.float          = float;
-    tp.naturalOrFloat = naturalOrFloat;
+    Object.assign(tp, {
+      decimal,
+      hexadecimal,
+      octal,
+      natural,
+      integer,
+      float,
+      naturalOrFloat,
+    });
 
     /*
          * character / string literals
