@@ -643,9 +643,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       /** ident: Parser[S, U, string] */
       const ident = label(
         bind(idStart, c =>
-          bind(manyChars(idLetter), cs =>
-            pure(c + cs)
-          )
+          map(manyChars(idLetter), cs => c + cs)
         ),
         "identifier"
       );
@@ -693,9 +691,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       /** oper: Parser[S, U, string] */
       const oper = label(
         bind(opStart, c =>
-          bind(manyChars(opLetter), cs =>
-            pure(c + cs)
-          )
+          map(manyChars(opLetter), cs => c + cs)
         ),
         "operator"
       );
