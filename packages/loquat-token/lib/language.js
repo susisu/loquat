@@ -19,23 +19,23 @@ module.exports = () => {
 
   /**
    * type LanguageDef[S, U] = {
-   *   commentStart: string \/ undefined;
-   *   commentEnd: string \/ undefined;
-   *   commentLine: string \/ undefined;
-   *   nestedComments: boolean;
-   *   idStart: Parser[S, U, char] \/ undefined;
-   *   idLetter: Parser[S, U, char] \/ undefined;
-   *   opStart: Parser[S, U, char] \/ undefined;
-   *   opLetter: Parser[S, U, char] \/ undefined;
-   *   reservedIds: Array[string] \/ undefined;
-   *   reservedOps: Array[string] \/ undefined;
-   *   caseSensitive: boolean;
+   *   commentStart: string \/ undefined,
+   *   commentEnd: string \/ undefined,
+   *   commentLine: string \/ undefined,
+   *   nestedComments: boolean,
+   *   idStart: Parser[S, U, char] \/ undefined,
+   *   idLetter: Parser[S, U, char] \/ undefined,
+   *   opStart: Parser[S, U, char] \/ undefined,
+   *   opLetter: Parser[S, U, char] \/ undefined,
+   *   reservedIds: Array[string] \/ undefined,
+   *   reservedOps: Array[string] \/ undefined,
+   *   caseSensitive: boolean,
    * }
    */
 
   /**
    * object LanguageDef {
-   *   create: [S, U](obj?: LanguageDefObject[S, U]) => LanguageDef[S, U]
+   *   create: [S, U](obj?: LanguageDefObject[S, U]) => LanguageDef[S, U];
    * }
    */
   const LanguageDef = Object.freeze({
