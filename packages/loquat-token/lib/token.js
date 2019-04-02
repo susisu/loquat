@@ -143,7 +143,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
    */
   /** number: [S, U](base: int, baseDigit: Parser[S, U, char]) => Parser[S, U, int] */
   function number(base, baseDigit) {
-    return bind(manyChars1(baseDigit), digits => pure(parseInt(digits, base)));
+    return map(manyChars1(baseDigit), digits => parseInt(digits, base));
   }
   /** decimal: [S <: CharacterStream[S], U]Parser[S, U, int] */
   const decimal = number(10, digit);
@@ -181,9 +181,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
   const fraction = label(
     then(
       char("."),
-      bind(label(manyChars1(digit), "fraction"), digits =>
-        pure("." + digits)
-      )
+      map(label(manyChars1(digit), "fraction"), digits => "." + digits)
     ),
     "fraction"
   );
@@ -192,9 +190,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     then(
       oneOf("Ee"),
       bind(signChar, s =>
-        bind(label(decimal, "exponent"), e =>
-          pure("e" + s + e)
-        )
+        map(label(decimal, "exponent"), e => "e" + s + e)
       )
     ),
     "exponent"
@@ -203,13 +199,9 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
   function fractExponent(nat) {
     return mplus(
       bind(fraction, fract =>
-        bind(option("", exponent), expo =>
-          pure(parseFloat(nat + fract + expo))
-        )
+        map(option("", exponent), expo => parseFloat(nat + fract + expo))
       ),
-      bind(exponent, expo =>
-        pure(parseFloat(nat + expo))
-      )
+      map(exponent, expo => parseFloat(nat + expo))
     );
   }
   /** floating: [S <: CharacterStream[S], U]Parser[S, U, float] */
@@ -234,9 +226,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
   );
   /** zeroNumFloat: [S <: CharacterStream[S], U] Parser[S, U, NaturalOrFloat] */
   const zeroNumFloat = mplus(
-    bind(mplus(hexadecimal, octal), n =>
-      pure({ type: "natural", value: n })
-    ),
+    map(mplus(hexadecimal, octal), n => ({ type: "natural", value: n })),
     mplus(
       decimalFloat,
       mplus(
@@ -330,11 +320,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
   /** charControl: [S <: CharacterStream[S], U]Parser[S, U, char] */
   const charControl = then(
     char("^"),
-    bind(upper, code =>
-      pure(
-        String.fromCharCode(code.charCodeAt(0) - "A".charCodeAt(0) + 1)
-      )
-    )
+    map(upper, code => String.fromCharCode(code.charCodeAt(0) - "A".charCodeAt(0) + 1))
   );
   /** escapeCode: [S <: CharacterStream[S], U]Parser[S, U, char] */
   const escapeCode = label(
