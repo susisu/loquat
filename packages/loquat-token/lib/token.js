@@ -364,23 +364,32 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
   );
 
   /*
-     * identifier
-     */
+   * identifier
+   */
+  /** alpha: Set[char] */
   const alpha = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 
+  /** alphaToLower: (name: string) => string */
   function alphaToLower(name) {
     return name.replace(/([A-Z])/g, c => c.toLowerCase());
   }
 
+  /** caseChar: [S <: CharacterStream[S], U](c: char) => Parser[S, U, char] */
   function caseChar(c) {
     return alpha.has(c)
-            ? mplus(
-              char(c.toLowerCase()),
-              char(c.toUpperCase())
-            )
-            : char(c);
+      ? mplus(
+        char(c.toLowerCase()),
+        char(c.toUpperCase())
+      )
+      : char(c);
   }
 
+  /**
+   * caseString: [S <: CharacterStream[S], U](
+   *   caseSensitive: boolean,
+   *   str: string
+   * ) => Parser[S, U, string]
+   */
   function caseString(caseSensitive, str) {
     if (caseSensitive) {
       return string(str);
@@ -391,14 +400,11 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       const walk = ftailRecM(str => {
         const unconsed = unconsString(str, unicode);
         return unconsed.empty
-                    ? map(pure(undefined), () => ({ done: true, value: undefined }))
-                    : map(
-                      label(
-                        caseChar(unconsed.head),
-                        msg
-                      ),
-                      () => ({ done: false, value: unconsed.tail })
-                    );
+          ? map(pure(undefined), () => ({ done: true, value: undefined }))
+          : map(
+            label(caseChar(unconsed.head), msg),
+            () => ({ done: false, value: unconsed.tail })
+          );
       });
       return then(walk(str), pure(str));
     });
@@ -625,18 +631,16 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     });
 
     /*
-         * identifier
-         */
+     * identifier
+     */
     if (isParser(def.idStart) && isParser(def.idLetter)) {
-      const idStart  = def.idStart;
-      const idLetter = def.idLetter;
+      const { idStart, idLetter, caseSensitive } = def;
 
-      const caseSensitive = def.caseSensitive;
-
-      const reservedIds   = def.reservedIds === undefined ? [] : def.reservedIds;
+      const reservedIds = def.reservedIds === undefined ? [] : def.reservedIds;
       const reservedIdSet = new Set(caseSensitive ? reservedIds : reservedIds.map(alphaToLower));
-      const isReservedId  = name => reservedIdSet.has(caseSensitive ? name : alphaToLower(name));
+      const isReservedId = name => reservedIdSet.has(caseSensitive ? name : alphaToLower(name));
 
+      /** ident: Parser[S, U, string] */
       const ident = label(
         bind(idStart, c =>
           bind(manyChars(idLetter), cs =>
@@ -645,16 +649,18 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
         ),
         "identifier"
       );
+      /** identifier: Parser[S, U, string]*/
       const identifier = lexeme(
         tryParse(
           bind(ident, name =>
-                        isReservedId(name)
-                        ? unexpected("reserved word " + show(name))
-                        : pure(name)
+            isReservedId(name)
+              ? unexpected("reserved word " + show(name))
+              : pure(name)
           )
         )
       );
 
+      /** reserved: (name: string) => Parser[S, U, string] */
       const reserved = name =>
         lexeme(
           tryParse(
@@ -668,21 +674,23 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
           )
         );
 
-      tp.identifier = identifier;
-      tp.reserved   = reserved;
+      Object.assign(tp, {
+        identifier,
+        reserved,
+      });
     }
 
     /*
-         * operator
-         */
+     * operator
+     */
     if (isParser(def.opStart) && isParser(def.opLetter)) {
-      const opStart  = def.opStart;
-      const opLetter = def.opLetter;
+      const { opStart, opLetter } = def;
 
-      const reservedOps   = def.reservedOps === undefined ? [] : def.reservedOps;
+      const reservedOps = def.reservedOps === undefined ? [] : def.reservedOps;
       const reservedOpSet = new Set(reservedOps);
-      const isReservedOp  = name => reservedOpSet.has(name);
+      const isReservedOp = name => reservedOpSet.has(name);
 
+      /** oper: Parser[S, U, string] */
       const oper = label(
         bind(opStart, c =>
           bind(manyChars(opLetter), cs =>
@@ -691,16 +699,18 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
         ),
         "operator"
       );
+      /** operator: Parser[S, U, string] */
       const operator = lexeme(
         tryParse(
           bind(oper, name =>
-                        isReservedOp(name)
-                        ? unexpected("reserved operator " + show(name))
-                        : pure(name)
+            isReservedOp(name)
+              ? unexpected("reserved operator " + show(name))
+              : pure(name)
           )
         )
       );
 
+      /** reservedOp: (name: string) => Parser[S, U, string] */
       const reservedOp = name =>
         lexeme(
           tryParse(
@@ -714,8 +724,10 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
           )
         );
 
-      tp.operator   = operator;
-      tp.reservedOp = reservedOp;
+      Object.assign(tp, {
+        operator,
+        reservedOp,
+      });
     }
 
     return tp;
