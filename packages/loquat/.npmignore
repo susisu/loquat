@@ -1,9 +1,0 @@
-/temp/
-/test/
-/docs/
-/examples/
-.gitignore
-.eslintrc.json
-jsdoc.conf.json
-test.js
-CONTRIBUTING.md
