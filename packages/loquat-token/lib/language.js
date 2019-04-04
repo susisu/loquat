@@ -35,7 +35,7 @@ module.exports = () => {
 
   /**
    * object LanguageDef {
-   *   create: [S, U](obj?: LanguageDefObject[S, U]) => LanguageDef[S, U];
+   *   create[S, U](obj?: LanguageDefObject[S, U]): LanguageDef[S, U];
    * }
    */
   const LanguageDef = Object.freeze({
