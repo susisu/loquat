@@ -5,38 +5,40 @@ module.exports = ({ _core, _aux }) => chai => {
 
   Assertion.addMethod("equalPositionTo", function (exp) {
     const { SourcePos } = _core;
-    const { equal, inspect } = _aux.SourcePos;
+    const { inspect } = _aux.SourcePos;
 
     const act = this._obj;
 
     new Assertion(act).to.be.an.instanceOf(SourcePos);
 
     this.assert(
-      equal(act, exp),
+      SourcePos.equal(act, exp),
       `expected ${inspect(act)} to equal ${inspect(exp)}`,
       `expected ${inspect(act)} to not equal ${inspect(exp)}`
     );
   });
 
   Assertion.addMethod("equalErrorMessageTo", function (exp) {
-    const { equal, inspect } = _aux.ErrorMessage;
+    const { ErrorMessage } = _core;
+    const { inspect } = _aux.ErrorMessage;
 
     const act = this._obj;
 
     this.assert(
-      equal(act, exp),
+      ErrorMessage.equal(act, exp),
       `expected ${inspect(act)} to equal ${inspect(exp)}`,
       `expected ${inspect(act)} to not equal ${inspect(exp)}`
     );
   });
 
   Assertion.addMethod("equalErrorMessagesTo", function (exp) {
-    const { equalArray, inspectArray } = _aux.ErrorMessage;
+    const { ErrorMessage } = _core;
+    const {  inspectArray } = _aux.ErrorMessage;
 
     const act = this._obj;
 
     this.assert(
-      equalArray(act, exp),
+      ErrorMessage.messagesEqual(act, exp),
       `expected ${inspectArray(act)} to equal ${inspectArray(exp)}`,
       `expected ${inspectArray(act)} to not equal ${inspectArray(exp)}`
     );
@@ -44,14 +46,14 @@ module.exports = ({ _core, _aux }) => chai => {
 
   Assertion.addMethod("equalErrorTo", function (exp) {
     const { ParseError } = _core;
-    const { equal, inspect } = _aux.ParseError;
+    const { inspect } = _aux.ParseError;
 
     const act = this._obj;
 
     new Assertion(act).to.be.an.instanceOf(ParseError);
 
     this.assert(
-      equal(act, exp),
+      ParseError.equal(act, exp),
       `expected ${inspect(act)} to equal ${inspect(exp)}`,
       `expected ${inspect(act)} to not equal ${inspect(exp)}`
     );
@@ -59,14 +61,14 @@ module.exports = ({ _core, _aux }) => chai => {
 
   Assertion.addMethod("equalConfigTo", function (exp) {
     const { Config } = _core;
-    const { equal, inspect } = _aux.Config;
+    const {  inspect } = _aux.Config;
 
     const act = this._obj;
 
     new Assertion(act).to.be.an.instanceOf(Config);
 
     this.assert(
-      equal(act, exp),
+      Config.equal(act, exp),
       `expected ${inspect(act)} to equal ${inspect(exp)}`,
       `expected ${inspect(act)} to not equal ${inspect(exp)}`
     );
@@ -74,26 +76,27 @@ module.exports = ({ _core, _aux }) => chai => {
 
   Assertion.addMethod("equalStateTo", function (exp, inputEqual, userStateEqual) {
     const { State } = _core;
-    const { equal, inspect } = _aux.State;
+    const {  inspect } = _aux.State;
 
     const act = this._obj;
 
     new Assertion(act).to.be.an.instanceOf(State);
 
     this.assert(
-      equal(act, exp, inputEqual, userStateEqual),
+      State.equal(act, exp, inputEqual, userStateEqual),
       `expected ${inspect(act)} to equal ${inspect(exp)}`,
       `expected ${inspect(act)} to not equal ${inspect(exp)}`
     );
   });
 
   Assertion.addMethod("equalResultTo", function (exp, valEqual, inputEqual, userStateEqual) {
-    const { equal, inspect } = _aux.Result;
+    const { Result } = _core;
+    const { inspect } = _aux.Result;
 
     const act = this._obj;
 
     this.assert(
-      equal(act, exp, valEqual, inputEqual, userStateEqual),
+      Result.equal(act, exp, valEqual, inputEqual, userStateEqual),
       `expected ${inspect(act)} to equal ${inspect(exp)}`,
       `expected ${inspect(act)} to not equal ${inspect(exp)}`
     );
