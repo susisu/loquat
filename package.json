@@ -6,10 +6,10 @@
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "lint": "lerna run --ignore loquat --concurrency 1 --no-bail lint -- --color",
-    "lint:fast": "lerna run --ignore loquat lint",
-    "test": "lerna run --ignore loquat --concurrency 1 --no-bail test -- --colors",
-    "test:fast": "lerna run --ignore loquat test"
+    "lint": "lerna run --concurrency 1 --no-bail lint -- --color",
+    "lint:fast": "lerna run lint",
+    "test": "lerna run --concurrency 1 --no-bail test -- --colors",
+    "test:fast": "lerna run test"
   },
   "devDependencies": {
     "lerna": "^3.13.1"
