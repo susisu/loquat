@@ -28,18 +28,42 @@ module.exports = ({ _pos }) => {
 
   /**
    * object ErrorMessage {
-   *   create: (type: ErrorMessageType, str: string) => ErrorMessage;
-   *   messagesToString: (msgs: Array[ErrorMessage]) => string;
+   *   create(type: ErrorMessageType, str: string): ErrorMessage;
+   *   equal(msgA: ErrorMessage, msgB: ErrorMessage): boolean;
+   *   messagesEqual(msgsA: Array[ErrorMessage], msgsB: Array[ErrorMessage]): boolean;
+   *   messagesToString(msgs: Array[ErrorMessage]): string;
    * }
    */
   const ErrorMessage = Object.freeze({
     /**
-     * ErrorMessage.create: (type: ErrorMessageType, str: string) => ErrorMessage
+     * ErrorMessage.create(type: ErrorMessageType, str: string): ErrorMessage
      *
      * Creates an ErrorMessage object.
      */
     create(type, str) {
       return { type, str };
+    },
+
+    /**
+     * ErrorMessage.equal: (msgA: ErrorMessage, msgB: ErrorMessage) => boolean
+     */
+    equal(msgA, msgB) {
+      return msgA.type === msgB.type
+          && msgA.str  === msgB.str;
+    },
+
+    /**
+     * ErrorMessage.messagesEqual(
+     *   msgsA: Array[ErrorMessage],
+     *   msgsB: Array[ErrorMessage]
+     * ): boolean
+     */
+    messagesEqual(msgsA, msgsB) {
+      return msgsA.length === msgsB.length
+        && msgsA.every((msgA, i) => {
+          const msgB = msgsB[i];
+          return ErrorMessage.equal(msgA, msgB);
+        });
     },
 
     /**
@@ -139,6 +163,7 @@ module.exports = ({ _pos }) => {
   /**
    * object ParseError {
    *   unknown(pos: SourcePos): StrictParseError;
+   *   equal(errA: ParseError, errB: ParseError): boolean;
    *   merge(errA: StrictParseError, errB: StrictParseError): ParseError;
    * }
    */
@@ -162,6 +187,14 @@ module.exports = ({ _pos }) => {
      */
     static unknown(pos) {
       return new StrictParseError(pos, []);
+    }
+
+    /**
+     * ParseError.equal(errA: ParseError, errB: ParseError) => boolean
+     */
+    static equal(errA, errB) {
+      return SourcePos.equal(errA.pos, errB.pos)
+        && ErrorMessage.messagesEqual(errA.msgs, errB.msgs);
     }
 
     /**

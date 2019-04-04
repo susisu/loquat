@@ -7,13 +7,14 @@ module.exports = () => {
   /**
    * class SourcePos(name: string, index:int, line: int, column: int) {
    *   static init(name: string): SourcePos;
+   *   static equal(posA: SoucePos, posB; SoucePos): boolean;
    *   static compare(posA: SoucePos, posB: SoucePos): int;
    *   toString(): string;
    *   setName(name: string): SourcePos;
    *   setLine(line: int): SoucePos;
    *   setColumn(column: int): SourcePos;
    *   addChar(char: string, tabWidth: int): SoucePos;
-   *   addString(str: string, tabWidth: int, unicode: bool): SoucePos;
+   *   addString(str: string, tabWidth: int, unicode: boolean): SoucePos;
    * }
    *
    * `SourcePos` represents a position in input.
@@ -26,6 +27,16 @@ module.exports = () => {
      */
     static init(name) {
       return new SourcePos(name, 0, 1, 1);
+    }
+
+    /**
+     * SourcePos.equal(posA: SoucePos, posB: SoucePos): boolean
+     */
+    static equal(posA, posB) {
+      return posA.name   === posB.name
+          && posA.index  === posB.index
+          && posA.line   === posB.line
+          && posA.column === posB.column;
     }
 
     /**

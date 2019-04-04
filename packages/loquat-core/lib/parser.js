@@ -1,7 +1,8 @@
 "use strict";
 
-module.exports = ({ _pos }) => {
+module.exports = ({ _pos, _error }) => {
   const { SourcePos } = _pos;
+  const { ParseError } = _error;
 
   /**
    * type ConfigOptions = {
@@ -12,6 +13,7 @@ module.exports = ({ _pos }) => {
 
   /**
    * class Config(opts?: ConfigOptions) {
+   *  static equal(configA: Config, configB: Config): boolean;
    *  tabWidth: int;
    *  unicode: boolean;
    *  setTabWidth(tabWidth: int): Config;
@@ -19,6 +21,14 @@ module.exports = ({ _pos }) => {
    * }
    */
   class Config {
+    /**
+     * Config.equal(configA: Config, configB: Config): boolean
+     */
+    static equal(configA, configB) {
+      return configA.tabWidth === configB.tabWidth
+          && configA.unicode  === configB.unicode;
+    }
+
     constructor(opts = {}) {
       this._tabWidth = opts.tabWidth === undefined ? 1 : opts.tabWidth;
       this._unicode  = opts.unicode === undefined ? true : opts.unicode;
@@ -53,6 +63,12 @@ module.exports = ({ _pos }) => {
 
   /**
    * class State[S, U](config: Config, input: S, pos: SourcePos, userState: U) {
+   *   static equal[S, U](
+   *      stateA: State[S, U],
+   *      stateB: State[S, U],
+   *      inputEqual?: (S, S) => boolean,
+   *      userStateEqual?: (U, U) => boolean
+   *   ): boolean;
    *   setConfig(config: Config): State[S, U];
    *   setInput(input: S): State[S, U];
    *   setPosition(pos: SourcePos): State[S, U];
@@ -60,6 +76,25 @@ module.exports = ({ _pos }) => {
    * }
    */
   class State {
+    /**
+     * State.equal[S, U](
+     *    stateA: State[S, U],
+     *    stateB: State[S, U],
+     *    inputEqual?: (S, S) => boolean,
+     *    userStateEqual?: (U, U) => boolean
+     * ): boolean;
+     */
+    static equal(stateA, stateB, inputEqual, userStateEqual) {
+      return Config.equal(stateA.config, stateB.config)
+        && (inputEqual === undefined
+          ? stateA.input === stateB.input
+          : inputEqual(stateA.input, stateB.input))
+        && SourcePos.equal(stateA.pos, stateB.pos)
+        && (userStateEqual === undefined
+          ? stateA.userState === stateB.userState
+          : userStateEqual(stateA.userState, stateB.userState));
+    }
+
     constructor(config, input, pos, userState) {
       this._config    = config;
       this._input     = input;
@@ -144,65 +179,97 @@ module.exports = ({ _pos }) => {
 
   /**
    * object Result {
-   *   succ: [S, U, A](
+   *   succ[S, U, A](
    *     consumed: boolean,
    *     err: Parser,
    *     val: A,
    *     state: State[S, U]
-   *   ) => Success[S, U, A];
-   *   fail: (consumed: boolean, err: Parser) => Failure
-   *   csucc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A];
-   *   cfail: (err: Parser) => Failure;
-   *   esucc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A];
-   *   efail: (err: Parser) => Failure;
+   *   ): Success[S, U, A];
+   *   fail(consumed: boolean, err: Parser): Failure
+   *   csucc[S, U, A](err: Parser, val: A, state: State[S, U]): Success[S, U, A];
+   *   cfail(err: Parser): Failure;
+   *   esucc[S, U, A](err: Parser, val: A, state: State[S, U]): Success[S, U, A];
+   *   efail(err: Parser) => Failure;
+   *   equal[S, U, A](
+   *     resA: Result[S, U, A],
+   *     resB: Result[S, U, A],
+   *     valEqual: (A, A) => boolean,
+   *     inputEqual: (S, S) => boolean,
+   *     userStateEqual: (U, U) => boolean
+   *   ): boolean
    * }
    */
   const Result = Object.freeze({
     /**
-     * Result.succ: [S, U, A](
+     * Result.succ[S, U, A](
      *   consumed: boolean,
      *   err: Parser,
      *   val: A,
      *   state: State[S, U]
-     * ) => Success[S, U, A]
+     * ): Success[S, U, A]
      */
     succ(consumed, err, val, state) {
       return { success: true, consumed, err, val, state };
     },
 
     /**
-     * Result.fail: (consumed: boolean, err: Parser) => Failure
+     * Result.fail(consumed: boolean, err: Parser): Failure
      */
     fail(consumed, err) {
       return { success: false, consumed, err };
     },
 
     /**
-     * Result.csucc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A]
+     * Result.csucc[S, U, A](err: Parser, val: A, state: State[S, U]): Success[S, U, A]
      */
     csucc(err, val, state) {
       return { success: true, consumed: true, err, val, state };
     },
 
     /**
-     * Result.cfail: (err: Parser) => Failure
+     * Result.cfail(err: Parser): Failure
      */
     cfail(err) {
       return { success: false, consumed: true, err };
     },
 
     /**
-     * Result.esucc: [S, U, A](err: Parser, val: A, state: State[S, U]) => Success[S, U, A]
+     * Result.esucc[S, U, A](err: Parser, val: A, state: State[S, U]): Success[S, U, A]
      */
     esucc(err, val, state) {
       return { success: true, consumed: false, err, val, state };
     },
 
     /**
-     * Result.efail: (err: Parser): Failure
+     * Result.efail(err: Parser): Failure
      */
     efail(err) {
       return { success: false, consumed: false, err };
+    },
+
+    /**
+     * Result.equal[S, U, A](
+     *   resA: Result[S, U, A],
+     *   resB: Result[S, U, A],
+     *   valEqual: (A, A) => boolean,
+     *   inputEqual: (S, S) => boolean,
+     *   userStateEqual: (U, U) => boolean
+     * ): boolean
+     */
+    equal(resA, resB, valEqual, inputEqual, userStateEqual) {
+      if (resA.success && resB.success) {
+        return resA.success  === resB.success
+            && resA.consumed === resB.consumed
+            && ParseError.equal(resA.err, resB.err)
+            && (valEqual === undefined
+              ? resA.val === resB.val
+              : valEqual(resA.val, resB.val))
+            && State.equal(resA.state, resB.state, inputEqual, userStateEqual);
+      } else {
+        return resA.success  === resB.success
+            && resA.consumed === resB.consumed
+            && ParseError.equal(resA.err, resB.err);
+      }
     },
   });
 

@@ -2,6 +2,7 @@
 
 describe("SourcePos", () => {
   require("./SourcePos/init");
+  require("./SourcePos/equal");
   require("./SourcePos/compare");
 
   require("./SourcePos/constructor");

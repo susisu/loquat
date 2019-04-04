@@ -7,4 +7,5 @@ describe("Result", () => {
   require("./Result/cfail");
   require("./Result/esucc");
   require("./Result/efail");
+  require("./Result/equal");
 });

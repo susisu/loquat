@@ -2,6 +2,7 @@
 
 describe("ParseError", () => {
   require("./ParseError/unknown");
+  require("./ParseError/equal");
   require("./ParseError/merge");
 
   require("./ParseError/constructor");
