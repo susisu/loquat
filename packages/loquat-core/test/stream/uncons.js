@@ -65,7 +65,7 @@ describe("uncons", () => {
       const config = new Config({ tabWidth: 4, unicode: true });
       const stream = {
         uncons: config => {
-          expect(config).to.be.an.equalConfigTo(new Config({ tabWidth: 4, unicode: true }));
+          expect(Config.equal(config, new Config({ tabWidth: 4, unicode: true }))).to.be.true;
           return { empty: true };
         },
       };
@@ -79,7 +79,7 @@ describe("uncons", () => {
       };
       const stream = {
         uncons: config => {
-          expect(config).to.be.an.equalConfigTo(new Config({ tabWidth: 4, unicode: true }));
+          expect(Config.equal(config, new Config({ tabWidth: 4, unicode: true }))).to.be.true;
           return {
             empty: false,
             head : "foo",
