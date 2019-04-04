@@ -4,7 +4,7 @@
 
 "use strict";
 
-module.exports = _core => {
+module.exports = (_core, _opts) => {
   const _qo = require("./lib/qo.js")(_core);
 
   return Object.freeze({

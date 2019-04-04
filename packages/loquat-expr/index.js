@@ -4,7 +4,7 @@
 
 "use strict";
 
-module.exports = _core => {
+module.exports = (_core, _opts) => {
   const _prim        = require("loquat-prim")(_core);
   const _combinators = require("loquat-combinators")(_core);
 
