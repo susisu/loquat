@@ -48,7 +48,7 @@ describe("#run", () => {
     ));
     expect(evaluated).to.be.true;
     expect(flag).to.be.true;
-    expect(res).to.be.an.equalResultTo(Result.csucc(
+    expect(Result.equal(res, Result.csucc(
       new StrictParseError(
         new SourcePos("main", 506, 7, 29),
         [
@@ -65,6 +65,6 @@ describe("#run", () => {
         new SourcePos("main", 516, 8, 30),
         "some"
       )
-    ));
+    ))).to.be.true;
   });
 });

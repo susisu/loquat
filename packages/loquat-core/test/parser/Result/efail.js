@@ -19,7 +19,7 @@ describe(".efail", () => {
         ]
       )
     );
-    expect(res).to.be.an.equalResultTo({
+    expect(Result.equal(res, {
       success : false,
       consumed: false,
       err     : new StrictParseError(
@@ -31,6 +31,6 @@ describe(".efail", () => {
           ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
         ]
       ),
-    });
+    })).to.be.true;
   });
 });

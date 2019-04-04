@@ -19,7 +19,7 @@ describe(".cfail", () => {
         ]
       )
     );
-    expect(res).to.be.an.equalResultTo({
+    expect(Result.equal(res, {
       success : false,
       consumed: true,
       err     : new StrictParseError(
@@ -31,6 +31,6 @@ describe(".cfail", () => {
           ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
         ]
       ),
-    });
+    })).to.be.true;
   });
 });

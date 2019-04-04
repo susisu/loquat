@@ -21,7 +21,7 @@ describe(".fail", () => {
           ]
         )
       );
-      expect(res).to.be.an.equalResultTo({
+      expect(Result.equal(res, {
         success : false,
         consumed: true,
         err     : new StrictParseError(
@@ -33,7 +33,7 @@ describe(".fail", () => {
             ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-      });
+      })).to.be.true;
     }
     {
       const res = Result.fail(
@@ -48,7 +48,7 @@ describe(".fail", () => {
           ]
         )
       );
-      expect(res).to.be.an.equalResultTo({
+      expect(Result.equal(res, {
         success : false,
         consumed: false,
         err     : new StrictParseError(
@@ -60,7 +60,7 @@ describe(".fail", () => {
             ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
           ]
         ),
-      });
+      })).to.be.true;
     }
   });
 });

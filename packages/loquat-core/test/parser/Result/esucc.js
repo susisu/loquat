@@ -26,7 +26,7 @@ describe(".esucc", () => {
         "none"
       )
     );
-    expect(res).to.be.an.equalResultTo({
+    expect(Result.equal(res, {
       success : true,
       consumed: false,
       err     : new StrictParseError(
@@ -45,6 +45,6 @@ describe(".esucc", () => {
         new SourcePos("main", 506, 7, 29),
         "none"
       ),
-    });
+    })).to.be.true;
   });
 });

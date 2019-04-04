@@ -26,7 +26,7 @@ describe(".csucc", () => {
         "none"
       )
     );
-    expect(res).to.be.an.equalResultTo({
+    expect(Result.equal(res, {
       success : true,
       consumed: true,
       err     : new StrictParseError(
@@ -45,6 +45,6 @@ describe(".csucc", () => {
         new SourcePos("main", 506, 7, 29),
         "none"
       ),
-    });
+    })).to.be.true;
   });
 });

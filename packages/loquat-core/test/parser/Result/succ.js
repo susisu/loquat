@@ -28,7 +28,7 @@ describe(".succ", () => {
           "none"
         )
       );
-      expect(res).to.be.an.equalResultTo({
+      expect(Result.equal(res, {
         success : true,
         consumed: true,
         err     : new StrictParseError(
@@ -47,7 +47,7 @@ describe(".succ", () => {
           new SourcePos("main", 506, 7, 29),
           "none"
         ),
-      });
+      })).to.be.true;
     }
     {
       const res = Result.succ(
@@ -69,7 +69,7 @@ describe(".succ", () => {
           "none"
         )
       );
-      expect(res).to.be.an.equalResultTo({
+      expect(Result.equal(res, {
         success : true,
         consumed: false,
         err     : new StrictParseError(
@@ -88,7 +88,7 @@ describe(".succ", () => {
           new SourcePos("main", 506, 7, 29),
           "none"
         ),
-      });
+      })).to.be.true;
     }
   });
 });
