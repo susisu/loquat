@@ -14,12 +14,12 @@ describe("#run", () => {
       evaluated = true;
       return new StrictParser(state => {
         flag = true;
-        expect(state).to.be.an.equalStateTo(new State(
+        expect(State.equal(state, new State(
           new Config({ tabWidth: 4, unicode: true }),
           "test",
           new SourcePos("main", 496, 6, 28),
           "none"
-        ));
+        ))).to.be.true;
         return Result.csucc(
           new StrictParseError(
             new SourcePos("main", 506, 7, 29),

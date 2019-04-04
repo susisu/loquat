@@ -15,11 +15,11 @@ describe("#setInput", () => {
     );
     const copy = state.setInput("bar");
     expect(copy).to.not.equal(state);
-    expect(copy).to.be.an.equalStateTo(new State(
+    expect(State.equal(copy, new State(
       new Config({ tabWidth: 4, unicode: true }),
       "bar",
       new SourcePos("main", 496, 6, 28),
       "none"
-    ));
+    ))).to.be.true;
   });
 });

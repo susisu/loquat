@@ -15,11 +15,11 @@ describe("#setPosition", () => {
     );
     const copy = state.setPosition(new SourcePos("lib", 506, 7, 29));
     expect(copy).to.not.equal(state);
-    expect(copy).to.be.an.equalStateTo(new State(
+    expect(State.equal(copy, new State(
       new Config({ tabWidth: 4, unicode: true }),
       "foo",
       new SourcePos("lib", 506, 7, 29),
       "none"
-    ));
+    ))).to.be.true;
   });
 });

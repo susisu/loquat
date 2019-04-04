@@ -15,11 +15,11 @@ describe("#setConfig", () => {
     );
     const copy = state.setConfig(new Config({ tabWidth: 8, unicode: false }));
     expect(copy).to.not.equal(state);
-    expect(copy).to.be.an.equalStateTo(new State(
+    expect(State.equal(copy, new State(
       new Config({ tabWidth: 8, unicode: false }),
       "foo",
       new SourcePos("main", 496, 6, 28),
       "none"
-    ));
+    ))).to.be.true;
   });
 });

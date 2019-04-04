@@ -14,12 +14,12 @@ describe("#parse", () => {
       const parser = new LazyParser(() => {
         evaluated = true;
         return new StrictParser(state => {
-          expect(state).to.be.an.equalStateTo(new State(
+          expect(State.equal(state, new State(
             new Config({ tabWidth: 4, unicode: true }),
             "test",
             new SourcePos("main", 0, 1, 1),
             "none"
-          ));
+          ))).to.be.true;
           return Result.csucc(
             new StrictParseError(
               new SourcePos("main", 496, 6, 28),
@@ -53,12 +53,12 @@ describe("#parse", () => {
       const parser = new LazyParser(() => {
         evaluated = true;
         return new StrictParser(state => {
-          expect(state).to.be.an.equalStateTo(new State(
+          expect(State.equal(state, new State(
             new Config({ tabWidth: 4, unicode: true }),
             "test",
             new SourcePos("main", 0, 1, 1),
             "none"
-          ));
+          ))).to.be.true;
           return Result.cfail(
             new StrictParseError(
               new SourcePos("main", 496, 6, 28),
@@ -92,12 +92,12 @@ describe("#parse", () => {
       const parser = new LazyParser(() => {
         evaluated = true;
         return new StrictParser(state => {
-          expect(state).to.be.an.equalStateTo(new State(
+          expect(State.equal(state, new State(
             new Config({ tabWidth: 4, unicode: true }),
             "test",
             new SourcePos("main", 0, 1, 1),
             "none"
-          ));
+          ))).to.be.true;
           return Result.esucc(
             new StrictParseError(
               new SourcePos("main", 496, 6, 28),
@@ -131,12 +131,12 @@ describe("#parse", () => {
       const parser = new LazyParser(() => {
         evaluated = true;
         return new StrictParser(state => {
-          expect(state).to.be.an.equalStateTo(new State(
+          expect(State.equal(state, new State(
             new Config({ tabWidth: 4, unicode: true }),
             "test",
             new SourcePos("main", 0, 1, 1),
             "none"
-          ));
+          ))).to.be.true;
           return Result.efail(
             new StrictParseError(
               new SourcePos("main", 496, 6, 28),
@@ -170,12 +170,12 @@ describe("#parse", () => {
       const parser = new LazyParser(() => {
         evaluated = true;
         return new StrictParser(state => {
-          expect(state).to.be.an.equalStateTo(new State(
+          expect(State.equal(state, new State(
             new Config(),
             "test",
             new SourcePos("main", 0, 1, 1),
             "none"
-          ));
+          ))).to.be.true;
           return Result.csucc(
             new StrictParseError(
               new SourcePos("main", 496, 6, 28),

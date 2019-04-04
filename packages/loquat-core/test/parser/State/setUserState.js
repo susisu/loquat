@@ -15,11 +15,11 @@ describe("#setUserState", () => {
     );
     const copy = state.setUserState("some");
     expect(copy).to.not.equal(state);
-    expect(copy).to.be.an.equalStateTo(new State(
+    expect(State.equal(copy, new State(
       new Config({ tabWidth: 4, unicode: true }),
       "foo",
       new SourcePos("main", 496, 6, 28),
       "some"
-    ));
+    ))).to.be.true;
   });
 });
