@@ -28,9 +28,9 @@
     "loquat-core": "^3.0.0-alpha.0"
   },
   "devDependencies": {
-    "@susisu/eslint-config": "^0.0.1",
+    "@susisu/eslint-config": "^0.0.2",
     "chai": "^4.2.0",
-    "eslint": "^5.15.3",
+    "eslint": "^5.16.0",
     "loquat-core": "^3.0.0-alpha.0",
     "loquat-test": "^3.0.0-alpha.0",
     "mocha": "^6.0.2",
