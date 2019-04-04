@@ -3,7 +3,7 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
+const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError } = _error;
 const { Config, State, Result, StrictParser } = _parser;
 
 describe("#parse", () => {
@@ -66,7 +66,7 @@ describe("#parse", () => {
       const res = parser.parse("main", "test", "none", { tabWidth: 4, unicode: true });
       expect(res).to.be.an("object");
       expect(res.success).to.be.false;
-      expect(res.error).to.be.an.equalErrorTo(new StrictParseError(
+      expect(ParseError.equal(res.error, new StrictParseError(
         new SourcePos("main", 496, 6, 28),
         [
           ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -74,7 +74,7 @@ describe("#parse", () => {
           ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
           ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
         ]
-      ));
+      ))).to.be.true;
     }
     // esucc
     {
@@ -134,7 +134,7 @@ describe("#parse", () => {
       const res = parser.parse("main", "test", "none", { tabWidth: 4, unicode: true });
       expect(res).to.be.an("object");
       expect(res.success).to.be.false;
-      expect(res.error).to.be.an.equalErrorTo(new StrictParseError(
+      expect(ParseError.equal(res.error, new StrictParseError(
         new SourcePos("main", 496, 6, 28),
         [
           ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -142,7 +142,7 @@ describe("#parse", () => {
           ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
           ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
         ]
-      ));
+      ))).to.be.true;
     }
     // use default parameters
     {

@@ -3,7 +3,7 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
+const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError } = _error;
 
 describe("#setSpecificTypeMessages", () => {
   it("should create a new parse error with all of the specified type of messages removed and the"
@@ -18,7 +18,7 @@ describe("#setSpecificTypeMessages", () => {
     const err = new StrictParseError(pos, msgs);
     const newErr = err.setSpecificTypeMessages(ErrorMessageType.UNEXPECT, ["A", "B"]);
     expect(newErr).to.not.equal(err);
-    expect(newErr).to.be.an.equalErrorTo(new StrictParseError(
+    expect(ParseError.equal(newErr, new StrictParseError(
       pos,
       [
         ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
@@ -27,6 +27,6 @@ describe("#setSpecificTypeMessages", () => {
         ErrorMessage.create(ErrorMessageType.UNEXPECT, "A"),
         ErrorMessage.create(ErrorMessageType.UNEXPECT, "B"),
       ]
-    ));
+    ))).to.be.true;
   });
 });

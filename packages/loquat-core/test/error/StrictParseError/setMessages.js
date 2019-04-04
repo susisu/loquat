@@ -3,7 +3,7 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
+const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError } = _error;
 
 describe("#setMessages", () => {
   it("should create a new parse error with `msgs` updated", () => {
@@ -23,6 +23,6 @@ describe("#setMessages", () => {
     ];
     const newErr = err.setMessages(newMsgs);
     expect(newErr).to.not.equal(err);
-    expect(newErr).to.be.an.equalErrorTo(new StrictParseError(pos, newMsgs));
+    expect(ParseError.equal(newErr, new StrictParseError(pos, newMsgs))).to.be.true;
   });
 });

@@ -22,27 +22,27 @@ describe(".merge", () => {
       const errA = new StrictParseError(posA, msgsA);
       const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
+      expect(ParseError.equal(err, new StrictParseError(posA, msgsA))).to.be.true;
     }
     // lazy
     {
       const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
       const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
+      expect(ParseError.equal(err, new StrictParseError(posA, msgsA))).to.be.true;
     }
     // mixed
     {
       const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
       const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
+      expect(ParseError.equal(err, new StrictParseError(posA, msgsA))).to.be.true;
     }
     {
       const errA = new StrictParseError(posA, msgsA);
       const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
+      expect(ParseError.equal(err, new StrictParseError(posA, msgsA))).to.be.true;
     }
   });
 
@@ -62,27 +62,27 @@ describe(".merge", () => {
       const errA = new StrictParseError(posA, msgsA);
       const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
+      expect(ParseError.equal(err, new StrictParseError(posB, msgsB))).to.be.true;
     }
     // lazy
     {
       const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
       const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
+      expect(ParseError.equal(err, new StrictParseError(posB, msgsB))).to.be.true;
     }
     // mixed
     {
       const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
       const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
+      expect(ParseError.equal(err, new StrictParseError(posB, msgsB))).to.be.true;
     }
     {
       const errA = new StrictParseError(posA, msgsA);
       const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
+      expect(ParseError.equal(err, new StrictParseError(posB, msgsB))).to.be.true;
     }
   });
 
@@ -107,27 +107,27 @@ describe(".merge", () => {
       const errA = new StrictParseError(posA, msgsA);
       const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
+      expect(ParseError.equal(err, new StrictParseError(posA, msgsA))).to.be.true;
     }
     // lazy
     {
       const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
       const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
+      expect(ParseError.equal(err, new StrictParseError(posA, msgsA))).to.be.true;
     }
     // mixed
     {
       const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
       const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
+      expect(ParseError.equal(err, new StrictParseError(posA, msgsA))).to.be.true;
     }
     {
       const errA = new StrictParseError(posA, msgsA);
       const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posA, msgsA));
+      expect(ParseError.equal(err, new StrictParseError(posA, msgsA))).to.be.true;
     }
   });
 
@@ -152,27 +152,27 @@ describe(".merge", () => {
       const errA = new StrictParseError(posA, msgsA);
       const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
+      expect(ParseError.equal(err, new StrictParseError(posB, msgsB))).to.be.true;
     }
     // lazy
     {
       const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
       const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
+      expect(ParseError.equal(err, new StrictParseError(posB, msgsB))).to.be.true;
     }
     // mixed
     {
       const errA = new LazyParseError(() => new StrictParseError(posA, msgsA));
       const errB = new StrictParseError(posB, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
+      expect(ParseError.equal(err, new StrictParseError(posB, msgsB))).to.be.true;
     }
     {
       const errA = new StrictParseError(posA, msgsA);
       const errB = new LazyParseError(() => new StrictParseError(posB, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(posB, msgsB));
+      expect(ParseError.equal(err, new StrictParseError(posB, msgsB))).to.be.true;
     }
   });
 
@@ -197,27 +197,27 @@ describe(".merge", () => {
       const errA = new StrictParseError(pos, msgsA);
       const errB = new StrictParseError(pos, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(pos, msgs));
+      expect(ParseError.equal(err, new StrictParseError(pos, msgs))).to.be.true;
     }
     // lazy
     {
       const errA = new LazyParseError(() => new StrictParseError(pos, msgsA));
       const errB = new LazyParseError(() => new StrictParseError(pos, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(pos, msgs));
+      expect(ParseError.equal(err, new StrictParseError(pos, msgs))).to.be.true;
     }
     // mixed
     {
       const errA = new LazyParseError(() => new StrictParseError(pos, msgsA));
       const errB = new StrictParseError(pos, msgsB);
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(pos, msgs));
+      expect(ParseError.equal(err, new StrictParseError(pos, msgs))).to.be.true;
     }
     {
       const errA = new StrictParseError(pos, msgsA);
       const errB = new LazyParseError(() => new StrictParseError(pos, msgsB));
       const err = ParseError.merge(errA, errB);
-      expect(err).to.be.an.equalErrorTo(new StrictParseError(pos, msgs));
+      expect(ParseError.equal(err, new StrictParseError(pos, msgs))).to.be.true;
     }
   });
 });

@@ -3,7 +3,7 @@
 const { expect } = require("chai");
 
 const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, StrictParseError, LazyParseError } = _error;
+const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError, LazyParseError } = _error;
 
 describe("#eval", () => {
   it("should evaluate the thunk then return a fully evaluated `StrictParseError`", () => {
@@ -53,7 +53,7 @@ describe("#eval", () => {
       const resB = err.eval();
       // the cached result is returned
       expect(evalCount).to.equal(1);
-      expect(resA).to.be.an.equalErrorTo(resB);
+      expect(ParseError.equal(resA, resB)).to.be.true;
     }
     // all LazyParseError objects are evaluated only once
     {
@@ -70,7 +70,7 @@ describe("#eval", () => {
       const resB = err.eval();
       expect(intermediateEvalCount).to.equal(1);
       expect(evalCount).to.equal(1);
-      expect(resA).to.be.an.equalErrorTo(resB);
+      expect(ParseError.equal(resA, resB)).to.be.true;
     }
     {
       let intermediateEvalCount = 0;
@@ -89,8 +89,8 @@ describe("#eval", () => {
       const resB = err.eval();
       expect(intermediateEvalCount).to.equal(1);
       expect(evalCount).to.equal(1);
-      expect(resA).to.be.an.equalErrorTo(resB);
-      expect(resA).to.be.an.equalErrorTo(intermediateRes);
+      expect(ParseError.equal(resA, resB)).to.be.true;
+      expect(ParseError.equal(resA, intermediateRes)).to.be.true;
     }
   });
 
