@@ -9,6 +9,6 @@ describe("#setName", () => {
     const pos = new SourcePos("foo", 496, 6, 28);
     const copy = pos.setName("bar");
     expect(copy).to.not.equal(pos);
-    expect(copy).to.be.an.equalPositionTo(new SourcePos("bar", 496, 6, 28));
+    expect(SourcePos.equal(copy, new SourcePos("bar", 496, 6, 28))).to.be.true;
   });
 });

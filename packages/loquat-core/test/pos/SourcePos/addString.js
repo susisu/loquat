@@ -10,13 +10,13 @@ describe("#addString", () => {
       const pos = new SourcePos("foo", 496, 6, 1);
       const copy = pos.addString("nyan\n\tcat\n\u3042\t\uD83C\uDF63", 8, false);
       expect(copy).to.not.equal(pos);
-      expect(copy).to.be.an.equalPositionTo(new SourcePos("foo", 510, 8, 11));
+      expect(SourcePos.equal(copy, new SourcePos("foo", 510, 8, 11))).to.be.true;
     }
     {
       const pos = new SourcePos("foo", 496, 6, 1);
       const copy = pos.addString("nyan\n\tcat\n\u3042\t\uD83C\uDF63", 4, false);
       expect(copy).to.not.equal(pos);
-      expect(copy).to.be.an.equalPositionTo(new SourcePos("foo", 510, 8, 7));
+      expect(SourcePos.equal(copy, new SourcePos("foo", 510, 8, 7))).to.be.true;
     }
   });
 
@@ -25,6 +25,6 @@ describe("#addString", () => {
     const copy = pos.addString("nyan\n\tcat\n\u3042\t\uD83C\uDF63", 8, true);
     expect(copy).to.not.equal(pos);
     // the offset in index is not affected by the unicode flag
-    expect(copy).to.be.an.equalPositionTo(new SourcePos("foo", 510, 8, 10));
+    expect(SourcePos.equal(copy, new SourcePos("foo", 510, 8, 10))).to.be.true;
   });
 });

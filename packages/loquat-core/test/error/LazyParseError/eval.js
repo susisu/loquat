@@ -18,7 +18,7 @@ describe("#eval", () => {
       const err = new LazyParseError(() => new StrictParseError(pos, msgs));
       const res = err.eval();
       expect(res).to.be.an.instanceOf(StrictParseError);
-      expect(res.pos).to.be.an.equalPositionTo(pos);
+      expect(SourcePos.equal(res.pos, pos)).to.be.true;
       expect(res.msgs).to.be.equalErrorMessagesTo(msgs);
     }
     // a multiply-nested LazyParseError object is also evaluated to a StrictParseError object
@@ -30,7 +30,7 @@ describe("#eval", () => {
       );
       const res = err.eval();
       expect(res).to.be.an.instanceOf(StrictParseError);
-      expect(res.pos).to.be.an.equalPositionTo(pos);
+      expect(SourcePos.equal(res.pos, pos)).to.be.true;
       expect(res.msgs).to.be.equalErrorMessagesTo(msgs);
     }
   });

@@ -9,6 +9,6 @@ describe("#setColumn", () => {
     const pos = new SourcePos("foo", 496, 6, 28);
     const copy = pos.setColumn(29);
     expect(copy).to.not.equal(pos);
-    expect(copy).to.be.an.equalPositionTo(new SourcePos("foo", 496, 6, 29));
+    expect(SourcePos.equal(copy, new SourcePos("foo", 496, 6, 29))).to.be.true;
   });
 });

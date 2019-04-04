@@ -19,7 +19,7 @@ describe("#pos", () => {
       evaluated = true;
       return new StrictParseError(pos, msgs);
     });
-    expect(err.pos).to.be.an.equalPositionTo(pos);
+    expect(SourcePos.equal(err.pos, pos)).to.be.true;
     expect(evaluated).to.be.true;
   });
 });

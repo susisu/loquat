@@ -9,6 +9,6 @@ describe("#setLine", () => {
     const pos  = new SourcePos("foo", 496, 6, 28);
     const copy = pos.setLine(7);
     expect(copy).to.not.equal(pos);
-    expect(copy).to.be.an.equalPositionTo(new SourcePos("foo", 496, 7, 28));
+    expect(SourcePos.equal(copy, new SourcePos("foo", 496, 7, 28))).to.be.true;
   });
 });

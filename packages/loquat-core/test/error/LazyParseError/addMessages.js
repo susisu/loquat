@@ -23,7 +23,7 @@ describe("#addMessages", () => {
     ];
     const newErr = err.addMessages(additionalMsgs);
     expect(evaluated).to.be.false; // not evaluated yet
-    expect(newErr.pos).to.be.an.equalPositionTo(pos);
+    expect(SourcePos.equal(newErr.pos, pos)).to.be.true;
     expect(newErr.msgs).to.be.equalErrorMessagesTo(msgs.concat(additionalMsgs));
     expect(evaluated).to.be.true;
   });
