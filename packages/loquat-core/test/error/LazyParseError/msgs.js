@@ -19,7 +19,7 @@ describe("#msgs", () => {
       evaluated = true;
       return new StrictParseError(pos, msgs);
     });
-    expect(err.msgs).to.be.equalErrorMessagesTo(msgs);
+    expect(ErrorMessage.messagesEqual(err.msgs, msgs)).to.be.true;
     expect(evaluated).to.be.true;
   });
 });

@@ -24,7 +24,7 @@ describe("#addMessages", () => {
     const newErr = err.addMessages(additionalMsgs);
     expect(evaluated).to.be.false; // not evaluated yet
     expect(SourcePos.equal(newErr.pos, pos)).to.be.true;
-    expect(newErr.msgs).to.be.equalErrorMessagesTo(msgs.concat(additionalMsgs));
+    expect(ErrorMessage.messagesEqual(newErr.msgs, msgs.concat(additionalMsgs))).to.be.true;
     expect(evaluated).to.be.true;
   });
 });
