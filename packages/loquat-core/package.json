@@ -28,7 +28,6 @@
     "@susisu/eslint-config": "^0.0.1",
     "chai": "^4.2.0",
     "eslint": "^5.15.3",
-    "loquat-test": "^3.0.0-alpha.0",
     "mocha": "^6.0.2",
     "nyc": "^13.3.0"
   }

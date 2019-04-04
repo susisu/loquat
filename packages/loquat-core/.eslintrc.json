@@ -16,8 +16,7 @@
          "_error": "readonly",
          "_parser": "readonly",
          "_stream": "readonly",
-         "_core": "readonly",
-         "_test": "readonly"
+         "_core": "readonly"
       },
       "rules": {
         "no-new": "off",
