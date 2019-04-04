@@ -2,9 +2,8 @@
 
 const { expect } = require("chai");
 
-const { Parser, LazyParser, extendParser } = _parser;
-
-const { createDummyParser } = _test.helper;
+const { ParseError } = _error;
+const { Result, Parser, StrictParser, LazyParser, extendParser } = _parser;
 
 describe("extendParser", () => {
   it("should extend `Parser.prototype`", () => {
@@ -30,13 +29,15 @@ describe("extendParser", () => {
 
     // can be accessed from parser objects
     {
-      const parser = createDummyParser();
+      const parser = new StrictParser(state => Result.efail(ParseError.unknown(state.pos)));
       for (const key of Object.keys(extensions)) {
         expect(parser[key]).to.equal(extensions[key]);
       }
     }
     {
-      const parser = new LazyParser(() => createDummyParser());
+      const parser = new LazyParser(() =>
+        new StrictParser(state => Result.efail(ParseError.unknown(state.pos)))
+      );
       for (const key of Object.keys(extensions)) {
         expect(parser[key]).to.equal(extensions[key]);
       }

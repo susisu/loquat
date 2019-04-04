@@ -2,13 +2,12 @@
 
 const { expect } = require("chai");
 
-const { LazyParser } = _parser;
-
-const { createDummyParser } = _test.helper;
+const { ParseError } = _error;
+const { Result, StrictParser, LazyParser } = _parser;
 
 describe("#eval", () => {
   it("should evaluate the thunk then return a fully evaluated `StrictParser`", () => {
-    const p = createDummyParser();
+    const p = new StrictParser(state => Result.efail(ParseError.unknown(state.pos)));
     {
       const parser = new LazyParser(() => p);
       const res = parser.eval();
@@ -29,7 +28,7 @@ describe("#eval", () => {
       let evalCount = 0;
       const parser = new LazyParser(() => {
         evalCount += 1;
-        return createDummyParser();
+        return new StrictParser(state => Result.efail(ParseError.unknown(state.pos)));
       });
       const resA = parser.eval();
       const resB = parser.eval();
@@ -45,7 +44,7 @@ describe("#eval", () => {
         evalCount += 1;
         return new LazyParser(() => {
           intermediateEvalCount += 1;
-          return createDummyParser();
+          return new StrictParser(state => Result.efail(ParseError.unknown(state.pos)));
         });
       });
       const resA = parser.eval();
@@ -58,7 +57,7 @@ describe("#eval", () => {
       let intermediateEvalCount = 0;
       const intermediateParser = new LazyParser(() => {
         intermediateEvalCount += 1;
-        return createDummyParser();
+        return new StrictParser(state => Result.efail(ParseError.unknown(state.pos)));
       });
       let evalCount = 0;
       const parser = new LazyParser(() => {
