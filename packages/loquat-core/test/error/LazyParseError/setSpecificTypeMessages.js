@@ -23,13 +23,13 @@ describe("#setSpecificTypeMessages", () => {
     const newErr = err.setSpecificTypeMessages(ErrorMessageType.UNEXPECT, ["A", "B"]);
     expect(evaluated).to.be.false; // not evaluated yet
     expect(SourcePos.equal(newErr.pos, pos)).to.be.true;
-    expect(newErr.msgs).to.be.equalErrorMessagesTo([
+    expect(ErrorMessage.messagesEqual(newErr.msgs, [
       ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
       ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
       ErrorMessage.create(ErrorMessageType.UNEXPECT, "A"),
       ErrorMessage.create(ErrorMessageType.UNEXPECT, "B"),
-    ]);
+    ])).to.be.true;
     expect(evaluated).to.be.true;
   });
 });
