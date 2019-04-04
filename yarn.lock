@@ -3272,50 +3272,6 @@ log-symbols@2.2.0:
   dependencies:
     chalk "^2.0.1"
 
-loquat-char@~2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/loquat-char/-/loquat-char-2.0.1.tgz#f4bb23a17a619f6600859f47726b2323f5d1f40d"
-  integrity sha1-9LsjoXphn2YAhZ9HcmsjI/XR9A0=
-  dependencies:
-    loquat-prim "^2.0.0"
-
-loquat-combinators@^2.0.0, loquat-combinators@~2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/loquat-combinators/-/loquat-combinators-2.0.0.tgz#f56bb83eb496aed971361ab8072b368d325bf277"
-  integrity sha1-9Wu4PrSWrtlxNhq4Bys2jTJb8nc=
-  dependencies:
-    loquat-prim "^2.0.0"
-
-loquat-core@~2.0.0:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/loquat-core/-/loquat-core-2.0.2.tgz#e6d71d25ab4ba60f2b468b2055d9cced9eed230c"
-  integrity sha512-Qiq1gdqmL0H14BkjgGX1hc9i9Hkksvp+Yhc57ZvddL2iT2n9ijFYvbdyTBwwUrH96i81wvtKPP/fxcwLgGaZuw==
-
-loquat-expr@~2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/loquat-expr/-/loquat-expr-2.0.0.tgz#79687450b1e7a5ff4a37d165020701065ec1a8b2"
-  integrity sha1-eWh0ULHnpf9KN9FlAgcBBl7BqLI=
-  dependencies:
-    loquat-combinators "^2.0.0"
-    loquat-prim "^2.0.0"
-
-loquat-monad@~2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/loquat-monad/-/loquat-monad-2.0.0.tgz#e4d97f165fddf1e9e1c0953a88b5d0a4c89d84d5"
-  integrity sha1-5Nl/Fl/d8enhwJU6iLXQpMidhNU=
-  dependencies:
-    loquat-prim "^2.0.0"
-
-loquat-prim@^2.0.0, loquat-prim@~2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/loquat-prim/-/loquat-prim-2.0.1.tgz#b3c021f1abfc9a9a9184985cbef3cf0ea1a6e678"
-  integrity sha1-s8Ah8av8mpqRhJhcvvPPDqGm5ng=
-
-loquat-qo@~2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/loquat-qo/-/loquat-qo-2.0.0.tgz#064cf86a10e10e3cad71514788d6d847ccc7c6dd"
-  integrity sha1-Bkz4ahDhDjytcVFHiNbYR8zHxt0=
-
 loud-rejection@^1.0.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/loud-rejection/-/loud-rejection-1.6.0.tgz#5b46f80147edee578870f086d04821cf998e551f"
