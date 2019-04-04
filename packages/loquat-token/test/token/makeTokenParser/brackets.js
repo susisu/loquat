@@ -196,7 +196,7 @@ describe("brackets", () => {
         new SourcePos("main", 0, 1, 1),
         "none"
       );
-      const p = new StrictParser(state => assert.fail("expect function to not be called"));
+      const p = new StrictParser(_state => assert.fail("expect function to not be called"));
       const parser = brackets(p);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
