@@ -254,6 +254,20 @@ module.exports = _core => {
   }
 
   /**
+   * cont: [S, U, A, B](parser: Parser[S, U, A]) => Parser[S, U, Cont[A, B]]
+   */
+  function cont(parser) {
+    return map(parser, x => ({ done: false, value: x }));
+  }
+
+  /**
+   * done: [S, U, A, B](parser: Parser[S, U, B]) => Parser[S, U, Cont[A, B]]
+   */
+  function done(parser) {
+    return map(parser, x => ({ done: true, value: x }));
+  }
+
+  /**
    * mzero: [S, U, A]Parser[S, U, A]
    */
   const mzero = new StrictParser(state => Result.efail(ParseError.unknown(state.pos)));
@@ -656,6 +670,8 @@ module.exports = _core => {
     fail,
     tailRecM,
     ftailRecM,
+    cont,
+    done,
     mzero,
     mplus,
     label,

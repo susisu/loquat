@@ -12,6 +12,8 @@ module.exports = (_core, { _prim }) => {
     bind,
     then,
     fail,
+    cont,
+    done,
     mplus,
     label,
     hidden,
@@ -50,11 +52,11 @@ module.exports = (_core, { _prim }) => {
     fail(msgStr) {
       return then(this, fail(msgStr));
     },
-    done() {
-      return map(this, x => ({ done: true, value: x }));
-    },
     cont() {
-      return map(this, x => ({ done: false, value: x }));
+      return cont(this);
+    },
+    done() {
+      return done(this);
     },
     or(parser) {
       return mplus(this, parser);
