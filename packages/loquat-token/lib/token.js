@@ -90,9 +90,9 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       undefined,
       constant(label(
         mplus(
-          then(
+          map(
             tryParse(string(commentEnd)),
-            pure({ done: true, value: undefined })
+            _ => ({ done: true, value: undefined })
           ),
           mplus(
             map(comment, _ => ({ done: false, value: undefined })),
@@ -116,9 +116,9 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       undefined,
       constant(label(
         mplus(
-          then(
+          map(
             tryParse(string(commentEnd)),
-            pure({ done: true, value: undefined })
+            _ => ({ done: true, value: undefined })
           ),
           mplus(
             map(
@@ -401,10 +401,10 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
       const walk = ftailRecM(str => {
         const unconsed = unconsString(str, unicode);
         return unconsed.empty
-          ? map(pure(undefined), () => ({ done: true, value: undefined }))
+          ? map(pure(undefined), _ => ({ done: true, value: undefined }))
           : map(
             label(caseChar(unconsed.head), msg),
-            () => ({ done: false, value: unconsed.tail })
+            _ => ({ done: false, value: unconsed.tail })
           );
       });
       return then(walk(str), pure(str));
