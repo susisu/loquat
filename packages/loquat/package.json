@@ -17,8 +17,8 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint *.js",
-    "lint:fix": "eslint --fix *.js",
+    "lint": "eslint *.js examples",
+    "lint:fix": "eslint --fix *.js examples",
     "test": "nyc -r html -r text mocha test.js"
   },
   "dependencies": {

@@ -1,24 +1,28 @@
 /*
  * simple calculator
+ *
+ * Example
+ *   node calc.js <expression>
  */
 
 "use strict";
 
-const lq = require("../index.js")(); // require("loquat")();
+// const lq = require("loquat")();
+const lq = require("../index")();
 
 // skips trailing spaces
 const spaces = lq.spaces.label("");
 
 function lexeme(parser) {
-    return parser.skip(spaces);
+  return parser.skip(spaces);
 }
 
 function symbol(str) {
-    return lexeme(lq.string(str).try());
+  return lexeme(lq.string(str).try());
 }
 
-// <number> (not negative)
-const numberRegExp = /(0|[1-9]\d*)(\.\d*)?([Ee][+\-]?\d*)?/;
+// <number> (non-negative)
+const numberRegExp = /(0|[1-9]\d*)(\.\d*)?([Ee][+-]?\d*)?/u;
 const number = lexeme(lq.regexp(numberRegExp)).map(Number).label("number");
 
 // <term> ::= <number> | "(" <expr> ")"
@@ -38,36 +42,35 @@ const div   = symbol("/").return((x, y) => x / y);
 const add   = symbol("+").return((x, y) => x + y);
 const sub   = symbol("-").return((x, y) => x - y);
 const expr = lq.buildExpressionParser(
+  [
     [
-        [
-            new lq.Operator(lq.OperatorType.PREFIX, plus),
-            new lq.Operator(lq.OperatorType.PREFIX, minus)
-        ],
-        [
-            new lq.Operator(lq.OperatorType.INFIX, pow, lq.OperatorAssoc.RIGHT)
-        ],
-        [
-            new lq.Operator(lq.OperatorType.INFIX, mul, lq.OperatorAssoc.LEFT),
-            new lq.Operator(lq.OperatorType.INFIX, div, lq.OperatorAssoc.LEFT)
-        ],
-        [
-            new lq.Operator(lq.OperatorType.INFIX, add, lq.OperatorAssoc.LEFT),
-            new lq.Operator(lq.OperatorType.INFIX, sub, lq.OperatorAssoc.LEFT)
-        ]
+      lq.Operator.prefix(plus),
+      lq.Operator.prefix(minus),
     ],
-    term
+    [
+      lq.Operator.infix(pow, lq.OperatorAssoc.RIGHT),
+    ],
+    [
+      lq.Operator.infix(mul, lq.OperatorAssoc.LEFT),
+      lq.Operator.infix(div, lq.OperatorAssoc.LEFT),
+    ],
+    [
+      lq.Operator.infix(add, lq.OperatorAssoc.LEFT),
+      lq.Operator.infix(sub, lq.OperatorAssoc.LEFT),
+    ],
+  ],
+  term
 );
 
 const calc = spaces.and(expr).left(lq.eof);
 
 function parse(src) {
-    const result = lq.parse(calc, "", src);
-    if (result.success) {
-        console.log(result.value);
-    }
-    else {
-        console.error(result.error.toString());
-    }
+  const result = lq.parse(calc, "", src);
+  if (result.success) {
+    console.log(result.value);
+  } else {
+    console.error(result.error.toString());
+  }
 }
 
 parse(process.argv[2]);
