@@ -1,12 +1,13 @@
 "use strict";
 
 const { expect } = require("chai");
+const core = require("@loquat/core");
 
 const _loquat = require("./index");
 
 describe("loquat", () => {
   it("should yield a new loquat parsers", () => {
-    const lq = _loquat();
+    const lq = _loquat(core);
     expect(lq).to.be.an("object");
     expect(lq.Parser).to.be.a("function");
     expect(lq.exts).to.deep.equal({});
@@ -14,7 +15,7 @@ describe("loquat", () => {
 
   describe("use", () => {
     it("should use an extension", () => {
-      const lq = _loquat();
+      const lq = _loquat(core);
       const ext = (_core, opts) => {
         expect(_core).to.be.an("object");
         expect(_core.Parser).to.be.a("function");
@@ -26,7 +27,7 @@ describe("loquat", () => {
     });
 
     it("should pass options to an extension", () => {
-      const lq = _loquat();
+      const lq = _loquat(core);
       const ext = (_core, opts) => {
         expect(_core).to.be.an("object");
         expect(_core.Parser).to.be.a("function");
@@ -38,7 +39,7 @@ describe("loquat", () => {
     });
 
     it("should set the extension to `exts` property if name is specified", () => {
-      const lq = _loquat();
+      const lq = _loquat(core);
       const ext = (_core, opts) => {
         expect(_core).to.be.an("object");
         expect(_core.Parser).to.be.a("function");
@@ -51,7 +52,7 @@ describe("loquat", () => {
     });
 
     it("should not extract properties to the root if `qualified = true` is specified", () => {
-      const lq = _loquat();
+      const lq = _loquat(core);
       const ext = (_core, opts) => {
         expect(_core).to.be.an("object");
         expect(_core.Parser).to.be.a("function");

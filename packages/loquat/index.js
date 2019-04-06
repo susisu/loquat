@@ -18,8 +18,8 @@
 
 "use strict";
 
-module.exports = () => {
-  const _core = require("@loquat/core")();
+module.exports = core => {
+  const _core = core();
 
   const _loquat = Object.assign({}, _core);
 
