@@ -207,6 +207,7 @@ declare namespace loquat {
   export function right<A>(parserA: Parser<unknown>, parserB: Parser<A>): Parser<A>;
   export function bind<A, B>(parser: Parser<A>, bind: (val: A) => Parser<B>): Parser<B>;
   export function then<A>(parserA: Parser<unknown>, parserB: Parser<A>): Parser<A>;
+  export function and<A>(parserA: Parser<unknown>, parserB: Parser<A>): Parser<A>;
   export function fail(str: string): Parser<never>;
   export type Cont<A, B> = { done: false, value: A } | { done: true, value: B };
   export function tailRecM<A, B>(initVal: A, func: (accum: A) => Parser<Cont<A, B>>): Parser<B>;
@@ -217,6 +218,7 @@ declare namespace loquat {
   export function done<A>(parser: Parser<A>): Parser<Cont<never, A>>;
   export function mzero(): Parser<never>;
   export function mplus<A, B>(parserA: Parser<A>, parserB: Parser<B>): Parser<A | B>;
+  export function or<A, B>(parserA: Parser<A>, parserB: Parser<B>): Parser<A | B>;
   export function label<A>(parser: Parser<A>, str: string): Parser<A>;
   export function labels<A>(parser: Parser<A>, strs: string[]): Parser<A>;
   export function hidden<A>(parser: Parser<A>): Parser<A>;
