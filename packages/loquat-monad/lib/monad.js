@@ -28,14 +28,14 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-   * when: [S, U, A](cond: boolean, parser: Parser[S, U, A]) => Parser[S, U, undefined]
+   * when: [S, U](cond: boolean, parser: Parser[S, U, undefined]) => Parser[S, U, undefined]
    */
   function when(cond, parser) {
     return cond ? parser : pure(undefined);
   }
 
   /**
-   * unless: [S, U, A](cond: boolean, parser: Parser[S, U, A]) => Parser[S, U, undefined]
+   * unless: [S, U](cond: boolean, parser: Parser[S, U, undefined]) => Parser[S, U, undefined]
    */
   function unless(cond, parser) {
     return cond ? pure(undefined) : parser;
@@ -100,7 +100,7 @@ module.exports = (_core, { _prim }) => {
    * liftM5: [S, U, A, B, C, D, E, F](
    *   func: (A, B, C, D, E) => F
    * ) => (Parser[S, U, A], Parser[S, U, B], Parser[S, U, C], Parser[S, U, D], Parser[S, U, E])
-   *   => Parser[S, U, E]
+   *   => Parser[S, U, F]
    */
   function liftM5(func) {
     return (parserA, parserB, parserC, parserD, parserE) =>
