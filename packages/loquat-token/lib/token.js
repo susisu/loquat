@@ -434,7 +434,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
    *   natural: Parser[S, U, int],
    *   integer: Parser[S, U, int],
    *   float: Parser[S, U, float],
-   *   naturalOrFloat: Parser[S, U, number],
+   *   naturalOrFloat: Parser[S, U, NaturalOrFloat],
    *   charLiteral: Parser[S, U, char],
    *   stringLiteral: Parser[S, U, string],
    *   identifier: Parser[S, U, string],
