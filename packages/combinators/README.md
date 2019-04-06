@@ -1,0 +1,2 @@
+# `@loquat/combinators`
+Useful combinators.

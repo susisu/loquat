@@ -1,0 +1,2 @@
+# `@loquat/monad`
+Monadic functions.
