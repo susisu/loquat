@@ -6,9 +6,9 @@
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "lint": "lerna run --concurrency 1 --no-bail lint -- --color",
+    "lint": "lerna run --concurrency 1 --no-bail lint",
     "lint:fast": "lerna run lint",
-    "test": "lerna run --concurrency 1 --no-bail test -- --colors",
+    "test": "lerna run --concurrency 1 --no-bail test",
     "test:fast": "lerna run test"
   },
   "devDependencies": {
