@@ -6,8 +6,8 @@ module.exports = ({ _pos, _error }) => {
 
   /**
    * type ConfigOptions = {
-   *   tabWidth: undefined \/ int,
-   *   unicode: undefined \/ boolean,
+   *   tabWidth?: int,
+   *   unicode?: boolean,
    * }
    */
 
@@ -167,7 +167,7 @@ module.exports = ({ _pos, _error }) => {
 
   /**
    * type Failure = {
-   *   success: true,
+   *   success: false,
    *   consumed: boolean,
    *   err: ParseError,
    * }
@@ -296,8 +296,8 @@ module.exports = ({ _pos, _error }) => {
   /**
    * trait Parser[S, U, A] {
    *   [parserTypeKey]: ParserType;
-   *   run(state: State[S, U, A]): Result[S, U, A];
-   *   parse(name: string, input: S, userState: U, opts: ConfigOptions): ParseResult[A];
+   *   run(state: State[S, U]): Result[S, U, A];
+   *   parse(name: string, input: S, userState: U, opts?: ConfigOptions): ParseResult[A];
    * }
    */
   class Parser {
@@ -319,11 +319,11 @@ module.exports = ({ _pos, _error }) => {
   Parser.prototype[parserTypeKey] = ParserType.STRICT;
 
   /**
-   * type ParserFunc[S, U, A] = (input: State[S, U]) => Result[S, U, A]
+   * type ParserFunction[S, U, A] = (state: State[S, U]) => Result[S, U, A]
    */
 
   /**
-   * class StrictParser[S, U, A](func: ParserFunc[S, U, A]) extends Parser[S, U, A] {
+   * class StrictParser[S, U, A](func: ParserFunction[S, U, A]) extends Parser[S, U, A] {
    *   [parserTypeKey]: "strict";
    * }
    */
