@@ -1,0 +1,7 @@
+{
+  "extends": "@susisu",
+  "env": {
+    "es6": true,
+    "commonjs": true
+  }
+}
