@@ -40,6 +40,8 @@ module.exports = (_core, opts = {}) => {
     fail             : _prim.fail,
     tailRecM         : _prim.tailRecM,
     ftailRecM        : _prim.ftailRecM,
+    cont             : _prim.cont,
+    done             : _prim.done,
     mzero            : _prim.mzero,
     mplus            : _prim.mplus,
     or               : _prim.mplus,
