@@ -7,30 +7,30 @@ module.exports = () => {
   /**
    * class SourcePos(name: string, index:int, line: int, column: int) {
    *   static init(name: string): SourcePos;
-   *   static equal(posA: SoucePos, posB; SoucePos): boolean;
-   *   static compare(posA: SoucePos, posB: SoucePos): int;
+   *   static equal(posA: SourcePos, posB; SourcePos): boolean;
+   *   static compare(posA: SourcePos, posB: SourcePos): int;
    *   toString(): string;
    *   setName(name: string): SourcePos;
-   *   setLine(line: int): SoucePos;
+   *   setLine(line: int): SourcePos;
    *   setColumn(column: int): SourcePos;
-   *   addChar(char: string, tabWidth: int): SoucePos;
-   *   addString(str: string, tabWidth: int, unicode: boolean): SoucePos;
+   *   addChar(char: string, tabWidth: int): SourcePos;
+   *   addString(str: string, tabWidth: int, unicode: boolean): SourcePos;
    * }
    *
    * `SourcePos` represents a position in input.
    */
   class SourcePos {
     /**
-     * SoucePos.init(name: string): SoucePos
+     * SourcePos.init(name: string): SourcePos
      *
-     * Creates a new `SoucePos` with the initial position `(index, line, column) = (0, 1, 1)`.
+     * Creates a new `SourcePos` with the initial position `(index, line, column) = (0, 1, 1)`.
      */
     static init(name) {
       return new SourcePos(name, 0, 1, 1);
     }
 
     /**
-     * SourcePos.equal(posA: SoucePos, posB: SoucePos): boolean
+     * SourcePos.equal(posA: SourcePos, posB: SourcePos): boolean
      */
     static equal(posA, posB) {
       return posA.name   === posB.name
@@ -40,7 +40,7 @@ module.exports = () => {
     }
 
     /**
-     * SoucePos.compare(posA: SoucePos, posB: SoucePos): int
+     * SourcePos.compare(posA: SourcePos, posB: SourcePos): int
      *
      * Compares two positions. Returns negative number if `posA` is ahead of `posB`, positive if
      * `posA` is behind `posB`, and zero if two positions are equal.
@@ -81,7 +81,7 @@ module.exports = () => {
     }
 
     /**
-     * SoucePos#toString(): string
+     * SourcePos#toString(): string
      *
      * Returns a human readable string representation of the position.
      */
@@ -91,7 +91,7 @@ module.exports = () => {
     }
 
     /**
-     * SoucePos#setName(name: string): SoucePos
+     * SourcePos#setName(name: string): SourcePos
      *
      * Creates a copy of the position with `name` updated.
      */
@@ -100,7 +100,7 @@ module.exports = () => {
     }
 
     /**
-     * SoucePos#setIndex(index: int): SoucePos
+     * SourcePos#setIndex(index: int): SourcePos
      *
      * Creates a copy of the position with `index` updated.
      */
@@ -109,7 +109,7 @@ module.exports = () => {
     }
 
     /**
-     * SoucePos#setLine(line: int): SoucePos
+     * SourcePos#setLine(line: int): SourcePos
      *
      * Creates a copy of the position with `line` updated.
      */
@@ -118,7 +118,7 @@ module.exports = () => {
     }
 
     /**
-     * SoucePos#setColumn(column: int): SoucePos
+     * SourcePos#setColumn(column: int): SourcePos
      *
      * Creates a copy of the position with `column` updated.
      */
@@ -127,7 +127,7 @@ module.exports = () => {
     }
 
     /**
-     * SoucePos#addChar(char: string, tabWidth: int): SoucePos
+     * SourcePos#addChar(char: string, tabWidth: int): SourcePos
      *
      * Returns a new position that is offset from the original position by the given character.
      */
@@ -152,7 +152,7 @@ module.exports = () => {
     }
 
     /**
-     * SoucePos#addString(str: string, tabWidth: int, unicode: boolean): SoucePos
+     * SourcePos#addString(str: string, tabWidth: int, unicode: boolean): SourcePos
      *
      * Returns a new position that is offset from the original position by the given string.
      */
