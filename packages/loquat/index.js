@@ -18,7 +18,7 @@
 
 "use strict";
 
-module.exports = (opts = {}) => {
+module.exports = () => {
   const _core = require("loquat-core")();
 
   const _loquat = Object.assign({}, _core);
@@ -47,15 +47,6 @@ module.exports = (opts = {}) => {
       _loquat.extensions[opts.name] = _ext;
     }
     return _ext;
-  }
-
-  if (!opts.noUsingDefaults) {
-    use(require("loquat-prim"),        { name: "prim",        options: { sugar: true } });
-    use(require("loquat-char"),        { name: "char",        options: { sugar: true } });
-    use(require("loquat-combinators"), { name: "combinators", options: { sugar: true } });
-    use(require("loquat-monad"),       { name: "monad",       options: { sugar: true } });
-    use(require("loquat-expr"),        { name: "expr",        options: {} });
-    use(require("loquat-qo"),          { name: "qo",          options: {} });
   }
 
   return _loquat;

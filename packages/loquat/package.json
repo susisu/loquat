@@ -22,13 +22,7 @@
     "test": "nyc -r html -r text mocha --colors test.js"
   },
   "dependencies": {
-    "loquat-char": "3.0.0-alpha.0",
-    "loquat-combinators": "3.0.0-alpha.0",
-    "loquat-core": "3.0.0-alpha.0",
-    "loquat-expr": "3.0.0-alpha.0",
-    "loquat-monad": "3.0.0-alpha.0",
-    "loquat-prim": "3.0.0-alpha.0",
-    "loquat-qo": "3.0.0-alpha.0"
+    "loquat-core": "3.0.0-alpha.0"
   },
   "devDependencies": {
     "@susisu/eslint-config": "^0.0.2",

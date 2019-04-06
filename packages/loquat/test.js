@@ -9,16 +9,7 @@ describe("loquat", () => {
     const lq = _loquat();
     expect(lq).to.be.an("object");
     expect(lq.Parser).to.be.a("function");
-    expect(lq.bind).to.be.a("function");
-    expect(lq.Parser.prototype.bind).to.be.a("function");
-  });
-
-  it("should not use default plugins if `noUsingDefaults = true` is specified", () => {
-    const lq = _loquat({ noUsingDefaults: true });
-    expect(lq).to.be.an("object");
-    expect(lq.Parser).to.be.a("function");
-    expect(lq.bind).to.be.undefined;
-    expect(lq.Parser.prototype.bind).to.be.undefined;
+    expect(lq.extensions).to.deep.equal({});
   });
 
   describe("use", () => {
