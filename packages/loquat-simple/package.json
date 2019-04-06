@@ -19,7 +19,8 @@
   "types": "index.d.ts",
   "scripts": {
     "lint": "eslint *.js",
-    "lint:fix": "eslint --fix *.js"
+    "lint:fix": "eslint --fix *.js",
+    "test": "tsc --strict --lib es6 --noEmit index.d.ts"
   },
   "dependencies": {
     "loquat-char": "3.0.0-alpha.0",
