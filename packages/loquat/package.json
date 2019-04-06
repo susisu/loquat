@@ -14,7 +14,7 @@
     "url": "https://github.com/susisu/loquat2/issues"
   },
   "author": "Susisu <susisu2413@yahoo.co.jp> (https://github.com/susisu)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "main": "index.js",
   "scripts": {
     "lint": "eslint *.js examples",
