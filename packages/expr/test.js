@@ -8,7 +8,7 @@ const _combinators = require("@loquat/combinators")(_core);
 
 const _expr = require("./lib/expr.js")(_core, { _prim, _combinators });
 
-const _test = require("@loquat/test")(_core);
+const _test = require("@loquat/testutil")(_core);
 
 Object.assign(global, { _core, _expr, _test });
 chai.use(_test.plugin);

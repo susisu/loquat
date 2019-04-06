@@ -8,7 +8,7 @@ const _prim = require("@loquat/prim")(_core);
 const _char  = require("./lib/char.js")(_core, { _prim });
 const _sugar = require("./lib/sugar.js")(_core, { _char });
 
-const _test = require("@loquat/test")(_core);
+const _test = require("@loquat/testutil")(_core);
 
 Object.assign(global, { _core, _char, _sugar, _test });
 chai.use(_test.plugin);

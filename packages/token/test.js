@@ -10,7 +10,7 @@ const _combinators = require("@loquat/combinators")(_core);
 const _language = require("./lib/language.js")();
 const _token    = require("./lib/token.js")(_core, { _prim, _char, _combinators });
 
-const _test = require("@loquat/test")(_core);
+const _test = require("@loquat/testutil")(_core);
 
 Object.assign(global, { _core, _language, _token, _test });
 chai.use(_test.plugin);

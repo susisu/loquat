@@ -32,7 +32,7 @@
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
     "@loquat/core": "^3.0.0-alpha.0",
-    "@loquat/test": "^3.0.0-alpha.0",
+    "@loquat/testutil": "^3.0.0-alpha.0",
     "mocha": "^6.0.2",
     "nyc": "^13.3.0"
   }

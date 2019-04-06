@@ -1,0 +1,2 @@
+# `@loquat/testutil`
+Test utilities.
