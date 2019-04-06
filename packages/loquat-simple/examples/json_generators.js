@@ -7,8 +7,8 @@
 
 "use strict";
 
-// const lq = require("loquat")();
-const lq = require("../index")();
+// const lq = require("loquat-simple");
+const lq = require("../index");
 
 // skip trailing whitespace
 function lexeme(parser) {
@@ -47,31 +47,31 @@ function escape(str) {
     }
   });
 }
-const stringLiteral = lq.do(function* () {
+const stringLiteral = lq.qo(function* () {
   const str = yield lexeme(lq.regexp(stringRegExp, 1));
   return escape(str);
 }).label("string");
 
 // number literal
 const numberRegExp = /-?(0|[1-9]\d*)(\.\d*)?([Ee][+-]?\d*)?/u;
-const numberLiteral = lq.do(function* () {
+const numberLiteral = lq.qo(function* () {
   const numStr = yield lexeme(lq.regexp(numberRegExp));
   return Number(numStr);
 }).label("number");
 
 // boolean literals
-const trueLiteral = lq.do(function* () {
+const trueLiteral = lq.qo(function* () {
   yield lexeme(lq.string("true"));
   return true;
 }).label("true");
 
-const falseLiteral = lq.do(function* () {
+const falseLiteral = lq.qo(function* () {
   yield lexeme(lq.string("false"));
   return false;
 }).label("false");
 
 // null literal
-const nullLiteral = lq.do(function* () {
+const nullLiteral = lq.qo(function* () {
   yield lexeme(lq.string("null"));
   return null;
 }).label("null");
@@ -84,13 +84,13 @@ const rbracket = lexeme(lq.char("]"));
 const colon    = lexeme(lq.char(":"));
 const comma    = lexeme(lq.char(","));
 
-const keyValue = lq.do(function* () {
+const keyValue = lq.qo(function* () {
   const key = yield stringLiteral;
   yield colon;
   const val = yield value;
   return [key, val];
 });
-const object = lq.do(function* () {
+const object = lq.qo(function* () {
   yield lbrace;
   const kvs = yield keyValue.sepBy(comma);
   yield rbrace;
@@ -101,14 +101,14 @@ const object = lq.do(function* () {
   return obj;
 }).label("object");
 
-const array = lq.do(function* () {
+const array = lq.qo(function* () {
   yield lbracket;
   const vs = yield value.sepBy(comma);
   yield rbracket;
   return vs;
 }).label("array");
 
-const json = lq.do(function* () {
+const json = lq.qo(function* () {
   yield lq.spaces;
   const val = yield value;
   yield lq.eof;

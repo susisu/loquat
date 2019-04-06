@@ -3,5 +3,17 @@
   "env": {
     "es6": true,
     "commonjs": true
-  }
+  },
+  "overrides": [
+    {
+      "files": ["examples/**/*.js"],
+      "env": {
+        "node": true
+      },
+      "rules": {
+        "no-console": "off",
+        "no-use-before-define": "off"
+      }
+    }
+  ]
 }

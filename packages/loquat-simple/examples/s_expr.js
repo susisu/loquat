@@ -7,8 +7,8 @@
 
 "use strict";
 
-// const lq = require("loquat")();
-const lq = require("../index")();
+// const lq = require("loquat-simple");
+const lq = require("../index");
 
 const space = lq.oneOf("\r\n\t ").label("");
 function lexeme(parser) {
@@ -23,14 +23,14 @@ const expr = lq.lazy(() => lq.choice([
 
 // atom ::= letter atom_tail*
 // atom_tail ::= letter | number
-const atom = lexeme(lq.do(function* () {
+const atom = lexeme(lq.qo(function* () {
   const x  = yield lq.letter;
   const xs = yield lq.alphaNum.manyChars();
   return x + xs;
 })).label("atom");
 
 // list ::= "(" expr* ["." expr] ")"
-const list = lq.do(function* () {
+const list = lq.qo(function* () {
   yield lexeme(lq.char("("));
   const xs = yield expr.many();
   const x  = yield lq.option(null, lexeme(lq.char(".")).and(expr));

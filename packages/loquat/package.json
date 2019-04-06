@@ -17,8 +17,8 @@
   "license": "Apache-2.0",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint --color *.js examples",
-    "lint:fix": "eslint --color --fix *.js examples",
+    "lint": "eslint --color *.js",
+    "lint:fix": "eslint --color --fix *.js",
     "test": "nyc -r html -r text mocha --colors test.js"
   },
   "dependencies": {

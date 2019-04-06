@@ -21,8 +21,8 @@
     "index.d.ts"
   ],
   "scripts": {
-    "lint": "eslint --color *.js",
-    "lint:fix": "eslint --color --fix *.js",
+    "lint": "eslint --color *.js examples",
+    "lint:fix": "eslint --color --fix *.js examples",
     "test": "tsc --strict --lib es6 --noEmit index.d.ts"
   },
   "dependencies": {

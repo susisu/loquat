@@ -7,8 +7,8 @@
 
 "use strict";
 
-// const lq = require("loquat")();
-const lq = require("../index")();
+// const lq = require("loquat-simple");
+const lq = require("../index");
 
 // skips trailing spaces
 const spaces = lq.spaces.label("");

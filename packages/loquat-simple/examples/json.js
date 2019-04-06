@@ -7,8 +7,8 @@
 
 "use strict";
 
-// const lq = require("loquat")();
-const lq = require("../index")();
+// const lq = require("loquat-simple");
+const lq = require("../index");
 
 // skip trailing whitespace
 function lexeme(parser) {
