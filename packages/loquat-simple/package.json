@@ -16,6 +16,7 @@
   "author": "Susisu <susisu2413@yahoo.co.jp> (https://github.com/susisu)",
   "license": "Apache-2.0",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "lint": "eslint *.js",
     "lint:fix": "eslint --fix *.js"
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@susisu/eslint-config": "^0.0.2",
-    "eslint": "^5.16.0"
+    "eslint": "^5.16.0",
+    "typescript": "^3.4.2"
   }
 }
