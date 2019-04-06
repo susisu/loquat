@@ -341,8 +341,6 @@ module.exports = ({ _pos }) => {
   /**
    * class LazyParseError(thunk: () => ParseError) extends ParseError {
    *   [parseErrorTypeKey]: "lazy";
-   *   pos: SourcePos,;
-   *   msgs: Array[ErrorMessage];
    *   eval(): StrictParseError;
    * }
    */
