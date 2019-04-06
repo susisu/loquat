@@ -517,7 +517,7 @@ module.exports = _core => {
    * token: [S <: Stream[S], U, A](
    *   calcValue: (S#Token, Config) => Option[A],
    *   tokenToString: S#Token => string,
-   *   calcPos: (S#Token, COnfig) => SourcePos
+   *   calcPos: (S#Token, Config) => SourcePos
    * ) => Parser[S, U, A]
    */
   function token(calcValue, tokenToString, calcPos) {
@@ -532,7 +532,7 @@ module.exports = _core => {
 
   /**
    * tokenPrim: [S <: Stream[S], U, A](
-   *   calcValue: (S#Token, Config) => A,
+   *   calcValue: (S#Token, Config) => Option<A>,
    *   tokenToString: S#Token => string,
    *   calcNextPos: (SourcePos, S#Token, S, Config) => SourcePos,
    *   calcNextUserState?: (U, SourcePos, S#Token, S, Config) => U
