@@ -1,7 +1,7 @@
 "use strict";
 
-module.exports = _core => {
-  const { ParseError, Result, StrictParser, isParser } = _core;
+module.exports = $core => {
+  const { ParseError, Result, StrictParser, isParser } = $core;
 
   /**
    * qo: [S, U, A](genFunc: () => Generator) => Parser[S, U, A]

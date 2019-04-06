@@ -11,9 +11,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { anyChar } = _char;
+const { anyChar } = $char;
 
 describe("anyChar", () => {
   it("should be a parser that accepts any character", () => {

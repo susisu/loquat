@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { ParseError, Result, StrictParser } = _parser;
+const { ParseError, Result, StrictParser } = $parser;
 
 describe(".constructor", () => {
   it("should create a new `StrictParser` instance", () => {

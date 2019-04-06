@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { map } = _prim;
+const { map } = $prim;
 
 describe("map", () => {
   it("should create a parser that runs a parser and applies a function to its result", () => {

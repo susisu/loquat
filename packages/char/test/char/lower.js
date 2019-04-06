@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { lower } = _char;
+const { lower } = $char;
 
 describe("lower", () => {
   it("should be a parser that accepts a lowercase letter", () => {

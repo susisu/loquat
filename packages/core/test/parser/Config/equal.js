@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { Config } = _parser;
+const { Config } = $parser;
 
 describe(".equal", () => {
   it("should return true if two configs are equal", () => {

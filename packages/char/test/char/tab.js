@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { tab } = _char;
+const { tab } = $char;
 
 describe("tab", () => {
   it("should be a parser that accepts a tab character", () => {

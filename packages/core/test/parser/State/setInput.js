@@ -2,8 +2,8 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
-const { Config, State } = _parser;
+const { SourcePos } = $pos;
+const { Config, State } = $parser;
 
 describe("#setInput", () => {
   it("should create a new state with `input` updated", () => {

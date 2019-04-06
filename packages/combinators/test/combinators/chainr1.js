@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { chainr1 } = _combinators;
+const { chainr1 } = $combinators;
 
 describe("chainr1", () => {
   it("should create a parser that parses an expression and folds the results with the operators"

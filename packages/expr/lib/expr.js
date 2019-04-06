@@ -1,9 +1,9 @@
 "use strict";
 
-module.exports = (_core, { _prim, _combinators }) => {
-  const { ParseError, Result, StrictParser } = _core;
-  const { pure, bind, then, fail, mplus, label, tryParse } = _prim;
-  const { choice } = _combinators;
+module.exports = ($core, { $prim, $combinators }) => {
+  const { ParseError, Result, StrictParser } = $core;
+  const { pure, bind, then, fail, mplus, label, tryParse } = $prim;
+  const { choice } = $combinators;
 
   /**
    * type OperatorType = "infix" \/ "prefix" \/ "postfix"

@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { replicateM_ } = _monad;
+const { replicateM_ } = $monad;
 
 describe("replicateM_", () => {
   it("should create a parser that runs the given parser n times and discards all the"

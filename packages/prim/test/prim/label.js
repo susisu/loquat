@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { label } = _prim;
+const { label } = $prim;
 
 describe("label", () => {
   it("should create a parser labelled with the given string", () => {

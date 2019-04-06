@@ -3,11 +3,11 @@
 const { expect } = require("chai");
 const core = require("@loquat/core");
 
-const _loquat = require("./index");
+const loquat = require("./index");
 
 describe("loquat", () => {
   it("should yield a new loquat parsers", () => {
-    const lq = _loquat(core);
+    const lq = loquat(core);
     expect(lq).to.be.an("object");
     expect(lq.Parser).to.be.a("function");
     expect(lq.exts).to.deep.equal({});
@@ -15,10 +15,10 @@ describe("loquat", () => {
 
   describe("use", () => {
     it("should use an extension", () => {
-      const lq = _loquat(core);
-      const ext = (_core, opts) => {
-        expect(_core).to.be.an("object");
-        expect(_core.Parser).to.be.a("function");
+      const lq = loquat(core);
+      const ext = ($core, opts) => {
+        expect($core).to.be.an("object");
+        expect($core.Parser).to.be.a("function");
         expect(opts).to.be.undefined;
         return { foo: "bar" };
       };
@@ -27,10 +27,10 @@ describe("loquat", () => {
     });
 
     it("should pass options to an extension", () => {
-      const lq = _loquat(core);
-      const ext = (_core, opts) => {
-        expect(_core).to.be.an("object");
-        expect(_core.Parser).to.be.a("function");
+      const lq = loquat(core);
+      const ext = ($core, opts) => {
+        expect($core).to.be.an("object");
+        expect($core.Parser).to.be.a("function");
         expect(opts).to.deep.equal({ answer: 42 });
         return { foo: "bar" };
       };
@@ -39,10 +39,10 @@ describe("loquat", () => {
     });
 
     it("should set the extension to `exts` property if name is specified", () => {
-      const lq = _loquat(core);
-      const ext = (_core, opts) => {
-        expect(_core).to.be.an("object");
-        expect(_core.Parser).to.be.a("function");
+      const lq = loquat(core);
+      const ext = ($core, opts) => {
+        expect($core).to.be.an("object");
+        expect($core.Parser).to.be.a("function");
         expect(opts).to.be.undefined;
         return { foo: "bar" };
       };
@@ -52,10 +52,10 @@ describe("loquat", () => {
     });
 
     it("should not extract properties to the root if `qualified = true` is specified", () => {
-      const lq = _loquat(core);
-      const ext = (_core, opts) => {
-        expect(_core).to.be.an("object");
-        expect(_core.Parser).to.be.a("function");
+      const lq = loquat(core);
+      const ext = ($core, opts) => {
+        expect($core).to.be.an("object");
+        expect($core.Parser).to.be.a("function");
         expect(opts).to.be.undefined;
         return { foo: "bar" };
       };

@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { when } = _monad;
+const { when } = $monad;
 
 describe("when", () => {
   it("should create a parser that runs the given parser only when the given condition is"

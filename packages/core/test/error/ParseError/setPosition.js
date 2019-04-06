@@ -2,8 +2,8 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
-const { ParseError } = _error;
+const { SourcePos } = $pos;
+const { ParseError } = $error;
 
 describe("#setPosition", () => {
   it("should throw `Error` because not implemented", () => {

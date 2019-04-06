@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { makeAnchoredRegexp } = _char._internal;
+const { makeAnchoredRegexp } = $char._internal;
 
 describe("makeAnchoredRegexp", () => {
   it("should remove flags exept `i`, `m` and `u`", () => {

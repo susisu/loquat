@@ -1,13 +1,13 @@
 "use strict";
 
-const _utils  = require("./lib/utils")();
-const _pos    = require("./lib/pos")();
-const _error  = require("./lib/error")({ _pos });
-const _parser = require("./lib/parser")({ _pos, _error });
-const _stream = require("./lib/stream")({ _utils });
-const _core   = require("./lib/core")({ _utils, _pos, _error, _parser, _stream });
+const $utils  = require("./lib/utils")();
+const $pos    = require("./lib/pos")();
+const $error  = require("./lib/error")({ $pos });
+const $parser = require("./lib/parser")({ $pos, $error });
+const $stream = require("./lib/stream")({ $utils });
+const $core   = require("./lib/core")({ $utils, $pos, $error, $parser, $stream });
 
-Object.assign(global, { _utils, _pos, _error, _stream, _parser, _core });
+Object.assign(global, { $utils, $pos, $error, $stream, $parser, $core });
 
 require("./test/utils");
 require("./test/pos");

@@ -2,8 +2,8 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
+const { SourcePos } = $pos;
+const { ErrorMessageType, ErrorMessage, StrictParseError } = $error;
 
 describe("#pos", () => {
   it("should get position of the error", () => {

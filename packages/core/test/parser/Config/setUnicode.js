@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { Config } = _parser;
+const { Config } = $parser;
 
 describe("#setUnicode", () => {
   it("should create a copy of the config with `unicode` updated", () => {

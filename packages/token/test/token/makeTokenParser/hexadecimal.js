@@ -11,10 +11,10 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { LanguageDef } = _language;
-const { makeTokenParser } = _token;
+const { LanguageDef } = $language;
+const { makeTokenParser } = $token;
 
 describe("hexadecimal", () => {
   it("should be a parser that parses hexadecimal digits after a character X/x and returns an parsed"

@@ -2,9 +2,9 @@
 
 const { expect, assert, AssertionError } = require("chai");
 
-const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
-const { Config, State, Result } = _parser;
+const { SourcePos } = $pos;
+const { ErrorMessageType, ErrorMessage, StrictParseError } = $error;
+const { Config, State, Result } = $parser;
 
 describe(".equal", () => {
   it("should return true if two results are equal", () => {

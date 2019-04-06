@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { between } = _combinators;
+const { between } = $combinators;
 
 describe("between", () => {
   it("should create a parser that parses tokens between open and close symbols", () => {

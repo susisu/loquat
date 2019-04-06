@@ -2,15 +2,15 @@
 
 const chai = require("chai");
 
-const _core = require("@loquat/core")();
+const $core = require("@loquat/core")();
 
-const _prim  = require("./lib/prim.js")(_core);
-const _sugar = require("./lib/sugar.js")(_core, { _prim });
+const $prim  = require("./lib/prim.js")($core);
+const $sugar = require("./lib/sugar.js")($core, { $prim });
 
-const _test = require("@loquat/testutil")(_core);
+const $testutil = require("@loquat/testutil")($core);
 
-Object.assign(global, { _core, _prim, _sugar, _test });
-chai.use(_test.plugin);
+Object.assign(global, { $core, $prim, $sugar, $testutil });
+chai.use($testutil.plugin);
 
 require("./test/prim.js");
 require("./test/sugar.js");

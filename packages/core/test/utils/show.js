@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { show } = _utils;
+const { show } = $utils;
 
 describe("show", () => {
   it("should return an escaped and double-quoted string if a string is given", () => {

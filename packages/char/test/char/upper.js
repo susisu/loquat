@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { upper } = _char;
+const { upper } = $char;
 
 describe("upper", () => {
   it("should be a parser that accepts an uppercase letter", () => {

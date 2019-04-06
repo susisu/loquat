@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { alphaNum } = _char;
+const { alphaNum } = $char;
 
 describe("alphaNum", () => {
   it("should be a parser that accepts an alphabetical letter or a decimal digit", () => {

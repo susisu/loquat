@@ -13,9 +13,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { filterM } = _monad;
+const { filterM } = $monad;
 
 describe("filterM", () => {
   it("should create a parser that applies the given function to each element of an array, and"

@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
+const { SourcePos } = $pos;
 
 describe("#addString", () => {
   it("should create a new position with `line` and `column` are offset by the given string", () => {

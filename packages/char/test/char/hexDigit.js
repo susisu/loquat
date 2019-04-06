@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { hexDigit } = _char;
+const { hexDigit } = $char;
 
 describe("hexDigit", () => {
   it("should be a parser that accepts a hexadecimal digit", () => {

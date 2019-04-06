@@ -1,7 +1,7 @@
 "use strict";
 
-module.exports = (_core, { _prim, _char, _combinators }) => {
-  const { show, unconsString, lazy, isParser } = _core;
+module.exports = ($core, { $prim, $char, $combinators }) => {
+  const { show, unconsString, lazy, isParser } = $core;
   const {
     map,
     pure,
@@ -16,7 +16,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     tryParse,
     skipMany,
     getConfig,
-  } = _prim;
+  } = $prim;
   const {
     string,
     satisfy,
@@ -30,7 +30,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     hexDigit,
     manyChars,
     manyChars1,
-  } = _char;
+  } = $char;
   const {
     choice,
     option,
@@ -40,7 +40,7 @@ module.exports = (_core, { _prim, _char, _combinators }) => {
     sepBy,
     sepBy1,
     notFollowedBy,
-  } = _combinators;
+  } = $combinators;
 
   /** constant: [A, B]A => B => A */
   function constant(x) {

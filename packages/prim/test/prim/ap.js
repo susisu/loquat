@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { pure, ap } = _prim;
+const { pure, ap } = $prim;
 
 describe("ap", () => {
   it("should create a parser that runs two parsers sequentially and then applies the result of the"

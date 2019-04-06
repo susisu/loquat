@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { ParseError } = _error;
+const { ParseError } = $error;
 
 describe("#toString", () => {
   it("should throw `Error` because not implemented", () => {

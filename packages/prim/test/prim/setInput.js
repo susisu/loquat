@@ -2,9 +2,9 @@
 
 const { expect } = require("chai");
 
-const { SourcePos, ParseError, Config, State, Result } = _core;
+const { SourcePos, ParseError, Config, State, Result } = $core;
 
-const { setInput } = _prim;
+const { setInput } = $prim;
 
 describe("setInput", () => {
   it("should create a parser that sets the input of the current parser state to the specified one"

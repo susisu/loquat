@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = _core => {
+module.exports = $core => {
   const {
     ErrorMessageType,
     ErrorMessage,
@@ -11,7 +11,7 @@ module.exports = _core => {
     Result,
     StrictParser,
     uncons,
-  } = _core;
+  } = $core;
 
   /**
    * map: [S, U, A, B](parser: Parser[S, U, A], func: A => B): Parser[S, U, B]

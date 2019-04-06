@@ -13,9 +13,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { count } = _combinators;
+const { count } = $combinators;
 
 describe("count", () => {
   it("should create a parser that runs the given parser n times and returns an array of result"

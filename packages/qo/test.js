@@ -2,13 +2,13 @@
 
 const chai = require("chai");
 
-const _core = require("@loquat/core")();
+const $core = require("@loquat/core")();
 
-const _qo = require("./lib/qo.js")(_core);
+const $qo = require("./lib/qo.js")($core);
 
-const _test = require("@loquat/testutil")(_core);
+const $testutil = require("@loquat/testutil")($core);
 
-Object.assign(global, { _core, _qo, _test });
-chai.use(_test.plugin);
+Object.assign(global, { $core, $qo, $testutil });
+chai.use($testutil.plugin);
 
 require("./test/qo.js");

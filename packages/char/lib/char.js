@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = (_core, { _prim }) => {
+module.exports = ($core, { $prim }) => {
   const {
     show,
     ErrorMessageType,
@@ -11,8 +11,8 @@ module.exports = (_core, { _prim }) => {
     Result,
     StrictParser,
     uncons,
-  } = _core;
-  const { pure, bind, label, reduceMany, skipMany } = _prim;
+  } = $core;
+  const { pure, bind, label, reduceMany, skipMany } = $prim;
 
   /**
    * type char = string

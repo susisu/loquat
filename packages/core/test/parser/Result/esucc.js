@@ -2,9 +2,9 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
-const { Config, State, Result } = _parser;
+const { SourcePos } = $pos;
+const { ErrorMessageType, ErrorMessage, StrictParseError } = $error;
+const { Config, State, Result } = $parser;
 
 describe(".esucc", () => {
   it("should create an empty success result object", () => {

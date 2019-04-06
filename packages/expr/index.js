@@ -18,16 +18,16 @@
 
 "use strict";
 
-module.exports = (_core, _opts) => {
-  const _prim        = require("@loquat/prim")(_core);
-  const _combinators = require("@loquat/combinators")(_core);
+module.exports = ($core, _opts) => {
+  const $prim        = require("@loquat/prim")($core);
+  const $combinators = require("@loquat/combinators")($core);
 
-  const _expr = require("./lib/expr.js")(_core, { _prim, _combinators });
+  const $expr = require("./lib/expr.js")($core, { $prim, $combinators });
 
   return Object.freeze({
-    OperatorType         : _expr.OperatorType,
-    OperatorAssoc        : _expr.OperatorAssoc,
-    Operator             : _expr.Operator,
-    buildExpressionParser: _expr.buildExpressionParser,
+    OperatorType         : $expr.OperatorType,
+    OperatorAssoc        : $expr.OperatorAssoc,
+    Operator             : $expr.Operator,
+    buildExpressionParser: $expr.buildExpressionParser,
   });
 };

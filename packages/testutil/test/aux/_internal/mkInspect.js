@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { mkInspect } = _aux._internal;
+const { mkInspect } = $aux._internal;
 
 describe("mkInspect", () => {
   it("should create an inspector function", () => {

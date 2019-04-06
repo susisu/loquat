@@ -2,8 +2,8 @@
 
 const { expect } = require("chai");
 
-const { Config } = _parser;
-const { ArrayStream } = _stream;
+const { Config } = $parser;
+const { ArrayStream } = $stream;
 
 describe("#uncons", () => {
   it("should return an empty result if the current index is greater than the array length", () => {

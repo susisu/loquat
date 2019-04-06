@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { forM_ } = _monad;
+const { forM_ } = $monad;
 
 describe("forM_", () => {
   it("should create a parser that applied the given function to each element of the array, and runs"

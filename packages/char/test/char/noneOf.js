@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { noneOf } = _char;
+const { noneOf } = $char;
 
 describe("noneOf", () => {
   it("should create a parser that accepts a character not contained in the given string", () => {

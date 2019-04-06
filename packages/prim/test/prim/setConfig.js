@@ -2,9 +2,9 @@
 
 const { expect } = require("chai");
 
-const { SourcePos, ParseError, Config, State, Result } = _core;
+const { SourcePos, ParseError, Config, State, Result } = $core;
 
-const { setConfig } = _prim;
+const { setConfig } = $prim;
 
 describe("setConfig", () => {
   it("should create a parser that sets the config of the current parser state to the specified one"

@@ -11,10 +11,10 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { LanguageDef } = _language;
-const { makeTokenParser } = _token;
+const { LanguageDef } = $language;
+const { makeTokenParser } = $token;
 
 describe("colon", () => {
   it("should be a parser that parsea a colon", () => {

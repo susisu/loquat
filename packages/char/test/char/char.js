@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { char } = _char;
+const { char } = $char;
 
 describe("char", () => {
   it("should create a parser that accepts the specified character", () => {

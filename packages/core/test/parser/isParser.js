@@ -2,8 +2,8 @@
 
 const { expect } = require("chai");
 
-const { ParseError } = _error;
-const { Result, Parser, StrictParser, LazyParser, isParser } = _parser;
+const { ParseError } = $error;
+const { Result, Parser, StrictParser, LazyParser, isParser } = $parser;
 
 describe("isParser", () => {
   it("should return true if the argument is an instance of `Parser`", () => {

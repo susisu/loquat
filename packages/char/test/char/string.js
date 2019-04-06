@@ -11,9 +11,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { string } = _char;
+const { string } = $char;
 
 describe("string", () => {
   it("should create a parser that parses the given string", () => {

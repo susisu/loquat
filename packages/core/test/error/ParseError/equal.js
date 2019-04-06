@@ -2,9 +2,9 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
+const { SourcePos } = $pos;
 
-const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError, LazyParseError } = _error;
+const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError, LazyParseError } = $error;
 
 describe(".equal", () => {
   it("should return true if two errors are equal", () => {

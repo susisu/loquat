@@ -2,7 +2,7 @@
 
 const { expect, AssertionError } = require("chai");
 
-const { Config } = _core;
+const { Config } = $core;
 
 describe("equalConfigTo", () => {
   it("should throw AssertionError if the actual config is not equal to the expected one", () => {

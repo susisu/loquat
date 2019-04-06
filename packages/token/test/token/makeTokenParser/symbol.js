@@ -11,10 +11,10 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { LanguageDef } = _language;
-const { makeTokenParser } = _token;
+const { LanguageDef } = $language;
+const { makeTokenParser } = $token;
 
 describe("symbol", () => {
   it("should create a parser that parses the given string, and skips trailing spaces and"

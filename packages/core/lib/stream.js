@@ -1,7 +1,7 @@
 "use strict";
 
-module.exports = ({ _utils }) => {
-  const { unconsString } = _utils;
+module.exports = ({ $utils }) => {
+  const { unconsString } = $utils;
 
   /**
    * type UnconsResult[T, S] = { empty: true } \/ { empty: false, head: T, tail: S }

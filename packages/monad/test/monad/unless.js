@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { unless } = _monad;
+const { unless } = $monad;
 
 describe("unless", () => {
   it("should create a parser that runs the given parser only when the given condition is not"

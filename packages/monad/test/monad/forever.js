@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { forever } = _monad;
+const { forever } = $monad;
 
 describe("forever", () => {
   it("should create a parser that runs the given parser repeatedly until it finally fails", () => {

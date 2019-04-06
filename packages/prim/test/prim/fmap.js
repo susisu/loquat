@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { fmap } = _prim;
+const { fmap } = $prim;
 
 describe("fmap", () => {
   it("should lift a function on values to a function on parsers", () => {

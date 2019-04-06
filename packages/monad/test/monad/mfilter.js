@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { mfilter } = _monad;
+const { mfilter } = $monad;
 
 describe("mfilter", () => {
   it("should create a parser that runs the given parser and tests the result with a function, and"

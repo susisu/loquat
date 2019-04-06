@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { labels } = _prim;
+const { labels } = $prim;
 
 describe("labels", () => {
   it("should return a parser labelled with the given array of strings", () => {

@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { ErrorMessageType, ErrorMessage } = _error;
+const { ErrorMessageType, ErrorMessage } = $error;
 
 describe(".create", () => {
   it("should create a new ErrorMessage object", () => {

@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { skipMany } = _prim;
+const { skipMany } = $prim;
 
 describe("skipMany", () => {
   it("should create a parser that runs the given parser until it fails without consumption and"

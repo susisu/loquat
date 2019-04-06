@@ -8,9 +8,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { guard } = _monad;
+const { guard } = $monad;
 
 describe("guard", () => {
   it("returns a parser that does nothing and succeeds without consumption if the given condition"

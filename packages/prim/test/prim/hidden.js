@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { hidden } = _prim;
+const { hidden } = $prim;
 
 describe("hidden", () => {
   it("should create a parser labelled with an empty string", () => {

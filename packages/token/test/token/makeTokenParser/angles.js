@@ -12,10 +12,10 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { LanguageDef } = _language;
-const { makeTokenParser } = _token;
+const { LanguageDef } = $language;
+const { makeTokenParser } = $token;
 
 describe("angles", () => {
   it("should create a parser that parses tokens between angles", () => {

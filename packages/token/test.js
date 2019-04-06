@@ -2,18 +2,18 @@
 
 const chai = require("chai");
 
-const _core        = require("@loquat/core")();
-const _prim        = require("@loquat/prim")(_core);
-const _char        = require("@loquat/char")(_core);
-const _combinators = require("@loquat/combinators")(_core);
+const $core        = require("@loquat/core")();
+const $prim        = require("@loquat/prim")($core);
+const $char        = require("@loquat/char")($core);
+const $combinators = require("@loquat/combinators")($core);
 
-const _language = require("./lib/language.js")();
-const _token    = require("./lib/token.js")(_core, { _prim, _char, _combinators });
+const $language = require("./lib/language.js")();
+const $token    = require("./lib/token.js")($core, { $prim, $char, $combinators });
 
-const _test = require("@loquat/testutil")(_core);
+const $testutil = require("@loquat/testutil")($core);
 
-Object.assign(global, { _core, _language, _token, _test });
-chai.use(_test.plugin);
+Object.assign(global, { $core, $language, $token, $testutil });
+chai.use($testutil.plugin);
 
 require("./test/language.js");
 require("./test/token.js");

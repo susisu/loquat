@@ -19,11 +19,11 @@
 "use strict";
 
 module.exports = core => {
-  const _core = core();
+  const $core = core();
 
-  const _loquat = Object.assign({}, _core);
+  const $loquat = Object.assign({}, $core);
 
-  Object.defineProperties(_loquat, {
+  Object.defineProperties($loquat, {
     "exts": {
       writable    : false,
       configurable: false,
@@ -39,15 +39,15 @@ module.exports = core => {
   });
 
   function use(ext, opts = {}) {
-    const _ext = ext(_core, opts.options);
+    const _ext = ext($core, opts.options);
     if (!opts.qualified) {
-      Object.assign(_loquat, _ext);
+      Object.assign($loquat, _ext);
     }
     if (opts.name !== undefined) {
-      _loquat.exts[opts.name] = _ext;
+      $loquat.exts[opts.name] = _ext;
     }
     return _ext;
   }
 
-  return _loquat;
+  return $loquat;
 };

@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { cleanMessageStrings } = _error._internal;
+const { cleanMessageStrings } = $error._internal;
 
 describe("cleanMessageStrings", () => {
   it("should remove empty or duplicate messages", () => {

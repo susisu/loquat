@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
+const { SourcePos } = $pos;
 
 describe("#addChar", () => {
   it("should create a copy without any change if an empty string is given", () => {

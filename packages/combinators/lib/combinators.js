@@ -1,7 +1,7 @@
 "use strict";
 
-module.exports = (_core, { _prim }) => {
-  const { show, ParseError, Result, StrictParser } = _core;
+module.exports = ($core, { $prim }) => {
+  const { show, ParseError, Result, StrictParser } = $core;
   const {
     map,
     pure,
@@ -14,7 +14,7 @@ module.exports = (_core, { _prim }) => {
     many,
     skipMany,
     tokenPrim,
-  } = _prim;
+  } = $prim;
 
   /**
    * choice: [S, U, A](parsers: Array[Parser[S, U, A]]) => Parser[S, U, A]

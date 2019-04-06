@@ -13,9 +13,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { zipWithM } = _monad;
+const { zipWithM } = $monad;
 
 describe("zipWithM", () => {
   it("should create a parser that zips two arrays with the given binary function, and runs the"

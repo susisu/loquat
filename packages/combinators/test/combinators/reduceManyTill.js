@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { reduceManyTill } = _combinators;
+const { reduceManyTill } = $combinators;
 
 describe("reduceManyTill", () => {
   it("should create a parser that parses zero or more tokens until the end and reduces the result"

@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { joinWithCommasOr } = _error._internal;
+const { joinWithCommasOr } = $error._internal;
 
 describe("joinWithCommasOr", () => {
   it("should return an empty string if the argument is empty", () => {

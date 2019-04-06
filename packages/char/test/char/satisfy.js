@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { satisfy } = _char;
+const { satisfy } = $char;
 
 describe("satisfy", () => {
   it("should create a parser that accepts a character satisfying the given predicate", () => {

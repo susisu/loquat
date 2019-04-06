@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { manyTill } = _combinators;
+const { manyTill } = $combinators;
 
 describe("manyTill", () => {
   it("should create a parser that parses zero or more tokens until the end and returns an array of"

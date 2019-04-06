@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { regexp } = _char;
+const { regexp } = $char;
 
 describe("regexp", () => {
   it("should create a parser that accepts a string that the given regular expression"

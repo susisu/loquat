@@ -2,14 +2,14 @@
 
 const chai = require("chai");
 
-const _core = require("@loquat/core")();
+const $core = require("@loquat/core")();
 
-const _aux    = require("./lib/aux")({ _core });
-const _assert = require("./lib/assert")({ _core, _aux });
-const _helper = require("./lib/helper")({ _core });
+const $aux    = require("./lib/aux")({ $core });
+const $assert = require("./lib/assert")({ $core, $aux });
+const $helper = require("./lib/helper")({ $core });
 
-Object.assign(global, { _core, _aux, _helper });
-chai.use(_assert);
+Object.assign(global, { $core, $aux, $helper });
+chai.use($assert);
 
 require("./test/aux");
 require("./test/assert");

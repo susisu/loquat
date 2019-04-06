@@ -2,8 +2,8 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError, LazyParseError } = _error;
+const { SourcePos } = $pos;
+const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError, LazyParseError } = $error;
 
 describe(".merge", () => {
   it("should return a parse error equal to the first argument if the second is unknown but the"

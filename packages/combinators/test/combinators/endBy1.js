@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { endBy1 } = _combinators;
+const { endBy1 } = $combinators;
 
 describe("endBy1", () => {
   it("should create a parser that parses one or more tokens separated and ended by symbols", () => {

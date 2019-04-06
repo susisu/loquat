@@ -2,9 +2,9 @@
 
 const { expect } = require("chai");
 
-const { OperatorType, OperatorAssoc, Operator } = _expr;
+const { OperatorType, OperatorAssoc, Operator } = $expr;
 
-const { createDummyParser } = _test.helper;
+const { createDummyParser } = $testutil.helper;
 
 describe("infix", () => {
   it("should create an infix operator object", () => {

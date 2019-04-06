@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { space } = _char;
+const { space } = $char;
 
 describe("space", () => {
   it("should be a parser that accepts a space character", () => {

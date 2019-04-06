@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { ArrayStream } = _stream;
+const { ArrayStream } = $stream;
 
 describe(".constructor", () => {
   it("should create a new instance", () => {

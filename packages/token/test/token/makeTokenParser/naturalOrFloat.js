@@ -11,10 +11,10 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { LanguageDef } = _language;
-const { makeTokenParser } = _token;
+const { LanguageDef } = $language;
+const { makeTokenParser } = $token;
 
 describe("naturalOrFloat", () => {
   const EPS = 1e-15;

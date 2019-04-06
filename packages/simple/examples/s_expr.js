@@ -2,7 +2,7 @@
  * S-Expression parser
  *
  * Example:
- *   node s_expr.js <expression>
+ *   node s$expr.js <expression>
  */
 
 "use strict";

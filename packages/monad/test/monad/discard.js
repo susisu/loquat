@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { discard } = _monad;
+const { discard } = $monad;
 
 describe("discard", () => {
   it("should create a parser that discards the return value of the given parser", () => {

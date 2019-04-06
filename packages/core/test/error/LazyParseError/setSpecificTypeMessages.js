@@ -2,8 +2,8 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, StrictParseError, LazyParseError } = _error;
+const { SourcePos } = $pos;
+const { ErrorMessageType, ErrorMessage, StrictParseError, LazyParseError } = $error;
 
 describe("#setSpecificTypeMessages", () => {
   it("should create a new parse error with all of the specified type of messages removed and the"

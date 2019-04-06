@@ -1,7 +1,7 @@
 "use strict";
 
-module.exports = ({ _core }) => {
-  const { ParseError, Result, StrictParser } = _core;
+module.exports = ({ $core }) => {
+  const { ParseError, Result, StrictParser } = $core;
 
   function createDummyParser() {
     return new StrictParser(state => Result.efail(ParseError.unknown(state.pos)));

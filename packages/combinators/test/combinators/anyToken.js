@@ -11,9 +11,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { anyToken } = _combinators;
+const { anyToken } = $combinators;
 
 describe("anyToken", () => {
   it("should be a parser that accepts any token", () => {

@@ -14,10 +14,10 @@ const {
   Result,
   StrictParser,
   uncons,
-} = _core;
+} = $core;
 
-const { LanguageDef } = _language;
-const { makeTokenParser } = _token;
+const { LanguageDef } = $language;
+const { makeTokenParser } = $token;
 
 describe("commaSep1", () => {
   const p = new StrictParser(state => {

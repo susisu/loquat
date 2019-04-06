@@ -14,9 +14,9 @@
         "mocha": true
       },
       "globals": {
-         "_core": "readonly",
-         "_aux": "readonly",
-         "_helper": "readonly"
+         "$core": "readonly",
+         "$aux": "readonly",
+         "$helper": "readonly"
       },
       "rules": {
         "no-invalid-this": "warn",

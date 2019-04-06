@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { ftailRecM } = _prim;
+const { ftailRecM } = $prim;
 
 describe("ftailRecM", () => {
   it("should create a function that chains the given function from a value to a parser", () => {

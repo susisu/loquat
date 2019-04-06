@@ -13,9 +13,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { replicateM } = _monad;
+const { replicateM } = $monad;
 
 describe("replicateM", () => {
   it("should create a parser that runs the given parser n times and returns the results as an"

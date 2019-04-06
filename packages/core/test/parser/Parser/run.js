@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { Parser } = _parser;
+const { Parser } = $parser;
 
 describe("#run", () => {
   it("should throw `Error` because not implemented", () => {

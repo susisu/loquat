@@ -11,9 +11,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { spaces } = _char;
+const { spaces } = $char;
 
 describe("spaces", () => {
   it("should be a parser that skips many space characters", () => {

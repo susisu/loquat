@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { oneOf } = _char;
+const { oneOf } = $char;
 
 describe("oneOf", () => {
   it("should create a parser that accepts one of a character contained in the given string", () => {

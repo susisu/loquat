@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { ltor } = _monad;
+const { ltor } = $monad;
 
 describe("ltor", () => {
   it("should compose functions from values to parsers, from left to right", () => {

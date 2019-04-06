@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { ErrorMessageType, ErrorMessage } = _error;
+const { ErrorMessageType, ErrorMessage } = $error;
 
 describe(".equall", () => {
   it("should return true if two messages are equal", () => {

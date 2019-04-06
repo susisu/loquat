@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { ErrorMessageType, ErrorMessage } = _error;
+const { ErrorMessageType, ErrorMessage } = $error;
 
 describe(".messagesToString", () => {
   it("should return \"unknown parse error\" if the argument is empty", () => {

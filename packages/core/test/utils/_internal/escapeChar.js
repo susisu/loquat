@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { escapeChar } = _utils._internal;
+const { escapeChar } = $utils._internal;
 
 describe("escapeChar", () => {
   it("should escape the given character if it is a special character", () => {

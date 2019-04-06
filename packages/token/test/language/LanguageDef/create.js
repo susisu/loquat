@@ -2,9 +2,9 @@
 
 const { expect } = require("chai");
 
-const { LanguageDef } = _language;
+const { LanguageDef } = $language;
 
-const { createDummyParser } = _test.helper;
+const { createDummyParser } = $testutil.helper;
 
 describe("create", () => {
   it("should create a new language definition object", () => {

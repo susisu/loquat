@@ -11,10 +11,10 @@
         "mocha": true
       },
       "globals": {
-         "_core": "readonly",
-         "_combinators": "readonly",
-         "_sugar": "readonly",
-         "_test": "readonly"
+         "$core": "readonly",
+         "$combinators": "readonly",
+         "$sugar": "readonly",
+         "$testutil": "readonly"
       },
       "rules": {
         "no-new": "off",

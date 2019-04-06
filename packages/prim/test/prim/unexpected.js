@@ -10,9 +10,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { unexpected } = _prim;
+const { unexpected } = $prim;
 
 describe("unexpected", () => {
   it("should create a parser that always fails without consumption, with an unexpected"

@@ -18,40 +18,40 @@
 
 "use strict";
 
-module.exports = (_core, opts = {}) => {
-  const _prim = require("@loquat/prim")(_core);
+module.exports = ($core, opts = {}) => {
+  const $prim = require("@loquat/prim")($core);
 
-  const _combinators = require("./lib/combinators.js")(_core, { _prim });
+  const $combinators = require("./lib/combinators.js")($core, { $prim });
 
   if (opts.sugar) {
-    const _sugar = require("./lib/sugar.js")(_core, { _prim, _combinators });
-    _core.extendParser(_sugar);
+    const $sugar = require("./lib/sugar.js")($core, { $prim, $combinators });
+    $core.extendParser($sugar);
   }
 
   return Object.freeze({
-    choice        : _combinators.choice,
-    option        : _combinators.option,
-    optionMaybe   : _combinators.optionMaybe,
-    optional      : _combinators.optional,
-    between       : _combinators.between,
-    many1         : _combinators.many1,
-    skipMany1     : _combinators.skipMany1,
-    sepBy         : _combinators.sepBy,
-    sepBy1        : _combinators.sepBy1,
-    sepEndBy      : _combinators.sepEndBy,
-    sepEndBy1     : _combinators.sepEndBy1,
-    endBy         : _combinators.endBy,
-    endBy1        : _combinators.endBy1,
-    count         : _combinators.count,
-    chainl        : _combinators.chainl,
-    chainl1       : _combinators.chainl1,
-    chainr        : _combinators.chainr,
-    chainr1       : _combinators.chainr1,
-    anyToken      : _combinators.anyToken,
-    notFollowedBy : _combinators.notFollowedBy,
-    eof           : _combinators.eof,
-    reduceManyTill: _combinators.reduceManyTill,
-    manyTill      : _combinators.manyTill,
-    skipManyTill  : _combinators.skipManyTill,
+    choice        : $combinators.choice,
+    option        : $combinators.option,
+    optionMaybe   : $combinators.optionMaybe,
+    optional      : $combinators.optional,
+    between       : $combinators.between,
+    many1         : $combinators.many1,
+    skipMany1     : $combinators.skipMany1,
+    sepBy         : $combinators.sepBy,
+    sepBy1        : $combinators.sepBy1,
+    sepEndBy      : $combinators.sepEndBy,
+    sepEndBy1     : $combinators.sepEndBy1,
+    endBy         : $combinators.endBy,
+    endBy1        : $combinators.endBy1,
+    count         : $combinators.count,
+    chainl        : $combinators.chainl,
+    chainl1       : $combinators.chainl1,
+    chainr        : $combinators.chainr,
+    chainr1       : $combinators.chainr1,
+    anyToken      : $combinators.anyToken,
+    notFollowedBy : $combinators.notFollowedBy,
+    eof           : $combinators.eof,
+    reduceManyTill: $combinators.reduceManyTill,
+    manyTill      : $combinators.manyTill,
+    skipManyTill  : $combinators.skipManyTill,
   });
 };

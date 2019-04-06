@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { optional } = _combinators;
+const { optional } = $combinators;
 
 describe("optional", () => {
   it("should create a parser that tries the given parser and ignores its failure if there is no"

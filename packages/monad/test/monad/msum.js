@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { msum } = _monad;
+const { msum } = $monad;
 
 describe("msum", () => {
   it("should create a parser that fails without consumption, with an unknown error, if the argument"

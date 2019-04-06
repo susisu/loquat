@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { unconsString } = _utils;
+const { unconsString } = $utils;
 
 describe("unconsString", () => {
   context("when `unicode` is true", () => {

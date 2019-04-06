@@ -10,9 +10,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { fail } = _prim;
+const { fail } = $prim;
 
 describe("fail", () => {
   it("should create a parser that always fails without consumption, with the specified error"

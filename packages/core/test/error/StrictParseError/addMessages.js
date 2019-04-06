@@ -2,8 +2,8 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError } = _error;
+const { SourcePos } = $pos;
+const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError } = $error;
 
 describe("#addMessages", () => {
   it("should return a new parse error with the given messages added", () => {

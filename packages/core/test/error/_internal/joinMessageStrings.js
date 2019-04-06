@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { joinMessageStrings } = _error._internal;
+const { joinMessageStrings } = $error._internal;
 
 describe("joinMessageStrings", () => {
   it("should return just a joined message if the given description is empty", () => {

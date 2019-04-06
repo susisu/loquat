@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { ParseError } = _error;
+const { ParseError } = $error;
 
 describe("#pos", () => {
   it("should throw an `Error` because not implemented", () => {

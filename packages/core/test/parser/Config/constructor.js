@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { Config } = _parser;
+const { Config } = $parser;
 
 describe(".constructor", () => {
   it("should create a new `Config` instance", () => {

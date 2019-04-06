@@ -13,11 +13,11 @@ const {
   Result,
   StrictParser,
   uncons,
-} = _core;
+} = $core;
 
 describe("reserved", () => {
-  const { LanguageDef } = _language;
-  const { makeTokenParser } = _token;
+  const { LanguageDef } = $language;
+  const { makeTokenParser } = $token;
 
   function genCharParser(re) {
     return new StrictParser(state => {

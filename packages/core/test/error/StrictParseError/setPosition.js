@@ -2,8 +2,8 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError } = _error;
+const { SourcePos } = $pos;
+const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError } = $error;
 
 describe("#setPosition", () => {
   it("should create a new parse error with `pos` updated", () => {

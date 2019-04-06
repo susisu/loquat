@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
+const { SourcePos } = $pos;
 
 describe(".constructor", () => {
   it("should create a new `SourcePos' instance", () => {

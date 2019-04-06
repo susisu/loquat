@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
+const { SourcePos } = $pos;
 
 describe("#setName", () => {
   it("should create a copy of the position with `name` updated", () => {

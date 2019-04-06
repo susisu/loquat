@@ -11,9 +11,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { eof } = _combinators;
+const { eof } = $combinators;
 
 describe("eof", () => {
   it("should be a parser that rejects any token", () => {

@@ -2,9 +2,9 @@
 
 const { expect } = require("chai");
 
-const { SourcePos, ParseError, Config, State, Result } = _core;
+const { SourcePos, ParseError, Config, State, Result } = $core;
 
-const { updateParserState } = _prim;
+const { updateParserState } = $prim;
 
 describe("updateParserState", () => {
   it("should create a parser that updates the current parser state using the specified function and"

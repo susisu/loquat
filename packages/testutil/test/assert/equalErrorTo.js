@@ -2,7 +2,7 @@
 
 const { expect, AssertionError } = require("chai");
 
-const { SourcePos, ErrorMessageType, ErrorMessage, StrictParseError, LazyParseError } = _core;
+const { SourcePos, ErrorMessageType, ErrorMessage, StrictParseError, LazyParseError } = $core;
 
 describe("equalErrorTo", () => {
   it("should throw AssertionError if the actual error is not equal to the expected one", () => {

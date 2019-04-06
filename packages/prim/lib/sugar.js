@@ -1,7 +1,7 @@
 "use strict";
 
-module.exports = (_core, { _prim }) => {
-  const { isParser } = _core;
+module.exports = ($core, { $prim }) => {
+  const { isParser } = $core;
 
   const {
     map,
@@ -22,7 +22,7 @@ module.exports = (_core, { _prim }) => {
     reduceMany,
     many,
     skipMany,
-  } = _prim;
+  } = $prim;
 
   return Object.freeze({
     map(func) {

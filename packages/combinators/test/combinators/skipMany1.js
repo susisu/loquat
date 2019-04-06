@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { skipMany1 } = _combinators;
+const { skipMany1 } = $combinators;
 
 describe("skipMany1", () => {
   it("should create a parser that runs the given parser at least once until it fails without"

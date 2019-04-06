@@ -13,9 +13,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { sequence } = _monad;
+const { sequence } = $monad;
 
 describe("sequence", () => {
   it("should create a parser that runs the given parsers sequentially", () => {

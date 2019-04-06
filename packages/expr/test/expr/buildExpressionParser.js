@@ -11,11 +11,11 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { OperatorAssoc, Operator, buildExpressionParser } = _expr;
+const { OperatorAssoc, Operator, buildExpressionParser } = $expr;
 
-const { createDummyParser } = _test.helper;
+const { createDummyParser } = $testutil.helper;
 
 describe("buildExpressionParser", () => {
   function genP(chars, val) {

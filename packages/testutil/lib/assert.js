@@ -1,11 +1,11 @@
 "use strict";
 
-module.exports = ({ _core, _aux }) => chai => {
+module.exports = ({ $core, $aux }) => chai => {
   const { Assertion } = chai;
 
   Assertion.addMethod("equalPositionTo", function (exp) {
-    const { SourcePos } = _core;
-    const { inspect } = _aux.SourcePos;
+    const { SourcePos } = $core;
+    const { inspect } = $aux.SourcePos;
 
     const act = this._obj;
 
@@ -19,8 +19,8 @@ module.exports = ({ _core, _aux }) => chai => {
   });
 
   Assertion.addMethod("equalErrorMessageTo", function (exp) {
-    const { ErrorMessage } = _core;
-    const { inspect } = _aux.ErrorMessage;
+    const { ErrorMessage } = $core;
+    const { inspect } = $aux.ErrorMessage;
 
     const act = this._obj;
 
@@ -32,8 +32,8 @@ module.exports = ({ _core, _aux }) => chai => {
   });
 
   Assertion.addMethod("equalErrorMessagesTo", function (exp) {
-    const { ErrorMessage } = _core;
-    const {  inspectArray } = _aux.ErrorMessage;
+    const { ErrorMessage } = $core;
+    const {  inspectArray } = $aux.ErrorMessage;
 
     const act = this._obj;
 
@@ -45,8 +45,8 @@ module.exports = ({ _core, _aux }) => chai => {
   });
 
   Assertion.addMethod("equalErrorTo", function (exp) {
-    const { ParseError } = _core;
-    const { inspect } = _aux.ParseError;
+    const { ParseError } = $core;
+    const { inspect } = $aux.ParseError;
 
     const act = this._obj;
 
@@ -60,8 +60,8 @@ module.exports = ({ _core, _aux }) => chai => {
   });
 
   Assertion.addMethod("equalConfigTo", function (exp) {
-    const { Config } = _core;
-    const {  inspect } = _aux.Config;
+    const { Config } = $core;
+    const {  inspect } = $aux.Config;
 
     const act = this._obj;
 
@@ -75,8 +75,8 @@ module.exports = ({ _core, _aux }) => chai => {
   });
 
   Assertion.addMethod("equalStateTo", function (exp, inputEqual, userStateEqual) {
-    const { State } = _core;
-    const {  inspect } = _aux.State;
+    const { State } = $core;
+    const {  inspect } = $aux.State;
 
     const act = this._obj;
 
@@ -90,8 +90,8 @@ module.exports = ({ _core, _aux }) => chai => {
   });
 
   Assertion.addMethod("equalResultTo", function (exp, valEqual, inputEqual, userStateEqual) {
-    const { Result } = _core;
-    const { inspect } = _aux.Result;
+    const { Result } = $core;
+    const { inspect } = $aux.Result;
 
     const act = this._obj;
 
@@ -103,7 +103,7 @@ module.exports = ({ _core, _aux }) => chai => {
   });
 
   Assertion.addProperty("parser", function () {
-    const { isParser } = _core;
+    const { isParser } = $core;
 
     const obj = this._obj;
 

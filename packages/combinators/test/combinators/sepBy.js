@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { sepBy } = _combinators;
+const { sepBy } = $combinators;
 
 describe("sepBy", () => {
   it("should create a parser that parses zero or more tokens separated by symbols", () => {

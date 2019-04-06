@@ -18,11 +18,11 @@
 
 "use strict";
 
-module.exports = (_core, _opts) => {
-  const _qo = require("./lib/qo.js")(_core);
+module.exports = ($core, _opts) => {
+  const $qo = require("./lib/qo.js")($core);
 
   return Object.freeze({
-    qo: _qo.qo,
-    do: _qo.qo,
+    qo: $qo.qo,
+    do: $qo.qo,
   });
 };

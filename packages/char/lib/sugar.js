@@ -1,7 +1,7 @@
 "use strict";
 
-module.exports = (_core, { _char }) => {
-  const { manyChars, manyChars1 } = _char;
+module.exports = ($core, { $char }) => {
+  const { manyChars, manyChars1 } = $char;
 
   return Object.freeze({
     manyChars() {

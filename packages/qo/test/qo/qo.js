@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { qo } = _qo;
+const { qo } = $qo;
 
 describe("qo", () => {
   it("should create a parser from a generator that yields parsers", () => {

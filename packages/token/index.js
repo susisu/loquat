@@ -18,16 +18,16 @@
 
 "use strict";
 
-module.exports = (_core, _opts) => {
-  const _prim        = require("@loquat/prim")(_core);
-  const _char        = require("@loquat/char")(_core);
-  const _combinators = require("@loquat/combinators")(_core);
+module.exports = ($core, _opts) => {
+  const $prim        = require("@loquat/prim")($core);
+  const $char        = require("@loquat/char")($core);
+  const $combinators = require("@loquat/combinators")($core);
 
-  const _language = require("./lib/language.js")();
-  const _token    = require("./lib/token.js")(_core, { _prim, _char, _combinators });
+  const $language = require("./lib/language.js")();
+  const $token    = require("./lib/token.js")($core, { $prim, $char, $combinators });
 
   return Object.freeze({
-    LanguageDef    : _language.LanguageDef,
-    makeTokenParser: _token.makeTokenParser,
+    LanguageDef    : $language.LanguageDef,
+    makeTokenParser: $token.makeTokenParser,
   });
 };

@@ -1,29 +1,29 @@
 "use strict";
 
-module.exports = ({ _utils, _pos, _error, _stream, _parser }) =>
+module.exports = ({ $utils, $pos, $error, $stream, $parser }) =>
   Object.freeze({
-    show        : _utils.show,
-    unconsString: _utils.unconsString,
+    show        : $utils.show,
+    unconsString: $utils.unconsString,
 
-    SourcePos: _pos.SourcePos,
+    SourcePos: $pos.SourcePos,
 
-    ErrorMessageType: _error.ErrorMessageType,
-    ErrorMessage    : _error.ErrorMessage,
-    ParseError      : _error.ParseError,
-    StrictParseError: _error.StrictParseError,
-    LazyParseError  : _error.LazyParseError,
+    ErrorMessageType: $error.ErrorMessageType,
+    ErrorMessage    : $error.ErrorMessage,
+    ParseError      : $error.ParseError,
+    StrictParseError: $error.StrictParseError,
+    LazyParseError  : $error.LazyParseError,
 
-    Config      : _parser.Config,
-    State       : _parser.State,
-    Result      : _parser.Result,
-    Parser      : _parser.Parser,
-    StrictParser: _parser.StrictParser,
-    LazyParser  : _parser.LazyParser,
-    lazy        : _parser.lazy,
-    parse       : _parser.parse,
-    isParser    : _parser.isParser,
-    extendParser: _parser.extendParser,
+    Config      : $parser.Config,
+    State       : $parser.State,
+    Result      : $parser.Result,
+    Parser      : $parser.Parser,
+    StrictParser: $parser.StrictParser,
+    LazyParser  : $parser.LazyParser,
+    lazy        : $parser.lazy,
+    parse       : $parser.parse,
+    isParser    : $parser.isParser,
+    extendParser: $parser.extendParser,
 
-    uncons     : _stream.uncons,
-    ArrayStream: _stream.ArrayStream,
+    uncons     : $stream.uncons,
+    ArrayStream: $stream.ArrayStream,
   });

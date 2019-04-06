@@ -11,9 +11,9 @@
         "mocha": true
       },
       "globals": {
-         "_core": "readonly",
-         "_qo": "readonly",
-         "_test": "readonly"
+         "$core": "readonly",
+         "$qo": "readonly",
+         "$testutil": "readonly"
       },
       "rules": {
         "no-new": "off",

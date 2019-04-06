@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { option } = _combinators;
+const { option } = $combinators;
 
 describe("option", () => {
   it("should create a parser that tries the given parser and returns its result if it succeeds, or"

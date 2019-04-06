@@ -18,15 +18,15 @@
 
 "use strict";
 
-module.exports = _core => {
-  const _aux    = require("./lib/aux")({ _core });
-  const _assert = require("./lib/assert")({ _core, _aux });
-  const _helper = require("./lib/helper")({ _core });
+module.exports = $core => {
+  const $aux    = require("./lib/aux")({ $core });
+  const $assert = require("./lib/assert")({ $core, $aux });
+  const $helper = require("./lib/helper")({ $core });
 
   return {
     plugin: (chai, utils) => {
-      _assert(chai, utils);
+      $assert(chai, utils);
     },
-    helper: _helper,
+    helper: $helper,
   };
 };

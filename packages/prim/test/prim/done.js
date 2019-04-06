@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { done } = _prim;
+const { done } = $prim;
 
 describe("done", () => {
   it("should create a parser that returns its result with the context that the current tailrec loop"

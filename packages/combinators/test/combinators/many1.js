@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { many1 } = _combinators;
+const { many1 } = $combinators;
 
 describe("many1", () => {
   it("should create a parser that runs the given parser at least once until it fails without"

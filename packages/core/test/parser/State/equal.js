@@ -3,8 +3,8 @@
 const chai = require("chai");
 const { expect } = chai;
 
-const { SourcePos } = _pos;
-const { Config, State } = _parser;
+const { SourcePos } = $pos;
+const { Config, State } = $parser;
 
 describe(".equal", () => {
   it("should return true if two states are equal", () => {

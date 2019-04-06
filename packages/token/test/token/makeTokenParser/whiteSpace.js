@@ -11,10 +11,10 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { LanguageDef } = _language;
-const { makeTokenParser } = _token;
+const { LanguageDef } = $language;
+const { makeTokenParser } = $token;
 
 describe("whiteSpace", () => {
   context("when none of one-line and multi-line comments are specified", () => {

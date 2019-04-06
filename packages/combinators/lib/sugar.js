@@ -1,9 +1,9 @@
 "use strict";
 
-module.exports = (_core, { _prim, _combinators }) => {
-  const { isParser } = _core;
+module.exports = ($core, { $prim, $combinators }) => {
+  const { isParser } = $core;
 
-  const { left, tryParse } = _prim;
+  const { left, tryParse } = $prim;
 
   const {
     option,
@@ -23,7 +23,7 @@ module.exports = (_core, { _prim, _combinators }) => {
     reduceManyTill,
     manyTill,
     skipManyTill,
-  } = _combinators;
+  } = $combinators;
 
   return Object.freeze({
     option(defaultVal) {

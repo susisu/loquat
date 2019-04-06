@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { ParseError } = _error;
+const { ParseError } = $error;
 
 describe(".constructor", () => {
   it("should throw `Error` if it is called as `new ParseError`", () => {

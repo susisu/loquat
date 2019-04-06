@@ -2,8 +2,8 @@
 
 const { expect } = require("chai");
 
-const { Config } = _parser;
-const { uncons } = _stream;
+const { Config } = $parser;
+const { uncons } = $stream;
 
 describe("uncons", () => {
   context("string input", () => {

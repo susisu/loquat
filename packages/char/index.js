@@ -18,37 +18,37 @@
 
 "use strict";
 
-module.exports = (_core, opts = {}) => {
-  const _prim = require("@loquat/prim")(_core);
+module.exports = ($core, opts = {}) => {
+  const $prim = require("@loquat/prim")($core);
 
-  const _char = require("./lib/char.js")(_core, { _prim });
+  const $char = require("./lib/char.js")($core, { $prim });
 
   if (opts.sugar) {
-    const _sugar = require("./lib/sugar.js")(_core, { _char });
-    _core.extendParser(_sugar);
+    const $sugar = require("./lib/sugar.js")($core, { $char });
+    $core.extendParser($sugar);
   }
 
   return Object.freeze({
-    string    : _char.string,
-    satisfy   : _char.satisfy,
-    oneOf     : _char.oneOf,
-    noneOf    : _char.noneOf,
-    char      : _char.char,
-    anyChar   : _char.anyChar,
-    space     : _char.space,
-    spaces    : _char.spaces,
-    newline   : _char.newline,
-    tab       : _char.tab,
-    upper     : _char.upper,
-    lower     : _char.lower,
-    letter    : _char.letter,
-    digit     : _char.digit,
-    alphaNum  : _char.alphaNum,
-    octDigit  : _char.octDigit,
-    hexDigit  : _char.hexDigit,
-    manyChars : _char.manyChars,
-    manyChars1: _char.manyChars1,
-    regexp    : _char.regexp,
-    regexpPrim: _char.regexpPrim,
+    string    : $char.string,
+    satisfy   : $char.satisfy,
+    oneOf     : $char.oneOf,
+    noneOf    : $char.noneOf,
+    char      : $char.char,
+    anyChar   : $char.anyChar,
+    space     : $char.space,
+    spaces    : $char.spaces,
+    newline   : $char.newline,
+    tab       : $char.tab,
+    upper     : $char.upper,
+    lower     : $char.lower,
+    letter    : $char.letter,
+    digit     : $char.digit,
+    alphaNum  : $char.alphaNum,
+    octDigit  : $char.octDigit,
+    hexDigit  : $char.hexDigit,
+    manyChars : $char.manyChars,
+    manyChars1: $char.manyChars1,
+    regexp    : $char.regexp,
+    regexpPrim: $char.regexpPrim,
   });
 };

@@ -10,7 +10,7 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
 describe("equalResultTo", () => {
   it("should throw AssertionError if the actual result is not equal to the expected one", () => {

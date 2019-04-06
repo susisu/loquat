@@ -11,12 +11,12 @@
         "mocha": true
       },
       "globals": {
-         "_utils": "readonly",
-         "_pos": "readonly",
-         "_error": "readonly",
-         "_parser": "readonly",
-         "_stream": "readonly",
-         "_core": "readonly"
+         "$utils": "readonly",
+         "$pos": "readonly",
+         "$error": "readonly",
+         "$parser": "readonly",
+         "$stream": "readonly",
+         "$core": "readonly"
       },
       "rules": {
         "no-new": "off",

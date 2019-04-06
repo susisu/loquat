@@ -2,7 +2,7 @@
 
 const { expect, AssertionError } = require("chai");
 
-const { ErrorMessageType, ErrorMessage } = _core;
+const { ErrorMessageType, ErrorMessage } = $core;
 
 describe("equalErrorMessagesTo", () => {
   it("should throw AssertionError if the actual message array is not equal to the expected"

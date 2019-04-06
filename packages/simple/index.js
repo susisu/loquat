@@ -18,28 +18,28 @@
 
 "use strict";
 
-const _core        = require("@loquat/core")();
-const _prim        = require("@loquat/prim")(_core, { sugar: true });
-const _char        = require("@loquat/char")(_core, { sugar: true });
-const _combinators = require("@loquat/combinators")(_core, { sugar: true });
-const _monad       = require("@loquat/monad")(_core, { sugar: true });
-const _expr        = require("@loquat/expr")(_core);
-const _qo          = require("@loquat/qo")(_core);
-const _token       = require("@loquat/token")(_core);
+const $core        = require("@loquat/core")();
+const $prim        = require("@loquat/prim")($core, { sugar: true });
+const $char        = require("@loquat/char")($core, { sugar: true });
+const $combinators = require("@loquat/combinators")($core, { sugar: true });
+const $monad       = require("@loquat/monad")($core, { sugar: true });
+const $expr        = require("@loquat/expr")($core);
+const $qo          = require("@loquat/qo")($core);
+const $token       = require("@loquat/token")($core);
 
-const _loquat = Object.assign({},
-  _core,
-  _prim,
-  _char,
-  _combinators,
-  _monad,
-  _expr,
-  _qo,
-  _token
+const $loquat = Object.assign({},
+  $core,
+  $prim,
+  $char,
+  $combinators,
+  $monad,
+  $expr,
+  $qo,
+  $token
 );
-delete _loquat.isParser;
-delete _loquat.extendParser;
-delete _loquat.ArrayStream;
-Object.freeze(_loquat);
+delete $loquat.isParser;
+delete $loquat.extendParser;
+delete $loquat.ArrayStream;
+Object.freeze($loquat);
 
-module.exports = _loquat;
+module.exports = $loquat;

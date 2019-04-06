@@ -2,9 +2,9 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError } = _error;
-const { Config, State, Result, StrictParser, parse } = _parser;
+const { SourcePos } = $pos;
+const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError } = $error;
+const { Config, State, Result, StrictParser, parse } = $parser;
 
 describe("parse", () => {
   it("should run `parser' and return result as a simple object", () => {

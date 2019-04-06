@@ -1,8 +1,8 @@
 "use strict";
 
-module.exports = (_core, { _prim }) => {
-  const { ParseError, Result, StrictParser } = _core;
-  const { map, pure, bind, then, tailRecM, mzero } = _prim;
+module.exports = ($core, { $prim }) => {
+  const { ParseError, Result, StrictParser } = $core;
+  const { map, pure, bind, then, tailRecM, mzero } = $prim;
 
   /**
    * forever: [S, U, A, B](parser: Parser[S, U, A]) => Parser[S, U, B]

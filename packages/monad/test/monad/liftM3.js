@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { liftM3 } = _monad;
+const { liftM3 } = $monad;
 
 describe("liftM3", () => {
   it("should lift a ternary function on values to a function on parsers", () => {

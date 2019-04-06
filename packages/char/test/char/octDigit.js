@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { octDigit } = _char;
+const { octDigit } = $char;
 
 describe("octDigit", () => {
   it("should be a parser that accepts an octal digit", () => {

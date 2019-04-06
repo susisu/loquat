@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { foldM } = _monad;
+const { foldM } = $monad;
 
 describe("foldM", () => {
   it("should create a parser that folds an array using the given function that maps an accumulator"

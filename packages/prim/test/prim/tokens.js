@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { tokens } = _prim;
+const { tokens } = $prim;
 
 describe("tokens", () => {
   it("should create a parser that parses the given tokens", () => {

@@ -2,8 +2,8 @@
 
 const { expect } = require("chai");
 
-const { ParseError } = _error;
-const { Result, StrictParser, LazyParser, lazy } = _parser;
+const { ParseError } = $error;
+const { Result, StrictParser, LazyParser, lazy } = $parser;
 
 describe("lazy", () => {
   it("should create a new `LazyParser` instance", () => {

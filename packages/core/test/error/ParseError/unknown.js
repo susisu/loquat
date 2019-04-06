@@ -2,8 +2,8 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
-const { ParseError, StrictParseError } = _error;
+const { SourcePos } = $pos;
+const { ParseError, StrictParseError } = $error;
 
 describe(".unknown", () => {
   it("should create a new parse error describing with empty error messages", () => {

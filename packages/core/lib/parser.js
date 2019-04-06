@@ -1,8 +1,8 @@
 "use strict";
 
-module.exports = ({ _pos, _error }) => {
-  const { SourcePos } = _pos;
-  const { ParseError } = _error;
+module.exports = ({ $pos, $error }) => {
+  const { SourcePos } = $pos;
+  const { ParseError } = $error;
 
   /**
    * type ConfigOptions = {
@@ -98,7 +98,7 @@ module.exports = ({ _pos, _error }) => {
     constructor(config, input, pos, userState) {
       this._config    = config;
       this._input     = input;
-      this._pos       = pos;
+      this.$pos       = pos;
       this._userState = userState;
     }
 
@@ -111,7 +111,7 @@ module.exports = ({ _pos, _error }) => {
     }
 
     get pos() {
-      return this._pos;
+      return this.$pos;
     }
 
     get userState() {

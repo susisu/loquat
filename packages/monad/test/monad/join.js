@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { join } = _monad;
+const { join } = $monad;
 
 describe("join", () => {
   it("should create a parser that runs the given parser and successively runs the result value as a"

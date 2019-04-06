@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { tryParse } = _prim;
+const { tryParse } = $prim;
 
 describe("tryParse", () => {
   it("should create a parser that transforms failure with consumption of the original parser to"

@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { Parser } = _parser;
+const { Parser } = $parser;
 
 describe(".constructor", () => {
   it("should throw `Error` if it is called as `new Parser`", () => {

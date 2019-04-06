@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { liftM } = _monad;
+const { liftM } = $monad;
 
 describe("liftM", () => {
   it("should lift an unary function on values to a function on parsers", () => {

@@ -2,9 +2,9 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, StrictParseError } = _error;
-const { Config, State, Result, StrictParser, LazyParser } = _parser;
+const { SourcePos } = $pos;
+const { ErrorMessageType, ErrorMessage, StrictParseError } = $error;
+const { Config, State, Result, StrictParser, LazyParser } = $parser;
 
 describe("#run", () => {
   it("should evaluate the thunk and run the resultant parser with the given state", () => {

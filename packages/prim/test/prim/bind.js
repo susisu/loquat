@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { pure, bind } = _prim;
+const { pure, bind } = $prim;
 
 describe("bind", () => {
   it("should create a parser that runs a parser, gives its result to a function, and then runs a"

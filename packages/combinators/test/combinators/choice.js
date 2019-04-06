@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { choice } = _combinators;
+const { choice } = $combinators;
 
 describe("choice", () => {
   it("should create a parser that fails without consumption, with an unknown error, if the argument"

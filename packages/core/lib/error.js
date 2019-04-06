@@ -1,7 +1,7 @@
 "use strict";
 
-module.exports = ({ _pos }) => {
-  const { SourcePos } = _pos;
+module.exports = ({ $pos }) => {
+  const { SourcePos } = $pos;
 
   /**
    * type ErrorMessageType = "systemUnexpect" \/ "unexpect" \/ "expect" \/ "message"
@@ -260,12 +260,12 @@ module.exports = ({ _pos }) => {
   class StrictParseError extends ParseError {
     constructor(pos, msgs) {
       super();
-      this._pos  = pos;
+      this.$pos  = pos;
       this._msgs = msgs;
     }
 
     get pos() {
-      return this._pos;
+      return this.$pos;
     }
 
     get msgs() {

@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { newline } = _char;
+const { newline } = $char;
 
 describe("newline", () => {
   it("should be a parser that accepts a newline character (LF)", () => {

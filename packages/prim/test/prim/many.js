@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { many } = _prim;
+const { many } = $prim;
 
 describe("many", () => {
   it("should create a parser that runs the given parser until it fails without consumption and"

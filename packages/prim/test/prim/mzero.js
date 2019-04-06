@@ -2,9 +2,9 @@
 
 const { expect } = require("chai");
 
-const { SourcePos, ParseError, Config, State, Result } = _core;
+const { SourcePos, ParseError, Config, State, Result } = $core;
 
-const { mzero } = _prim;
+const { mzero } = $prim;
 
 describe("mzero", () => {
   it("should be a parser that always fails without consumption, with an unknown error", () => {

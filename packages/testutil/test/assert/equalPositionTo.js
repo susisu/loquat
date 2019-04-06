@@ -2,7 +2,7 @@
 
 const { expect, AssertionError } = require("chai");
 
-const { SourcePos } = _core;
+const { SourcePos } = $core;
 
 describe("equalPositionTo", () => {
   it("should throw AssertionError if the actual position is not equal to the expected one", () => {

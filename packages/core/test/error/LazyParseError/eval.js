@@ -2,8 +2,8 @@
 
 const { expect } = require("chai");
 
-const { SourcePos } = _pos;
-const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError, LazyParseError } = _error;
+const { SourcePos } = $pos;
+const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError, LazyParseError } = $error;
 
 describe("#eval", () => {
   it("should evaluate the thunk then return a fully evaluated `StrictParseError`", () => {

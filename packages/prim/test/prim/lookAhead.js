@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { lookAhead } = _prim;
+const { lookAhead } = $prim;
 
 describe("lookAhead", () => {
   it("should create a parser that runs the given parser and returns the original state when it"

@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { notFollowedBy } = _combinators;
+const { notFollowedBy } = $combinators;
 
 describe("notFollowedBy", () => {
   it("should create a parser that succeeds without consumption only when the given parser"

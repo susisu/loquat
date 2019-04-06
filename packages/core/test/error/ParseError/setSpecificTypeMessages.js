@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { ErrorMessageType, ParseError } = _error;
+const { ErrorMessageType, ParseError } = $error;
 
 describe("#setSpecificTypeMessages", () => {
   it("should throw `Error` because not implemented", () => {

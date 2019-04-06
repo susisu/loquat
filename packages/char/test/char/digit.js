@@ -12,9 +12,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { digit } = _char;
+const { digit } = $char;
 
 describe("digit", () => {
   it("should be a parser that parses a decimal digit", () => {

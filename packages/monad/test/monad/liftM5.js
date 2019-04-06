@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { liftM5 } = _monad;
+const { liftM5 } = $monad;
 
 describe("liftM5", () => {
   it("should lift a 5-ary function on values to a function on parsers", () => {

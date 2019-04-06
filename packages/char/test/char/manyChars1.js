@@ -11,9 +11,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { manyChars1 } = _char;
+const { manyChars1 } = $char;
 
 describe("manyChars1", () => {
   it("should create a parser that runs the given character parser at least once until it fails"

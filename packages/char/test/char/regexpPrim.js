@@ -13,9 +13,9 @@ const {
   Config,
   State,
   Result,
-} = _core;
+} = $core;
 
-const { regexpPrim } = _char;
+const { regexpPrim } = $char;
 
 describe("regexpPrim", () => {
   it("should create a parser that accepts a string that the given regular expression"

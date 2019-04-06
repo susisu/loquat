@@ -1,7 +1,7 @@
 "use strict";
 
-module.exports = ({ _core }) => {
-  const { show } = _core;
+module.exports = ({ $core }) => {
+  const { show } = $core;
 
   function mkInspect(className, props) {
     const fullProps = props.map(prop =>

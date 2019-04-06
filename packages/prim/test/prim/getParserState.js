@@ -2,9 +2,9 @@
 
 const { expect } = require("chai");
 
-const { SourcePos, ParseError, Config, State, Result } = _core;
+const { SourcePos, ParseError, Config, State, Result } = $core;
 
-const { getParserState } = _prim;
+const { getParserState } = $prim;
 
 describe("getParserState", () => {
   it("should be a parser that gets the current parser state", () => {

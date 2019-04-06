@@ -12,9 +12,9 @@ const {
   State,
   Result,
   StrictParser,
-} = _core;
+} = $core;
 
-const { optionMaybe } = _combinators;
+const { optionMaybe } = $combinators;
 
 describe("optionMaybe", () => {
   it("should create a parser that tries the given parser and returns its result wrapped by an"

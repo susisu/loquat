@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = (_core, { _monad }) => {
+module.exports = ($core, { $monad }) => {
   const {
     forever,
     discard,
@@ -8,7 +8,7 @@ module.exports = (_core, { _monad }) => {
     when,
     unless,
     mfilter,
-  } = _monad;
+  } = $monad;
 
   return Object.freeze({
     forever() {
