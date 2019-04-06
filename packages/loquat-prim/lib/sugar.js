@@ -49,8 +49,8 @@ module.exports = (_core, { _prim }) => {
     and(parser) {
       return then(this, parser);
     },
-    fail(msgStr) {
-      return then(this, fail(msgStr));
+    fail(str) {
+      return then(this, fail(str));
     },
     cont() {
       return cont(this);
@@ -61,8 +61,8 @@ module.exports = (_core, { _prim }) => {
     or(parser) {
       return mplus(this, parser);
     },
-    label(labelStr) {
-      return label(this, labelStr);
+    label(str) {
+      return label(this, str);
     },
     hidden() {
       return hidden(this);
