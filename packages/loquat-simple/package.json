@@ -17,6 +17,9 @@
   "license": "Apache-2.0",
   "main": "index.js",
   "types": "index.d.ts",
+  "files": [
+    "index.d.ts"
+  ],
   "scripts": {
     "lint": "eslint *.js",
     "lint:fix": "eslint --fix *.js",
