@@ -27,7 +27,7 @@ const _expr        = require("loquat-expr")(_core);
 const _qo          = require("loquat-qo")(_core);
 const _token       = require("loquat-token")(_core);
 
-const _loquat = Object.freeze(Object.assign({},
+const _loquat = Object.assign({},
   _core,
   _prim,
   _char,
@@ -36,6 +36,10 @@ const _loquat = Object.freeze(Object.assign({},
   _expr,
   _qo,
   _token
-));
+);
+delete _loquat.isParser;
+delete _loquat.extendParser;
+delete _loquat.ArrayStream;
+Object.freeze(_loquat);
 
 module.exports = _loquat;
