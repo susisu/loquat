@@ -26,8 +26,8 @@ module.exports = (_core, { _prim, _combinators }) => {
   } = _combinators;
 
   return Object.freeze({
-    option(val) {
-      return option(this, val);
+    option(defaultVal) {
+      return option(defaultVal, this);
     },
     optionMaybe() {
       return optionMaybe(this);

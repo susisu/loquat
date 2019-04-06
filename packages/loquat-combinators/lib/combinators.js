@@ -41,10 +41,10 @@ module.exports = (_core, { _prim }) => {
   }
 
   /**
-   * option: [S, U, A, B](val: A, parser: Parser[S, U, B]) => Parser[S, U, A \/ B]
+   * option: [S, U, A, B](defaultVal: A, parser: Parser[S, U, B]) => Parser[S, U, A \/ B]
    */
-  function option(val, parser) {
-    return mplus(parser, pure(val));
+  function option(defaultVal, parser) {
+    return mplus(parser, pure(defaultVal));
   }
 
   /**
