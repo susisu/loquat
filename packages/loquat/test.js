@@ -9,58 +9,58 @@ describe("loquat", () => {
     const lq = _loquat();
     expect(lq).to.be.an("object");
     expect(lq.Parser).to.be.a("function");
-    expect(lq.extensions).to.deep.equal({});
+    expect(lq.exts).to.deep.equal({});
   });
 
   describe("use", () => {
-    it("should use a plugin", () => {
+    it("should use an extension", () => {
       const lq = _loquat();
-      const plugin = (_core, opts) => {
+      const ext = (_core, opts) => {
         expect(_core).to.be.an("object");
         expect(_core.Parser).to.be.a("function");
         expect(opts).to.be.undefined;
         return { foo: "bar" };
       };
-      lq.use(plugin);
+      lq.use(ext);
       expect(lq.foo).to.equal("bar");
     });
 
-    it("should pass options to a plugin", () => {
+    it("should pass options to an extension", () => {
       const lq = _loquat();
-      const plugin = (_core, opts) => {
+      const ext = (_core, opts) => {
         expect(_core).to.be.an("object");
         expect(_core.Parser).to.be.a("function");
         expect(opts).to.deep.equal({ answer: 42 });
         return { foo: "bar" };
       };
-      lq.use(plugin, { options: { answer: 42 } });
+      lq.use(ext, { options: { answer: 42 } });
       expect(lq.foo).to.equal("bar");
     });
 
-    it("should set the plugin to `extensions` property if name is specified", () => {
+    it("should set the extension to `exts` property if name is specified", () => {
       const lq = _loquat();
-      const plugin = (_core, opts) => {
+      const ext = (_core, opts) => {
         expect(_core).to.be.an("object");
         expect(_core.Parser).to.be.a("function");
         expect(opts).to.be.undefined;
         return { foo: "bar" };
       };
-      lq.use(plugin, { name: "myplugin" });
+      lq.use(ext, { name: "myextension" });
       expect(lq.foo).to.equal("bar");
-      expect(lq.extensions.myplugin).to.deep.equal({ foo: "bar" });
+      expect(lq.exts.myextension).to.deep.equal({ foo: "bar" });
     });
 
     it("should not extract properties to the root if `qualified = true` is specified", () => {
       const lq = _loquat();
-      const plugin = (_core, opts) => {
+      const ext = (_core, opts) => {
         expect(_core).to.be.an("object");
         expect(_core.Parser).to.be.a("function");
         expect(opts).to.be.undefined;
         return { foo: "bar" };
       };
-      lq.use(plugin, { name: "myplugin", qualified: true });
+      lq.use(ext, { name: "myextension", qualified: true });
       expect(lq.foo).to.be.undefined;
-      expect(lq.extensions.myplugin).to.deep.equal({ foo: "bar" });
+      expect(lq.exts.myextension).to.deep.equal({ foo: "bar" });
     });
   });
 });

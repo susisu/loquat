@@ -24,7 +24,7 @@ module.exports = () => {
   const _loquat = Object.assign({}, _core);
 
   Object.defineProperties(_loquat, {
-    "extensions": {
+    "exts": {
       writable    : false,
       configurable: false,
       enumerable  : true,
@@ -44,7 +44,7 @@ module.exports = () => {
       Object.assign(_loquat, _ext);
     }
     if (opts.name !== undefined) {
-      _loquat.extensions[opts.name] = _ext;
+      _loquat.exts[opts.name] = _ext;
     }
     return _ext;
   }
