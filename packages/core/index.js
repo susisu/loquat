@@ -1,5 +1,5 @@
 /*
- * loquat-core
+ * @loquat/core
  *
  * Copyright 2019 Susisu
  *

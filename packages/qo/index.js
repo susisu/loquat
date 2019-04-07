@@ -1,5 +1,5 @@
 /*
- * loquat-qo
+ * @loquat/qo
  *
  * Copyright 2019 Susisu
  *

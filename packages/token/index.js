@@ -1,5 +1,5 @@
 /*
- * loquat-token
+ * @loquat/token
  *
  * Copyright 2019 Susisu
  *

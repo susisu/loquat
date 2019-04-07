@@ -1,5 +1,5 @@
 /*
- * loquat-monad
+ * @loquat/monad
  *
  * Copyright 2019 Susisu
  *

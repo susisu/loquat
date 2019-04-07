@@ -1,5 +1,5 @@
 /*
- * loquat-prim
+ * @loquat/prim
  *
  * Copyright 2019 Susisu
  *

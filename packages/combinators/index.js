@@ -1,5 +1,5 @@
 /*
- * loquat-combinators
+ * @loquat/combinators
  *
  * Copyright 2019 Susisu
  *

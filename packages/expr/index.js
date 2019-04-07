@@ -1,5 +1,5 @@
 /*
- * loquat-expr
+ * @loquat/expr
  *
  * Copyright 2019 Susisu
  *

@@ -1,5 +1,5 @@
 /*
- * loquat-test
+ * @loquat/testutil
  *
  * Copyright 2019 Susisu
  *
