@@ -223,7 +223,7 @@ declare namespace loquat {
   export function labels<A>(parser: Parser<A>, strs: string[]): Parser<A>;
   export function hidden<A>(parser: Parser<A>): Parser<A>;
   export function unexpected(str: string): Parser<never>;
-  export function tryParser<A>(parser: Parser<A>): Parser<A>;
+  export function tryParse<A>(parser: Parser<A>): Parser<A>;
   export function lookAhead<A>(parser: Parser<A>): Parser<A>;
   export function reduceMany<A, B>(
     parser: Parser<A>,
@@ -287,7 +287,7 @@ declare namespace loquat {
   export function manyChars(parser: Parser<char>): Parser<string>;
   export function manyChars1(parser: Parser<char>): Parser<string>;
   export function regexp(re: RegExp, groupId?: int): Parser<string>;
-  export function regExpPrim(re: RegExp): Parser<RegExpExecArray>;
+  export function regexpPrim(re: RegExp): Parser<RegExpExecArray>;
 
   export function choice<A>(parsers: Parser<A>[]): Parser<A>;
   export function option<A, B>(defaultVal: A, parser: Parser<B>): Parser<A | B>;
@@ -306,7 +306,7 @@ declare namespace loquat {
   export function sepEndBy1<A>(parser: Parser<A>, sep: Parser<unknown>): Parser<A[]>;
   export function endBy<A>(parser: Parser<A>, sep: Parser<unknown>): Parser<A[]>;
   export function endBy1<A>(parser: Parser<A>, sep: Parser<unknown>): Parser<A[]>;
-  export function cont<A>(num: int, parser: Parser<A>): Parser<A[]>;
+  export function count<A>(num: int, parser: Parser<A>): Parser<A[]>;
   export function chainl<A>(
     term: Parser<A>,
     op: Parser<(valA: A, valB: A) => A>,
@@ -366,9 +366,9 @@ declare namespace loquat {
   export function sequence<A>(parsers: Parser<A>[]): Parser<A[]>;
   export function sequence_(parsers: Parser<unknown>[]): Parser<undefined>;
   export function mapM<A, B>(func: (val: A) => Parser<B>, arr: A[]): Parser<B[]>;
-  export function mapM<A>(func: (val: A) => Parser<unknown>, arr: A[]): Parser<undefined>;
+  export function mapM_<A>(func: (val: A) => Parser<unknown>, arr: A[]): Parser<undefined>;
   export function forM<A, B>(arr: A[], func: (val: A) => Parser<B>): Parser<B[]>;
-  export function forM<A>(arr: A[], func: (val: A) => Parser<unknown>): Parser<undefined>;
+  export function forM_<A>(arr: A[], func: (val: A) => Parser<unknown>): Parser<undefined>;
   export function filterM<A>(test: (val: A) => Parser<boolean>, arr: A[]): Parser<A[]>;
   export function zipWithM<A, B, C>(
     func: (valA: A, valB: B) => Parser<C>,
@@ -390,7 +390,7 @@ declare namespace loquat {
     initVal: A,
     arr: B[]
   ): Parser<undefined>;
-  export function relicateM<A>(num: int, parser: Parser<A>): Parser<A[]>;
+  export function replicateM<A>(num: int, parser: Parser<A>): Parser<A[]>;
   export function replicateM_(num: int, parser: Parser<unknown>): Parser<undefined>;
   export function guard(cond: boolean): Parser<undefined>;
   export function msum<A>(parsers: Parser<A>[]): Parser<A>;
@@ -491,7 +491,7 @@ declare namespace loquat {
     operator: Parser<string>,
     reservedOp: (name: string) => Parser<undefined>,
   };
-  export function makeTokenparser(def: LanguageDef): TokenParser;
+  export function makeTokenParser(def: LanguageDef): TokenParser;
 }
 
 export = loquat;
