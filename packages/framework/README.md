@@ -1,0 +1,2 @@
+# `@loquat/framework`
+Extension framework.

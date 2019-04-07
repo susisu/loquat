@@ -1,7 +1,7 @@
 {
-  "name": "loquat",
+  "name": "@loquat/framework",
   "version": "3.0.0-alpha.0",
-  "description": "Monadic parser combinators",
+  "description": "Extension framework",
   "keywords": [
     "parsing"
   ],

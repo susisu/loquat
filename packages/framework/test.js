@@ -3,11 +3,11 @@
 const { expect } = require("chai");
 const core = require("@loquat/core");
 
-const loquat = require("./index");
+const framework = require("./index");
 
-describe("loquat", () => {
-  it("should yield a new loquat parsers", () => {
-    const lq = loquat(core);
+describe("framework", () => {
+  it("should yield a new core module using the given factory function", () => {
+    const lq = framework(core);
     expect(lq).to.be.an("object");
     expect(lq.Parser).to.be.a("function");
     expect(lq.exts).to.deep.equal({});
@@ -15,7 +15,7 @@ describe("loquat", () => {
 
   describe("use", () => {
     it("should use an extension", () => {
-      const lq = loquat(core);
+      const lq = framework(core);
       const ext = ($core, opts) => {
         expect($core).to.be.an("object");
         expect($core.Parser).to.be.a("function");
@@ -27,7 +27,7 @@ describe("loquat", () => {
     });
 
     it("should pass options to an extension", () => {
-      const lq = loquat(core);
+      const lq = framework(core);
       const ext = ($core, opts) => {
         expect($core).to.be.an("object");
         expect($core.Parser).to.be.a("function");
@@ -39,7 +39,7 @@ describe("loquat", () => {
     });
 
     it("should set the extension to `exts` property if name is specified", () => {
-      const lq = loquat(core);
+      const lq = framework(core);
       const ext = ($core, opts) => {
         expect($core).to.be.an("object");
         expect($core.Parser).to.be.a("function");
@@ -52,7 +52,7 @@ describe("loquat", () => {
     });
 
     it("should not extract properties to the root if `qualified = true` is specified", () => {
-      const lq = loquat(core);
+      const lq = framework(core);
       const ext = ($core, opts) => {
         expect($core).to.be.an("object");
         expect($core.Parser).to.be.a("function");

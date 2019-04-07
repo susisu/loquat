@@ -1,5 +1,5 @@
 /*
- * loquat
+ * @loquat/framework
  *
  * Copyright 2019 Susisu
  *
