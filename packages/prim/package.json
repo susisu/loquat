@@ -1,6 +1,6 @@
 {
   "name": "@loquat/prim",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.1",
   "description": "Primitive parsers and combinators",
   "keywords": [
     "parsing"
@@ -25,14 +25,14 @@
     "test": "nyc -r html -r text mocha --colors test.js"
   },
   "peerDependencies": {
-    "@loquat/core": "^3.0.0-alpha.0"
+    "@loquat/core": "^3.0.0-alpha.1"
   },
   "devDependencies": {
+    "@loquat/core": "^3.0.0-alpha.1",
+    "@loquat/testutil": "^3.0.0-alpha.1",
     "@susisu/eslint-config": "^0.0.2",
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
-    "@loquat/core": "^3.0.0-alpha.0",
-    "@loquat/testutil": "^3.0.0-alpha.0",
     "mocha": "^6.0.2",
     "nyc": "^13.3.0"
   }

@@ -1,6 +1,6 @@
 {
   "name": "@loquat/testutil",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.1",
   "description": "Test utilities",
   "keywords": [
     "loquat",
@@ -29,10 +29,10 @@
     "chai": "^4.2.0"
   },
   "devDependencies": {
+    "@loquat/core": "^3.0.0-alpha.1",
     "@susisu/eslint-config": "^0.0.2",
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
-    "@loquat/core": "^3.0.0-alpha.0",
     "mocha": "^6.0.2",
     "nyc": "^13.3.0"
   }
