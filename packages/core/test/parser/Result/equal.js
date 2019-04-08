@@ -277,10 +277,10 @@ describe(".equal", () => {
         ),
         "val",
         new State(
-          new Config({ tabWidth: 4, unicode: true }),
-          "rest",
-          new SourcePos("main", 7, 28),
-          "none"
+          new Config({ tabWidth: 8, unicode: false }),
+          "tail",
+          new SourcePos("main", 498, 8, 30),
+          "some"
         )
       );
       expect(Result.equal(resA, resB)).to.be.false;
