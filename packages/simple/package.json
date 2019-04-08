@@ -39,5 +39,8 @@
     "@susisu/eslint-config": "^0.0.2",
     "eslint": "^5.16.0",
     "typescript": "^3.4.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
