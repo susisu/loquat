@@ -1,4 +1,4 @@
-declare module '@loquat/simple' {
+declare module "@loquat/simple" {
   export type int = number;
   export type float = number;
   export type char = string;
