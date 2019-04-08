@@ -1,4 +1,4 @@
-declare namespace loquat {
+declare module '@loquat/simple' {
   export type int = number;
   export type float = number;
   export type char = string;
@@ -493,5 +493,3 @@ declare namespace loquat {
   };
   export function makeTokenParser(def: LanguageDef): TokenParser;
 }
-
-export = loquat;
