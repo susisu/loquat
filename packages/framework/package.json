@@ -16,6 +16,7 @@
   "author": "Susisu <susisu2413@yahoo.co.jp> (https://github.com/susisu)",
   "license": "Apache-2.0",
   "main": "index.js",
+  "files": [],
   "scripts": {
     "lint": "eslint --color *.js",
     "lint:fix": "eslint --color --fix *.js",
