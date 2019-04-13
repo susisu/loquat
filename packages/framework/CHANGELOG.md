@@ -1,4 +1,4 @@
-# 3.0.0 (yyyy-mm-dd)
+# 3.0.0 (2019-04-13)
 ## Breaking changes
 - Remove all default extensions
 - `@loquat/core` is now given as a parameter

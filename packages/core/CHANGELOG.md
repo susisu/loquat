@@ -1,4 +1,4 @@
-# 3.0.0 (yyyy-mm-dd)
+# 3.0.0 (2019-04-13)
 ## Breaking changes
 - Drop support for Node.js v4
 - Add `index` field to `SourcePos`
