@@ -1,6 +1,6 @@
 {
   "name": "@loquat/char",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0-alpha.2",
   "description": "Character parsers",
   "keywords": [
     "parsing"
@@ -25,14 +25,14 @@
     "test": "nyc -r html -r text mocha --colors test.js"
   },
   "dependencies": {
-    "@loquat/prim": "^3.0.0-alpha.1"
+    "@loquat/prim": "^3.0.0-alpha.2"
   },
   "peerDependencies": {
-    "@loquat/core": "^3.0.0-alpha.1"
+    "@loquat/core": "^3.0.0-alpha.2"
   },
   "devDependencies": {
-    "@loquat/core": "^3.0.0-alpha.1",
-    "@loquat/testutil": "^3.0.0-alpha.1",
+    "@loquat/core": "^3.0.0-alpha.2",
+    "@loquat/testutil": "^3.0.0-alpha.2",
     "@susisu/eslint-config": "^0.0.2",
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
