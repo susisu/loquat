@@ -1,4 +1,4 @@
-### https://raw.github.com/github/gitignore/37abd930a6893fd3a716c48934e704795bc2a45c/Node.gitignore
+### https://raw.github.com/github/gitignore/c1b7904af6689bd01646f008b0561d4f19a0e972/Node.gitignore
 
 # Logs
 logs
@@ -6,6 +6,10 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Runtime data
 pids
