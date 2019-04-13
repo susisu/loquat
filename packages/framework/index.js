@@ -24,6 +24,12 @@ module.exports = core => {
   const $loquat = Object.assign({}, $core);
 
   Object.defineProperties($loquat, {
+    "core": {
+      writable    : false,
+      configurable: false,
+      enumerable  : true,
+      value       : $core,
+    },
     "exts": {
       writable    : false,
       configurable: false,

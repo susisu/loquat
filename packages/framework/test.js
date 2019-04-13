@@ -10,7 +10,9 @@ describe("framework", () => {
     const lq = framework(core);
     expect(lq).to.be.an("object");
     expect(lq.Parser).to.be.a("function");
+    expect(lq.core.Parser).to.equal(lq.Parser);
     expect(lq.exts).to.deep.equal({});
+    expect(lq.use).to.be.a("function");
   });
 
   describe("use", () => {
