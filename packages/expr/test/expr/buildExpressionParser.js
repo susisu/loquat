@@ -24,7 +24,7 @@ describe("buildExpressionParser", () => {
       switch (state.input[0]) {
       case csucc:
       {
-        const newPos = state.pos.addChar(csucc);
+        const newPos = state.pos.addChar(csucc, state.config.tabWidth);
         return Result.csucc(
           new StrictParseError(
             newPos,
@@ -41,7 +41,7 @@ describe("buildExpressionParser", () => {
       case cfail:
         return Result.cfail(
           new StrictParseError(
-            state.pos.addChar(cfail),
+            state.pos.addChar(cfail, state.config.tabWidth),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail")]
           ));
       case esucc:
