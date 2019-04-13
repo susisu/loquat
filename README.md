@@ -1,4 +1,6 @@
 # loquat
+[![Build Status](https://travis-ci.com/susisu/loquat.svg?branch=master)](https://travis-ci.com/susisu/loquat)
+
 Monadic parser combinators for JavScript, inspired by [Parsec](https://github.com/haskell/parsec).
 
 ## Packages
