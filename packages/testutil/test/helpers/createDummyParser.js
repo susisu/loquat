@@ -4,7 +4,7 @@ const { expect } = require("chai");
 
 const { SourcePos, ParseError, Config, State, Result } = $core;
 
-const { createDummyParser } = $helper;
+const { createDummyParser } = $helpers;
 
 describe("createDummyParser", () => {
   it("should create a new parser that does nothing", () => {

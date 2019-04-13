@@ -15,7 +15,7 @@ const {
 
 const { OperatorAssoc, Operator, buildExpressionParser } = $expr;
 
-const { createDummyParser } = $testutil.helper;
+const { createDummyParser } = $testutil.helpers;
 
 describe("buildExpressionParser", () => {
   function genP(chars, val) {

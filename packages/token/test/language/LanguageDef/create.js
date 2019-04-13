@@ -4,7 +4,7 @@ const { expect } = require("chai");
 
 const { LanguageDef } = $language;
 
-const { createDummyParser } = $testutil.helper;
+const { createDummyParser } = $testutil.helpers;
 
 describe("create", () => {
   it("should create a new language definition object", () => {

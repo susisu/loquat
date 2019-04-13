@@ -16,7 +16,7 @@
       "globals": {
          "$core": "readonly",
          "$aux": "readonly",
-         "$helper": "readonly"
+         "$helpers": "readonly"
       },
       "rules": {
         "no-invalid-this": "warn",

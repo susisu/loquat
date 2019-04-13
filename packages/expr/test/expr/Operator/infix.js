@@ -4,7 +4,7 @@ const { expect } = require("chai");
 
 const { OperatorType, OperatorAssoc, Operator } = $expr;
 
-const { createDummyParser } = $testutil.helper;
+const { createDummyParser } = $testutil.helpers;
 
 describe("infix", () => {
   it("should create an infix operator object", () => {

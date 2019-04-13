@@ -5,7 +5,7 @@ const { expect } = require("chai");
 const { LanguageDef } = $language;
 const { makeTokenParser } = $token;
 
-const { createDummyParser } = $testutil.helper;
+const { createDummyParser } = $testutil.helpers;
 
 describe("makeTokenParser", () => {
   it("should create an object containing token parsers defined by the definition", () => {

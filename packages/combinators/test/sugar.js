@@ -2,7 +2,7 @@
 
 const { expect } = require("chai");
 
-const { createDummyParser } = $testutil.helper;
+const { createDummyParser } = $testutil.helpers;
 
 describe("sugar", () => {
   it("should contain parser extension methods", () => {

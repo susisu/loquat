@@ -4,7 +4,7 @@ const { expect } = require("chai");
 
 const { OperatorType, Operator } = $expr;
 
-const { createDummyParser } = $testutil.helper;
+const { createDummyParser } = $testutil.helpers;
 
 describe("prefix", () => {
   it("should create a prefix operator object", () => {

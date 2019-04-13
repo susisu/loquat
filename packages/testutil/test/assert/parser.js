@@ -4,7 +4,7 @@ const { expect, AssertionError } = require("chai");
 
 const { Parser, LazyParser } = $core;
 
-const { createDummyParser } = $helper;
+const { createDummyParser } = $helpers;
 
 describe("parser", () => {
   it("should throw AssertionError if the object is not a parser", () => {

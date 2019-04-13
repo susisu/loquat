@@ -4,7 +4,7 @@ const { expect } = require("chai");
 
 const { OperatorType, Operator } = $expr;
 
-const { createDummyParser } = $testutil.helper;
+const { createDummyParser } = $testutil.helpers;
 
 describe("postfix", () => {
   it("should create a postfix operator object", () => {
