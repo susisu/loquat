@@ -1,6 +1,31 @@
 # loquat
-Monadic parser combinators for JavScript.
+Monadic parser combinators for JavScript, inspired by [Parsec](https://github.com/haskell/parsec).
 
+## Packages
+If you are not familiar with loquat, or you are using TypeScript, `@loquat/simple` is recommended.
+
+- [simple](https://github.com/susisu/loquat2/tree/master/packages/simple)
+
+For a more flexible and extensible framework, use `@loquat/framework`.
+
+- [framework](https://github.com/susisu/loquat2/tree/master/packages/framework)
+
+The core features and extensions are provided as separate packages.
+
+- [core](https://github.com/susisu/loquat2/tree/master/packages/core)
+- [prim](https://github.com/susisu/loquat2/tree/master/packages/prim)
+- [char](https://github.com/susisu/loquat2/tree/master/packages/char)
+- [combinators](https://github.com/susisu/loquat2/tree/master/packages/combinators)
+- [monad](https://github.com/susisu/loquat2/tree/master/packages/monad)
+- [expr](https://github.com/susisu/loquat2/tree/master/packages/expr)
+- [qo](https://github.com/susisu/loquat2/tree/master/packages/qo)
+- [token](https://github.com/susisu/loquat2/tree/master/packages/token)
+
+For extension development, a [chai](https://www.chaijs.com) plugin and some test helpers are available.
+
+- [testutil](https://github.com/susisu/loquat2/tree/master/packages/testutil)
+
+## License
 ```
 Copyright 2019 Susisu
 

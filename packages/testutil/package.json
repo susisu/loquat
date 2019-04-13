@@ -3,14 +3,13 @@
   "version": "3.0.0-alpha.1",
   "description": "Test utilities",
   "keywords": [
-    "loquat",
     "testing"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/susisu/loquat2.git"
   },
-  "homepage": "https://github.com/susisu/loquat2#readme",
+  "homepage": "https://github.com/susisu/loquat2/blob/master/packages/testutil#readme",
   "bugs": {
     "url": "https://github.com/susisu/loquat2/issues"
   },
