@@ -8,7 +8,7 @@ npm i @loquat/token
 yarn add @loquat/token
 ```
 
-See also [`@loquat/framework`](https://github.com/susisu/loquat2/tree/master/packages/framework).
+See also [`@loquat/framework`](https://github.com/susisu/loquat/tree/master/packages/framework).
 
 ## Usage
 First, create a language definition.

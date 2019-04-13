@@ -7,11 +7,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/susisu/loquat2.git"
+    "url": "git+https://github.com/susisu/loquat.git"
   },
-  "homepage": "https://github.com/susisu/loquat2/blob/master/packages/token#readme",
+  "homepage": "https://github.com/susisu/loquat/blob/master/packages/token#readme",
   "bugs": {
-    "url": "https://github.com/susisu/loquat2/issues"
+    "url": "https://github.com/susisu/loquat/issues"
   },
   "author": "Susisu <susisu2413@yahoo.co.jp> (https://github.com/susisu)",
   "license": "Apache-2.0",

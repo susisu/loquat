@@ -8,7 +8,7 @@ npm i @loquat/expr
 yarn add @loquat/expr
 ```
 
-See also [`@loquat/framework`](https://github.com/susisu/loquat2/tree/master/packages/framework) and [an example](https://github.com/susisu/loquat2/tree/master/packages/simple/examples/calc.js).
+See also [`@loquat/framework`](https://github.com/susisu/loquat/tree/master/packages/framework) and [an example](https://github.com/susisu/loquat/tree/master/packages/simple/examples/calc.js).
 
 ## License
 ```

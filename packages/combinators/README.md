@@ -8,7 +8,7 @@ npm i @loquat/combinators
 yarn add @loquat/combinators
 ```
 
-See also [`@loquat/framework`](https://github.com/susisu/loquat2/tree/master/packages/framework).
+See also [`@loquat/framework`](https://github.com/susisu/loquat/tree/master/packages/framework).
 
 ## Options
 If `sugar: true` is specified, the method extensions of `Parser` is enabled.

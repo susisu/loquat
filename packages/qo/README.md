@@ -8,7 +8,7 @@ npm i @loquat/qo
 yarn add @loquat/qo
 ```
 
-See also [`@loquat/framework`](https://github.com/susisu/loquat2/tree/master/packages/framework).
+See also [`@loquat/framework`](https://github.com/susisu/loquat/tree/master/packages/framework).
 
 ## Usage
 When writing parsers, `.bind` chains sometimes introduce a kind of *Callback Hell*. But fortunately, you can avoid it using generators to keep your code readable and maintainable!

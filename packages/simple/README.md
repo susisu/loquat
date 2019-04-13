@@ -9,10 +9,10 @@ yarn add @loquat/simple
 ```
 
 ## Examples
-* [json.js](https://github.com/susisu/loquat2/blob/master/packages/simple/examples/json.js): A JSON parser
-* [json_generators.js](https://github.com/susisu/loquat2/blob/master/packages/simple/examples/json_generators.js): A JSON parser using do-notation with generators
-* [calc.js](https://github.com/susisu/loquat2/blob/master/packages/simple/examples/calc.js): A simple calculator, an example of expression parser builder
-* [s_expr.js](https://github.com/susisu/loquat2/blob/master/packages/simple/examples/s_expr.js): An S-expression parser
+* [json.js](https://github.com/susisu/loquat/blob/master/packages/simple/examples/json.js): A JSON parser
+* [json_generators.js](https://github.com/susisu/loquat/blob/master/packages/simple/examples/json_generators.js): A JSON parser using do-notation with generators
+* [calc.js](https://github.com/susisu/loquat/blob/master/packages/simple/examples/calc.js): A simple calculator, an example of expression parser builder
+* [s_expr.js](https://github.com/susisu/loquat/blob/master/packages/simple/examples/s_expr.js): An S-expression parser
 
 ## License
 ```
