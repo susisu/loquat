@@ -21,7 +21,7 @@ const { makeTokenParser } = $token;
 describe("reservedOp", () => {
   function genCharParser(re) {
     return new StrictParser(state => {
-      const unconsed = uncons(state.input, state.config.unicode);
+      const unconsed = uncons(state.input, state.config);
       if (unconsed.empty) {
         return Result.efail(
           new StrictParseError(
