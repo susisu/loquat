@@ -30,7 +30,7 @@ describe("qo", () => {
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
-        ParseError.unknown(initState.pos.setColumn(1)),
+        ParseError.unknown(initState.pos),
         undefined,
         initState
       ));
@@ -43,7 +43,7 @@ describe("qo", () => {
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
-        ParseError.unknown(initState.pos.setColumn(1)),
+        ParseError.unknown(initState.pos),
         "foo",
         initState
       ));
