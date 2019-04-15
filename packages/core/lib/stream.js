@@ -62,14 +62,14 @@ module.exports = ({ $utils }) => {
   }
 
   /**
-   * class ArrayStream[T](arr: Array[T], index: int) extends Stream[ArrayStream[T]] {
+   * class ArrayStream[T](arr: Array[T], index?: int) extends Stream[ArrayStream[T]] {
    *   type Token = T;
    * }
    *
    * `ArrayStream[T]` provides an efficient `Stream[S]` implementation for arrays.
    */
   class ArrayStream {
-    constructor(arr, index) {
+    constructor(arr, index = 0) {
       this._arr   = arr;
       this._index = index;
     }

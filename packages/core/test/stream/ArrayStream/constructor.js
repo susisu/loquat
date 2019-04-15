@@ -20,5 +20,12 @@ describe(".constructor", () => {
       expect(stream.arr).to.deep.equal(["abc", "def", "ghi"]);
       expect(stream.index).to.equal(1);
     }
+    // use default argument
+    {
+      const stream = new ArrayStream(["abc", "def", "ghi"]);
+      expect(stream).to.be.an.instanceOf(ArrayStream);
+      expect(stream.arr).to.deep.equal(["abc", "def", "ghi"]);
+      expect(stream.index).to.equal(0);
+    }
   });
 });
