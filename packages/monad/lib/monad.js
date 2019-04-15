@@ -8,9 +8,8 @@ module.exports = ($core, { $prim }) => {
    * forever: [S, U, A, B](parser: Parser[S, U, A]) => Parser[S, U, B]
    */
   function forever(parser) {
-    return tailRecM(undefined, _ =>
-      map(parser, _ => ({ done: false, value: undefined }))
-    );
+    const p = map(parser, _ => ({ done: false, value: undefined }));
+    return tailRecM(undefined, _ => p);
   }
 
   /**
