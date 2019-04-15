@@ -1,3 +1,9 @@
+# 3.1.0 (2019-04-15)
+## Features
+- Drop `SourcePos#index`
+  - It was just inconsistent, and a kind of mistake.
+- Add default parameter `index = 0` to `ArrayStream` constructor
+
 # 3.0.0 (2019-04-13)
 ## Breaking changes
 - Drop support for Node.js v4
