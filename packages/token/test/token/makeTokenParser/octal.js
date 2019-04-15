@@ -27,13 +27,13 @@ describe("octal", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "O12345670UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = octal.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 9, 1, 10),
+          new SourcePos("main", 1, 10),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
@@ -43,7 +43,7 @@ describe("octal", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "UVW",
-          new SourcePos("main", 9, 1, 10),
+          new SourcePos("main", 1, 10),
           "none"
         )
       ));
@@ -52,13 +52,13 @@ describe("octal", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "o12345670 UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = octal.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 9, 1, 10),
+          new SourcePos("main", 1, 10),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(" ")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
@@ -68,7 +68,7 @@ describe("octal", () => {
         new State(
           new Config({ tabWidth: 8 }),
           " UVW",
-          new SourcePos("main", 9, 1, 10),
+          new SourcePos("main", 1, 10),
           "none"
         )
       ));
@@ -78,13 +78,13 @@ describe("octal", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "oUVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = octal.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
@@ -97,13 +97,13 @@ describe("octal", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = octal.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U"))]
         )
       ));

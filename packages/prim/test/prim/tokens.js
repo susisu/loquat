@@ -19,7 +19,7 @@ const { tokens } = $prim;
 describe("tokens", () => {
   it("should create a parser that parses the given tokens", () => {
     const initConfig = new Config();
-    const initPos = new SourcePos("main", 0, 1, 1);
+    const initPos = new SourcePos("main", 1, 1);
     function generateParser(expectTokens) {
       return tokens(
         expectTokens,
@@ -29,7 +29,7 @@ describe("tokens", () => {
           expect(pos).to.be.an.equalPositionTo(initPos);
           expect(tokens).to.deep.equal(expectTokens);
           expect(config).to.be.an.equalConfigTo(initConfig);
-          return new SourcePos("main", 2, 1, 3);
+          return new SourcePos("main", 1, 3);
         }
       );
     }
@@ -59,12 +59,12 @@ describe("tokens", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
-          ParseError.unknown(new SourcePos("main", 2, 1, 3)),
+          ParseError.unknown(new SourcePos("main", 1, 3)),
           ["A", "B"],
           new State(
             initState.config,
             "C",
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             "none"
           )
         ),
@@ -148,7 +148,7 @@ describe("tokens", () => {
       const initState = new State(
         new Config({ unicode: false }),
         "\uD83C\uDF63ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const expectTokens = ["\uD83C", "\uDF63", "A"];
@@ -160,19 +160,19 @@ describe("tokens", () => {
           expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(tokens).to.deep.equal(expectTokens);
           expect(config).to.be.an.equalConfigTo(initState.config);
-          return new SourcePos("main", 3, 1, 4);
+          return new SourcePos("main", 1, 4);
         }
       );
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
-          ParseError.unknown(new SourcePos("main", 3, 1, 4)),
+          ParseError.unknown(new SourcePos("main", 1, 4)),
           ["\uD83C", "\uDF63", "A"],
           new State(
             initState.config,
             "BC",
-            new SourcePos("main", 3, 1, 4),
+            new SourcePos("main", 1, 4),
             "none"
           )
         ),
@@ -184,7 +184,7 @@ describe("tokens", () => {
       const initState = new State(
         new Config({ unicode: true }),
         "\uD83C\uDF63ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const expectTokens = ["\uD83C\uDF63", "A"];
@@ -196,19 +196,19 @@ describe("tokens", () => {
           expect(pos).to.be.an.equalPositionTo(initState.pos);
           expect(tokens).to.deep.equal(expectTokens);
           expect(config).to.be.an.equalConfigTo(initState.config);
-          return new SourcePos("main", 3, 1, 3);
+          return new SourcePos("main", 1, 3);
         }
       );
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
-          ParseError.unknown(new SourcePos("main", 3, 1, 3)),
+          ParseError.unknown(new SourcePos("main", 1, 3)),
           ["\uD83C\uDF63", "A"],
           new State(
             initState.config,
             "BC",
-            new SourcePos("main", 3, 1, 3),
+            new SourcePos("main", 1, 3),
             "none"
           )
         ),

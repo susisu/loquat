@@ -24,17 +24,17 @@ describe("hexDigit", () => {
       const initState = new State(
         new Config(),
         c + "GHI",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = hexDigit.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        ParseError.unknown(new SourcePos("main", 1, 2)),
         c,
         new State(
           initState.config,
           "GHI",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "none"
         )
       ));
@@ -44,13 +44,13 @@ describe("hexDigit", () => {
       const initState = new State(
         new Config(),
         "GHI",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = hexDigit.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("G")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
@@ -63,13 +63,13 @@ describe("hexDigit", () => {
       const initState = new State(
         new Config(),
         "",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = hexDigit.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
             ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),

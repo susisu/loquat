@@ -20,7 +20,7 @@ describe("fail", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const parser = fail("foo");
@@ -28,7 +28,7 @@ describe("fail", () => {
     const res = parser.run(initState);
     expect(res).to.be.an.equalResultTo(Result.efail(
       new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "foo")]
       )
     ));

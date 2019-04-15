@@ -23,7 +23,7 @@ describe("satisfy", () => {
       const initState = new State(
         new Config(),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = satisfy((char, config) => {
@@ -34,12 +34,12 @@ describe("satisfy", () => {
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        ParseError.unknown(new SourcePos("main", 1, 2)),
         "A",
         new State(
           initState.config,
           "BC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "none"
         )
       ));
@@ -49,7 +49,7 @@ describe("satisfy", () => {
       const initState = new State(
         new Config(),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = satisfy((char, config) => {
@@ -61,7 +61,7 @@ describe("satisfy", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A"))]
         )
       ));
@@ -71,7 +71,7 @@ describe("satisfy", () => {
       const initState = new State(
         new Config(),
         "",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = satisfy((_, _config) => assert.fail("expect function to not be called"));
@@ -79,7 +79,7 @@ describe("satisfy", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "")]
         )
       ));
@@ -92,7 +92,7 @@ describe("satisfy", () => {
       const initState = new State(
         new Config({ unicode: false }),
         "\uD83C\uDF63ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = satisfy((char, config) => {
@@ -103,12 +103,12 @@ describe("satisfy", () => {
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        ParseError.unknown(new SourcePos("main", 1, 2)),
         "\uD83C",
         new State(
           initState.config,
           "\uDF63ABC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "none"
         )
       ));
@@ -118,7 +118,7 @@ describe("satisfy", () => {
       const initState = new State(
         new Config({ unicode: true }),
         "\uD83C\uDF63ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = satisfy((char, config) => {
@@ -129,12 +129,12 @@ describe("satisfy", () => {
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 2)),
+        ParseError.unknown(new SourcePos("main", 1, 2)),
         "\uD83C\uDF63",
         new State(
           initState.config,
           "ABC",
-          new SourcePos("main", 2, 1, 2),
+          new SourcePos("main", 1, 2),
           "none"
         )
       ));

@@ -21,7 +21,7 @@ describe("between", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     // csucc, csucc, csucc
@@ -29,11 +29,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -44,11 +44,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -59,11 +59,11 @@ describe("between", () => {
       const stateC = new State(
         new Config(),
         "restC",
-        new SourcePos("main", 3, 1, 4),
+        new SourcePos("main", 1, 4),
         "someC"
       );
       const errC = new StrictParseError(
-        new SourcePos("main", 3, 1, 4),
+        new SourcePos("main", 1, 4),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -81,11 +81,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -96,11 +96,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -109,7 +109,7 @@ describe("between", () => {
       });
 
       const errC = new StrictParseError(
-        new SourcePos("main", 3, 1, 4),
+        new SourcePos("main", 1, 4),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -127,11 +127,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -142,11 +142,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -157,11 +157,11 @@ describe("between", () => {
       const stateC = new State(
         new Config(),
         "restC",
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         "someC"
       );
       const errC = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -183,11 +183,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -198,11 +198,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -211,7 +211,7 @@ describe("between", () => {
       });
 
       const errC = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -229,11 +229,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -242,7 +242,7 @@ describe("between", () => {
       });
 
       const errP = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -262,11 +262,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -277,11 +277,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -292,11 +292,11 @@ describe("between", () => {
       const stateC = new State(
         new Config(),
         "restC",
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         "someC"
       );
       const errC = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -314,11 +314,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -329,11 +329,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -342,7 +342,7 @@ describe("between", () => {
       });
 
       const errC = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -360,11 +360,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -375,11 +375,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -390,11 +390,11 @@ describe("between", () => {
       const stateC = new State(
         new Config(),
         "restC",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someC"
       );
       const errC = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -416,11 +416,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -431,11 +431,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -444,7 +444,7 @@ describe("between", () => {
       });
 
       const errC = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -464,11 +464,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -477,7 +477,7 @@ describe("between", () => {
       });
 
       const errP = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -495,7 +495,7 @@ describe("between", () => {
     // cfail, *, *
     {
       const errO = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -517,11 +517,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -532,11 +532,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -547,11 +547,11 @@ describe("between", () => {
       const stateC = new State(
         new Config(),
         "restC",
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         "someC"
       );
       const errC = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -569,11 +569,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -584,11 +584,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -597,7 +597,7 @@ describe("between", () => {
       });
 
       const errC = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -615,11 +615,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -630,11 +630,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -645,11 +645,11 @@ describe("between", () => {
       const stateC = new State(
         new Config(),
         "restC",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someC"
       );
       const errC = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -667,11 +667,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -682,11 +682,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -695,7 +695,7 @@ describe("between", () => {
       });
 
       const errC = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -713,11 +713,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -726,7 +726,7 @@ describe("between", () => {
       });
 
       const errP = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -746,11 +746,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -761,11 +761,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -776,11 +776,11 @@ describe("between", () => {
       const stateC = new State(
         new Config(),
         "restC",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someC"
       );
       const errC = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -798,11 +798,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -813,11 +813,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -826,7 +826,7 @@ describe("between", () => {
       });
 
       const errC = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -844,11 +844,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -859,11 +859,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -874,11 +874,11 @@ describe("between", () => {
       const stateC = new State(
         new Config(),
         "restC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someC"
       );
       const errC = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -900,11 +900,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -915,11 +915,11 @@ describe("between", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -928,7 +928,7 @@ describe("between", () => {
       });
 
       const errC = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       );
       const close = new StrictParser(state => {
@@ -948,11 +948,11 @@ describe("between", () => {
       const stateO = new State(
         new Config(),
         "restO",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someO"
       );
       const errO = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {
@@ -961,7 +961,7 @@ describe("between", () => {
       });
 
       const errP = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const p = new StrictParser(state => {
@@ -979,7 +979,7 @@ describe("between", () => {
     // efail, *, *
     {
       const errO = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testO")]
       );
       const open = new StrictParser(state => {

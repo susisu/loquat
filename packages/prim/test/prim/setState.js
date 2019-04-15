@@ -12,19 +12,19 @@ describe("setState", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const parser = setState("some");
     expect(parser).to.be.a.parser;
     const res = parser.run(initState);
     expect(res).to.be.an.equalResultTo(Result.esucc(
-      ParseError.unknown(new SourcePos("main", 0, 1, 1)),
+      ParseError.unknown(new SourcePos("main", 1, 1)),
       undefined,
       new State(
         new Config(),
         "input",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "some"
       )
     ));

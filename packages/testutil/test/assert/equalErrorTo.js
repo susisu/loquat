@@ -9,11 +9,11 @@ describe("equalErrorTo", () => {
     // pos
     {
       const act = new StrictParseError(
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       const exp = new StrictParseError(
-        new SourcePos("lib", 497, 7, 29),
+        new SourcePos("lib", 7, 29),
         [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       expect(() => {
@@ -32,11 +32,11 @@ describe("equalErrorTo", () => {
     // msgs
     {
       const act = new StrictParseError(
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       const exp = new StrictParseError(
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         [ErrorMessage.create(ErrorMessageType.EXPECT, "bar")]
       );
       expect(() => {
@@ -55,11 +55,11 @@ describe("equalErrorTo", () => {
     // both
     {
       const act = new StrictParseError(
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       const exp = new StrictParseError(
-        new SourcePos("lib", 497, 7, 29),
+        new SourcePos("lib", 7, 29),
         [ErrorMessage.create(ErrorMessageType.EXPECT, "bar")]
       );
       expect(() => {
@@ -78,11 +78,11 @@ describe("equalErrorTo", () => {
     // negated
     {
       const act = new StrictParseError(
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       const exp = new StrictParseError(
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       expect(() => {
@@ -105,11 +105,11 @@ describe("equalErrorTo", () => {
   it("should not throw AssertionError if the actual error is equal to the expected one", () => {
     expect(() => {
       const act = new StrictParseError(
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       const exp = new StrictParseError(
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
       );
       expect(act).to.be.an.equalErrorTo(exp);
@@ -130,7 +130,7 @@ describe("equalErrorTo", () => {
       () => {},
     ];
     const exp = new StrictParseError(
-      new SourcePos("main", 496, 6, 28),
+      new SourcePos("main", 6, 28),
       [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
     );
     for (const act of values) {

@@ -26,13 +26,13 @@ describe("natural", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = natural.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
@@ -46,7 +46,7 @@ describe("natural", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "UVW",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "none"
         )
       ));
@@ -55,13 +55,13 @@ describe("natural", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0x12345678UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = natural.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 10, 1, 11),
+          new SourcePos("main", 1, 11),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
@@ -73,7 +73,7 @@ describe("natural", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "UVW",
-          new SourcePos("main", 10, 1, 11),
+          new SourcePos("main", 1, 11),
           "none"
         )
       ));
@@ -82,13 +82,13 @@ describe("natural", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0x90ABCDEFUVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = natural.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 10, 1, 11),
+          new SourcePos("main", 1, 11),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
@@ -100,7 +100,7 @@ describe("natural", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "UVW",
-          new SourcePos("main", 10, 1, 11),
+          new SourcePos("main", 1, 11),
           "none"
         )
       ));
@@ -109,13 +109,13 @@ describe("natural", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0o12345670UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = natural.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 10, 1, 11),
+          new SourcePos("main", 1, 11),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
@@ -127,7 +127,7 @@ describe("natural", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "UVW",
-          new SourcePos("main", 10, 1, 11),
+          new SourcePos("main", 1, 11),
           "none"
         )
       ));
@@ -136,13 +136,13 @@ describe("natural", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "01234567890UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = natural.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 11, 1, 12),
+          new SourcePos("main", 1, 12),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
@@ -154,7 +154,7 @@ describe("natural", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "UVW",
-          new SourcePos("main", 11, 1, 12),
+          new SourcePos("main", 1, 12),
           "none"
         )
       ));
@@ -163,13 +163,13 @@ describe("natural", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "1234567890UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = natural.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 10, 1, 11),
+          new SourcePos("main", 1, 11),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
@@ -181,7 +181,7 @@ describe("natural", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "UVW",
-          new SourcePos("main", 10, 1, 11),
+          new SourcePos("main", 1, 11),
           "none"
         )
       ));
@@ -190,13 +190,13 @@ describe("natural", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "1234567890 UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = natural.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 11, 1, 12),
+          new SourcePos("main", 1, 12),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -206,7 +206,7 @@ describe("natural", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "UVW",
-          new SourcePos("main", 11, 1, 12),
+          new SourcePos("main", 1, 12),
           "none"
         )
       ));
@@ -216,13 +216,13 @@ describe("natural", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0xUVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = natural.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
@@ -234,13 +234,13 @@ describe("natural", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0oUVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = natural.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
@@ -253,13 +253,13 @@ describe("natural", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = natural.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // 0
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // decimal

@@ -22,7 +22,7 @@ describe("tokenPrim", () => {
       const initState = new State(
         new Config(),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = tokenPrim(
@@ -37,7 +37,7 @@ describe("tokenPrim", () => {
           expect(x).to.equal("A");
           expect(xs).to.equal("BC");
           expect(config).to.be.an.equalConfigTo(initState.config);
-          return new SourcePos("main", 1, 1, 2);
+          return new SourcePos("main", 1, 2);
         },
         (userState, pos, x, xs, config) => {
           expect(userState).to.equal("none");
@@ -51,12 +51,12 @@ describe("tokenPrim", () => {
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        ParseError.unknown(new SourcePos("main", 1, 2)),
         "foo",
         new State(
           initState.config,
           "BC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "some"
         )
       )
@@ -67,7 +67,7 @@ describe("tokenPrim", () => {
       const initState = new State(
         new Config(),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = tokenPrim(
@@ -82,18 +82,18 @@ describe("tokenPrim", () => {
           expect(x).to.equal("A");
           expect(xs).to.equal("BC");
           expect(config).to.be.an.equalConfigTo(initState.config);
-          return new SourcePos("main", 1, 1, 2);
+          return new SourcePos("main", 1, 2);
         }
       );
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        ParseError.unknown(new SourcePos("main", 1, 2)),
         "nyancat",
         new State(
           initState.config,
           "BC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "none"
         )
       )
@@ -104,7 +104,7 @@ describe("tokenPrim", () => {
       const initState = new State(
         new Config(),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = tokenPrim(
@@ -124,7 +124,7 @@ describe("tokenPrim", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo")]
         )
       )
@@ -135,7 +135,7 @@ describe("tokenPrim", () => {
       const initState = new State(
         new Config(),
         "",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = tokenPrim(
@@ -148,7 +148,7 @@ describe("tokenPrim", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "")]
         )
       )
@@ -162,7 +162,7 @@ describe("tokenPrim", () => {
       const initState = new State(
         new Config({ unicode: false }),
         "\uD83C\uDF63ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = tokenPrim(
@@ -177,7 +177,7 @@ describe("tokenPrim", () => {
           expect(x).to.equal("\uD83C");
           expect(xs).to.equal("\uDF63ABC");
           expect(config).to.be.an.equalConfigTo(initState.config);
-          return new SourcePos("main", 1, 1, 2);
+          return new SourcePos("main", 1, 2);
         },
         (userState, pos, x, xs, config) => {
           expect(userState).to.equal("none");
@@ -191,23 +191,23 @@ describe("tokenPrim", () => {
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        ParseError.unknown(new SourcePos("main", 1, 2)),
         "foo",
         new State(
           initState.config,
           "\uDF63ABC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "some"
         )
       )
       );
     }
-    // unicode mode
+    // unicode = true
     {
       const initState = new State(
         new Config({ unicode: true }),
         "\uD83C\uDF63ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = tokenPrim(
@@ -222,7 +222,7 @@ describe("tokenPrim", () => {
           expect(x).to.equal("\uD83C\uDF63");
           expect(xs).to.equal("ABC");
           expect(config).to.be.an.equalConfigTo(initState.config);
-          return new SourcePos("main", 2, 1, 2);
+          return new SourcePos("main", 1, 2);
         },
         (userState, pos, x, xs, config) => {
           expect(userState).to.equal("none");
@@ -236,12 +236,12 @@ describe("tokenPrim", () => {
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 2)),
+        ParseError.unknown(new SourcePos("main", 1, 2)),
         "foo",
         new State(
           initState.config,
           "ABC",
-          new SourcePos("main", 2, 1, 2),
+          new SourcePos("main", 1, 2),
           "some"
         )
       )

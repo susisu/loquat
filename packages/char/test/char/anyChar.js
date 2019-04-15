@@ -23,17 +23,17 @@ describe("anyChar", () => {
       const initState = new State(
         new Config(),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = anyChar.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        ParseError.unknown(new SourcePos("main", 1, 2)),
         "A",
         new State(
           initState.config,
           "BC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "none"
         )
       ));
@@ -43,13 +43,13 @@ describe("anyChar", () => {
       const initState = new State(
         new Config(),
         "",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = anyChar.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "")]
         )
       ));
@@ -62,17 +62,17 @@ describe("anyChar", () => {
       const initState = new State(
         new Config({ unicode: false }),
         "\uD83C\uDF63ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = anyChar.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        ParseError.unknown(new SourcePos("main", 1, 2)),
         "\uD83C",
         new State(
           initState.config,
           "\uDF63ABC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "none"
         )
       ));
@@ -82,17 +82,17 @@ describe("anyChar", () => {
       const initState = new State(
         new Config({ unicode: true }),
         "\uD83C\uDF63ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = anyChar.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 2)),
+        ParseError.unknown(new SourcePos("main", 1, 2)),
         "\uD83C\uDF63",
         new State(
           initState.config,
           "ABC",
-          new SourcePos("main", 2, 1, 2),
+          new SourcePos("main", 1, 2),
           "none"
         )
       ));

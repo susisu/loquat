@@ -12,7 +12,7 @@ describe(".fail", () => {
       const res = Result.fail(
         true,
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -25,7 +25,7 @@ describe(".fail", () => {
         success : false,
         consumed: true,
         err     : new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -39,7 +39,7 @@ describe(".fail", () => {
       const res = Result.fail(
         false,
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -52,7 +52,7 @@ describe(".fail", () => {
         success : false,
         consumed: false,
         err     : new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),

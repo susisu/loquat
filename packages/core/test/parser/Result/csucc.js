@@ -10,7 +10,7 @@ describe(".csucc", () => {
   it("should create a consumed success result object", () => {
     const res = Result.csucc(
       new StrictParseError(
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         [
           ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
           ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -22,7 +22,7 @@ describe(".csucc", () => {
       new State(
         new Config({ tabWidth: 4, unicode: true }),
         "rest",
-        new SourcePos("main", 506, 7, 29),
+        new SourcePos("main", 7, 29),
         "none"
       )
     );
@@ -30,7 +30,7 @@ describe(".csucc", () => {
       success : true,
       consumed: true,
       err     : new StrictParseError(
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         [
           ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
           ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -42,7 +42,7 @@ describe(".csucc", () => {
       state: new State(
         new Config({ tabWidth: 4, unicode: true }),
         "rest",
-        new SourcePos("main", 506, 7, 29),
+        new SourcePos("main", 7, 29),
         "none"
       ),
     })).to.be.true;

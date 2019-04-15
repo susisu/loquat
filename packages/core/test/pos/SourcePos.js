@@ -8,7 +8,6 @@ describe("SourcePos", () => {
   require("./SourcePos/constructor");
   require("./SourcePos/toString");
   require("./SourcePos/setName");
-  require("./SourcePos/setIndex");
   require("./SourcePos/setLine");
   require("./SourcePos/setColumn");
   require("./SourcePos/addChar");

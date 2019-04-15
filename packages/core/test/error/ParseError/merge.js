@@ -8,14 +8,14 @@ const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError, LazyParseE
 describe(".merge", () => {
   it("should return a parse error equal to the first argument if the second is unknown but the"
     + " first is not", () => {
-    const posA = new SourcePos("main", 496, 6, 28);
+    const posA = new SourcePos("main", 6, 28);
     const msgsA = [
       ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
       ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
       ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
     ];
-    const posB = new SourcePos("main", 506, 7, 29);
+    const posB = new SourcePos("main", 7, 29);
     const msgsB = [];
     // strict
     {
@@ -48,9 +48,9 @@ describe(".merge", () => {
 
   it("should return a parse error equal to the second argument if the first is unknown but the"
     + " second is not", () => {
-    const posA = new SourcePos("main", 506, 7, 29);
+    const posA = new SourcePos("main", 7, 29);
     const msgsA = [];
-    const posB = new SourcePos("main", 496, 6, 28);
+    const posB = new SourcePos("main", 6, 28);
     const msgsB = [
       ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -88,14 +88,14 @@ describe(".merge", () => {
 
   it("should return a parse error equal to the first element if its position is behind that of the"
     + " second", () => {
-    const posA = new SourcePos("main", 506, 7, 29);
+    const posA = new SourcePos("main", 7, 29);
     const msgsA = [
       ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
       ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
       ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
     ];
-    const posB = new SourcePos("main", 496, 6, 28);
+    const posB = new SourcePos("main", 6, 28);
     const msgsB = [
       ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "A"),
       ErrorMessage.create(ErrorMessageType.UNEXPECT, "B"),
@@ -133,14 +133,14 @@ describe(".merge", () => {
 
   it("should return a parse error equal to the second element if its position is behind that of the"
         + " first", () => {
-    const posA = new SourcePos("main", 496, 6, 28);
+    const posA = new SourcePos("main", 6, 28);
     const msgsA = [
       ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
       ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
       ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
     ];
-    const posB = new SourcePos("main", 506, 7, 29);
+    const posB = new SourcePos("main", 7, 29);
     const msgsB = [
       ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "A"),
       ErrorMessage.create(ErrorMessageType.UNEXPECT, "B"),
@@ -178,7 +178,7 @@ describe(".merge", () => {
 
   it("should return a parse error with the messages of the arguments concatenated if their"
     + " positions are equal", () => {
-    const pos = new SourcePos("foobar", 496, 6, 28);
+    const pos = new SourcePos("foobar", 6, 28);
     const msgsA = [
       ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),

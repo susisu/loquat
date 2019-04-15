@@ -12,7 +12,7 @@ describe(".equal", () => {
     {
       const resA = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -24,13 +24,13 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const resB = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -42,7 +42,7 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
@@ -52,7 +52,7 @@ describe(".equal", () => {
     {
       const resA = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -64,13 +64,13 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const resB = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -82,7 +82,7 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "REST",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "NONE"
         )
       );
@@ -96,7 +96,7 @@ describe(".equal", () => {
     {
       const resA = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -108,13 +108,13 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const resB = Result.esucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -126,7 +126,7 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
@@ -136,7 +136,7 @@ describe(".equal", () => {
     {
       const resA = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -148,13 +148,13 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const resB = Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -169,7 +169,7 @@ describe(".equal", () => {
     {
       const resA = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -181,13 +181,13 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const resB = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "A"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "B"),
@@ -199,7 +199,7 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
@@ -209,7 +209,7 @@ describe(".equal", () => {
     {
       const resA = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -221,13 +221,13 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const resB = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -239,7 +239,7 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
@@ -249,7 +249,7 @@ describe(".equal", () => {
     {
       const resA = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -261,13 +261,13 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const resB = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -279,7 +279,7 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 8, unicode: false }),
           "tail",
-          new SourcePos("main", 498, 8, 30),
+          new SourcePos("main", 8, 30),
           "some"
         )
       );
@@ -289,7 +289,7 @@ describe(".equal", () => {
     {
       const resA = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -301,13 +301,13 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const resB = Result.efail(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "A"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "B"),
@@ -326,7 +326,7 @@ describe(".equal", () => {
     {
       const resA = Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -337,7 +337,7 @@ describe(".equal", () => {
       );
       const resB = Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -354,7 +354,7 @@ describe(".equal", () => {
     {
       const resA = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -366,13 +366,13 @@ describe(".equal", () => {
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "rest",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const resB = Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),

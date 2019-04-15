@@ -22,14 +22,14 @@ describe("msum", () => {
     const initState = new State(
       new Config(),
       "ABC",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const parser = msum([]);
     expect(parser).to.be.a.parser;
     const res = parser.run(initState);
     expect(res).to.be.an.equalResultTo(Result.efail(
-      ParseError.unknown(new SourcePos("main", 0, 1, 1)))
+      ParseError.unknown(new SourcePos("main", 1, 1)))
     );
   });
 
@@ -38,7 +38,7 @@ describe("msum", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     // csucc, *
@@ -46,11 +46,11 @@ describe("msum", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -66,7 +66,7 @@ describe("msum", () => {
     // cfail, *
     {
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -84,11 +84,11 @@ describe("msum", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -104,7 +104,7 @@ describe("msum", () => {
     // efail, csucc
     {
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -114,11 +114,11 @@ describe("msum", () => {
       const stateB = new State(
         new Config(),
         "restB",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         "someB"
       );
       const errB = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const parserB = new StrictParser(state => {
@@ -133,7 +133,7 @@ describe("msum", () => {
     // efail, cfail
     {
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -141,7 +141,7 @@ describe("msum", () => {
         return Result.efail(errA);
       });
       const errB = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const parserB = new StrictParser(state => {
@@ -156,7 +156,7 @@ describe("msum", () => {
     // efail, esucc
     {
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -166,11 +166,11 @@ describe("msum", () => {
       const stateB = new State(
         new Config(),
         "restB",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         "someB"
       );
       const errB = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const parserB = new StrictParser(state => {
@@ -185,7 +185,7 @@ describe("msum", () => {
     // efail, efail
     {
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -193,7 +193,7 @@ describe("msum", () => {
         return Result.efail(errA);
       });
       const errB = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const parserB = new StrictParser(state => {

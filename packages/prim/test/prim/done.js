@@ -22,7 +22,7 @@ describe("done", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     // csucc
@@ -31,14 +31,14 @@ describe("done", () => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           ),
           "foo",
           new State(
             new Config(),
             "rest",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         );
@@ -49,14 +49,14 @@ describe("done", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           ),
           { done: true, value: "foo" },
           new State(
             new Config(),
             "rest",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         ),
@@ -69,7 +69,7 @@ describe("done", () => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           )
         );
@@ -79,7 +79,7 @@ describe("done", () => {
       const res = contParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
         )
       ));
@@ -90,14 +90,14 @@ describe("done", () => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           ),
           "foo",
           new State(
             new Config(),
             "rest",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         );
@@ -108,14 +108,14 @@ describe("done", () => {
       expect(res).to.be.an.equalResultTo(
         Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           ),
           { done: true, value: "foo" },
           new State(
             new Config(),
             "rest",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ),
@@ -128,7 +128,7 @@ describe("done", () => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.efail(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           )
         );
@@ -138,7 +138,7 @@ describe("done", () => {
       const res = contParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
         )
       ));

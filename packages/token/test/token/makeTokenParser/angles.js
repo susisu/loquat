@@ -27,26 +27,26 @@ describe("angles", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "< ABC > DEF",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const p = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(new State(
           new Config({ tabWidth: 8 }),
           "ABC > DEF",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "none"
         ));
         return Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 6, 1, 7),
+            new SourcePos("main", 1, 7),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           ),
           "nyancat",
           new State(
             new Config({ tabWidth: 8 }),
             "> XYZ",
-            new SourcePos("main", 6, 1, 7),
+            new SourcePos("main", 1, 7),
             "some"
           )
         );
@@ -56,7 +56,7 @@ describe("angles", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 8, 1, 9),
+          new SourcePos("main", 1, 9),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -66,7 +66,7 @@ describe("angles", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "XYZ",
-          new SourcePos("main", 8, 1, 9),
+          new SourcePos("main", 1, 9),
           "some"
         )
       ));
@@ -76,19 +76,19 @@ describe("angles", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "< ABC > DEF",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const p = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(new State(
           new Config({ tabWidth: 8 }),
           "ABC > DEF",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "none"
         ));
         return Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 6, 1, 7),
+            new SourcePos("main", 1, 7),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           )
         );
@@ -98,7 +98,7 @@ describe("angles", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 6, 1, 7),
+          new SourcePos("main", 1, 7),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
         )
       ));
@@ -108,26 +108,26 @@ describe("angles", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "< ABC > DEF",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const p = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(new State(
           new Config({ tabWidth: 8 }),
           "ABC > DEF",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "none"
         ));
         return Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           ),
           "nyancat",
           new State(
             new Config({ tabWidth: 8 }),
             "> XYZ",
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             "some"
           )
         );
@@ -137,7 +137,7 @@ describe("angles", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -147,7 +147,7 @@ describe("angles", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "XYZ",
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           "some"
         )
       ));
@@ -157,19 +157,19 @@ describe("angles", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "< ABC > DEF",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const p = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(new State(
           new Config({ tabWidth: 8 }),
           "ABC > DEF",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "none"
         ));
         return Result.efail(
           new StrictParseError(
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           )
         );
@@ -179,7 +179,7 @@ describe("angles", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
             ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -193,7 +193,7 @@ describe("angles", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "ABC > DEF",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const p = new StrictParser(_state => assert.fail("expect function to not be called"));
@@ -202,7 +202,7 @@ describe("angles", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
             ErrorMessage.create(ErrorMessageType.EXPECT, show("<")),
@@ -215,26 +215,26 @@ describe("angles", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "< ABC > DEF",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const p = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(new State(
           new Config({ tabWidth: 8 }),
           "ABC > DEF",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "none"
         ));
         return Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 6, 1, 7),
+            new SourcePos("main", 1, 7),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           ),
           "nyancat",
           new State(
             new Config({ tabWidth: 8 }),
             "XYZ",
-            new SourcePos("main", 6, 1, 7),
+            new SourcePos("main", 1, 7),
             "some"
           )
         );
@@ -244,7 +244,7 @@ describe("angles", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 6, 1, 7),
+          new SourcePos("main", 1, 7),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),

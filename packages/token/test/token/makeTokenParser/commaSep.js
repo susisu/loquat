@@ -82,14 +82,14 @@ describe("commaSep", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "X",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "e")]
           ),
           [],
@@ -103,14 +103,14 @@ describe("commaSep", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "C, C, CX",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 7, 1, 8),
+            new SourcePos("main", 1, 8),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, show(",")),
@@ -120,7 +120,7 @@ describe("commaSep", () => {
           new State(
             new Config({ tabWidth: 8 }),
             "X",
-            new SourcePos("main", 7, 1, 8),
+            new SourcePos("main", 1, 8),
             "none"
           )
         ),
@@ -131,13 +131,13 @@ describe("commaSep", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "C, C, C, X",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 9, 1, 10),
+          new SourcePos("main", 1, 10),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, ""),

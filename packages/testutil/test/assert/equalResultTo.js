@@ -18,20 +18,20 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const exp = Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
@@ -41,27 +41,27 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const exp = Result.esucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
@@ -70,13 +70,13 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
       const exp = Result.efail(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
@@ -86,27 +86,27 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const exp = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.EXPECT, "bar")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
@@ -115,13 +115,13 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
       const exp = Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.EXPECT, "bar")]
         )
       );
@@ -131,27 +131,27 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const exp = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         42,
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
@@ -161,27 +161,27 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const exp = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 8, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "some"
         )
       );
@@ -192,27 +192,27 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const exp = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "INPUT",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "NONE"
         )
       );
@@ -221,27 +221,27 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const exp = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "NYANCAT",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "NONE"
         )
       );
@@ -250,27 +250,27 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const exp = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "NYANCAT",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "INPUT",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
@@ -280,27 +280,27 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "bar",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const exp = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "bar",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
@@ -312,27 +312,27 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "bar",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const exp = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "bar",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
@@ -341,13 +341,13 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
       const exp = Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         )
       );
@@ -358,27 +358,27 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const exp = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "NYANCAT",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
@@ -387,27 +387,27 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const exp = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "INPUT",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
@@ -416,27 +416,27 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const exp = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "NONE"
         )
       );
@@ -445,27 +445,27 @@ describe("equalResultTo", () => {
     expect(() => {
       const act = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "nyancat",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "input",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "none"
         )
       );
       const exp = Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 496, 6, 28),
+          new SourcePos("main", 6, 28),
           [ErrorMessage.create(ErrorMessageType.UNEXPECT, "foo")]
         ),
         "NYANCAT",
         new State(
           new Config({ tabWidth: 4, unicode: true }),
           "INPUT",
-          new SourcePos("main", 497, 7, 29),
+          new SourcePos("main", 7, 29),
           "NONE"
         )
       );

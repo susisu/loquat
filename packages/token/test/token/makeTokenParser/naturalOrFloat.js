@@ -40,14 +40,14 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0xABCDEF.06789UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 8, 1, 9),
+            new SourcePos("main", 1, 9),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(".")),
               ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
@@ -59,7 +59,7 @@ describe("naturalOrFloat", () => {
           new State(
             new Config({ tabWidth: 8 }),
             ".06789UVW",
-            new SourcePos("main", 8, 1, 9),
+            new SourcePos("main", 1, 9),
             "none"
           )
         ),
@@ -70,14 +70,14 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0o12345670.06789UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 10, 1, 11),
+            new SourcePos("main", 1, 11),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(".")),
               ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
@@ -89,7 +89,7 @@ describe("naturalOrFloat", () => {
           new State(
             new Config({ tabWidth: 8 }),
             ".06789UVW",
-            new SourcePos("main", 10, 1, 11),
+            new SourcePos("main", 1, 11),
             "none"
           )
         ),
@@ -100,14 +100,14 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "01234567890UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 11, 1, 12),
+            new SourcePos("main", 1, 12),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
               ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
@@ -123,7 +123,7 @@ describe("naturalOrFloat", () => {
           new State(
             new Config({ tabWidth: 8 }),
             "UVW",
-            new SourcePos("main", 11, 1, 12),
+            new SourcePos("main", 1, 12),
             "none"
           )
         ),
@@ -134,14 +134,14 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "09876.5432e-10UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 14, 1, 15),
+            new SourcePos("main", 1, 15),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
               ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
@@ -153,7 +153,7 @@ describe("naturalOrFloat", () => {
           new State(
             new Config({ tabWidth: 8 }),
             "UVW",
-            new SourcePos("main", 14, 1, 15),
+            new SourcePos("main", 1, 15),
             "none"
           )
         ),
@@ -164,14 +164,14 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0.5432e-10UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 10, 1, 11),
+            new SourcePos("main", 1, 11),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
               ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
@@ -183,7 +183,7 @@ describe("naturalOrFloat", () => {
           new State(
             new Config({ tabWidth: 8 }),
             "UVW",
-            new SourcePos("main", 10, 1, 11),
+            new SourcePos("main", 1, 11),
             "none"
           )
         ),
@@ -194,14 +194,14 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // hexadecimal
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // octal
@@ -219,7 +219,7 @@ describe("naturalOrFloat", () => {
           new State(
             new Config({ tabWidth: 8 }),
             "UVW",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "none"
           )
         ),
@@ -230,14 +230,14 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "1234567890UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 10, 1, 11),
+            new SourcePos("main", 1, 11),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
               ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
@@ -253,7 +253,7 @@ describe("naturalOrFloat", () => {
           new State(
             new Config({ tabWidth: 8 }),
             "UVW",
-            new SourcePos("main", 10, 1, 11),
+            new SourcePos("main", 1, 11),
             "none"
           )
         ),
@@ -264,14 +264,14 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "9876.5432e-10 UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 14, 1, 15),
+            new SourcePos("main", 1, 15),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -281,7 +281,7 @@ describe("naturalOrFloat", () => {
           new State(
             new Config({ tabWidth: 8 }),
             "UVW",
-            new SourcePos("main", 14, 1, 15),
+            new SourcePos("main", 1, 15),
             "none"
           )
         ),
@@ -293,13 +293,13 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0xUVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "hexadecimal digit"),
@@ -311,13 +311,13 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0oUVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "octal digit"),
@@ -329,13 +329,13 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0.UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "fraction"),
@@ -347,13 +347,13 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0eUVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, show("-")),
@@ -369,13 +369,13 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "0e-UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "exponent"),
@@ -387,13 +387,13 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "987.UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "fraction"),
@@ -405,13 +405,13 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "987eUVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, show("-")),
@@ -427,13 +427,13 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "987e-UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 5, 1, 6),
+          new SourcePos("main", 1, 6),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "exponent"),
@@ -446,13 +446,13 @@ describe("naturalOrFloat", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "UVW",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = naturalOrFloat.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // 0
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("U")), // decimal

@@ -22,7 +22,7 @@ describe("sequence_", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     // empty
@@ -41,11 +41,11 @@ describe("sequence_", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -56,11 +56,11 @@ describe("sequence_", () => {
       const stateB = new State(
         new Config(),
         "restB",
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         "someB"
       );
       const errB = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const parserB = new StrictParser(state => {
@@ -78,11 +78,11 @@ describe("sequence_", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -91,7 +91,7 @@ describe("sequence_", () => {
       });
 
       const errB = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const parserB = new StrictParser(state => {
@@ -109,11 +109,11 @@ describe("sequence_", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -124,11 +124,11 @@ describe("sequence_", () => {
       const stateB = new State(
         new Config(),
         "restB",
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         "someB"
       );
       const errB = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const parserB = new StrictParser(state => {
@@ -150,11 +150,11 @@ describe("sequence_", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -163,7 +163,7 @@ describe("sequence_", () => {
       });
 
       const errB = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const parserB = new StrictParser(state => {
@@ -179,7 +179,7 @@ describe("sequence_", () => {
     // cfail, *
     {
       const errA = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -199,11 +199,11 @@ describe("sequence_", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -214,11 +214,11 @@ describe("sequence_", () => {
       const stateB = new State(
         new Config(),
         "restB",
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         "someB"
       );
       const errB = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const parserB = new StrictParser(state => {
@@ -236,11 +236,11 @@ describe("sequence_", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -249,7 +249,7 @@ describe("sequence_", () => {
       });
 
       const errB = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const parserB = new StrictParser(state => {
@@ -267,11 +267,11 @@ describe("sequence_", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -282,11 +282,11 @@ describe("sequence_", () => {
       const stateB = new State(
         new Config(),
         "restB",
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         "someB"
       );
       const errB = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const parserB = new StrictParser(state => {
@@ -308,11 +308,11 @@ describe("sequence_", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {
@@ -321,7 +321,7 @@ describe("sequence_", () => {
       });
 
       const errB = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const parserB = new StrictParser(state => {
@@ -337,7 +337,7 @@ describe("sequence_", () => {
     // efail, *
     {
       const errA = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const parserA = new StrictParser(state => {

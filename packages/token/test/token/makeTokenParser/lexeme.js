@@ -32,21 +32,21 @@ describe("lexeme", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const p = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           ),
           "nyancat",
           new State(
             new Config({ tabWidth: 8 }),
             "{- nyan\ncat -}\n \f\r\v{----}\n-- foobar\n\tXYZ",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         );
@@ -56,7 +56,7 @@ describe("lexeme", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 38, 5, 9),
+          new SourcePos("main", 5, 9),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
@@ -68,7 +68,7 @@ describe("lexeme", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "XYZ",
-          new SourcePos("main", 38, 5, 9),
+          new SourcePos("main", 5, 9),
           "some"
         )
       ));
@@ -78,14 +78,14 @@ describe("lexeme", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const p = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           )
         );
@@ -95,7 +95,7 @@ describe("lexeme", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
         )
       ));
@@ -105,21 +105,21 @@ describe("lexeme", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const p = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           ),
           "nyancat",
           new State(
             new Config({ tabWidth: 8 }),
             "{- nyan\ncat -}\n \f\r\v{----}\n-- foobar\n\tXYZ",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         );
@@ -129,7 +129,7 @@ describe("lexeme", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 37, 5, 9),
+          new SourcePos("main", 5, 9),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
@@ -141,7 +141,7 @@ describe("lexeme", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "XYZ",
-          new SourcePos("main", 37, 5, 9),
+          new SourcePos("main", 5, 9),
           "some"
         )
       ));
@@ -151,14 +151,14 @@ describe("lexeme", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const p = new StrictParser(state => {
         expect(state).to.be.an.equalStateTo(initState);
         return Result.efail(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
           )
         );
@@ -168,7 +168,7 @@ describe("lexeme", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
         )
       ));

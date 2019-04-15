@@ -22,17 +22,17 @@ describe("lookAhead", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const finalState = new State(
       new Config(),
       "rest",
-      new SourcePos("main", 1, 1, 2),
+      new SourcePos("main", 1, 2),
       "some"
     );
     const err = new StrictParseError(
-      new SourcePos("main", 1, 1, 2),
+      new SourcePos("main", 1, 2),
       [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
     );
     // csucc
@@ -45,7 +45,7 @@ describe("lookAhead", () => {
       expect(aheadParser).to.be.a.parser;
       const res = aheadParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
-        ParseError.unknown(new SourcePos("main", 0, 1, 1)),
+        ParseError.unknown(new SourcePos("main", 1, 1)),
         "foo",
         initState
       ));
@@ -70,7 +70,7 @@ describe("lookAhead", () => {
       expect(aheadParser).to.be.a.parser;
       const res = aheadParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
-        ParseError.unknown(new SourcePos("main", 0, 1, 1)),
+        ParseError.unknown(new SourcePos("main", 1, 1)),
         "foo",
         initState
       ));

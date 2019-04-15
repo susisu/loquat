@@ -12,14 +12,12 @@ declare module "@loquat/simple" {
     static init(name: string): SourcePos;
     static equal(posA: SourcePos, posB: SourcePos): boolean;
     static compare(posA: SourcePos, posB: SourcePos): int;
-    constructor(name: string, index: int, line: int, column: int);
+    constructor(name: string, line: int, column: int);
     readonly name: string;
-    readonly index: int;
     readonly line: int;
     readonly column: int;
     toString(): string;
     setName(name: string): SourcePos;
-    setIndex(index: int): SourcePos;
     setLine(line: int): SourcePos;
     setColumn(column: int): SourcePos;
     addChar(char: char, tabWidth: int): SourcePos;

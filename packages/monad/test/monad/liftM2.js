@@ -25,27 +25,27 @@ describe("liftM2", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const stateA = new State(
       new Config(),
       "restA",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "someA"
     );
     const errA = new StrictParseError(
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
     );
     const stateB = new State(
       new Config(),
       "restB",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "someB"
     );
     const errB = new StrictParseError(
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
     );
     // csucc, csucc

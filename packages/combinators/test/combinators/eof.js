@@ -23,13 +23,13 @@ describe("eof", () => {
       const initState = new State(
         new Config(),
         "",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = eof.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
             ErrorMessage.create(ErrorMessageType.EXPECT, "end of input"),
@@ -44,13 +44,13 @@ describe("eof", () => {
       const initState = new State(
         new Config(),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = eof.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.UNEXPECT, show("A")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "end of input"),

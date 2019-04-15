@@ -24,19 +24,19 @@ describe("regexp", () => {
       const initState = new State(
         new Config(),
         "XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(new RegExp("", "u"), 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
-        ParseError.unknown(new SourcePos("main", 0, 1, 1)),
+        ParseError.unknown(new SourcePos("main", 1, 1)),
         "",
         new State(
           new Config(),
           "XYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         )
       ));
@@ -46,19 +46,19 @@ describe("regexp", () => {
       const initState = new State(
         new Config(),
         "XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/.{2}/u, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 3)),
+        ParseError.unknown(new SourcePos("main", 1, 3)),
         "XY",
         new State(
           new Config(),
           "Z",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "none"
         )
       ));
@@ -68,19 +68,19 @@ describe("regexp", () => {
       const initState = new State(
         new Config(),
         "XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/.{2}/u);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 3)),
+        ParseError.unknown(new SourcePos("main", 1, 3)),
         "XY",
         new State(
           new Config(),
           "Z",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "none"
         )
       ));
@@ -90,19 +90,19 @@ describe("regexp", () => {
       const initState = new State(
         new Config(),
         "XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/(.)(.)/u, 2);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 3)),
+        ParseError.unknown(new SourcePos("main", 1, 3)),
         "Y",
         new State(
           new Config(),
           "Z",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "none"
         )
       ));
@@ -112,7 +112,7 @@ describe("regexp", () => {
       const initState = new State(
         new Config(),
         "XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/abc/u, 0);
@@ -120,7 +120,7 @@ describe("regexp", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.EXPECT, show(/abc/u))]
         )
       ));
@@ -133,7 +133,7 @@ describe("regexp", () => {
       const initState = new State(
         new Config(),
         "XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/xy/u, 0);
@@ -141,7 +141,7 @@ describe("regexp", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.EXPECT, show(/xy/u))]
         )
       ));
@@ -151,19 +151,19 @@ describe("regexp", () => {
       const initState = new State(
         new Config(),
         "XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/xy/iu, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 3)),
+        ParseError.unknown(new SourcePos("main", 1, 3)),
         "XY",
         new State(
           new Config(),
           "Z",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "none"
         )
       ));
@@ -176,7 +176,7 @@ describe("regexp", () => {
       const initState = new State(
         new Config(),
         "XY\nZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/XY$/u, 0);
@@ -184,7 +184,7 @@ describe("regexp", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.EXPECT, show(/XY$/u))]
         )
       ));
@@ -194,19 +194,19 @@ describe("regexp", () => {
       const initState = new State(
         new Config(),
         "XY\nZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/XY$/mu, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 3)),
+        ParseError.unknown(new SourcePos("main", 1, 3)),
         "XY",
         new State(
           new Config(),
           "\nZ",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "none"
         )
       ));
@@ -219,19 +219,19 @@ describe("regexp", () => {
       const initState = new State(
         new Config({ unicode: false }),
         "\uD83C\uDF63XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/./, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 1, 1, 2)),
+        ParseError.unknown(new SourcePos("main", 1, 2)),
         "\uD83C",
         new State(
           new Config({ unicode: false }),
           "\uDF63XYZ",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "none"
         )
       ));
@@ -240,7 +240,7 @@ describe("regexp", () => {
       const initState = new State(
         new Config({ unicode: false }),
         "\uD83C\uDF63XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/\u{1F363}/, 0);
@@ -248,7 +248,7 @@ describe("regexp", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.EXPECT, show(/\u{1F363}/))]
         )
       ));
@@ -258,19 +258,19 @@ describe("regexp", () => {
       const initState = new State(
         new Config({ unicode: true }),
         "\uD83C\uDF63XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/./u, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 2)),
+        ParseError.unknown(new SourcePos("main", 1, 2)),
         "\uD83C\uDF63",
         new State(
           new Config({ unicode: true }),
           "XYZ",
-          new SourcePos("main", 2, 1, 2),
+          new SourcePos("main", 1, 2),
           "none"
         )
       ));
@@ -279,19 +279,19 @@ describe("regexp", () => {
       const initState = new State(
         new Config({ unicode: true }),
         "\uD83C\uDF63XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/\u{1F363}/u, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 2, 1, 2)),
+        ParseError.unknown(new SourcePos("main", 1, 2)),
         "\uD83C\uDF63",
         new State(
           new Config({ unicode: true }),
           "XYZ",
-          new SourcePos("main", 2, 1, 2),
+          new SourcePos("main", 1, 2),
           "none"
         )
       ));
@@ -304,7 +304,7 @@ describe("regexp", () => {
       const initState = new State(
         new Config({ unicode: true }),
         ["X", "Y", "Z"],
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/./u, 0);
@@ -318,7 +318,7 @@ describe("regexp", () => {
       const initState = new State(
         new Config({ unicode: true }),
         { uncons: () => ({ empty: true }) },
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/./u, 0);
@@ -336,7 +336,7 @@ describe("regexp", () => {
       const initState = new State(
         new Config({ unicode: true }),
         "\uD83C\uDF63XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/./, 0);
@@ -350,7 +350,7 @@ describe("regexp", () => {
       const initState = new State(
         new Config({ unicode: false }),
         "\uD83C\uDF63XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = regexp(/./u, 0);

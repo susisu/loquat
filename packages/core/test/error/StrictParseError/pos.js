@@ -7,7 +7,7 @@ const { ErrorMessageType, ErrorMessage, StrictParseError } = $error;
 
 describe("#pos", () => {
   it("should get position of the error", () => {
-    const pos = new SourcePos("main", 496, 6, 28);
+    const pos = new SourcePos("main", 6, 28);
     const msgs = [
       ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),

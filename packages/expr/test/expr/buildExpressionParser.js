@@ -106,20 +106,20 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "Ce",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc")]
           ),
           "X",
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         ));
@@ -129,13 +129,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "ce",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail")]
           )
         ));
@@ -145,20 +145,20 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc")]
           ),
           "X",
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -168,13 +168,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "efail")]
           )
         ));
@@ -195,13 +195,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "+Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
@@ -212,7 +212,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         ));
@@ -222,13 +222,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "-Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // prefix
             ]
@@ -240,13 +240,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "*Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // prefix
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -258,7 +258,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -268,13 +268,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "/Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "efail"), // prefix
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -299,13 +299,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E+e",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // postfix
             ]
@@ -314,7 +314,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         ));
@@ -324,13 +324,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E-e",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // postfix
             ]
@@ -342,13 +342,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*e",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
@@ -360,7 +360,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -370,13 +370,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E/e",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
@@ -388,7 +388,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "/e",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -409,13 +409,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E+Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infix
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
@@ -428,7 +428,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         ));
@@ -438,13 +438,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E-Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // infix
             ]
@@ -456,13 +456,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
@@ -489,7 +489,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -499,13 +499,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E/Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
@@ -520,7 +520,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "/Ee",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -530,13 +530,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E*Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
@@ -567,7 +567,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "*Ee",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -589,13 +589,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E+Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixl
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
@@ -608,7 +608,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         ));
@@ -618,13 +618,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E-Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // infixl
             ]
@@ -636,13 +636,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
@@ -664,7 +664,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -674,13 +674,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E/Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
@@ -694,7 +694,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "/Ee",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -705,13 +705,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E+Ce",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // term
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // postfix
@@ -722,7 +722,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             "some"
           )
         ));
@@ -731,13 +731,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E+ce",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // term
             ]
@@ -748,13 +748,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E+Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixl
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
@@ -767,7 +767,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         ));
@@ -776,13 +776,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E+ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixl
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
@@ -796,13 +796,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E-Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // infixl
             ]
@@ -814,13 +814,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E*Ce",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // term
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // postfix
@@ -831,7 +831,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         ));
@@ -840,13 +840,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E*ce",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // term
             ]
@@ -857,13 +857,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E*Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
@@ -889,7 +889,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -898,13 +898,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E*ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
@@ -928,7 +928,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "*ee",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -938,13 +938,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E/Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
@@ -966,7 +966,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "/Ee",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -976,13 +976,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E+E*ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixl
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
@@ -997,7 +997,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "*ee",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         ));
@@ -1019,13 +1019,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E+Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixr
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
@@ -1038,7 +1038,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         ));
@@ -1048,13 +1048,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E-Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // infixr
             ]
@@ -1066,13 +1066,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
@@ -1089,7 +1089,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -1099,13 +1099,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E/Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
@@ -1119,7 +1119,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "/Ee",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -1130,13 +1130,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E+Ce",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // term
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // postfix
@@ -1147,7 +1147,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             "some"
           )
         ));
@@ -1156,13 +1156,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E+ce",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // term
             ]
@@ -1173,13 +1173,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E+Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixr
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
@@ -1192,7 +1192,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         ));
@@ -1201,13 +1201,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E+ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixr
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
@@ -1221,13 +1221,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E-Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // infixr
             ]
@@ -1239,13 +1239,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E*Ce",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // term
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // postfix
@@ -1256,7 +1256,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         ));
@@ -1265,13 +1265,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E*ce",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "cfail"), // term
             ]
@@ -1282,13 +1282,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E*Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
@@ -1309,7 +1309,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -1318,13 +1318,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E*ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
@@ -1343,7 +1343,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "*ee",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -1353,13 +1353,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E*E*Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
@@ -1384,7 +1384,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "e",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -1393,13 +1393,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E+E*ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "csucc"), // infixr
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
@@ -1414,7 +1414,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "*ee",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "some"
           )
         ));
@@ -1424,13 +1424,13 @@ describe("buildExpressionParser", () => {
         const initState = new State(
           new Config(),
           "E*E*E*E*ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // prefix
               ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"),   // term
@@ -1457,7 +1457,7 @@ describe("buildExpressionParser", () => {
           new State(
             initState.config,
             "*ee",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "some"
           )
         ));
@@ -1479,13 +1479,13 @@ describe("buildExpressionParser", () => {
       const initState = new State(
         new Config(),
         "E*E&Ee",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.EXPECT, ""),       // prefix
             ErrorMessage.create(ErrorMessageType.MESSAGE, "esucc"), // term
@@ -1513,7 +1513,7 @@ describe("buildExpressionParser", () => {
         new State(
           initState.config,
           "&Ee",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "some"
         )
       ));
@@ -1532,13 +1532,13 @@ describe("buildExpressionParser", () => {
       const initState = new State(
         new Config(),
         "E*E&Ee",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // prefix
             ErrorMessage.create(ErrorMessageType.EXPECT, ""),         // prefix
@@ -1570,7 +1570,7 @@ describe("buildExpressionParser", () => {
         new State(
           initState.config,
           "e",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "some"
         )
       ));

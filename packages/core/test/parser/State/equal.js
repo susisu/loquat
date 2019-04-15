@@ -13,13 +13,13 @@ describe(".equal", () => {
       const stateA = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const stateB = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       expect(State.equal(stateA, stateB)).to.be.true;
@@ -30,13 +30,13 @@ describe(".equal", () => {
       const stateA = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const stateB = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       expect(State.equal(stateA, stateB, undefined, undefined)).to.be.true;
@@ -47,13 +47,13 @@ describe(".equal", () => {
       const stateA = new State(
         new Config({ tabWidth: 4, unicode: true }),
         ["foo", "bar", "baz"],
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const stateB = new State(
         new Config({ tabWidth: 4, unicode: true }),
         ["foo", "bar", "baz"],
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "NONE"
       );
       const inputEqual = chai.util.eql;
@@ -69,13 +69,13 @@ describe(".equal", () => {
       const stateA = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const stateB = new State(
         new Config({ tabWidth: 8, unicode: false }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       expect(State.equal(stateA, stateB)).to.be.false;
@@ -86,13 +86,13 @@ describe(".equal", () => {
       const stateA = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const stateB = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "FOO",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       expect(State.equal(stateA, stateB)).to.be.false;
@@ -103,13 +103,13 @@ describe(".equal", () => {
       const stateA = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const stateB = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("lib", 497, 7, 29),
+        new SourcePos("lib", 7, 29),
         "none"
       );
       expect(State.equal(stateA, stateB)).to.be.false;
@@ -120,13 +120,13 @@ describe(".equal", () => {
       const stateA = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const stateB = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "NONE"
       );
       expect(State.equal(stateA, stateB)).to.be.false;
@@ -137,13 +137,13 @@ describe(".equal", () => {
       const stateA = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const stateB = new State(
         new Config({ tabWidth: 8, unicode: false }),
         "FOO",
-        new SourcePos("lib", 497, 7, 29),
+        new SourcePos("lib", 7, 29),
         "NONE"
       );
       expect(State.equal(stateA, stateB)).to.be.false;
@@ -154,13 +154,13 @@ describe(".equal", () => {
       const stateA = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const stateB = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const inputEqual = (_a, _b) => false;
@@ -171,13 +171,13 @@ describe(".equal", () => {
       const stateA = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const stateB = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const userStateEqual = (_a, _b) => false;

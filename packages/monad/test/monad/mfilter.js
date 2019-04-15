@@ -21,7 +21,7 @@ describe("mfilter", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     // csucc
@@ -29,11 +29,11 @@ describe("mfilter", () => {
       const finalState = new State(
         new Config(),
         "rest",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parser = new StrictParser(state => {
@@ -66,7 +66,7 @@ describe("mfilter", () => {
     // cfail
     {
       const err = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parser = new StrictParser(state => {
@@ -84,11 +84,11 @@ describe("mfilter", () => {
       const finalState = new State(
         new Config(),
         "rest",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parser = new StrictParser(state => {
@@ -121,7 +121,7 @@ describe("mfilter", () => {
     // efail
     {
       const err = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parser = new StrictParser(state => {

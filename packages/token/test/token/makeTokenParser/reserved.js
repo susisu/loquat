@@ -71,13 +71,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: false }),
           "nyan0CAT XYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 9, 1, 10),
+            new SourcePos("main", 1, 10),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -87,7 +87,7 @@ describe("reserved", () => {
           new State(
             new Config({ tabWidth: 8, unicode: false }),
             "XYZ",
-            new SourcePos("main", 9, 1, 10),
+            new SourcePos("main", 1, 10),
             "none"
           )
         ));
@@ -96,13 +96,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: false }),
           "NYAN0CAT XYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("N")),
               ErrorMessage.create(ErrorMessageType.EXPECT, show("nyan0CAT")),
@@ -114,13 +114,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: false }),
           "nyan XYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(" ")),
               ErrorMessage.create(ErrorMessageType.EXPECT, show("nyan0CAT")),
@@ -132,13 +132,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: false }),
           "nyan0CATXYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 9, 1, 10),
+            new SourcePos("main", 1, 10),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "C"),
               ErrorMessage.create(ErrorMessageType.UNEXPECT, show("X")),
@@ -151,13 +151,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: false }),
           "XYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, show("nyan0CAT")),
@@ -174,13 +174,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: false }),
           "\uD83C\uDF63 XYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 3, 1, 4),
+            new SourcePos("main", 1, 4),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -190,7 +190,7 @@ describe("reserved", () => {
           new State(
             new Config({ tabWidth: 8, unicode: false }),
             "XYZ",
-            new SourcePos("main", 3, 1, 4),
+            new SourcePos("main", 1, 4),
             "none"
           )
         ));
@@ -199,13 +199,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: true }),
           "\uD83C\uDF63 XYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 3, 1, 3),
+            new SourcePos("main", 1, 3),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -215,7 +215,7 @@ describe("reserved", () => {
           new State(
             new Config({ tabWidth: 8, unicode: true }),
             "XYZ",
-            new SourcePos("main", 3, 1, 3),
+            new SourcePos("main", 1, 3),
             "none"
           )
         ));
@@ -239,13 +239,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: false }),
           "nyan0CAT XYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 9, 1, 10),
+            new SourcePos("main", 1, 10),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -255,7 +255,7 @@ describe("reserved", () => {
           new State(
             new Config({ tabWidth: 8, unicode: false }),
             "XYZ",
-            new SourcePos("main", 9, 1, 10),
+            new SourcePos("main", 1, 10),
             "none"
           )
         ));
@@ -264,13 +264,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: false }),
           "NYAN0cat XYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 9, 1, 10),
+            new SourcePos("main", 1, 10),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -280,7 +280,7 @@ describe("reserved", () => {
           new State(
             new Config({ tabWidth: 8, unicode: false }),
             "XYZ",
-            new SourcePos("main", 9, 1, 10),
+            new SourcePos("main", 1, 10),
             "none"
           )
         ));
@@ -289,13 +289,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: false }),
           "nyan XYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 4, 1, 5),
+            new SourcePos("main", 1, 5),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(" ")),
               ErrorMessage.create(ErrorMessageType.EXPECT, show("nyan0CAT")),
@@ -307,13 +307,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: false }),
           "nyan0 XYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 5, 1, 6),
+            new SourcePos("main", 1, 6),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(" ")),
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(" ")),
@@ -326,13 +326,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: false }),
           "nyan0CATXYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 9, 1, 10),
+            new SourcePos("main", 1, 10),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "C"),
               ErrorMessage.create(ErrorMessageType.UNEXPECT, show("X")),
@@ -345,13 +345,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: false }),
           "XYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
@@ -369,13 +369,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: false }),
           "\uD83C\uDF63 XYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 3, 1, 4),
+            new SourcePos("main", 1, 4),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -385,7 +385,7 @@ describe("reserved", () => {
           new State(
             new Config({ tabWidth: 8, unicode: false }),
             "XYZ",
-            new SourcePos("main", 3, 1, 4),
+            new SourcePos("main", 1, 4),
             "none"
           )
         ));
@@ -394,13 +394,13 @@ describe("reserved", () => {
         const initState = new State(
           new Config({ tabWidth: 8, unicode: true }),
           "\uD83C\uDF63 XYZ",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         );
         const res = parser.run(initState);
         expect(res).to.be.an.equalResultTo(Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 3, 1, 3),
+            new SourcePos("main", 1, 3),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -410,7 +410,7 @@ describe("reserved", () => {
           new State(
             new Config({ tabWidth: 8, unicode: true }),
             "XYZ",
-            new SourcePos("main", 3, 1, 3),
+            new SourcePos("main", 1, 3),
             "none"
           )
         ));
@@ -428,13 +428,13 @@ describe("reserved", () => {
     const initState = new State(
       new Config({ tabWidth: 8 }),
       "XYZ",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const res = parser.run(initState);
     expect(res).to.be.an.equalResultTo(Result.efail(
       new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "identifier parser(s) not specified")]
       )
     ));

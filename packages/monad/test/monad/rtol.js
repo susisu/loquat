@@ -21,7 +21,7 @@ describe("rtol", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     // csucc, csucc
@@ -29,11 +29,11 @@ describe("rtol", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
@@ -47,11 +47,11 @@ describe("rtol", () => {
       const stateB = new State(
         new Config(),
         "restB",
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         "someB"
       );
       const errB = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
@@ -74,11 +74,11 @@ describe("rtol", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
@@ -90,7 +90,7 @@ describe("rtol", () => {
       };
 
       const errB = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
@@ -113,11 +113,11 @@ describe("rtol", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
@@ -131,11 +131,11 @@ describe("rtol", () => {
       const stateB = new State(
         new Config(),
         "restB",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         "someB"
       );
       const errB = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
@@ -158,11 +158,11 @@ describe("rtol", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
@@ -174,7 +174,7 @@ describe("rtol", () => {
       };
 
       const errB = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
@@ -195,7 +195,7 @@ describe("rtol", () => {
     // cfail, *
     {
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
@@ -220,11 +220,11 @@ describe("rtol", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
@@ -238,11 +238,11 @@ describe("rtol", () => {
       const stateB = new State(
         new Config(),
         "restB",
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         "someB"
       );
       const errB = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
@@ -265,11 +265,11 @@ describe("rtol", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
@@ -281,7 +281,7 @@ describe("rtol", () => {
       };
 
       const errB = new StrictParseError(
-        new SourcePos("main", 2, 1, 3),
+        new SourcePos("main", 1, 3),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
@@ -304,11 +304,11 @@ describe("rtol", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
@@ -322,11 +322,11 @@ describe("rtol", () => {
       const stateB = new State(
         new Config(),
         "restB",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         "someB"
       );
       const errB = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
@@ -349,11 +349,11 @@ describe("rtol", () => {
       const stateA = new State(
         new Config(),
         "restA",
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         "someA"
       );
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {
@@ -365,7 +365,7 @@ describe("rtol", () => {
       };
 
       const errB = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       );
       const funcB = val => {
@@ -386,7 +386,7 @@ describe("rtol", () => {
     // efail, *
     {
       const errA = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       );
       const funcA = val => {

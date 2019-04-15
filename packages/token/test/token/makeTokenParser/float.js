@@ -34,14 +34,14 @@ describe("float", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "12345.06789XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = float.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 11, 1, 12),
+            new SourcePos("main", 1, 12),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
@@ -55,7 +55,7 @@ describe("float", () => {
           new State(
             new Config({ tabWidth: 8 }),
             "XYZ",
-            new SourcePos("main", 11, 1, 12),
+            new SourcePos("main", 1, 12),
             "none"
           )
         ),
@@ -66,14 +66,14 @@ describe("float", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "98765432E10XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = float.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 11, 1, 12),
+            new SourcePos("main", 1, 12),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
@@ -85,7 +85,7 @@ describe("float", () => {
           new State(
             new Config({ tabWidth: 8 }),
             "XYZ",
-            new SourcePos("main", 11, 1, 12),
+            new SourcePos("main", 1, 12),
             "none"
           )
         ),
@@ -96,14 +96,14 @@ describe("float", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "98765432e+10XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = float.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 12, 1, 13),
+            new SourcePos("main", 1, 13),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
@@ -115,7 +115,7 @@ describe("float", () => {
           new State(
             new Config({ tabWidth: 8 }),
             "XYZ",
-            new SourcePos("main", 12, 1, 13),
+            new SourcePos("main", 1, 13),
             "none"
           )
         ),
@@ -126,14 +126,14 @@ describe("float", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "98765432e-10XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = float.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 12, 1, 13),
+            new SourcePos("main", 1, 13),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
@@ -145,7 +145,7 @@ describe("float", () => {
           new State(
             new Config({ tabWidth: 8 }),
             "XYZ",
-            new SourcePos("main", 12, 1, 13),
+            new SourcePos("main", 1, 13),
             "none"
           )
         ),
@@ -156,14 +156,14 @@ describe("float", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "9876.5432e-10XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = float.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 13, 1, 14),
+            new SourcePos("main", 1, 14),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
@@ -175,7 +175,7 @@ describe("float", () => {
           new State(
             new Config({ tabWidth: 8 }),
             "XYZ",
-            new SourcePos("main", 13, 1, 14),
+            new SourcePos("main", 1, 14),
             "none"
           )
         ),
@@ -186,14 +186,14 @@ describe("float", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "9876.5432e-10 XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = float.run(initState);
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 14, 1, 15),
+            new SourcePos("main", 1, 15),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -203,7 +203,7 @@ describe("float", () => {
           new State(
             new Config({ tabWidth: 8 }),
             "XYZ",
-            new SourcePos("main", 14, 1, 15),
+            new SourcePos("main", 1, 15),
             "none"
           )
         ),
@@ -215,13 +215,13 @@ describe("float", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "123XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = float.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
@@ -237,13 +237,13 @@ describe("float", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "123.XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = float.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "fraction"),
@@ -255,13 +255,13 @@ describe("float", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "123eXYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = float.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, show("-")),
@@ -277,13 +277,13 @@ describe("float", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "123e-XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = float.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 5, 1, 6),
+          new SourcePos("main", 1, 6),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "exponent"),
@@ -295,13 +295,13 @@ describe("float", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "123e+XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = float.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 5, 1, 6),
+          new SourcePos("main", 1, 6),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "exponent"),
@@ -313,13 +313,13 @@ describe("float", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "123.456eXYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = float.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 8, 1, 9),
+          new SourcePos("main", 1, 9),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, show("-")),
@@ -336,13 +336,13 @@ describe("float", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = float.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "float"),

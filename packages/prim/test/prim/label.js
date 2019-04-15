@@ -21,18 +21,18 @@ describe("label", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const finalState = new State(
       new Config(),
       "rest",
-      new SourcePos("main", 1, 1, 2),
+      new SourcePos("main", 1, 2),
       "some"
     );
     // unknown error case
     {
-      const err = ParseError.unknown(new SourcePos("main", 1, 1, 2));
+      const err = ParseError.unknown(new SourcePos("main", 1, 2));
       // csucc
       {
         const parser = new StrictParser(state => {
@@ -77,7 +77,7 @@ describe("label", () => {
         const res = labelled.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [ErrorMessage.create(ErrorMessageType.EXPECT, "label")]
           )
         ));
@@ -86,7 +86,7 @@ describe("label", () => {
     // known error case
     {
       const err = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [
           ErrorMessage.create(ErrorMessageType.EXPECT, "expect1"),
           ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
@@ -126,7 +126,7 @@ describe("label", () => {
         const res = labelled.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
               ErrorMessage.create(ErrorMessageType.EXPECT, "label"),
@@ -147,7 +147,7 @@ describe("label", () => {
         const res = labelled.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
               ErrorMessage.create(ErrorMessageType.EXPECT, "label"),

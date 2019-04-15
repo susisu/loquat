@@ -24,17 +24,17 @@ describe("tab", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "\tABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = tab.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
-        ParseError.unknown(new SourcePos("main", 1, 1, 9)),
+        ParseError.unknown(new SourcePos("main", 1, 9)),
         "\t",
         new State(
           initState.config,
           "ABC",
-          new SourcePos("main", 1, 1, 9),
+          new SourcePos("main", 1, 9),
           "none"
         )
       ));
@@ -44,13 +44,13 @@ describe("tab", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = tab.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "tab"),
@@ -63,13 +63,13 @@ describe("tab", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = tab.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, ""),
             ErrorMessage.create(ErrorMessageType.EXPECT, "tab"),

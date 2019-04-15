@@ -26,13 +26,13 @@ describe("decimal", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "1234567890XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = decimal.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 10, 1, 11),
+          new SourcePos("main", 1, 11),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
@@ -42,7 +42,7 @@ describe("decimal", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "XYZ",
-          new SourcePos("main", 10, 1, 11),
+          new SourcePos("main", 1, 11),
           "none"
         )
       ));
@@ -51,13 +51,13 @@ describe("decimal", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "1234567890 XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = decimal.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 10, 1, 11),
+          new SourcePos("main", 1, 11),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(" ")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),
@@ -67,7 +67,7 @@ describe("decimal", () => {
         new State(
           new Config({ tabWidth: 8 }),
           " XYZ",
-          new SourcePos("main", 10, 1, 11),
+          new SourcePos("main", 1, 11),
           "none"
         )
       ));
@@ -77,13 +77,13 @@ describe("decimal", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = decimal.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, "digit"),

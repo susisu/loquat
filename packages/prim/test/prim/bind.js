@@ -22,27 +22,27 @@ describe("bind", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const stateA = new State(
       new Config(),
       "restA",
-      new SourcePos("main", 1, 1, 2),
+      new SourcePos("main", 1, 2),
       "someA"
     );
     const errA = new StrictParseError(
-      new SourcePos("main", 1, 1, 2),
+      new SourcePos("main", 1, 2),
       [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
     );
     const stateB = new State(
       new Config(),
       "restB",
-      new SourcePos("main", 1, 1, 2),
+      new SourcePos("main", 1, 2),
       "someB"
     );
     const errB = new StrictParseError(
-      new SourcePos("main", 1, 1, 2),
+      new SourcePos("main", 1, 2),
       [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
     );
     // csucc, csucc
@@ -219,7 +219,7 @@ describe("bind", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     // pure x >>= func = func x
@@ -227,11 +227,11 @@ describe("bind", () => {
       const finalState = new State(
         new Config(),
         "rest",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const funcs = [
@@ -252,11 +252,11 @@ describe("bind", () => {
       const finalState = new State(
         new Config(),
         "rest",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parsers = [
@@ -277,11 +277,11 @@ describe("bind", () => {
       const stateP = new State(
         new Config(),
         "restP",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someP"
       );
       const errP = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testP")]
       );
       const parsers = [
@@ -294,11 +294,11 @@ describe("bind", () => {
       const stateF = new State(
         new Config(),
         "restF",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someF"
       );
       const errF = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testF")]
       );
       const fs = [
@@ -311,11 +311,11 @@ describe("bind", () => {
       const stateG = new State(
         new Config(),
         "restG",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "someG"
       );
       const errG = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testG")]
       );
       const gs = [

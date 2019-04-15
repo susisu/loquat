@@ -22,17 +22,17 @@ describe("notFollowedBy", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const finalState = new State(
       new Config(),
       "rest",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "some"
     );
     const err = new StrictParseError(
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
     );
     // csucc
@@ -46,7 +46,7 @@ describe("notFollowedBy", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, show("foo")),
@@ -65,7 +65,7 @@ describe("notFollowedBy", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
         ),
         undefined,
@@ -83,7 +83,7 @@ describe("notFollowedBy", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, show("foo")),
@@ -102,7 +102,7 @@ describe("notFollowedBy", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
         ),
         undefined,

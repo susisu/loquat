@@ -5,7 +5,7 @@ module.exports = () => {
   const LF = 0xA;
 
   /**
-   * class SourcePos(name: string, index:int, line: int, column: int) {
+   * class SourcePos(name: string, line: int, column: int) {
    *   static init(name: string): SourcePos;
    *   static equal(posA: SourcePos, posB; SourcePos): boolean;
    *   static compare(posA: SourcePos, posB: SourcePos): int;
@@ -23,10 +23,10 @@ module.exports = () => {
     /**
      * SourcePos.init(name: string): SourcePos
      *
-     * Creates a new `SourcePos` with the initial position `(index, line, column) = (0, 1, 1)`.
+     * Creates a new `SourcePos` with the initial position `(line, column) = (1, 1)`.
      */
     static init(name) {
-      return new SourcePos(name, 0, 1, 1);
+      return new SourcePos(name, 1, 1);
     }
 
     /**
@@ -34,7 +34,6 @@ module.exports = () => {
      */
     static equal(posA, posB) {
       return posA.name   === posB.name
-          && posA.index  === posB.index
           && posA.line   === posB.line
           && posA.column === posB.column;
     }
@@ -48,8 +47,6 @@ module.exports = () => {
     static compare(posA, posB) {
       return posA.name   < posB.name   ? -1
            : posA.name   > posB.name   ? 1
-           : posA.index  < posB.index  ? -1
-           : posA.index  > posB.index  ? 1
            : posA.line   < posB.line   ? -1
            : posA.line   > posB.line   ? 1
            : posA.column < posB.column ? -1
@@ -57,19 +54,14 @@ module.exports = () => {
                                        : 0;
     }
 
-    constructor(name, index, line, column) {
+    constructor(name, line, column) {
       this._name   = name;
-      this._index  = index;
       this._line   = line;
       this._column = column;
     }
 
     get name() {
       return this._name;
-    }
-
-    get index() {
-      return this._index;
     }
 
     get line() {
@@ -96,16 +88,7 @@ module.exports = () => {
      * Creates a copy of the position with `name` updated.
      */
     setName(name) {
-      return new SourcePos(name, this.index, this.line, this.column);
-    }
-
-    /**
-     * SourcePos#setIndex(index: int): SourcePos
-     *
-     * Creates a copy of the position with `index` updated.
-     */
-    setIndex(index) {
-      return new SourcePos(this.name, index, this.line, this.column);
+      return new SourcePos(name, this.line, this.column);
     }
 
     /**
@@ -114,7 +97,7 @@ module.exports = () => {
      * Creates a copy of the position with `line` updated.
      */
     setLine(line) {
-      return new SourcePos(this.name, this.index, line, this.column);
+      return new SourcePos(this.name, line, this.column);
     }
 
     /**
@@ -123,7 +106,7 @@ module.exports = () => {
      * Creates a copy of the position with `column` updated.
      */
     setColumn(column) {
-      return new SourcePos(this.name, this.index, this.line, column);
+      return new SourcePos(this.name, this.line, column);
     }
 
     /**
@@ -136,18 +119,17 @@ module.exports = () => {
       // - `if` is faster than `switch`
       // - comparing strings is faster than character codes
       if (char === "") {
-        return new SourcePos(this.name, this.index, this.line, this.column);
+        return new SourcePos(this.name, this.line, this.column);
       } else if (char === "\n") {
-        return new SourcePos(this.name, this.index + 1, this.line + 1, 1);
+        return new SourcePos(this.name, this.line + 1, 1);
       } else if (char === "\t") {
         return new SourcePos(
           this.name,
-          this.index + 1,
           this.line,
           this.column + tabWidth - (this.column - 1) % tabWidth
         );
       } else {
-        return new SourcePos(this.name, this.index + char.length, this.line, this.column + 1);
+        return new SourcePos(this.name, this.line, this.column + 1);
       }
     }
 
@@ -162,7 +144,6 @@ module.exports = () => {
       // - comparing character codes is faster than strings
       let line = this.line;
       let column = this.column;
-      const len = str.length;
       if (unicode) {
         for (const char of str) {
           switch (char.charCodeAt(0)) {
@@ -178,6 +159,7 @@ module.exports = () => {
           }
         }
       } else {
+        const len = str.length;
         for (let i = 0; i < len; i++) {
           switch (str.charCodeAt(i)) {
           case LF:
@@ -192,7 +174,7 @@ module.exports = () => {
           }
         }
       }
-      return new SourcePos(this.name, this.index + len, line, column);
+      return new SourcePos(this.name, line, column);
     }
   }
 

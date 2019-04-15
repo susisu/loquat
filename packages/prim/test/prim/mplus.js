@@ -22,27 +22,27 @@ describe("mplus", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const stateA = new State(
       new Config(),
       "restA",
-      new SourcePos("main", 1, 1, 2),
+      new SourcePos("main", 1, 2),
       "someA"
     );
     const errA = new StrictParseError(
-      new SourcePos("main", 1, 1, 2),
+      new SourcePos("main", 1, 2),
       [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
     );
     const stateB = new State(
       new Config({ tabWidth: 2 }),
       "restB",
-      new SourcePos("main", 1, 1, 2),
+      new SourcePos("main", 1, 2),
       "someB"
     );
     const errB = new StrictParseError(
-      new SourcePos("main", 1, 1, 2),
+      new SourcePos("main", 1, 2),
       [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
     );
     // csucc
@@ -147,7 +147,7 @@ describe("mplus", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     // (u `mplus` v) `mplus` w = u `mplus` (v `mplus` w)
@@ -155,11 +155,11 @@ describe("mplus", () => {
       const stateU = new State(
         new Config(),
         "restU",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someU"
       );
       const errU = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testU")]
       );
       const us = [
@@ -172,11 +172,11 @@ describe("mplus", () => {
       const stateV = new State(
         new Config(),
         "restV",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someV"
       );
       const errV = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testV")]
       );
       const vs = [
@@ -189,11 +189,11 @@ describe("mplus", () => {
       const stateW = new State(
         new Config(),
         "restW",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "someW"
       );
       const errW = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testW")]
       );
       const ws = [
@@ -218,11 +218,11 @@ describe("mplus", () => {
       const finalState = new State(
         new Config(),
         "rest",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const parsers = [

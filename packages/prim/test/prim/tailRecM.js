@@ -21,7 +21,7 @@ describe("tailRecM", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const initVal = "init";
@@ -50,11 +50,11 @@ describe("tailRecM", () => {
       const finalState = new State(
         new Config(),
         "rest",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const func = val => {
@@ -72,7 +72,7 @@ describe("tailRecM", () => {
     // cfail
     {
       const err = new StrictParseError(
-        new SourcePos("main", 0, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const func = val => {
@@ -92,11 +92,11 @@ describe("tailRecM", () => {
       const finalState = new State(
         new Config(),
         "rest",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const func = val => {
@@ -114,7 +114,7 @@ describe("tailRecM", () => {
     // efail
     {
       const err = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const func = val => {
@@ -139,23 +139,23 @@ describe("tailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -165,14 +165,14 @@ describe("tailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         "bar",
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         )
       ));
@@ -186,17 +186,17 @@ describe("tailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -206,7 +206,7 @@ describe("tailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         )
       ));
@@ -220,23 +220,23 @@ describe("tailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -246,7 +246,7 @@ describe("tailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -256,7 +256,7 @@ describe("tailRecM", () => {
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         )
       ));
@@ -270,17 +270,17 @@ describe("tailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -290,7 +290,7 @@ describe("tailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -306,11 +306,11 @@ describe("tailRecM", () => {
       const states = [];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -320,7 +320,7 @@ describe("tailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         )
       ));
@@ -334,23 +334,23 @@ describe("tailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -360,14 +360,14 @@ describe("tailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         "bar",
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         )
       ));
@@ -381,17 +381,17 @@ describe("tailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -401,7 +401,7 @@ describe("tailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         )
       ));
@@ -415,23 +415,23 @@ describe("tailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -441,7 +441,7 @@ describe("tailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -451,7 +451,7 @@ describe("tailRecM", () => {
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         )
       ));
@@ -465,17 +465,17 @@ describe("tailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -485,7 +485,7 @@ describe("tailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -501,11 +501,11 @@ describe("tailRecM", () => {
       const states = [];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -515,7 +515,7 @@ describe("tailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         )
       ));
@@ -526,7 +526,7 @@ describe("tailRecM", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const initVal = "init";
@@ -573,33 +573,33 @@ describe("tailRecM", () => {
       new State(
         new Config(),
         "restA",
-        new SourcePos("mainb", 0, 1, 1),
+        new SourcePos("mainb", 1, 1),
         "someA"
       ),
       new State(
         new Config(),
         "restB",
-        new SourcePos("mainb", 0, 1, 1),
+        new SourcePos("mainb", 1, 1),
         "someB"
       ),
       new State(
         new Config(),
         "restC",
-        new SourcePos("mainb", 0, 1, 1),
+        new SourcePos("mainb", 1, 1),
         "someC"
       ),
     ];
     const errs = [
       new StrictParseError(
-        new SourcePos("mainb", 0, 1, 1),
+        new SourcePos("mainb", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
       ),
       new StrictParseError(
-        new SourcePos("mainb", 0, 1, 1),
+        new SourcePos("mainb", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
       ),
       new StrictParseError(
-        new SourcePos("mainb", 0, 1, 1),
+        new SourcePos("mainb", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
       ),
     ];
@@ -628,7 +628,7 @@ describe("tailRecM", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     let i = 0;

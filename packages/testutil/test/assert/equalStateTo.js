@@ -11,13 +11,13 @@ describe("equalStateTo", () => {
       const act = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const exp = new State(
         new Config({ tabWidth: 8, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       expect(act).to.be.an.equalStateTo(exp);
@@ -27,13 +27,13 @@ describe("equalStateTo", () => {
       const act = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const exp = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "bar",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       expect(act).to.be.an.equalStateTo(exp);
@@ -43,13 +43,13 @@ describe("equalStateTo", () => {
       const act = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const exp = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("lib", 497, 7, 29),
+        new SourcePos("lib", 7, 29),
         "none"
       );
       expect(act).to.be.an.equalStateTo(exp);
@@ -59,13 +59,13 @@ describe("equalStateTo", () => {
       const act = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const exp = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "some"
       );
       expect(act).to.be.an.equalStateTo(exp);
@@ -75,13 +75,13 @@ describe("equalStateTo", () => {
       const act = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const exp = new State(
         new Config({ tabWidth: 8, unicode: true }),
         "bar",
-        new SourcePos("lib", 497, 7, 29),
+        new SourcePos("lib", 7, 29),
         "some"
       );
       expect(act).to.be.an.equalStateTo(exp);
@@ -92,13 +92,13 @@ describe("equalStateTo", () => {
       const act = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const exp = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "NONE"
       );
       expect(act).to.be.an.equalStateTo(exp, caseInsensitiveEqual);
@@ -107,13 +107,13 @@ describe("equalStateTo", () => {
       const act = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const exp = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "FOO",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       expect(act).to.be.an.equalStateTo(exp, undefined, caseInsensitiveEqual);
@@ -123,13 +123,13 @@ describe("equalStateTo", () => {
       const act = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const exp = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       expect(act).to.not.be.an.equalStateTo(exp);
@@ -141,13 +141,13 @@ describe("equalStateTo", () => {
       const act = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const exp = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       expect(act).to.be.an.equalStateTo(exp);
@@ -158,13 +158,13 @@ describe("equalStateTo", () => {
       const act = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const exp = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "FOO",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       expect(act).to.be.an.equalStateTo(exp, caseInsensitiveEqual);
@@ -173,13 +173,13 @@ describe("equalStateTo", () => {
       const act = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const exp = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "NONE"
       );
       expect(act).to.be.an.equalStateTo(exp, undefined, caseInsensitiveEqual);
@@ -188,13 +188,13 @@ describe("equalStateTo", () => {
       const act = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "foo",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "none"
       );
       const exp = new State(
         new Config({ tabWidth: 4, unicode: true }),
         "FOO",
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         "NONE"
       );
       expect(act).to.be.an.equalStateTo(exp, caseInsensitiveEqual, caseInsensitiveEqual);
@@ -214,7 +214,7 @@ describe("equalStateTo", () => {
     const exp = new State(
       new Config({ tabWidth: 4, unicode: true }),
       "foo",
-      new SourcePos("main", 496, 6, 28),
+      new SourcePos("main", 6, 28),
       "none"
     );
     for (const act of values) {

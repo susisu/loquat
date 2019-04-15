@@ -20,7 +20,7 @@ describe("ftailRecM", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const initVal = "init";
@@ -49,11 +49,11 @@ describe("ftailRecM", () => {
       const finalState = new State(
         new Config(),
         "rest",
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const func = ftailRecM(val => {
@@ -71,7 +71,7 @@ describe("ftailRecM", () => {
     // cfail
     {
       const err = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const func = ftailRecM(val => {
@@ -91,11 +91,11 @@ describe("ftailRecM", () => {
       const finalState = new State(
         new Config(),
         "rest",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "some"
       );
       const err = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const func = ftailRecM(val => {
@@ -113,7 +113,7 @@ describe("ftailRecM", () => {
     // efail
     {
       const err = new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "test")]
       );
       const func = ftailRecM(val => {
@@ -138,23 +138,23 @@ describe("ftailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -164,14 +164,14 @@ describe("ftailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         "bar",
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         )
       ));
@@ -185,17 +185,17 @@ describe("ftailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -205,7 +205,7 @@ describe("ftailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         )
       ));
@@ -219,23 +219,23 @@ describe("ftailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -245,7 +245,7 @@ describe("ftailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -255,7 +255,7 @@ describe("ftailRecM", () => {
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         )
       ));
@@ -269,17 +269,17 @@ describe("ftailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -289,7 +289,7 @@ describe("ftailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -305,11 +305,11 @@ describe("ftailRecM", () => {
       const states = [];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -319,7 +319,7 @@ describe("ftailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         )
       ));
@@ -333,23 +333,23 @@ describe("ftailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -359,14 +359,14 @@ describe("ftailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         "bar",
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         )
       ));
@@ -380,17 +380,17 @@ describe("ftailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -400,7 +400,7 @@ describe("ftailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         )
       ));
@@ -414,23 +414,23 @@ describe("ftailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -440,7 +440,7 @@ describe("ftailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -450,7 +450,7 @@ describe("ftailRecM", () => {
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         )
       ));
@@ -464,17 +464,17 @@ describe("ftailRecM", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -484,7 +484,7 @@ describe("ftailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -500,11 +500,11 @@ describe("ftailRecM", () => {
       const states = [];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -514,7 +514,7 @@ describe("ftailRecM", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         )
       ));

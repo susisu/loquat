@@ -66,13 +66,13 @@ describe("operator", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "+: XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = operator.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -82,7 +82,7 @@ describe("operator", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "XYZ",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "none"
         )
       ));
@@ -91,13 +91,13 @@ describe("operator", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         ":+ XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = operator.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "e"),
             ErrorMessage.create(ErrorMessageType.EXPECT, "operator"),
@@ -119,13 +119,13 @@ describe("operator", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "-> XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = operator.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -135,7 +135,7 @@ describe("operator", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "XYZ",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "none"
         )
       ));
@@ -151,13 +151,13 @@ describe("operator", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "-> XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = operator.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "e"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, "reserved operator " + show("->")),
@@ -175,13 +175,13 @@ describe("operator", () => {
     const initState = new State(
       new Config({ tabWidth: 8 }),
       "XYZ",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const res = operator.run(initState);
     expect(res).to.be.an.equalResultTo(Result.efail(
       new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "operator parser(s) not specified")]
       )
     ));

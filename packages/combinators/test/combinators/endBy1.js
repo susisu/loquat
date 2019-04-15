@@ -21,7 +21,7 @@ describe("endBy1", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     function generateParsers(success, consumed, vals, states, errs) {
@@ -64,47 +64,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 5, 1, 6),
+          new SourcePos("main", 1, 6),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -114,7 +114,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 5, 1, 6),
+          new SourcePos("main", 1, 6),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         )
       ));
@@ -128,47 +128,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -179,14 +179,14 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 4, 1, 5),
+            new SourcePos("main", 1, 5),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
           ["foo", "bar"],
           new State(
             new Config(),
             "restD",
-            new SourcePos("main", 4, 1, 5),
+            new SourcePos("main", 1, 5),
             "someD"
           )
         ),
@@ -202,37 +202,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -242,7 +242,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -256,47 +256,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -306,7 +306,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         )
       ));
@@ -320,47 +320,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -371,14 +371,14 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 3, 1, 4),
+            new SourcePos("main", 1, 4),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
           ["foo", "bar"],
           new State(
             new Config(),
             "restD",
-            new SourcePos("main", 3, 1, 4),
+            new SourcePos("main", 1, 4),
             "someD"
           )
         ),
@@ -394,37 +394,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -434,7 +434,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testD"),
@@ -451,27 +451,27 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -481,7 +481,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         )
       ));
@@ -495,47 +495,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -545,7 +545,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         )
       ));
@@ -559,47 +559,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -610,14 +610,14 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 3, 1, 4),
+            new SourcePos("main", 1, 4),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
           ["foo", "bar"],
           new State(
             new Config(),
             "restD",
-            new SourcePos("main", 3, 1, 4),
+            new SourcePos("main", 1, 4),
             "someD"
           )
         ),
@@ -633,37 +633,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -673,7 +673,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -689,37 +689,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -730,7 +730,7 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
@@ -741,7 +741,7 @@ describe("endBy1", () => {
           new State(
             new Config(),
             "restB",
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             "someB"
           )
         ),
@@ -757,27 +757,27 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -788,7 +788,7 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
@@ -798,7 +798,7 @@ describe("endBy1", () => {
           new State(
             new Config(),
             "restB",
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             "someB"
           )
         ),
@@ -814,17 +814,17 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -834,7 +834,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         )
       ));
@@ -848,47 +848,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -898,7 +898,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         )
       ));
@@ -912,47 +912,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -963,14 +963,14 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 3, 1, 4),
+            new SourcePos("main", 1, 4),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
           ["foo", "bar"],
           new State(
             new Config(),
             "restD",
-            new SourcePos("main", 3, 1, 4),
+            new SourcePos("main", 1, 4),
             "someD"
           )
         ),
@@ -986,37 +986,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -1026,7 +1026,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -1040,47 +1040,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -1090,7 +1090,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         )
       ));
@@ -1104,47 +1104,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -1155,14 +1155,14 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
           ["foo", "bar"],
           new State(
             new Config(),
             "restD",
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             "someD"
           )
         ),
@@ -1178,37 +1178,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -1218,7 +1218,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testD"),
@@ -1235,27 +1235,27 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -1265,7 +1265,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         )
       ));
@@ -1279,47 +1279,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -1329,7 +1329,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         )
       ));
@@ -1343,47 +1343,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -1394,14 +1394,14 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
           ["foo", "bar"],
           new State(
             new Config(),
             "restD",
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             "someD"
           )
         ),
@@ -1417,37 +1417,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -1457,7 +1457,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -1473,37 +1473,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -1514,7 +1514,7 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -1526,7 +1526,7 @@ describe("endBy1", () => {
           new State(
             new Config(),
             "restB",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "someB"
           )
         ),
@@ -1542,27 +1542,27 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -1573,7 +1573,7 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -1584,7 +1584,7 @@ describe("endBy1", () => {
           new State(
             new Config(),
             "restB",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "someB"
           )
         ),
@@ -1600,17 +1600,17 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -1620,7 +1620,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -1636,7 +1636,7 @@ describe("endBy1", () => {
       const states = [];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
       ];
@@ -1646,7 +1646,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         )
       ));
@@ -1660,47 +1660,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -1710,7 +1710,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 4, 1, 5),
+          new SourcePos("main", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         )
       ));
@@ -1724,47 +1724,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -1775,14 +1775,14 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 3, 1, 4),
+            new SourcePos("main", 1, 4),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
           ["foo", "bar"],
           new State(
             new Config(),
             "restD",
-            new SourcePos("main", 3, 1, 4),
+            new SourcePos("main", 1, 4),
             "someD"
           )
         ),
@@ -1798,37 +1798,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -1838,7 +1838,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -1852,47 +1852,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -1902,7 +1902,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         )
       ));
@@ -1916,47 +1916,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -1967,14 +1967,14 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
           ["foo", "bar"],
           new State(
             new Config(),
             "restD",
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             "someD"
           )
         ),
@@ -1990,37 +1990,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -2030,7 +2030,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testD"),
@@ -2047,27 +2047,27 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -2077,7 +2077,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         )
       ));
@@ -2091,47 +2091,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -2141,7 +2141,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         )
       ));
@@ -2155,47 +2155,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -2206,14 +2206,14 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
           ["foo", "bar"],
           new State(
             new Config(),
             "restD",
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             "someD"
           )
         ),
@@ -2229,37 +2229,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -2269,7 +2269,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -2285,37 +2285,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -2326,7 +2326,7 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
@@ -2337,7 +2337,7 @@ describe("endBy1", () => {
           new State(
             new Config(),
             "restB",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "someB"
           )
         ),
@@ -2353,27 +2353,27 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -2384,7 +2384,7 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
@@ -2394,7 +2394,7 @@ describe("endBy1", () => {
           new State(
             new Config(),
             "restB",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "someB"
           )
         ),
@@ -2410,17 +2410,17 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -2430,7 +2430,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         )
       ));
@@ -2444,47 +2444,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -2494,7 +2494,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         )
       ));
@@ -2508,47 +2508,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -2559,14 +2559,14 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
           ["foo", "bar"],
           new State(
             new Config(),
             "restD",
-            new SourcePos("main", 2, 1, 3),
+            new SourcePos("main", 1, 3),
             "someD"
           )
         ),
@@ -2582,37 +2582,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -2622,7 +2622,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -2636,47 +2636,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -2686,7 +2686,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         )
       ));
@@ -2700,47 +2700,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -2751,14 +2751,14 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
           ["foo", "bar"],
           new State(
             new Config(),
             "restD",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "someD"
           )
         ),
@@ -2774,37 +2774,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -2814,7 +2814,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testD"),
@@ -2831,27 +2831,27 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -2861,7 +2861,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         )
       ));
@@ -2875,47 +2875,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -2925,7 +2925,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         )
       ));
@@ -2939,47 +2939,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -2990,14 +2990,14 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
           ),
           ["foo", "bar"],
           new State(
             new Config(),
             "restD",
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             "someD"
           )
         ),
@@ -3013,37 +3013,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -3053,7 +3053,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -3069,37 +3069,37 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -3110,7 +3110,7 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -3122,7 +3122,7 @@ describe("endBy1", () => {
           new State(
             new Config(),
             "restB",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "someB"
           )
         ),
@@ -3138,27 +3138,27 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -3169,7 +3169,7 @@ describe("endBy1", () => {
       expect(res).to.be.an.equalResultTo(
         Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
               ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -3180,7 +3180,7 @@ describe("endBy1", () => {
           new State(
             new Config(),
             "restB",
-            new SourcePos("main", 0, 1, 1),
+            new SourcePos("main", 1, 1),
             "someB"
           )
         ),
@@ -3196,17 +3196,17 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -3216,7 +3216,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -3232,7 +3232,7 @@ describe("endBy1", () => {
       const states = [];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
       ];
@@ -3242,7 +3242,7 @@ describe("endBy1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         )
       ));
@@ -3254,7 +3254,7 @@ describe("endBy1", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     function generateParsers(success, consumed, vals, states, errs) {
@@ -3297,47 +3297,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -3357,47 +3357,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -3417,47 +3417,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];
@@ -3477,47 +3477,47 @@ describe("endBy1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someD"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
       ];

@@ -12,13 +12,13 @@ describe("updateParserState", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const newState = new State(
       new Config(),
       "rest",
-      new SourcePos("main", 1, 1, 2),
+      new SourcePos("main", 1, 2),
       "some"
     );
     const parser = updateParserState(state => {

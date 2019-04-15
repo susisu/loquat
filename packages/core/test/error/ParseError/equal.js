@@ -8,14 +8,14 @@ const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError, LazyParseE
 
 describe(".equal", () => {
   it("should return true if two errors are equal", () => {
-    const posA = new SourcePos("main", 496, 6, 28);
+    const posA = new SourcePos("main", 6, 28);
     const msgsA = [
       ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
       ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
       ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
     ];
-    const posB = new SourcePos("main", 496, 6, 28);
+    const posB = new SourcePos("main", 6, 28);
     const msgsB = [
       ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -47,14 +47,14 @@ describe(".equal", () => {
   it("should return false if two errors are different", () => {
     // different position
     {
-      const posA = new SourcePos("main", 496, 6, 28);
+      const posA = new SourcePos("main", 6, 28);
       const msgsA = [
         ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
         ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
         ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
         ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
       ];
-      const posB = new SourcePos("lib", 497, 7, 29);
+      const posB = new SourcePos("lib", 7, 29);
       const msgsB = [
         ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
         ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -85,14 +85,14 @@ describe(".equal", () => {
     }
     // different error messages
     {
-      const posA = new SourcePos("main", 496, 6, 28);
+      const posA = new SourcePos("main", 6, 28);
       const msgsA = [
         ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
         ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
         ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
         ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
       ];
-      const posB = new SourcePos("main", 496, 6, 28);
+      const posB = new SourcePos("main", 6, 28);
       const msgsB = [
         ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
         ErrorMessage.create(ErrorMessageType.UNEXPECT, "y"),
@@ -124,14 +124,14 @@ describe(".equal", () => {
     }
     // both
     {
-      const posA = new SourcePos("main", 496, 6, 28);
+      const posA = new SourcePos("main", 6, 28);
       const msgsA = [
         ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
         ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
         ErrorMessage.create(ErrorMessageType.EXPECT, "baz"),
         ErrorMessage.create(ErrorMessageType.MESSAGE, "qux"),
       ];
-      const posB = new SourcePos("lib", 497, 7, 29);
+      const posB = new SourcePos("lib", 7, 29);
       const msgsB = [
         ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "x"),
         ErrorMessage.create(ErrorMessageType.UNEXPECT, "y"),

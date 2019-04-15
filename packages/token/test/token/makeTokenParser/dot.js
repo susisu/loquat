@@ -26,13 +26,13 @@ describe("dot", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         ". ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = dot.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
             ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -42,7 +42,7 @@ describe("dot", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "ABC",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "none"
         )
       ));
@@ -51,13 +51,13 @@ describe("dot", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         ".ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = dot.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
             ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -67,7 +67,7 @@ describe("dot", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "ABC",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "none"
         )
       ));
@@ -77,13 +77,13 @@ describe("dot", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = dot.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
             ErrorMessage.create(ErrorMessageType.EXPECT, show(".")),

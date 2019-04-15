@@ -13,7 +13,7 @@ describe("#setPosition", () => {
       }
     };
     const err = new TestParseError();
-    const pos = new SourcePos("main", 496, 6, 28);
+    const pos = new SourcePos("main", 6, 28);
     expect(() => { err.setPosition(pos); }).to.throw(Error, /not implemented/i);
   });
 });

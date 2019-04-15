@@ -68,13 +68,13 @@ describe("reservedOp", () => {
       const initState = new State(
         new Config({ tabWidth: 8, unicode: false }),
         "-> XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -84,7 +84,7 @@ describe("reservedOp", () => {
         new State(
           new Config({ tabWidth: 8, unicode: false }),
           "XYZ",
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           "none"
         )
       ));
@@ -93,13 +93,13 @@ describe("reservedOp", () => {
       const initState = new State(
         new Config({ tabWidth: 8, unicode: false }),
         "- XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show(" ")),
             ErrorMessage.create(ErrorMessageType.EXPECT, show("->")),
@@ -111,13 +111,13 @@ describe("reservedOp", () => {
       const initState = new State(
         new Config({ tabWidth: 8, unicode: false }),
         "->+",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 3, 1, 4),
+          new SourcePos("main", 1, 4),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "C"),
             ErrorMessage.create(ErrorMessageType.UNEXPECT, show("+")),
@@ -130,13 +130,13 @@ describe("reservedOp", () => {
       const initState = new State(
         new Config({ tabWidth: 8, unicode: false }),
         "XYZ",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("X")),
             ErrorMessage.create(ErrorMessageType.EXPECT, show("->")),
@@ -156,13 +156,13 @@ describe("reservedOp", () => {
     const initState = new State(
       new Config({ tabWidth: 8 }),
       "XYZ",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const res = parser.run(initState);
     expect(res).to.be.an.equalResultTo(Result.efail(
       new StrictParseError(
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         [ErrorMessage.create(ErrorMessageType.MESSAGE, "operator parser(s) not specified")]
       )
     ));

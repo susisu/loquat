@@ -12,12 +12,12 @@ describe("getInput", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const res = getInput.run(initState);
     expect(res).to.be.an.equalResultTo(Result.esucc(
-      ParseError.unknown(new SourcePos("main", 0, 1, 1)),
+      ParseError.unknown(new SourcePos("main", 1, 1)),
       initState.input,
       initState
     ));

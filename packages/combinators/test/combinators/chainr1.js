@@ -21,7 +21,7 @@ describe("chainr1", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     function generateParsers(success, consumed, vals, states, errs) {
@@ -64,37 +64,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 4, 1, 5),
+          new SourcePos("foobar", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -104,7 +104,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 4, 1, 5),
+          new SourcePos("foobar", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -118,37 +118,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -158,7 +158,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testD"),
@@ -168,7 +168,7 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           "someC"
         )
       ));
@@ -182,27 +182,27 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -212,7 +212,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         )
       ));
@@ -226,37 +226,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -266,7 +266,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -280,37 +280,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -320,7 +320,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
@@ -331,7 +331,7 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someC"
         )
       ));
@@ -345,27 +345,27 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -375,7 +375,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
@@ -392,17 +392,17 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -412,7 +412,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         )
       ));
@@ -426,37 +426,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -466,7 +466,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -480,37 +480,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -520,7 +520,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testD"),
@@ -530,7 +530,7 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someC"
         )
       ));
@@ -544,27 +544,27 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -574,7 +574,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         )
       ));
@@ -588,37 +588,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -628,7 +628,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -642,37 +642,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -682,7 +682,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -694,7 +694,7 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someC"
         )
       ));
@@ -708,27 +708,27 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -738,7 +738,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -749,7 +749,7 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         )
       ));
@@ -763,17 +763,17 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -783,7 +783,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -793,7 +793,7 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         )
       ));
@@ -806,7 +806,7 @@ describe("chainr1", () => {
       const states = [];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
       ];
@@ -816,7 +816,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         )
       ));
@@ -830,37 +830,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -870,7 +870,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -884,37 +884,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -924,7 +924,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testD"),
@@ -934,7 +934,7 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someC"
         )
       ));
@@ -948,27 +948,27 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -978,7 +978,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         )
       ));
@@ -992,37 +992,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -1032,7 +1032,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -1046,37 +1046,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -1086,7 +1086,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
@@ -1097,7 +1097,7 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someC"
         )
       ));
@@ -1111,27 +1111,27 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -1141,7 +1141,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
@@ -1158,17 +1158,17 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -1178,7 +1178,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         )
       ));
@@ -1192,37 +1192,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -1232,7 +1232,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -1246,37 +1246,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -1286,7 +1286,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testC"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testD"),
@@ -1296,7 +1296,7 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someC"
         )
       ));
@@ -1310,27 +1310,27 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -1340,7 +1340,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         )
       ));
@@ -1354,37 +1354,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -1394,7 +1394,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         )
       ));
@@ -1408,37 +1408,37 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someC"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
       ];
@@ -1448,7 +1448,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -1460,7 +1460,7 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restC",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someC"
         )
       ));
@@ -1474,27 +1474,27 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
       ];
@@ -1504,7 +1504,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -1515,7 +1515,7 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         )
       ));
@@ -1529,17 +1529,17 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -1549,7 +1549,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -1559,7 +1559,7 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         )
       ));
@@ -1572,7 +1572,7 @@ describe("chainr1", () => {
       const states = [];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
       ];
@@ -1582,7 +1582,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         )
       ));
@@ -1602,57 +1602,57 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("foobar", 4, 1, 5),
+          new SourcePos("foobar", 1, 5),
           "someD"
         ),
         new State(
           new Config(),
           "restE",
-          new SourcePos("foobar", 5, 1, 6),
+          new SourcePos("foobar", 1, 6),
           "someE"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 4, 1, 5),
+          new SourcePos("foobar", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 5, 1, 6),
+          new SourcePos("foobar", 1, 6),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 5, 1, 6),
+          new SourcePos("foobar", 1, 6),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testF")]
         ),
       ];
@@ -1662,7 +1662,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("foobar", 5, 1, 6),
+          new SourcePos("foobar", 1, 6),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testE"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testF"),
@@ -1672,7 +1672,7 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restE",
-          new SourcePos("foobar", 5, 1, 6),
+          new SourcePos("foobar", 1, 6),
           "someE"
         )
       ));
@@ -1693,67 +1693,67 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           "someB"
         ),
         new State(
           new Config(),
           "restC",
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           "someC"
         ),
         new State(
           new Config(),
           "restD",
-          new SourcePos("foobar", 4, 1, 5),
+          new SourcePos("foobar", 1, 5),
           "someD"
         ),
         new State(
           new Config(),
           "restE",
-          new SourcePos("foobar", 5, 1, 6),
+          new SourcePos("foobar", 1, 6),
           "someE"
         ),
         new State(
           new Config(),
           "restF",
-          new SourcePos("foobar", 5, 1, 6),
+          new SourcePos("foobar", 1, 6),
           "someF"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("foobar", 1, 1, 2),
+          new SourcePos("foobar", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 2, 1, 3),
+          new SourcePos("foobar", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 3, 1, 4),
+          new SourcePos("foobar", 1, 4),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testC")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 4, 1, 5),
+          new SourcePos("foobar", 1, 5),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testD")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 5, 1, 6),
+          new SourcePos("foobar", 1, 6),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testE")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 5, 1, 6),
+          new SourcePos("foobar", 1, 6),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testF")]
         ),
         new StrictParseError(
-          new SourcePos("foobar", 5, 1, 6),
+          new SourcePos("foobar", 1, 6),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testG")]
         ),
       ];
@@ -1763,7 +1763,7 @@ describe("chainr1", () => {
       const res = manyParser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("foobar", 5, 1, 6),
+          new SourcePos("foobar", 1, 6),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testE"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testF"),
@@ -1774,7 +1774,7 @@ describe("chainr1", () => {
         new State(
           new Config(),
           "restE",
-          new SourcePos("foobar", 5, 1, 6),
+          new SourcePos("foobar", 1, 6),
           "someE"
         )
       ));

@@ -32,7 +32,7 @@ describe("symbol", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = symbol("AB");
@@ -40,7 +40,7 @@ describe("symbol", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
@@ -52,7 +52,7 @@ describe("symbol", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "C",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "none"
         )
       ));
@@ -61,7 +61,7 @@ describe("symbol", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "AB{- nyan\ncat -}\n \f\r\v{----}\n-- foobar\n\tC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = symbol("AB");
@@ -69,7 +69,7 @@ describe("symbol", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 39, 5, 9),
+          new SourcePos("main", 5, 9),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("C")),
@@ -81,7 +81,7 @@ describe("symbol", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "C",
-          new SourcePos("main", 39, 5, 9),
+          new SourcePos("main", 5, 9),
           "none"
         )
       ));
@@ -90,7 +90,7 @@ describe("symbol", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "{- nyan\ncat -}\n \f\r\v{----}\n-- foobar\n\tABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = symbol("");
@@ -98,7 +98,7 @@ describe("symbol", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 37, 5, 9),
+          new SourcePos("main", 5, 9),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
@@ -110,7 +110,7 @@ describe("symbol", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "ABC",
-          new SourcePos("main", 37, 5, 9),
+          new SourcePos("main", 5, 9),
           "none"
         )
       ));
@@ -120,7 +120,7 @@ describe("symbol", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = symbol("AD");
@@ -128,7 +128,7 @@ describe("symbol", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("B")),
             ErrorMessage.create(ErrorMessageType.EXPECT, show("AD")),
@@ -141,7 +141,7 @@ describe("symbol", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = symbol("");
@@ -149,7 +149,7 @@ describe("symbol", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
@@ -161,7 +161,7 @@ describe("symbol", () => {
         new State(
           new Config({ tabWidth: 8 }),
           "ABC",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         )
       ));
@@ -171,7 +171,7 @@ describe("symbol", () => {
       const initState = new State(
         new Config({ tabWidth: 8 }),
         "ABC",
-        new SourcePos("main", 0, 1, 1),
+        new SourcePos("main", 1, 1),
         "none"
       );
       const parser = symbol("DE");
@@ -179,7 +179,7 @@ describe("symbol", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, show("A")),
             ErrorMessage.create(ErrorMessageType.EXPECT, show("DE")),

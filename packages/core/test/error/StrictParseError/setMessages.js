@@ -7,7 +7,7 @@ const { ErrorMessageType, ErrorMessage, ParseError, StrictParseError } = $error;
 
 describe("#setMessages", () => {
   it("should create a new parse error with `msgs` updated", () => {
-    const pos = new SourcePos("main", 496, 6, 28);
+    const pos = new SourcePos("main", 6, 28);
     const msgs = [
       ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),

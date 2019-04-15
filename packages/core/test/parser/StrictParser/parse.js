@@ -14,12 +14,12 @@ describe("#parse", () => {
         expect(State.equal(state, new State(
           new Config({ tabWidth: 4, unicode: true }),
           "test",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         ))).to.be.true;
         return Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 496, 6, 28),
+            new SourcePos("main", 6, 28),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
               ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -31,7 +31,7 @@ describe("#parse", () => {
           new State(
             new Config({ tabWidth: 4, unicode: true }),
             "rest",
-            new SourcePos("main", 506, 7, 29),
+            new SourcePos("main", 7, 29),
             "some"
           )
         );
@@ -48,12 +48,12 @@ describe("#parse", () => {
         expect(State.equal(state, new State(
           new Config({ tabWidth: 4, unicode: true }),
           "test",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         ))).to.be.true;
         return Result.cfail(
           new StrictParseError(
-            new SourcePos("main", 496, 6, 28),
+            new SourcePos("main", 6, 28),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
               ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -67,7 +67,7 @@ describe("#parse", () => {
       expect(res).to.be.an("object");
       expect(res.success).to.be.false;
       expect(ParseError.equal(res.error, new StrictParseError(
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         [
           ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
           ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -82,12 +82,12 @@ describe("#parse", () => {
         expect(State.equal(state, new State(
           new Config({ tabWidth: 4, unicode: true }),
           "test",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         ))).to.be.true;
         return Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 496, 6, 28),
+            new SourcePos("main", 6, 28),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
               ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -99,7 +99,7 @@ describe("#parse", () => {
           new State(
             new Config({ tabWidth: 4, unicode: true }),
             "rest",
-            new SourcePos("main", 506, 7, 29),
+            new SourcePos("main", 7, 29),
             "some"
           )
         );
@@ -116,12 +116,12 @@ describe("#parse", () => {
         expect(State.equal(state, new State(
           new Config({ tabWidth: 4, unicode: true }),
           "test",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         ))).to.be.true;
         return Result.efail(
           new StrictParseError(
-            new SourcePos("main", 496, 6, 28),
+            new SourcePos("main", 6, 28),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
               ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -135,7 +135,7 @@ describe("#parse", () => {
       expect(res).to.be.an("object");
       expect(res.success).to.be.false;
       expect(ParseError.equal(res.error, new StrictParseError(
-        new SourcePos("main", 496, 6, 28),
+        new SourcePos("main", 6, 28),
         [
           ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
           ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -150,12 +150,12 @@ describe("#parse", () => {
         expect(State.equal(state, new State(
           new Config(),
           "test",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "none"
         ))).to.be.true;
         return Result.csucc(
           new StrictParseError(
-            new SourcePos("main", 496, 6, 28),
+            new SourcePos("main", 6, 28),
             [
               ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
               ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
@@ -167,7 +167,7 @@ describe("#parse", () => {
           new State(
             new Config({ tabWidth: 4, unicode: true }),
             "rest",
-            new SourcePos("main", 506, 7, 29),
+            new SourcePos("main", 7, 29),
             "some"
           )
         );

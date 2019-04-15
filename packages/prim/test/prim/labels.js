@@ -21,18 +21,18 @@ describe("labels", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const finalState = new State(
       new Config(),
       "rest",
-      new SourcePos("main", 1, 1, 2),
+      new SourcePos("main", 1, 2),
       "some"
     );
     // unknown error case
     {
-      const err = ParseError.unknown(new SourcePos("main", 1, 1, 2));
+      const err = ParseError.unknown(new SourcePos("main", 1, 2));
       // csucc
       {
         const parser = new StrictParser(state => {
@@ -77,7 +77,7 @@ describe("labels", () => {
         const res = labelled.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, "label1"),
               ErrorMessage.create(ErrorMessageType.EXPECT, "label2"),
@@ -89,7 +89,7 @@ describe("labels", () => {
     // known error case
     {
       const err = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [
           ErrorMessage.create(ErrorMessageType.EXPECT, "expect1"),
           ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
@@ -129,7 +129,7 @@ describe("labels", () => {
         const res = labelled.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
               ErrorMessage.create(ErrorMessageType.EXPECT, "label1"),
@@ -151,7 +151,7 @@ describe("labels", () => {
         const res = labelled.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
               ErrorMessage.create(ErrorMessageType.EXPECT, "label1"),
@@ -167,18 +167,18 @@ describe("labels", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const finalState = new State(
       new Config(),
       "rest",
-      new SourcePos("main", 1, 1, 2),
+      new SourcePos("main", 1, 2),
       "some"
     );
     // unknown error case
     {
-      const err = ParseError.unknown(new SourcePos("main", 1, 1, 2));
+      const err = ParseError.unknown(new SourcePos("main", 1, 2));
       // csucc
       {
         const parser = new StrictParser(state => {
@@ -223,7 +223,7 @@ describe("labels", () => {
         const res = labelled.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),
             ]
@@ -234,7 +234,7 @@ describe("labels", () => {
     // known error case
     {
       const err = new StrictParseError(
-        new SourcePos("main", 1, 1, 2),
+        new SourcePos("main", 1, 2),
         [
           ErrorMessage.create(ErrorMessageType.EXPECT, "expect1"),
           ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
@@ -274,7 +274,7 @@ describe("labels", () => {
         const res = labelled.run(initState);
         expect(res).to.be.an.equalResultTo(Result.esucc(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),
@@ -295,7 +295,7 @@ describe("labels", () => {
         const res = labelled.run(initState);
         expect(res).to.be.an.equalResultTo(Result.efail(
           new StrictParseError(
-            new SourcePos("main", 1, 1, 2),
+            new SourcePos("main", 1, 2),
             [
               ErrorMessage.create(ErrorMessageType.MESSAGE, "test"),
               ErrorMessage.create(ErrorMessageType.EXPECT, ""),

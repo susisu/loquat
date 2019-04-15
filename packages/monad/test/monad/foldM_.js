@@ -22,7 +22,7 @@ describe("foldM_", () => {
     const initState = new State(
       new Config(),
       "input",
-      new SourcePos("main", 0, 1, 1),
+      new SourcePos("main", 1, 1),
       "none"
     );
     const initVal = "xyz";
@@ -64,23 +64,23 @@ describe("foldM_", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -90,14 +90,14 @@ describe("foldM_", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         undefined,
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           "someB"
         )
       ));
@@ -111,17 +111,17 @@ describe("foldM_", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -131,7 +131,7 @@ describe("foldM_", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 2, 1, 3),
+          new SourcePos("main", 1, 3),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         )
       ));
@@ -145,23 +145,23 @@ describe("foldM_", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -171,7 +171,7 @@ describe("foldM_", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -181,7 +181,7 @@ describe("foldM_", () => {
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         )
       ));
@@ -195,17 +195,17 @@ describe("foldM_", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -215,7 +215,7 @@ describe("foldM_", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -231,7 +231,7 @@ describe("foldM_", () => {
       const states = [];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
       ];
@@ -241,7 +241,7 @@ describe("foldM_", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         )
       ));
@@ -255,23 +255,23 @@ describe("foldM_", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -281,14 +281,14 @@ describe("foldM_", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.csucc(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
         undefined,
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           "someB"
         )
       ));
@@ -302,17 +302,17 @@ describe("foldM_", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -322,7 +322,7 @@ describe("foldM_", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.cfail(
         new StrictParseError(
-          new SourcePos("main", 1, 1, 2),
+          new SourcePos("main", 1, 2),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         )
       ));
@@ -336,23 +336,23 @@ describe("foldM_", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -362,7 +362,7 @@ describe("foldM_", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -372,7 +372,7 @@ describe("foldM_", () => {
         new State(
           new Config(),
           "restB",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someB"
         )
       ));
@@ -386,17 +386,17 @@ describe("foldM_", () => {
         new State(
           new Config(),
           "restA",
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           "someA"
         ),
       ];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testB")]
         ),
       ];
@@ -406,7 +406,7 @@ describe("foldM_", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testA"),
             ErrorMessage.create(ErrorMessageType.MESSAGE, "testB"),
@@ -422,7 +422,7 @@ describe("foldM_", () => {
       const states = [];
       const errs = [
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         ),
       ];
@@ -432,7 +432,7 @@ describe("foldM_", () => {
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.efail(
         new StrictParseError(
-          new SourcePos("main", 0, 1, 1),
+          new SourcePos("main", 1, 1),
           [ErrorMessage.create(ErrorMessageType.MESSAGE, "testA")]
         )
       ));

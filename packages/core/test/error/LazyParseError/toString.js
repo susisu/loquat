@@ -7,7 +7,7 @@ const { ErrorMessageType, ErrorMessage, StrictParseError, LazyParseError } = $er
 
 describe("#toString", () => {
   it("should return a string representation of the error", () => {
-    const pos = new SourcePos("main", 496, 6, 28);
+    const pos = new SourcePos("main", 6, 28);
     const msgs = [
       ErrorMessage.create(ErrorMessageType.SYSTEM_UNEXPECT, "foo"),
       ErrorMessage.create(ErrorMessageType.UNEXPECT, "bar"),
