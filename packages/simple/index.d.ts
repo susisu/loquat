@@ -421,9 +421,9 @@ declare module "@loquat/simple" {
   };
   export type Operator<A> = InfixOperator<A> | PrefixOperator<A> | PostfixOperator<A>;
   export const Operator: {
-    infix<A>(parser: (valA: A, valB: A) => A, assoc: OperatorAssoc): InfixOperator<A>;
-    prefix<A>(parser: (val: A) => A): PrefixOperator<A>;
-    postfix<A>(parser: (val: A) => A): PostfixOperator<A>;
+    infix<A>(parser: Parser<(valA: A, valB: A) => A>, assoc: OperatorAssoc): InfixOperator<A>;
+    prefix<A>(parser: Parser<(val: A) => A>): PrefixOperator<A>;
+    postfix<A>(parser: Parser<(val: A) => A>): PostfixOperator<A>;
   };
   export function buildExpressionParser<A>(opTable: Operator<A>[][], atom: Parser<A>): Parser<A>;
 
