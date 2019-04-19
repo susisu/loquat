@@ -1,6 +1,6 @@
 {
   "name": "@loquat/simple",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "A simple interface of loquat",
   "keywords": [
     "parsing"
@@ -26,14 +26,14 @@
     "test": "tsc --strict --lib es6 --noEmit index.d.ts"
   },
   "dependencies": {
-    "@loquat/char": "^3.1.0",
-    "@loquat/combinators": "^3.1.0",
-    "@loquat/core": "^3.1.0",
-    "@loquat/expr": "^3.1.0",
-    "@loquat/monad": "^3.1.0",
-    "@loquat/prim": "^3.1.0",
-    "@loquat/qo": "^3.1.0",
-    "@loquat/token": "^3.1.0"
+    "@loquat/char": "^3.1.1",
+    "@loquat/combinators": "^3.1.1",
+    "@loquat/core": "^3.1.1",
+    "@loquat/expr": "^3.1.1",
+    "@loquat/monad": "^3.1.1",
+    "@loquat/prim": "^3.1.1",
+    "@loquat/qo": "^3.1.1",
+    "@loquat/token": "^3.1.1"
   },
   "devDependencies": {
     "@susisu/eslint-config": "^0.0.2",

@@ -1,6 +1,6 @@
 {
   "name": "@loquat/prim",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Primitive parsers and combinators",
   "keywords": [
     "parsing"
@@ -28,8 +28,8 @@
     "@loquat/core": "^3.1.0"
   },
   "devDependencies": {
-    "@loquat/core": "^3.1.0",
-    "@loquat/testutil": "^3.1.0",
+    "@loquat/core": "^3.1.1",
+    "@loquat/testutil": "^3.1.1",
     "@susisu/eslint-config": "^0.0.2",
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
