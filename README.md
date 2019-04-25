@@ -3,6 +3,23 @@
 
 Monadic parser combinators for JavScript, inspired by [Parsec](https://github.com/haskell/parsec).
 
+``` javascript
+import * as lq from "@loquat/simple";
+
+const nat = lq.digit.manyChars1().map(str => parseInt(str, 10));
+const plus = lq.char("+");
+const expr =
+  nat.bind(a =>
+    plus.and(
+      nat.map(b =>
+        a + b
+      )
+    )
+  );
+
+const res = expr.parse("", "14+28"); // { success: true, value: 42 }
+```
+
 ## Packages
 If you are not familiar with loquat, or you are using TypeScript, `@loquat/simple` is recommended.
 
