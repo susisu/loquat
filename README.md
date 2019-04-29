@@ -7,12 +7,15 @@ Monadic parser combinators for JavScript, inspired by [Parsec](https://github.co
 import * as lq from "@loquat/simple";
 
 const nat = lq.digit.manyChars1().map(str => parseInt(str, 10));
-const plus = lq.char("+");
+const op = lq.choice([
+  lq.char("+").return((a, b) => a + b),
+  lq.char("-").return((a, b) => a - b)
+]);
 const expr =
   nat.bind(a =>
-    plus.and(
+    op.bind(f =>
       nat.map(b =>
-        a + b
+        f(a, b)
       )
     )
   );
