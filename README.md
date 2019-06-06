@@ -9,7 +9,7 @@ import * as lq from "@loquat/simple";
 const nat = lq.digit.manyChars1().map(str => parseInt(str, 10));
 const op = lq.choice([
   lq.char("+").return((a, b) => a + b),
-  lq.char("-").return((a, b) => a - b)
+  lq.char("-").return((a, b) => a - b),
 ]);
 const expr =
   nat.bind(a =>
