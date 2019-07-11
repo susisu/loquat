@@ -50,7 +50,12 @@ module.exports = core => {
       Object.assign($loquat, _ext);
     }
     if (opts.name !== undefined) {
-      $loquat.exts[opts.name] = _ext;
+      Object.defineProperty($loquat.exts, opts.name, {
+        value       : _ext,
+        writable    : true,
+        configurable: true,
+        enumerable  : true,
+      });
     }
     return _ext;
   }
