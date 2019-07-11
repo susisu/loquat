@@ -96,7 +96,16 @@ const object = lq.qo(function* () {
   yield rbrace;
   const obj = {};
   for (const kv of kvs) {
-    obj[kv[0]] = kv[1];
+    if (kv[0] in obj && !Object.prototype.hasOwnProperty.call(obj, kv[0])) {
+      Object.defineProperty(obj, kv[0], {
+        value       : kv[1],
+        writable    : true,
+        configurable: true,
+        enumerable  : true,
+      });
+    } else {
+      obj[kv[0]] = kv[1];
+    }
   }
   return obj;
 }).label("object");
