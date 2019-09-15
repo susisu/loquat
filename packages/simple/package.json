@@ -36,9 +36,9 @@
     "@loquat/token": "^3.1.1"
   },
   "devDependencies": {
-    "@susisu/eslint-config": "^0.0.3",
-    "eslint": "^6.0.1",
-    "typescript": "^3.5.3"
+    "@susisu/eslint-config": "^0.0.5",
+    "eslint": "^6.4.0",
+    "typescript": "^3.6.3"
   },
   "publishConfig": {
     "access": "public"

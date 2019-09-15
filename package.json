@@ -12,6 +12,6 @@
     "test:fast": "lerna run test"
   },
   "devDependencies": {
-    "lerna": "^3.15.0"
+    "lerna": "^3.16.4"
   }
 }
