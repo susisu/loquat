@@ -27,7 +27,7 @@ describe("regexp", () => {
         new SourcePos("main", 1, 1),
         "none"
       );
-      const parser = regexp(new RegExp("", "u"), 0);
+      const parser = regexp(/(?:)/u, 0);
       expect(parser).to.be.a.parser;
       const res = parser.run(initState);
       expect(res).to.be.an.equalResultTo(Result.esucc(
