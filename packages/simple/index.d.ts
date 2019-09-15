@@ -427,7 +427,7 @@ declare module "@loquat/simple" {
   };
   export function buildExpressionParser<A>(opTable: Operator<A>[][], atom: Parser<A>): Parser<A>;
 
-  export function qo(genFunc: () => IterableIterator<any>): Parser<any>;
+  export function qo<A>(genFunc: () => Iterator<Parser<any>, A, any>): Parser<A>;
 
   export type LanguageDefObject = {
     commentStart?: string,
