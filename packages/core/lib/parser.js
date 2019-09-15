@@ -432,14 +432,21 @@ module.exports = ({ $pos, $error }) => {
    * extendParser: (extensions: {}) => undefined
    */
   function extendParser(extensions) {
+    const descs = {};
     for (const key of Object.keys(extensions)) {
-      Object.defineProperty(Parser.prototype, key, {
-        value       : extensions[key],
+      Object.defineProperty(descs, key, {
+        value: {
+          value       : extensions[key],
+          writable    : true,
+          configurable: true,
+          enumerable  : false,
+        },
         writable    : true,
         configurable: true,
-        enumerable  : false,
+        enumerable  : true,
       });
     }
+    Object.defineProperties(Parser.prototype, descs);
   }
 
   return Object.freeze({
