@@ -1,3 +1,7 @@
+# 3.2.0 (2019-09-16)
+## Bug fixes
+- Fix `extendParser` could set `Parser.__proto__` 215d93be9afdf80b444cbd14cbbe82d8ce6f63a4
+
 # 3.1.1 (2019-04-19)
 - No changes
 

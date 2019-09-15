@@ -1,6 +1,6 @@
 {
   "name": "@loquat/qo",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "description": "Sweet syntax powered by generators",
   "keywords": [
     "parsing"
@@ -28,8 +28,8 @@
     "@loquat/core": "^3.1.0"
   },
   "devDependencies": {
-    "@loquat/core": "^3.1.1",
-    "@loquat/testutil": "^3.1.1",
+    "@loquat/core": "^3.2.0",
+    "@loquat/testutil": "^3.2.0",
     "@susisu/eslint-config": "^0.0.5",
     "chai": "^4.2.0",
     "eslint": "^6.4.0",
