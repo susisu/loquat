@@ -1,5 +1,5 @@
 # loquat
-[![Build Status](https://travis-ci.com/susisu/loquat.svg?branch=master)](https://travis-ci.com/susisu/loquat)
+[![CI](https://github.com/susisu/loquat/workflows/CI/badge.svg)](https://github.com/susisu/loquat/actions?query=workflow%3ACI)
 
 Monadic parser combinators for JavScript, inspired by [Parsec](https://github.com/haskell/parsec).
 
